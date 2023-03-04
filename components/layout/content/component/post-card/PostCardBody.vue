@@ -1,0 +1,140 @@
+<template>
+  <div class="post-preview-body">
+    <div class="post-contents">
+      <span class="content-text">{{ feed.description }}</span>
+    </div>
+    <NuxtLink v-bind:to="feed.path">
+      <div class="post-default-image">
+        <div class="default-image-wrapper">
+          <img :src="feed.header.thumbnail" />
+          <!--                <img class="hide-line" src="@/assets/blogging/hide_post.svg" v-if="feed.header.hide">-->
+        </div>
+        <div class="post-title-box">
+          <span class="post-title">{{ feed.header.summary }}</span>
+          <span class="post-path">taech.io</span>
+        </div>
+      </div>
+    </NuxtLink>
+  </div>
+</template>
+
+<script>
+import {PostContent} from "@/class/implement/PostContent";
+
+export default {
+  name: "PostCardBody",
+  props: {
+    feed: PostContent
+  }
+}
+</script>
+
+<style lang="scss">
+@import '@/styles';
+
+.post-preview-body {
+  display: flex;
+  flex-direction: column;
+
+  .post-default-image {
+    cursor: pointer;
+
+    .default-image-wrapper {
+      display: grid;
+      width: 100%;
+      min-height: 60px;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .post-title-box {
+      background-color: #cfe6f8;
+      padding: 4px 15px;
+      color: #2c3e50;
+
+      span {
+        display: block;
+
+        &.post-title {
+
+        }
+
+        &.post-path {
+          font-size: .78rem;
+        }
+      }
+    }
+  }
+
+  .post-contents {
+    margin: 0 15px;
+    max-height: 11rem;
+    overflow: hidden;
+    font-size: .92rem;
+    padding: 15px;
+    line-height: 1.6;
+    border-top: 1px $linear-color solid;
+
+    .content-text {
+
+      display: block;
+      font-family: inherit;
+      white-space: break-spaces;
+      word-break: break-all;
+    }
+
+  }
+}
+
+.dark .post-preview-body {
+  .post-contents {
+    border-color: $linear-dark-color;
+  }
+
+  .post-default-image {
+
+    .default-image-wrapper {
+      img {
+        filter: brightness(70%);
+      }
+
+    }
+
+    .post-title-box {
+      background-color: #92acc0;
+    }
+  }
+}
+
+@include tablet() {
+
+}
+
+@include mobile() {
+  .post-preview-body {
+
+    .post-contents {
+      margin: 0px 4px;
+      padding: 7px;
+    }
+
+    .post-default-image {
+
+      .default-image-wrapper {
+
+        img {
+          width: 100%;
+        }
+      }
+      .post-title-box {
+
+        .post-title {
+          font-size: .82rem;
+        }
+      }
+    }
+  }
+}
+</style>
