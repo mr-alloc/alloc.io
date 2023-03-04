@@ -1,0 +1,140 @@
+<template>
+  <div class="post-preview-header">
+    <div class="profile-image">
+      <img :src="`${getProfileOrDefault(feed.header.profile_image)}`" />
+    </div>
+    <div class="author-info">
+      <a href="https://github.com/taechnique" target="_blank">
+        <span class="author-name">
+            {{ userInfoStore.name }}
+        </span>
+      </a>
+      <span class="author-work-at">{{ feed.header.current_position }}, {{ feed.header.current_company }}</span>
+      <span class="posting-date">
+<!--              <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>-->
+              {{ calPostDate(feed.header.date) }}
+            </span>
+    </div>
+  </div>
+</template>
+
+
+<script>
+
+import {userInfoStore} from "@/store";
+import {PostContent} from "@/class/implement/PostContent";
+import {calPostDate} from "@/components/utils/settingUtils";
+
+export default {
+  data () {
+    return {
+      userInfoStore,
+      calPostDate
+    }
+  },
+  props: {
+    feed: PostContent
+  },
+  mounted() {
+
+  },
+  methods: {
+    getProfileOrDefault: (path) => {
+      const defaultPath = 'https://avatars.githubusercontent.com/u/65699391?v=4'
+      const basePath = 'https://raw.githubusercontent.com/taechnique/study-note/main/src'
+
+      const returnPath = path == undefined || path == null ? defaultPath : basePath + path
+
+      return returnPath
+    },
+
+  }
+}
+</script>
+
+<style lang="scss">
+@import '@/styles';
+
+.post-preview-header {
+  padding: 20px 30px;
+  display: flex;
+
+  .profile-image {
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .author-info {
+    padding: 0px 10px;
+    width: 80%;
+
+
+    span {
+      display: block;
+      color: #6b6b6b;
+      line-height: 18px;
+
+      &.author-name {
+        color: #2997ff;
+        display: inline-block;
+      }
+
+      &.posting-date {
+        font-size: .81rem;
+      }
+    }
+  }
+}
+
+
+@include tablet() {
+
+  .post-preview-header {
+
+    .author-info {
+
+      .author-work-at {
+        font-size: .84rem;
+      }
+    }
+  }
+}
+
+@include mobile() {
+
+  .post-preview-header {
+    padding: 5px 15px;
+
+    .author-info {
+
+      .author-work-at {
+        font-size: .84rem;
+      }
+    }
+  }
+}
+
+.dark .post-preview-header {
+
+  .author-info {
+
+    .author-name {
+      color: #2997ff;
+      cursor: pointer;
+    }
+
+    .author-work-at {
+      color: white;
+    }
+  }
+}
+</style>
