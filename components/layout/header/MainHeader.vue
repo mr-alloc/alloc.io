@@ -15,10 +15,11 @@
 
 <script lang="ts" setup>
 import { userInfoStore, searchInputStore, fileListStore, mobileNaviStore } from "@/store";
-import { calPostDate } from "@/components/utils/settingUtils";
+import { calPostDate } from "@/utils/settingUtils";
 import { useNuxtApp } from "#app";
 import {FileData} from "~/class/implement/FileData";
-const { $event, $listen } = useNuxtApp()
+import {onMounted} from "vue";
+const { $emitter } = useNuxtApp()
 
 const data = {
 
@@ -47,10 +48,10 @@ const data = {
       ]
     }
 }
-const mounted = () => {
+onMounted(() => {
 
   const body = document.getElementById('main-content-wrapper')!
-  $event('initScroll', () => {
+  $emitter.on('initScroll', () => {
     if (body.scrollTop) {
       body.scrollTop = 0
     }
@@ -67,7 +68,7 @@ const mounted = () => {
 
   })
 
-}
+})
 const methods = {
 
   // searchContents: (word: string) => {

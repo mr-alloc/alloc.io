@@ -1,12 +1,10 @@
 <template>
   <div class="post-resource-navigator" :class="{ active: mobileNaviStore.isActive }">
     <div id="element-wrapper" class="navigate-element-wrapper" :class="{ fixed : explorerHeaderStore.isActive }">
-<!--      <BaseWall/>-->
       <NavigateMarker />
       <div class="explored-control-panel" id="explored-panel">
         <PackageExplorer/>
       </div>
-<!--      <div id="scroll-bar"></div>-->
     </div>
     <div class="system-setting-wrapper">
       <div class="profile-element-wrapper">
@@ -28,7 +26,6 @@
 <!--            <font-awesome-icon :icon="['fas', 'chevron-right']"/>-->
           </span>
         </div>
-
         <div class="tooltip-bubble">
           <div class="tooltip-content"><span>준비중 입니다.</span></div>
           <div class="arrow"></div>
@@ -65,7 +62,7 @@ const data = {
 }
 
 onMounted(() => {
-  $emitter.$event('explore',(status: boolean) => {
+  $emitter.on('explore',(status: boolean) => {
     if(status) {
       data.isNotClickable = status
     } else {

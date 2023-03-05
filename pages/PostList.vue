@@ -13,8 +13,8 @@
 
 <script lang="ts" setup>
 import { postListStore, postCallStore, userInfoStore, fileListStore, mobileNaviStore } from "@/store";
-import { calPostDate } from "@/components/utils/settingUtils";
-import { callPostFeed } from "@/components/utils/postUtil";
+import { calPostDate } from "@/utils/settingUtils";
+import { callPostFeed } from "@/utils/postUtil";
 import { feeds } from '@/store/site'
 import PostCardHeader from "@/components/layout/content/component/PostCardHeader.vue";
 import PostCardBody from "@/components/layout/content/component/post-card/PostCardBody.vue";

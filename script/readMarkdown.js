@@ -5,7 +5,7 @@ const __ROOT__ = process.env.PWD
 
 
 module.exports = (filePath) => {
-    const content = fs.readFileSync(`${__ROOT__}/src${filePath}`, {
+    const content = fs.readFileSync(`${__ROOT__}${filePath}`, {
         encoding: 'utf-8'
     })
 

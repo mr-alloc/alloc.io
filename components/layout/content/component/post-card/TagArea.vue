@@ -1,14 +1,14 @@
 <template>
   <div class="post-tag-area">
 <!--    <font-awesome-icon class="tag-icon" :icon="['fa', 'tags']"/>-->
-    <NuxtLink :to="`/tags/${tag}/1`"  v-for="tag in props.tags" v-bind:key="tag" >
+    <NuxtLink :to="`/tags/${tag}/1}`"  v-for="tag in props.tags" v-bind:key="tag" >
       <span :class="{ current: data.booked && data.booked == tag}">{{ tag }}</span>
     </NuxtLink>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {useRoute} from "#app";
+import { useRoute } from "#app";
 
 const route = useRoute()
 const data = {

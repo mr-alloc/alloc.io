@@ -1,4 +1,4 @@
-import { spinnerStore } from "@/store";
+import { spinnerStore } from "~/store";
 
 
 export const calPostDate = (date: string): string => {

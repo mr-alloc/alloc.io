@@ -30,7 +30,7 @@ import SwitchButton from "@/components/layout/sidebar/SwitchButton.vue";
 import { darkModeStore, mobileNaviStore } from "@/store";
 import {useNuxtApp, useRouter} from "#app";
 
-const { $event, $listen } = useNuxtApp()
+const { $emitter } = useNuxtApp()
 const router = useRouter()
 
 const data = {
@@ -83,7 +83,7 @@ const method = {
     if(type == 'LINK') {
       router.push(link)
       mobileNaviStore.isActive = false
-      $event('initScroll')
+      $emitter.emit('initScroll')
     }
   }
 }

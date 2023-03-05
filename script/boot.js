@@ -1,6 +1,6 @@
 const explore = require('./explore')
+const postStore = require('./postStore')
 const refresh = require('./refresh')
-const PostStore = require('./PostStore')
 
 const __ROOT__ = process.env.PWD
 const __DOCS__ = '/docs'
@@ -11,7 +11,7 @@ const __POST_MAP__ = `${__ROOT__}/site/posts.json`
 const fileNode = explore(__DOCS__)
 
 /* Sort and indexing */
-const posts = PostStore.sort((a, b) => b.header.date - a.header.date)
+const posts = postStore.sort((a, b) => b.header.date - a.header.date)
     .map((post) => {
         return post
     });

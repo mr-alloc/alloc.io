@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import {postCallStore} from "@/store";
+import { postCallStore } from "@/store";
 
 const data = {
   postCallStore

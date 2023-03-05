@@ -1,4 +1,4 @@
-const createNode = require('./createNode')
+const createNode = require('./createNode.js')
 
 const explore = (path) => {
     const childFiles = createNode(path)
