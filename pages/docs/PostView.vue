@@ -36,7 +36,7 @@ import {
   calPostDate,
   setPageTitle,
   spinner
-} from "~/components/utils/settingUtils";
+} from "~/utils/settingUtils";
 import {
   fileListStore,
   postMapStore
@@ -44,7 +44,7 @@ import {
 import * as DateParser from 'date-format-parse'
 import NotFound from "~/components/layout/content/NotFound.vue";
 // import VueUtterances from 'vue-utterances';
-import markUp from "~/components/utils/markUp";
+import markUp from "~/utils/markUp";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
@@ -148,12 +148,10 @@ onMounted(() => {
       let route = useRoute();
       const path = route.fullPath
 
-      console.log('[PostView]route.fullPath:', path)
       const postContent: PostContent = postMapStore.map.get(path)
       if(postContent) {
         data.post_content = postContent
         data.post_body = markUp(postContent.content) ?? ''
-        console.log(postContent.header)
         setPageTitle(postContent.header.title)
         spinner(false)
       }

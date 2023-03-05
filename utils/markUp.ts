@@ -1,11 +1,12 @@
-import lineNumbers from '~/components/utils/lineNumbers'
-import preWrapper from '~/components/utils/preWrapper'
-import highlightLines from '~/components/utils/highlightLines'
+import lineNumbers from '~/utils/lineNumbers'
+import preWrapper from '~/utils/preWrapper'
+import highlightLines from '~/utils/highlightLines'
 
-
-import prism from 'prismjs'
+import Prism from 'prismjs'
 import escapeHtml from 'escape-html'
-
+// @ts-ignore
+import MarkdownIt from 'markdown-it'
+import loadLanguages from "prismjs/components/index";
 
 
 function wrap(code: string, lang: string) {
@@ -42,15 +43,16 @@ function highlight (code: string, lang: string) {
     lang = lang.toLowerCase()
     const rawLang = lang
     lang = getLangCodeFromExtension(lang)
-    if (!prism.languages[lang]) {
+    if (!Prism.languages[lang]) {
         try {
-            require(`prismjs/components/prism-${lang}`)
+
+            // loadLanguages([lang])
         } catch (e) {
             console.warn('e => ',e)
         }
     }
-    if (prism.languages[lang]) {
-        const coded = prism.highlight(code, prism.languages[lang], lang)
+    if (Prism.languages[lang]) {
+        const coded = Prism.highlight(code, Prism.languages[lang], lang)
         return wrap(coded, rawLang)
     }
     return wrap(code, 'text')
@@ -58,7 +60,7 @@ function highlight (code: string, lang: string) {
 
 const markUp = (markdown: string) => {
 
-    const md = require('markdown-it')({
+    const md = new MarkdownIt({
         html: true,
         xhtmlOut: true,
 
@@ -66,6 +68,7 @@ const markUp = (markdown: string) => {
             return highlight(code, lang)
         }
     })
+
     highlightLines(md)
     preWrapper(md)
     lineNumbers(md)

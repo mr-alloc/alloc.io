@@ -18,6 +18,7 @@ const components = {
 
 <style lang="scss">
 @import '@/styles';
+
 .global-router-wrapper {
   display: flex;
   flex-direction: row;

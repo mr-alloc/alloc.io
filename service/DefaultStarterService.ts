@@ -10,7 +10,9 @@ import postJson from '@/site/posts.json'
 import {IFileNode} from "@/class/IFileNode";
 import {IPostContent} from "@/class/IPostContent";
 
+// @ts-ignore
 const fileNode: IFileNode[] = fileNodeJson
+// @ts-ignore
 const posts: IPostContent[] = postJson
 
 class DefaultStarterService implements StarterService {

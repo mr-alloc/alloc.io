@@ -28,15 +28,14 @@
 </template>
 
 <script lang="ts" setup>
-
-import { FileType } from "@/script/storeFileMap";
 import { FileNodeWrapper } from "@/class/implement/FileNodeWrapper";
 import {mobileNaviStore} from "@/store";
 import {naviStack} from "@/store/site";
 import {useNuxtApp, useRouter} from "#app";
 import {FileNode} from "~/class/implement/FileNode";
 import {IFileNode} from "~/class/IFileNode";
-const { $event, $listen } = useNuxtApp();
+import {onMounted} from "vue";
+const { $emitter } = useNuxtApp();
 const router = useRouter()
 
 const data = {
@@ -46,8 +45,8 @@ const data = {
   isCallable: true
 }
 
-const mounted = () => {
-  $event('release_selected', () => {
+onMounted(() => {
+  $emitter.on('release_selected', () => {
 
     if(naviStack.length <= 3) {
       const children = methods.getStack(naviStack.length - 2)?.children
@@ -57,19 +56,19 @@ const mounted = () => {
       }
     }
   })
-}
+})
 
 const methods = {
   getFileType: (child: FileNode) => {
     console.log('child: ', child)
 
-    if(child._type == FileType.DIR)
+    if(child._type == 'DIRECTORY')
       return 'folder'
 
     return 'file-lines'
   },
   selectFile (file: FileNode, nodeIndex: number, index: number) {
-    $event('explore', true)
+    $emitter.emit('explore', true)
 
     if(file.isDirectory()) {
 
@@ -95,14 +94,14 @@ const methods = {
         }, 100)
       }
 
-      $event('moveIn', (nodeIndex +1))
+      $emitter.emit('moveIn', (nodeIndex +1))
     } else {
 
       router.push(file.path)
       mobileNaviStore.isActive = false
     }
 
-    $event('explore', false)
+    $emitter.emit('explore', false)
   },
   getStack(idx: number) {
 

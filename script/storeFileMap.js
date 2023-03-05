@@ -1,6 +1,4 @@
-import {Header} from "~/class/implement/Header";
-
-export const FileType = {
+const FileType = {
     DIR: 'DIRECTORY',
     POST: 'POST'
 }
@@ -14,7 +12,7 @@ class FileNode {
     _files
     _hasIcon
 
-    constructor(filePath: string, fileName: string, ext: string, summary: string, type: string, hasIcon: boolean) {
+    constructor(filePath, fileName, ext, summary, type, hasIcon) {
         this._path = filePath
         this._name = fileName
         this._ext = ext
@@ -24,7 +22,7 @@ class FileNode {
         this._files = new Array()
     }
 
-    set files(files: FileNode[]) {
+    set files(files) {
         this._files = files;
     }
 
@@ -49,7 +47,7 @@ class PostData {
     _description
     _content
 
-    constructor(path: string, header: Header, description: string, content: string) {
+    constructor(path, header, description, content) {
         this._path = path
         this._header = header
         this._description = description

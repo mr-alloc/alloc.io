@@ -1,9 +1,10 @@
 const fs = require("fs")
-const exclude = require("./excludeFileName")
-const {FileType, FileNode} = require("./storeFileMap")
+const exclude = require("./excludeFileName.js")
 const fileNames = require("../site/file-name.json")
-const readMarkdown = require("./readMarkdown")
-const PostStore = require('./PostStore')
+const readMarkdown = require("./readMarkdown.js")
+const PostStore = require('./postStore.js')
+
+const { FileType, FileNode } = require("./storeFileMap.js")
 
 const __ROOT__ = process.env.PWD
 const fileRE = /([^.]+)(?:(\.)([^.]+))?/g
@@ -31,14 +32,14 @@ function toFileFolder(wholePath, file) {
     const nickname = fileNames[file.name] != undefined
         ? fileNames[file.name]
         : file.name
-    const hasIcon = fs.existsSync(`${__ROOT__}/src/assets/icon/${file.name}.png`);
+    const hasIcon = fs.existsSync(`${__ROOT__}/public/assets/icon/${file.name}.png`);
 
-    return new FileNode(null, wholePath, file.name, '', nickname, FileType.DIR, hasIcon)
+    return new FileNode(wholePath, file.name, '', nickname, FileType.DIR, hasIcon)
 }
 
 module.exports = (path) => {
 
-    const files = fs.readdirSync(`${__ROOT__}/src${path}`, {
+    const files = fs.readdirSync(`${__ROOT__}${path}`, {
         withFileTypes: true,
         encoding: "utf-8"
     })

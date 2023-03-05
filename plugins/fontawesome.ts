@@ -25,12 +25,7 @@ import mitt from "mitt";
 config.autoAddCss = false
 
 export default defineNuxtPlugin((nuxtApp) => {
-    const emit = mitt()
     nuxtApp.vueApp.component('font-awesome-icon', FontAwesomeIcon)
-    return {
-        provide: {
-            event: emit.emit,
-            listen: emit.on
-        }
-    }
+    const emitter = mitt()
+    nuxtApp.provide('emitter', emitter)
 })
