@@ -1,6 +1,6 @@
 
-import {feeds, postContents} from "@/store/site";
-import {postCallStore} from "@/store";
+import {feeds, postContents} from "~/store/site";
+import {postCallStore} from "~/store";
 
 
 const DEFAULT_FEED_SIZE = 4

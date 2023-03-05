@@ -23,7 +23,7 @@
 
 import {userInfoStore} from "@/store";
 import {PostContent} from "@/class/implement/PostContent";
-import {calPostDate} from "@/components/utils/settingUtils";
+import {calPostDate} from "@/utils/settingUtils";
 
 export default {
   data () {

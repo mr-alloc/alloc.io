@@ -11,7 +11,9 @@ import {explorerHeaderStore} from '@/store'
 import {naviStack} from '@/store/site'
 import {useNuxtApp} from "#app";
 import {onMounted} from "vue";
-const { $listen } = useNuxtApp()
+const {
+   $emitter
+} = useNuxtApp()
 const name: string = 'NavigateMarker'
 const root = naviStack[0]?.name
 const data = {
@@ -26,7 +28,7 @@ const data = {
 onMounted(() => {
   document.querySelector(`#${data.titleId} .dist`)?.addEventListener('click', methods.moveBack)
 
-  $listen('moveIn', (index: number) => {
+  $emitter.on('moveIn', (index: number) => {
 
     const titleElement = document.getElementById(data.titleId)
     const oldDist = document.querySelector(`#${data.titleId} .dist`)
@@ -51,18 +53,22 @@ onMounted(() => {
       })
 
       carry.then(() => {
-        const oldDistClassList = oldDist?.classList!
-        oldDistClassList.add('after-passed')
-        oldDistClassList.remove('dist')
+        if(oldDist && oldDist.classList && oldSource && oldSource.classList) {
+          const oldDistClassList = oldDist.classList
+          oldDistClassList.add('after-passed')
+          oldDistClassList.remove('dist')
 
-        oldDistClassList.add('dist')
-        oldDistClassList.remove('source')
-        oldDistClassList.remove('active')
-        oldSource?.addEventListener('click', methods.moveBack)
-        setTimeout(() => {
-          methods.getSource()?.classList.add('active')
+          const oldSourceClassList = oldSource.classList
+          oldSourceClassList.add('dist')
+          oldSourceClassList.remove('source')
+          oldSourceClassList.remove('active')
 
-        }, 10)
+          oldSource?.addEventListener('click', methods.moveBack)
+          setTimeout(() => {
+            methods.getSource()?.classList.add('active')
+
+          }, 10)
+        }
       }).then(() => {
         setTimeout(() => {
           methods.getPassed()?.remove()
@@ -80,10 +86,10 @@ onMounted(() => {
 
 const methods = {
   moveBack () {
-      $event('explore', true)
+      $emitter.emit('explore', true)
       const panel = document.getElementById('explored-panel')
-      const oldDist = this.getDist()
-      const oldSource = this.getSource()
+      const oldDist = methods.getDist()
+      const oldSource = methods.getSource()
       if(panel) {
 
         let selected = (index: number) => {
@@ -100,7 +106,7 @@ const methods = {
             //== 마지막 페이지 ==//
             if(naviStack.length == 2) {
               document.getElementById('navigator-title-ele')?.classList.remove('back')
-              this.getSource().classList.remove('active')
+              methods.getSource().classList.remove('active')
             }
             //== 현재 페이지가 2개이상 ==//
             if(naviStack.length > 2) {
@@ -113,7 +119,7 @@ const methods = {
               const newSource = document.createElement('span')
               newSource.innerText = naviStack[naviStack.length -3].name
               newSource.classList.add('after-passed')
-              newSource.addEventListener('click', this.moveBack)
+              newSource.addEventListener('click', methods.moveBack)
               document.getElementById(data.titleId)?.insertBefore(newSource, document.querySelector(`#${data.titleId} .source`))
 
               setTimeout(() => {
@@ -143,8 +149,8 @@ const methods = {
         }).catch((error) => {
           console.log('Error occurred with: ', error)
         })
-        $event('release_selected')
-        $event('explore', false)
+        $emitter.emit('release_selected')
+        $emitter.emit('explore', false)
       }
     },
     getDist(): HTMLElement {

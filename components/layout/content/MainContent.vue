@@ -1,8 +1,6 @@
 <template>
   <div class="main-content-view" id="main-content-wrapper">
-    <ClientOnly>
-      <NuxtPage class="current-content" :page-key="route.fullPath" />
-    </ClientOnly>
+    <NuxtPage class="current-content" :page-key="route.fullPath" />
     <MainFooter />
     <div class="background" :class="{ active : data.mobileNaviStore.isActive}" v-on:click="data.mobileNaviStore.isActive = false">
     </div>
@@ -13,6 +11,7 @@
 import MainFooter from "@/components/layout/content/MainFooter.vue";
 import { mobileNaviStore } from "@/store";
 import { useRoute } from "#app";
+import {definePageMeta} from "#imports";
 const route = useRoute()
 
 const components = {
