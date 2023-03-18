@@ -1,11 +1,13 @@
 export interface IFileNode {
-    _path: string
-    _name: string
-    _type: string
-    _summary: string
-    _ext: string
-    _hasIcon: boolean
-    _files?: IFileNode []
+    readonly _path: string
+    readonly _name: string
+    readonly _type: string
+    readonly _summary: string
+    readonly _ext: string
+    readonly _hasIcon: boolean
+    readonly _files?: IFileNode []
 
     isDirectory(): boolean
+
+    get type(): string
 }

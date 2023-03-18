@@ -1,31 +1,28 @@
 <template>
   <div class="post-container">
-    <div class="not-found" v-if="data.post_content === null">
+    <div class="not-found" v-show="data.post_content === null">
       <NotFound />
     </div>
-    <div class="post-area" v-if="data.post_content">
+    <div class="post-area" v-show="data.post_content">
       <div class="post-title-area">
         <span class="title">{{ data.post_content.header.title }}</span>
       </div>
       <div class="post-content-wrapper" id="document-content">
         <div class="post-intro">
           <div class="reported-date">
-<!--            <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>-->
-            <span class="date-text">{{ data.calPostDate(data.post_content.header.date.toString()).concat(parseDate(data.post_content.header.date)) }}</span>
+            <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
+            <span class="date-text">{{ data.calPostDate(data.post_content.header.date.toString()) }}</span>
           </div>
         </div>
         <TagArea :tags="data.post_content.header.tags" />
         <div class="post-content" v-bind:class="{ hide : data.post_content.header.hide }" @click="clickedContent($event)" v-html="data.post_body"/>
-<!--        <div class="hide-box" v-if="post_content.header.hide">-->
-<!--          <img style="position: relative; width: 100%; top: 100px;" :src="require('@/assets/blogging/hide_post.png')" />-->
-<!--        </div>-->
-        <div class="zoom-in-image-wrapper" @click="zoomOut()" v-if="data.zoom_in.isActive">
+        <div class="zoom-in-image-wrapper" @click="zoomOut()" v-show="data.zoom_in.isActive">
           <div class="image-resizer">
             <img :src="data.zoom_in.imageLink">
           </div>
         </div>
-<!--        <vue-utterances repo="taechnique/study-note" crossorigin="anonymous" theme="github-light" issue-term="pathname" async/>-->
       </div>
+      <!--        <vue-utterances repo="taechnique/study-note" crossorigin="anonymous" theme="github-light" issue-term="pathname" async/>-->
     </div>
     <div class="zoom-image-aria" :class="{zoom : data.zoom_in.isActive}"></div>
   </div>
@@ -48,14 +45,12 @@ import markUp from "~/utils/markUp";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
-import { onMounted } from 'vue';
+import {onBeforeMount, onMounted} from 'vue';
 
 const data = {
   post_content: {
     header: {
-      title: '',
-      date: new Date(),
-      tags: ['']
+      title: ''
     }
   } as PostContent,
   page: {
@@ -144,19 +139,19 @@ const components = {
 spinner(true)
 turnOffSpinner(5000)
 
-onMounted(() => {
-      let route = useRoute();
-      const path = route.fullPath
+onBeforeMount(() => {
+  let route = useRoute();
+  const path = route.fullPath
 
-      const postContent: PostContent = postMapStore.map.get(path)
-      if(postContent) {
-        data.post_content = postContent
-        data.post_body = markUp(postContent.content) ?? ''
-        setPageTitle(postContent.header.title)
-        spinner(false)
-      }
-    }
-)
+  const postContent: PostContent = postMapStore.map.get(path)
+  if(postContent) {
+    data.post_content = postContent
+    data.post_body = markUp(postContent.content) ?? ''
+    setPageTitle(postContent.header.title)
+    spinner(false)
+  }
+
+})
 </script>
 
 <style lang="scss">

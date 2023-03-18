@@ -11,6 +11,7 @@ import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import RouteWrapper from "@/components/layout/content/RouteWrapper.vue";
 import { darkModeStore } from "@/store";
 import Runner from '@/service/DefaultStarterService';
+import {useHead} from "#head";
 
 Runner.init()
 
@@ -23,6 +24,15 @@ const components = {
   LoadingBar,
   MainHeader
 }
+
+useHead({
+  meta: [
+    {
+      name: 'theme-color',
+      content: '#010409'
+    }
+  ]
+})
 </script>
 
 <style lang="scss">

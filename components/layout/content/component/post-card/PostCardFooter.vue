@@ -1,31 +1,29 @@
 <template>
   <div class="post-preview-footer">
-    <TagArea :tags="feed.header.tags" />
-    <div v-bind:class="[`post-comment-list${feed._id}`,{ 'hide' : mobileNaviStore.isActive }]" class="message-box" ></div>
-    <PostCardFooterButton :id="feed.id"/>
+    <TagArea :tags="props.header.tags" />
+    <div v-bind:class="[`post-comment-list`,{ 'hide' : mobileNaviStore.isActive }]" class="message-box" ></div>
+    <PostCardFooterButton/>
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import {PostContent} from "@/class/implement/PostContent";
-import PostCardFooterButton from "@/components/layout/content/component/post-card/PostCardFooterButton";
 import {mobileNaviStore} from "@/store";
-import TagArea from "@/components/layout/content/component/post-card/TagArea";
+import PostCardFooterButton from "@/components/layout/content/component/post-card/PostCardFooterButton.vue";
+import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
+import {Header} from "~/class/implement/Header";
 
-export default {
-  name: "PostCardFooter",
-  data() {
-    return {
-      mobileNaviStore
-    }
-  },
-  props: {
-    feed: PostContent
-  },
-  components: {
-    TagArea,
-    PostCardFooterButton,
-  }
+const data = {
+  mobileNaviStore
+}
+
+const props = defineProps({
+  header: Header
+})
+
+const components = {
+  TagArea,
+  PostCardFooterButton,
 }
 </script>
 

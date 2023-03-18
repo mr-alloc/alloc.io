@@ -20,6 +20,10 @@ export class FileNode implements IFileNode {
         this._files = value._files !== undefined ? FileNode.toFileTrees(value._files) : undefined
     }
 
+    get type(): string {
+        return this._type
+    }
+
     get path(): string {
         return this._path
     }

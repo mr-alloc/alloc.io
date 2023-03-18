@@ -5,7 +5,7 @@
           <div class="setting-icon-area" :class="{ active: setting.has_icon }">
             <div class="element-icon-wrapper">
               <span class="element-icon">
-                <img class="custom-icon" v-if="setting.icon != ''" :src="`/assets/icon/${setting.icon}.png`" alt="file icon image" />
+                <img class="custom-icon" v-show="setting.icon != ''" :src="`/assets/icon/${setting.icon}.png`" alt="file icon image" />
               </span>
             </div>
           </div>
@@ -16,7 +16,7 @@
             <div class="feature-trailer">
               <SwitchButton v-if="setting.type == 'SWITCH'" :default="setting.switch.default" :switch="setting.switch.change"/>
               <span class="trailer-arrow" v-else>
-<!--                <font-awesome-icon :icon="['fas', 'chevron-right']"/>-->
+                <font-awesome-icon :icon="['fas', 'chevron-right']"/>
               </span>
             </div>
           </div>
@@ -67,7 +67,6 @@ const data = {
             data.settings[2].icon = 'sun'
           }
           darkModeStore.isDarkMode = behavior
-
           return behavior
         }
       }

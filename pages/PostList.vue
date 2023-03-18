@@ -2,11 +2,9 @@
     <div class="main-body" id="main-content-body">
       <div class="main-container">
         <div class="post-card-wrapper" v-for="(feed, index) in data.feeds" v-bind:key="index">
-          <PostCardHeader :feed="feed" />
-          <PostCardBody :feed="feed" />
-          <PostCardFooter :feed="feed" />
+          <PostCard :feed="feed" />
         </div>
-        <PostContentLoader />
+        <PostContentLoader class="content-loader" />
       </div>
     </div>
 </template>
@@ -16,15 +14,16 @@ import { postListStore, postCallStore, userInfoStore, fileListStore, mobileNaviS
 import { calPostDate } from "@/utils/settingUtils";
 import { callPostFeed } from "@/utils/postUtil";
 import { feeds } from '@/store/site'
-import PostCardHeader from "@/components/layout/content/component/PostCardHeader.vue";
+import PostCardHeader from "~/components/layout/content/component/post-card/PostCardHeader.vue";
 import PostCardBody from "@/components/layout/content/component/post-card/PostCardBody.vue";
 import PostCardFooter from "@/components/layout/content/component/post-card/PostCardFooter.vue";
 import PostContentLoader from "@/components/layout/content/component/post-card/PostContentLoader.vue";
-import {onMounted} from "vue";
+import PostCard from '@/components/layout/content/component/post-card/PostCard.vue'
+import {onBeforeMount} from "vue";
 
 callPostFeed()
 const data = {
-  feeds,
+  feeds: feeds,
   postListStore,
   userInfoStore,
   fileListStore,
@@ -53,7 +52,7 @@ const components = {
   PostContentLoader
 }
 
-onMounted(() => {
+onBeforeMount(() => {
   const wrapper = document.getElementById('main-content-wrapper')!
 
   const handleForScroll = () => {
@@ -76,7 +75,6 @@ onMounted(() => {
 
   }
   wrapper.addEventListener('scroll', handleForScroll)
-
 })
 </script>
 

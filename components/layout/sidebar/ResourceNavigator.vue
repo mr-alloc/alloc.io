@@ -23,7 +23,7 @@
         </div>
         <div class="feature-trailer">
           <span class="trailer-arrow">
-<!--            <font-awesome-icon :icon="['fas', 'chevron-right']"/>-->
+            <font-awesome-icon :icon="['fas', 'chevron-right']"/>
           </span>
         </div>
         <div class="tooltip-bubble">
@@ -44,7 +44,7 @@ import NavigateMarker from "@/components/layout/sidebar/NavigateMarker.vue";
 import DefaultSettings from "@/components/layout/sidebar/DefaultSettings.vue";
 import {naviStack} from "@/store/site";
 import {useNuxtApp} from "#app";
-import {onMounted} from "vue";
+import {onBeforeMount} from "vue";
 const { $emitter } = useNuxtApp()
 
 const components = {
@@ -61,7 +61,8 @@ const data = {
   isNotClickable: false
 }
 
-onMounted(() => {
+
+onBeforeMount(() => {
   $emitter.on('explore',(status: boolean) => {
     if(status) {
       data.isNotClickable = status
