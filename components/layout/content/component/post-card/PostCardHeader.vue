@@ -1,7 +1,7 @@
 <template>
   <div class="post-preview-header">
     <div class="profile-image">
-      <img :src="`${getProfileOrDefault(feed.header.profile_image)}`" />
+      <img :src="`${method.getProfileOrDefault(props.header.profile_image)}`" />
     </div>
     <div class="author-info">
       <a href="https://github.com/taechnique" target="_blank">
@@ -9,45 +9,40 @@
             {{ userInfoStore.name }}
         </span>
       </a>
-      <span class="author-work-at">{{ feed.header.current_position }}, {{ feed.header.current_company }}</span>
+      <span class="author-work-at">{{ props.header.current_position }}, {{ props.header.current_company }}</span>
       <span class="posting-date">
-<!--              <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>-->
-              {{ calPostDate(feed.header.date) }}
+              <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
+              {{ calPostDate(props.header.date) }}
             </span>
     </div>
   </div>
 </template>
 
 
-<script>
+<script lang="ts" setup>
 
-import {userInfoStore} from "@/store";
-import {PostContent} from "@/class/implement/PostContent";
-import {calPostDate} from "@/utils/settingUtils";
+import {userInfoStore} from "~/store";
+import {PostContent} from "~/class/implement/PostContent";
+import {calPostDate} from "~/utils/settingUtils";
+import {Header} from "~/class/implement/Header";
 
-export default {
-  data () {
-    return {
-      userInfoStore,
-      calPostDate
-    }
-  },
-  props: {
-    feed: PostContent
-  },
-  mounted() {
+const data = {
+  userInfoStore,
+  calPostDate
+}
 
-  },
-  methods: {
-    getProfileOrDefault: (path) => {
-      const defaultPath = 'https://avatars.githubusercontent.com/u/65699391?v=4'
-      const basePath = 'https://raw.githubusercontent.com/taechnique/study-note/main/src'
+const props = defineProps({
+  header: Header,
+})
 
-      const returnPath = path == undefined || path == null ? defaultPath : basePath + path
+const method = {
+  getProfileOrDefault(path: string) {
+    const defaultPath = 'https://avatars.githubusercontent.com/u/65699391?v=4'
+    const basePath = 'https://raw.githubusercontent.com/taechnique/study-note/main/src'
 
-      return returnPath
-    },
+    const returnPath = path == undefined || path == null ? defaultPath : basePath + path
 
+    return returnPath
   }
 }
 </script>

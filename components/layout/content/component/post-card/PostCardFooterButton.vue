@@ -1,28 +1,19 @@
 <template>
   <div class="footer-button-group">
-    <div class="footer-button button-recommend" v-on:click="recommendPost(this.id)">
-<!--      <font-awesome-icon icon="heart" />-->
+    <div class="footer-button button-recommend">
+            <font-awesome-icon icon="heart" />
       <span>추천</span>
       <div class="tooltip-bubble">
         <div class="tooltip-content"><span>준비중 입니다.</span></div>
         <div class="arrow"></div>
       </div>
     </div>
-    <div class="footer-button button-comment" @click="getCommentList(this.id)">
-<!--      <font-awesome-icon icon="message" />-->
+    <div class="footer-button button-comment">
+            <font-awesome-icon icon="message" />
       <span>댓글</span>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "PostCardFooterButton",
-  props: {
-    id: Number
-  }
-}
-</script>
 
 <style lang="scss">
 .footer-button-group {
