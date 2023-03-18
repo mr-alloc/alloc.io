@@ -1,32 +1,30 @@
 <template>
   <div class="post-preview-body">
     <div class="post-contents">
-      <span class="content-text">{{ feed.description }}</span>
+      <span class="content-text">{{ props.description }}</span>
     </div>
-    <NuxtLink v-bind:to="feed.path">
+    <nuxt-link v-bind:to="props.path">
       <div class="post-default-image">
         <div class="default-image-wrapper">
-          <img :src="feed.header.thumbnail" />
-          <!--                <img class="hide-line" src="@/assets/blogging/hide_post.svg" v-if="feed.header.hide">-->
+          <img :src="props.header.thumbnail" />
         </div>
         <div class="post-title-box">
-          <span class="post-title">{{ feed.header.summary }}</span>
+          <span class="post-title">{{ props.header.summary }}</span>
           <span class="post-path">taech.io</span>
         </div>
       </div>
-    </NuxtLink>
+    </nuxt-link>
   </div>
 </template>
 
-<script>
-import {PostContent} from "@/class/implement/PostContent";
+<script lang="ts" setup>
+import {Header} from "~/class/implement/Header";
 
-export default {
-  name: "PostCardBody",
-  props: {
-    feed: PostContent
-  }
-}
+const props = defineProps({
+  header: Header,
+  description: String,
+  path: String
+})
 </script>
 
 <style lang="scss">

@@ -4,9 +4,7 @@ import highlightLines from '~/utils/highlightLines'
 
 import Prism from 'prismjs'
 import escapeHtml from 'escape-html'
-// @ts-ignore
-import MarkdownIt from 'markdown-it'
-import loadLanguages from "prismjs/components/index";
+import * as MarkdownIt from 'markdown-it'
 
 
 function wrap(code: string, lang: string) {
@@ -45,8 +43,8 @@ function highlight (code: string, lang: string) {
     lang = getLangCodeFromExtension(lang)
     if (!Prism.languages[lang]) {
         try {
-
-            // loadLanguages([lang])
+            Prism.languages[lang] = Prism.languages.extend(lang, {
+            })
         } catch (e) {
             console.warn('e => ',e)
         }

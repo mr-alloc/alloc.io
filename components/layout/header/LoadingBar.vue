@@ -2,11 +2,6 @@
   <div class="global-spinner-wrapper" :class="{ on : spinnerStore.isOn }">
     <div class="spinner-background">
       <div class="spinner-area">
-<!--        <flower-spinner-->
-<!--            :animation-duration="2500"-->
-<!--            :size="70"-->
-<!--            color="#0a66c2"-->
-<!--        />-->
       </div>
     </div>
   </div>

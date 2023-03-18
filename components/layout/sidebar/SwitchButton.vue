@@ -1,5 +1,5 @@
 <template>
-      <div class="classic-switch" :class="{ active: data.isActive }" v-on:mouseup="method.reflect">
+      <div class="classic-switch" :class="{ active: data.isTurnOn }" v-on:mouseup="method.reflect">
         <span class="switch-ball"></span>
       </div>
 </template>
@@ -11,11 +11,11 @@ const props = defineProps({
 })
 
 const data = {
-  isActive: props.default
+  isTurnOn: props.default
 }
 const method = {
   reflect() {
-    data.isActive = props.switch && props.switch()
+    data.isTurnOn = props.switch && props.switch()
   }
 }
 </script>

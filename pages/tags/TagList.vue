@@ -12,7 +12,7 @@
     <div class="tag-list-wrapper">
       <TagArea :tags="Array.from(tagMap.store.keys())"/>
     </div>
-    <div class="connected-post" v-if="this.bookedTag">
+    <div class="connected-post" v-show="this.bookedTag">
       <div class="current-booked-tag">
         <h2 class="booked-tag-name">{{ this.bookedTag }}</h2>
       </div>
