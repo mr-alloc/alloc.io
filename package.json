@@ -7,7 +7,7 @@
     "generate": "yarn boot && nuxt generate",
     "preview": "yarn boot && nuxt preview",
     "postinstall": "yarn boot && nuxt prepare",
-    "deploy": "yarn boot && nuxt generate && gh-pages -d dist"
+    "deploy": "NODE_ENV=production yarn boot && nuxt generate && gh-pages -d dist"
   },
   "homepage": "https://taechnique.github.io/special-posted-in/",
   "dependencies": {
