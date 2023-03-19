@@ -2,10 +2,10 @@ import lineNumbers from '~/utils/lineNumbers'
 import preWrapper from '~/utils/preWrapper'
 import highlightLines from '~/utils/highlightLines'
 
-import Prism from 'prismjs'
 import escapeHtml from 'escape-html'
 import * as MarkdownIt from 'markdown-it'
-
+import Prism from 'prismjs'
+import * as PrismUtils from './prismUtils'
 
 function wrap(code: string, lang: string) {
     if(lang === 'text') {
@@ -41,13 +41,8 @@ function highlight (code: string, lang: string) {
     lang = lang.toLowerCase()
     const rawLang = lang
     lang = getLangCodeFromExtension(lang)
-    if (!Prism.languages[lang]) {
-        try {
-            Prism.languages[lang] = Prism.languages.extend(lang, {
-            })
-        } catch (e) {
-            console.warn('e => ',e)
-        }
+    if ( ! Prism.languages[lang]) {
+        PrismUtils.loadLanguage(lang)
     }
     if (Prism.languages[lang]) {
         const coded = Prism.highlight(code, Prism.languages[lang], lang)

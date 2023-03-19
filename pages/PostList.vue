@@ -4,7 +4,6 @@
         <div class="post-card-wrapper" v-for="(feed, index) in data.feeds" v-bind:key="index">
           <PostCard :feed="feed" />
         </div>
-        <PostContentLoader class="content-loader" />
       </div>
     </div>
 </template>
@@ -14,10 +13,6 @@ import { postListStore, postCallStore, userInfoStore, fileListStore, mobileNaviS
 import { calPostDate } from "@/utils/settingUtils";
 import { callPostFeed } from "@/utils/postUtil";
 import { feeds } from '@/store/site'
-import PostCardHeader from "~/components/layout/content/component/post-card/PostCardHeader.vue";
-import PostCardBody from "@/components/layout/content/component/post-card/PostCardBody.vue";
-import PostCardFooter from "@/components/layout/content/component/post-card/PostCardFooter.vue";
-import PostContentLoader from "@/components/layout/content/component/post-card/PostContentLoader.vue";
 import PostCard from '@/components/layout/content/component/post-card/PostCard.vue'
 import {onBeforeMount} from "vue";
 
@@ -44,12 +39,6 @@ const data = {
 
     }
   }
-}
-const components = {
-  PostCardHeader,
-  PostCardBody,
-  PostCardFooter,
-  PostContentLoader
 }
 
 onBeforeMount(() => {

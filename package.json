@@ -6,7 +6,8 @@
     "dev": "yarn boot && nuxt dev",
     "generate": "yarn boot && nuxt generate",
     "preview": "yarn boot && nuxt preview",
-    "postinstall": "yarn boot && nuxt prepare"
+    "postinstall": "yarn boot && nuxt prepare",
+    "deploy": "yarn boot && nuxt generate && gh-pages -d dist"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
@@ -14,7 +15,6 @@
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@types/escape-html": "^1.0.2",
-    "@types/node": "^18.14.6",
     "@types/prismjs": "^1.26.0",
     "date-format-parse": "^0.2.7",
     "jekyll-markdown-parser": "^4.0.0",
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",
+    "gh-pages": "^5.0.0",
     "nuxt": "^3.2.3"
   }
 }

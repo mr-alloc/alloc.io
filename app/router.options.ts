@@ -15,7 +15,7 @@ export default <RouterConfig> {
         },
         {
             name: 'tag',
-            path: '/tags/:tag_name/:page',
+            path: '/tags/:tag_name/:page(\\d+)',
             component: () => import('~/pages/tags/TagList.vue')
         },
         {
@@ -25,13 +25,15 @@ export default <RouterConfig> {
         }
     ],
     scrollBehavior: () => {
-        const body = document.getElementById('main-content-wrapper')!
+        const body = document.getElementById('main-content-wrapper')
         /* 현재 페이지의 스크롤이 아닌 내부 컨텐츠 컴포넌트 스크롤을 초기화.*/
-        // body.scrollTo({
-        //     behavior: 'smooth',
-        //     top: 0,
-        //     left: 0
-        // })
+        if(body) {
+            body.scrollTo({
+                behavior: 'smooth',
+                top: 0,
+                left: 0
+            })
+        }
 
         return {}
     }
