@@ -2,7 +2,7 @@
 
 export default defineNuxtConfig({
     generate: {
-        fallback: true
+        dir: 'dist'
     },
     target: 'static',
     router: {
