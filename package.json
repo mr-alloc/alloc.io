@@ -9,7 +9,7 @@
     "postinstall": "yarn boot && nuxt prepare",
     "deploy": "yarn boot && nuxt generate && gh-pages -d dist"
   },
-  "homepage": "https://taechnique.github.io/special-posted-in",
+  "homepage": "https://taechnique.github.io/special-posted-in/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
