@@ -1,5 +1,6 @@
 {
-  "private": true,
+  "name": "special-posted-in",
+  "homepage": "https://taechnique.github.io/special-posted-in/",
   "scripts": {
     "boot": "node script/boot.js",
     "build": "yarn boot && nuxt build",
@@ -9,7 +10,6 @@
     "postinstall": "yarn boot && nuxt prepare",
     "deploy": "NODE_ENV=production yarn boot && nuxt generate && gh-pages -d dist"
   },
-  "homepage": "https://taechnique.github.io/special-posted-in/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
