@@ -6,7 +6,7 @@ export default <RouterConfig> {
         {
             name: 'home',
             path: '/',
-            component: () => import('~/pages/PostList.vue')
+            component: () => import('~/pages/index.vue')
         },
         {
             name: 'post',
