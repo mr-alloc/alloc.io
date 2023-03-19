@@ -2,6 +2,9 @@
 import {defineNuxtConfig} from "nuxt/config";
 
 export default defineNuxtConfig({
+    generate: {
+        fallback: true
+    },
     target: 'static',
     typescript: {
         strict: true
