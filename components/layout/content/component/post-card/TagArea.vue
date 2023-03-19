@@ -1,9 +1,9 @@
 <template>
   <div class="post-tag-area">
     <font-awesome-icon class="tag-icon" :icon="['fa', 'tags']"/>
-    <NuxtLink :to="`/tags/${tag}/1}`"  v-for="tag in props.tags" v-bind:key="tag" >
+    <nuxt-link :to="`/tags/${tag}/1`"  v-for="tag in props.tags" v-bind:key="tag" >
       <span :class="{ current: data.booked && data.booked == tag}">{{ tag }}</span>
-    </NuxtLink>
+    </nuxt-link>
   </div>
 </template>
 
