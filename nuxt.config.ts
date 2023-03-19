@@ -1,6 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import {defineNuxtConfig} from "nuxt/config";
 
 export default defineNuxtConfig({
+    target: 'static',
     typescript: {
         strict: true
     },
@@ -19,5 +21,8 @@ export default defineNuxtConfig({
             '@fortawesome/free-solid-svg-icons',
             '@fortawesome/vue-fontawesome'
         ]
+    },
+    router: {
+        base: '/special-posted-in/'
     }
 })

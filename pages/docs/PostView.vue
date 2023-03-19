@@ -3,19 +3,19 @@
     <div class="not-found" v-show="data.post_content === null">
       <NotFound />
     </div>
-    <div class="post-area" v-show="data.post_content">
+    <div class="post-area" v-show="data.post_content != null">
       <div class="post-title-area">
         <span class="title">{{ data.post_content.header.title }}</span>
-      </div>
-      <div class="post-content-wrapper" id="document-content">
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
             <span class="date-text">{{ data.calPostDate(data.post_content.header.date.toString()) }}</span>
           </div>
         </div>
-        <TagArea :tags="data.post_content.header.tags" />
+      </div>
+      <div class="post-content-wrapper" id="document-content">
         <div class="post-content" v-bind:class="{ hide : data.post_content.header.hide }" @click="clickedContent($event)" v-html="data.post_body"/>
+        <TagArea :tags="data.post_content.header.tags" />
         <div class="zoom-in-image-wrapper" @click="zoomOut()" v-show="data.zoom_in.isActive">
           <div class="image-resizer">
             <img :src="data.zoom_in.imageLink">
@@ -45,12 +45,12 @@ import markUp from "~/utils/markUp";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
-import {onBeforeMount, onMounted} from 'vue';
+import {onBeforeMount} from 'vue';
 
 const data = {
   post_content: {
     header: {
-      title: ''
+      title: '',
     }
   } as PostContent,
   page: {
@@ -73,10 +73,6 @@ const turnOffSpinner = (second: number) => {
   setTimeout(()=> {
     spinner(false)
   },second)
-}
-
-const parseDate = (date: Date) => {
-  return DateParser.format(date, ' ( YY / MM / DD )')
 }
 
 
@@ -219,6 +215,29 @@ onBeforeMount(() => {
         font-weight: 600;
         color: white !important;
       }
+      .post-intro {
+        position: absolute;
+        display: flex;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        flex-direction: row-reverse;
+        align-items: flex-end;
+
+        .reported-date {
+          float: right;
+          font-size: .92rem;
+          margin-bottom: 7px;
+
+          .clock-icon {
+            color: #b7b4b4;
+          }
+
+          .date-text {
+            margin: 0px 10px;
+          }
+        }
+      }
     }
 
     .post-content-wrapper {
@@ -227,7 +246,6 @@ onBeforeMount(() => {
 
       .post-content {
         min-height: 300px;
-        padding: 30px 0px;
         word-break: break-word;
         font-weight: 400;
         -webkit-text-size-adjust: 100%;
@@ -490,24 +508,6 @@ onBeforeMount(() => {
         }
       }
 
-      .post-intro {
-        padding: 30px 0px 0px;
-
-
-        .reported-date {
-
-          .clock-icon {
-            color: #b7b4b4;
-          }
-
-          .date-text {
-            margin: 0px 10px;
-          }
-          width: 90%;
-          margin: 60px 0px 10px;
-          font-size: .92rem;
-        }
-      }
     }
   }
 }

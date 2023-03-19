@@ -33,18 +33,18 @@
       </div>
       <DefaultSettings />
     </div>
-    <div class="non-clickable-area" :class="{ active: data.isNotClickable }"></div>
+    <div class="non-clickable-area" :class="{ active: menuClickableStore.isNotClickable }"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { explorerHeaderStore, mobileNaviStore } from "@/store";
+import {explorerHeaderStore, menuClickableStore, mobileNaviStore} from "@/store";
 import PackageExplorer from "@/components/layout/sidebar/PackageExplorer.vue";
 import NavigateMarker from "@/components/layout/sidebar/NavigateMarker.vue";
 import DefaultSettings from "@/components/layout/sidebar/DefaultSettings.vue";
 import {naviStack} from "@/store/site";
 import {useNuxtApp} from "#app";
-import {onBeforeMount} from "vue";
+import {onMounted} from "vue";
 const { $emitter } = useNuxtApp()
 
 const components = {
@@ -58,18 +58,18 @@ const data = {
   explorerHeaderStore,
   mobileNaviStore,
   naviStack,
-  isNotClickable: false
+  menuClickableStore
 }
 
 
-onBeforeMount(() => {
+onMounted(() => {
   $emitter.on('explore',(status: boolean) => {
     if(status) {
-      data.isNotClickable = status
+      menuClickableStore.isNotClickable = status
     } else {
       setTimeout(() => {
 
-        data.isNotClickable = status
+        menuClickableStore.isNotClickable = status
       }, 700)
     }
   })
