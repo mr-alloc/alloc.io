@@ -1,17 +1,15 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import {defineNuxtConfig} from "nuxt/config";
 
 export default defineNuxtConfig({
     generate: {
         fallback: true
     },
     target: 'static',
+    router: {
+        base: '/special-posted-in/'
+    },
     typescript: {
         strict: true
-    },
-    alias: {
-        '@': `/${process.env.PWD}`,
-        '~': `/${process.env.PWD}`
     },
     css: [
         '@fortawesome/fontawesome-svg-core/styles.css'
@@ -24,8 +22,5 @@ export default defineNuxtConfig({
             '@fortawesome/free-solid-svg-icons',
             '@fortawesome/vue-fontawesome'
         ]
-    },
-    router: {
-        base: '/special-posted-in/'
     }
 })
