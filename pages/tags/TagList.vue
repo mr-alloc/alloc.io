@@ -17,7 +17,7 @@
         <h2 class="booked-tag-name">{{ data.bookedTag }}</h2>
       </div>
       <div class="card-list-wrapper">
-        <NuxtLink :to="post" v-for="(post, index) in data.posts.slice(data.pagingResult.first_result, data.pagingResult.last_result +1)" :key="index">
+        <nuxt-link :to="post" v-for="(post, index) in data.displayed" :key="index">
           <div class="connected-post-card">
             <div class="post-image">
               <img :src="post.header.thumbnail" />
@@ -26,7 +26,7 @@
               <span>{{ post.header.title }}</span>
             </div>
           </div>
-        </NuxtLink>
+        </nuxt-link>
       </div>
       <div class="paginated-area">
         <div class="paging-button-group">
@@ -67,7 +67,7 @@
 
 <script setup>
 import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
-import {tagMap} from "@/store/site";
+import { tagMap } from "@/store/site";
 import {postMapStore} from "@/store";
 import {useRoute} from "#app";
 import Paginator from 'paginator'
@@ -78,18 +78,27 @@ const params = route.params
 const path = route.fullPath
 const booked = params.tag_name ? params.tag_name : ''
 const page = params.page ? params.page : 0
-const postList = booked
-    ? () => {
-      const links = tagMap.store.get(booked)
-      if (Array.isArray(links)) {
+const bookedList = tagMap.store.get(booked)
 
-        return links.map((path) => postMapStore.map.get(path))
-      }
-    }
+const decoded = decodeURI(booked)
+const decoded2 = decodeURIComponent(booked)
+console.log('params:',params)
+console.log('path:',path)
+console.log('decoded:', decoded)
+console.log('decoded2:', decoded2)
+console.log('type:', typeof bookedList)
+console.log('booked:', booked)
+console.log('bookedList:',bookedList)
+
+const isNotUndefined = typeof bookedList != undefined
+const postList = decoded && isNotUndefined
+    ? tagMap.store.get(decoded).map((path) => postMapStore.map.get(path))
     : []
 
 const paginated = new Paginator(6, 4)
     .build(postList.length, page)
+
+const displayedPosts = postList.slice(paginated.first_result, paginated.last_result +1)
 
 const data = {
   tagMap,
@@ -97,6 +106,7 @@ const data = {
   bookedTag: booked,
   posts: postList,
   pagingResult: paginated,
+  displayed: displayedPosts,
   cur_page: 0
 }
 
