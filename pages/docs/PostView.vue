@@ -9,7 +9,13 @@
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-            <span class="date-text">{{ data.calPostDate(data.post_content.header.date.toString()) }}</span>
+            <span class="date-text">{{
+                () => {
+                  if (data.post_content.header.date) {
+                    data.calPostDate(data.post_content.header.date.toString())
+                  }
+                }
+              }}</span>
           </div>
         </div>
       </div>

@@ -78,10 +78,14 @@ const params = route.params
 const path = route.fullPath
 const booked = params.tag_name ? params.tag_name : ''
 const page = params.page ? params.page : 0
-
-
 const postList = booked
-    ? tagMap.store.get(booked).map((path) => postMapStore.map.get(path))
+    ? () => {
+      const links = tagMap.store.get(booked)
+      if (Array.isArray(links)) {
+
+        return links.map((path) => postMapStore.map.get(path))
+      }
+    }
     : []
 
 const paginated = new Paginator(6, 4)
