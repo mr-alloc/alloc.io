@@ -1,6 +1,6 @@
 const fs = require("fs")
 const exclude = require("./excludeFileName.js")
-const fileNames = require("../site/file-name.json")
+const fileNames = require("../static/file-name.json")
 const readMarkdown = require("./readMarkdown.js")
 const PostStore = require('./postStore.js')
 
