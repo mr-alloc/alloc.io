@@ -4,8 +4,8 @@ const refresh = require('./refresh')
 
 const __ROOT__ = process.env.PWD
 const __DOCS__ = '/docs'
-const __FILE_NODE__ = `${__ROOT__}/site/file-node.json`
-const __POST_MAP__ = `${__ROOT__}/site/posts.json`
+const __FILE_NODE__ = `${__ROOT__}/static/file-node.json`
+const __POST_MAP__ = `${__ROOT__}/static/posts.json`
 
 /* explore with recursive */
 const fileNode = explore(__DOCS__)

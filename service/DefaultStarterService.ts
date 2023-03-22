@@ -5,8 +5,8 @@ import {FileNodeWrapper} from "@/class/implement/FileNodeWrapper";
 import {PostContent} from "@/class/implement/PostContent";
 import {postMapStore} from "~/store";
 import {Header} from "~/class/implement/Header";
-import fileNodeJson from '@/site/file-node.json'
-import postJson from '@/site/posts.json'
+import fileNodeJson from '@/static/file-node.json'
+import postJson from '@/static/posts.json'
 import {IFileNode} from "@/class/IFileNode";
 import {IPostContent} from "@/class/IPostContent";
 
