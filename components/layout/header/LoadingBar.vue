@@ -1,5 +1,5 @@
 <template>
-  <div class="global-spinner-wrapper" :class="{ on : spinnerStore.isOn }">
+  <div class="global-spinner-wrapper" :class="{ on : store.isOn }">
     <div class="spinner-background">
       <div class="spinner-area">
       </div>
@@ -8,10 +8,9 @@
 </template>
 
 <script lang="ts" setup>
-import { spinnerStore } from "@/store";
-const data = {
-  spinnerStore
-}
+import { useSpinnerStore } from "@/store/SpinnerStore";
+
+const store = useSpinnerStore()
 </script>
 
 <style lang="scss">

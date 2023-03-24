@@ -27,12 +27,13 @@
 
 <script lang="ts" setup>
 import SwitchButton from "@/components/layout/sidebar/SwitchButton.vue";
-import { darkModeStore, mobileNaviStore } from "@/store";
+import { mobileNaviStore } from "@/store";
+import { useDarkModeStore} from "~/store/DarkModeStore";
 import {useNuxtApp, useRouter} from "#app";
 
 const { $emitter } = useNuxtApp()
 const router = useRouter()
-
+const darkModeStore = useDarkModeStore()
 const data = {
   settings: [
     {
@@ -66,7 +67,8 @@ const data = {
             themeColor.setAttribute('content', '#ededed')
             data.settings[2].icon = 'sun'
           }
-          darkModeStore.isDarkMode = behavior
+          darkModeStore.force(behavior)
+
           return behavior
         }
       }

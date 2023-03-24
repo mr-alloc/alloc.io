@@ -1,10 +1,11 @@
 <template>
-      <div class="classic-switch" :class="{ active: data.isTurnOn }" v-on:mouseup="method.reflect">
+      <div class="classic-switch" :class="{ active: data.isTurnOn }" v-on:mouseup="methods.reflect()">
         <span class="switch-ball"></span>
       </div>
 </template>
 
 <script lang="ts" setup>
+
 const props = defineProps({
   switch: Function,
   default: Boolean
@@ -13,9 +14,11 @@ const props = defineProps({
 const data = {
   isTurnOn: props.default
 }
-const method = {
+
+const methods = {
   reflect() {
-    data.isTurnOn = props.switch && props.switch()
+    const result = props.switch && props.switch()
+    data.isTurnOn = result
   }
 }
 </script>

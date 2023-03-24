@@ -1,5 +1,3 @@
-import { spinnerStore } from "~/store";
-
 
 export const calPostDate = (date: string): string => {
     const timeValue = Date.parse(date)
@@ -25,10 +23,6 @@ export const calPostDate = (date: string): string => {
     const years = days / 365
     return `${Math.round(years)}년 전`
 
-}
-
-export const spinner = (status: boolean) => {
-    spinnerStore.isOn = status
 }
 
 export const setPageTitle = (title: string) => {

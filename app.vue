@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" :class="{ dark: darkModeStore.isDarkMode }">
+  <div class="app-container" :class="{ dark: store.isDarkMode }">
     <MainHeader />
     <RouteWrapper />
     <LoadingBar />
@@ -9,15 +9,12 @@
 import MainHeader from "@/components/layout/header/MainHeader.vue";
 import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import RouteWrapper from "@/components/layout/content/RouteWrapper.vue";
-import { darkModeStore } from "@/store";
+import { useDarkModeStore } from "@/store/DarkModeStore";
 import Runner from '@/service/DefaultStarterService';
-import {useHead} from "#head";
 
 Runner.init()
 
-const data = {
-  darkModeStore
-}
+const store = useDarkModeStore()
 
 const components = {
   RouteWrapper,

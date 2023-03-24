@@ -10,11 +10,9 @@
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
             <span class="date-text">{{
-                () => {
-                  if (data.post_content.header.date) {
-                    data.calPostDate(data.post_content.header.date.toString())
-                  }
-                }
+                data.post_content.header.date
+                    ? data.calPostDate(data.post_content.header.date.toString())
+                    : ''
               }}</span>
           </div>
         </div>
@@ -37,13 +35,13 @@
 <script lang="ts" setup>
 import {
   calPostDate,
-  setPageTitle,
-  spinner
+  setPageTitle
 } from "~/utils/settingUtils";
 import {
   fileListStore,
   postMapStore
 } from "~/store";
+import {useSpinnerStore} from "~/store/SpinnerStore";
 import * as DateParser from 'date-format-parse'
 import NotFound from "~/components/layout/content/NotFound.vue";
 // import VueUtterances from 'vue-utterances';
@@ -53,6 +51,8 @@ import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {onBeforeMount} from 'vue';
 
+
+const spinnerStore = useSpinnerStore()
 const data = {
   post_content: {
     header: {
@@ -77,7 +77,7 @@ const data = {
 
 const turnOffSpinner = (second: number) => {
   setTimeout(()=> {
-    spinner(false)
+    spinnerStore.off()
   },second)
 }
 
@@ -138,7 +138,7 @@ const components = {
 }
 
 
-spinner(true)
+spinnerStore.on()
 turnOffSpinner(5000)
 
 onBeforeMount(() => {
@@ -150,7 +150,7 @@ onBeforeMount(() => {
     data.post_content = postContent
     data.post_body = markUp(postContent.content) ?? ''
     setPageTitle(postContent.header.title)
-    spinner(false)
+    spinnerStore.off()
   }
 
 })

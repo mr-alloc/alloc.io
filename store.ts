@@ -33,21 +33,12 @@ export const searchInputStore = reactive({
     result_list: []
 })
 
-export const spinnerStore = reactive({
-    isOn: false
-})
-
 export const mobileNaviStore = reactive({
     isActive: false
 })
 
 export const menuClickableStore = reactive({
     isNotClickable: false
-})
-
-
-export const darkModeStore = reactive({
-    isDarkMode: true
 })
 
 export const explorerHeaderStore = reactive({

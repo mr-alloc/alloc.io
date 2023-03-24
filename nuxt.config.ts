@@ -19,5 +19,8 @@ export default defineNuxtConfig({
             '@fortawesome/free-solid-svg-icons',
             '@fortawesome/vue-fontawesome'
         ]
-    }
+    },
+    modules: [
+        '@pinia/nuxt'
+    ]
 })
