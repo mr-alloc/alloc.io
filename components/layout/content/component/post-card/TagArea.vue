@@ -1,10 +1,7 @@
 <template>
   <div class="post-tag-area">
     <font-awesome-icon class="tag-icon" :icon="['fa', 'tags']"/>
-    <nuxt-link :to="() => {
-      console.log('TagArea tag:',tag)
-      return
-    }"  v-for="tag in props.tags" v-bind:key="tag" >
+    <nuxt-link :to="methods.getTagPath(tag)" v-for="tag in props.tags" v-bind:key="tag" >
       <span :class="{ current: data.booked && data.booked == tag}">{{ tag }}</span>
     </nuxt-link>
   </div>
@@ -22,6 +19,11 @@ const data = {
   booked: route.params.tag_name,
 }
 
+const methods = {
+  getTagPath(tag: string) {
+    return `/tags/${tag}/1`
+  }
+}
 </script>
 
 <style lang="scss">

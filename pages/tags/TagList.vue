@@ -33,11 +33,7 @@
           <nav aria-label="태그 검색 페이지 공간">
             <ul class="page-index">
               <li class="page-item" :class="{ disabled: !data.pagingResult.has_previous_page}">
-                <NuxtLink :to="{
-
-                  path: methods.getPage(data.currentPath, data.pagingResult.previous_page)
-
-                }" class="page-link">이전</NuxtLink>
+                <nuxt-link :to="{ path: methods.getPage(data.currentPath, data.pagingResult.previous_page) }" class="page-link">이전</nuxt-link>
               </li>
               <li v-for="index in methods.rangeArray(data.pagingResult.first_page, data.pagingResult.last_page)"
                   :key="index" class="page-item"
