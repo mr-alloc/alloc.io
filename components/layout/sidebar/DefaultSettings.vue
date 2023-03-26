@@ -1,23 +1,56 @@
 <template>
     <div class="default-list-panel">
       <ul class="spread-element-list">
-        <li class="setting-element" v-bind:key="idx" v-for="(setting, idx) in data.settings" @click="method.moveInto(setting.type, setting.link_to)" :class="{ clickable: setting.type == 'LINK' }">
-          <div class="setting-icon-area" :class="{ active: setting.has_icon }">
+        <li class="setting-element clickable" @click="method.moveInto('/')">
+          <div class="setting-icon-area">
             <div class="element-icon-wrapper">
               <span class="element-icon">
-                <img class="custom-icon" v-show="setting.icon != ''" :src="`/assets/icon/${setting.icon}.png`" alt="file icon image" />
               </span>
             </div>
           </div>
           <div class="element-content">
             <div class="element-title-area">
-              <span class="title-text">{{ setting.title }}</span>
+              <span class="title-text">포스팅</span>
             </div>
             <div class="feature-trailer">
-              <SwitchButton v-if="setting.type == 'SWITCH'" :default="setting.switch.default" :switch="setting.switch.change"/>
-              <span class="trailer-arrow" v-else>
+              <span class="trailer-arrow">
                 <font-awesome-icon :icon="['fas', 'chevron-right']"/>
               </span>
+            </div>
+          </div>
+        </li>
+        <li class="setting-element clickable" @click="method.moveInto('/tags')">
+          <div class="setting-icon-area">
+            <div class="element-icon-wrapper">
+              <span class="element-icon">
+              </span>
+            </div>
+          </div>
+          <div class="element-content">
+            <div class="element-title-area">
+              <span class="title-text">태그 목록</span>
+            </div>
+            <div class="feature-trailer">
+              <span class="trailer-arrow">
+                <font-awesome-icon :icon="['fas', 'chevron-right']"/>
+              </span>
+            </div>
+          </div>
+        </li>
+        <li class="setting-element">
+          <div class="setting-icon-area active">
+            <div class="element-icon-wrapper">
+              <span class="element-icon">
+                <img class="custom-icon" :src="`/assets/icon/${data.darkModeIcon}.png`" alt="dark mode icon image" />
+              </span>
+            </div>
+          </div>
+          <div class="element-content">
+            <div class="element-title-area">
+              <span class="title-text">다크모드</span>
+            </div>
+            <div class="feature-trailer">
+              <SwitchButton :default="darkModeStore.isDarkMode" :switch="changeDarkMode"/>
             </div>
           </div>
         </li>
@@ -27,65 +60,40 @@
 
 <script lang="ts" setup>
 import SwitchButton from "@/components/layout/sidebar/SwitchButton.vue";
-import { mobileNaviStore } from "@/store";
-import { useDarkModeStore} from "~/store/DarkModeStore";
+import {mobileNaviStore} from "@/store";
+import {useDarkModeStore} from "~/store/DarkModeStore";
 import {useNuxtApp, useRouter} from "#app";
 
 const { $emitter } = useNuxtApp()
 const router = useRouter()
 const darkModeStore = useDarkModeStore()
-const data = {
-  settings: [
-    {
-      icon: '',
-      has_icon: false,
-      title: 'Home',
-      type: 'LINK',
-      link_to: '/'
-    },
-    {
-      icon: '',
-      has_icon: false,
-      title: 'Tags',
-      type: 'LINK',
-      link_to: '/tags'
-    },
-    {
-      icon: 'moon',
-      has_icon: true,
-      title: '다크 모드',
-      type: 'SWITCH',
-      switch: {
-        default: darkModeStore.isDarkMode,
-        change: () => {
-          const behavior: boolean = !darkModeStore.isDarkMode
-          const themeColor: HTMLElement = document.querySelector('meta[name="theme-color"]')!
-          if(behavior) {
-            themeColor.setAttribute('content', '#010409')
-            data.settings[2].icon = 'moon'
-          } else {
-            themeColor.setAttribute('content', '#ededed')
-            data.settings[2].icon = 'sun'
-          }
-          darkModeStore.force(behavior)
 
-          return behavior
-        }
-      }
-    }
-  ],
-  darkModeStore
+const changeDarkMode = () => {
+  const behavior: boolean = !darkModeStore.isDarkMode
+  const themeColor: HTMLElement = document.querySelector('meta[name="theme-color"]')!
+  if(behavior) {
+    themeColor.setAttribute('content', '#010409')
+    data.darkModeIcon = 'moon'
+  } else {
+    themeColor.setAttribute('content', '#ededed')
+    data.darkModeIcon = 'sun'
+  }
+  darkModeStore.force(behavior)
+
+  return behavior
+}
+
+const data = {
+  darkModeIcon: 'moon'
 }
 const components = {
   SwitchButton
 }
 const method = {
-  moveInto(type: string, link: string) {
-    if(type == 'LINK') {
-      router.push(link)
-      mobileNaviStore.isActive = false
-      $emitter.emit('initScroll')
-    }
+  moveInto(link: string) {
+    router.push(link)
+    mobileNaviStore.isActive = false
+    $emitter.emit('initScroll')
   }
 }
 </script>
