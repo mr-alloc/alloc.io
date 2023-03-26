@@ -2,9 +2,11 @@
   <div class="post-resource-navigator" :class="{ active: mobileNaviStore.isActive }">
     <div id="element-wrapper" class="navigate-element-wrapper" :class="{ fixed : explorerHeaderStore.isActive }">
       <NavigateMarker />
-      <div class="explored-control-panel" id="explored-panel">
-        <PackageExplorer/>
-      </div>
+      <client-only>
+        <div class="explored-control-panel" id="explored-panel">
+          <PackageExplorer v-bind:key="idx" v-for="(parent, idx) in naviStack" :index="idx" :parent="parent" />
+        </div>
+      </client-only>
     </div>
     <div class="system-setting-wrapper">
       <div class="profile-element-wrapper">
@@ -46,20 +48,6 @@ import {naviStack} from "@/store/site";
 import {useNuxtApp} from "#app";
 import {onMounted} from "vue";
 const { $emitter } = useNuxtApp()
-
-const components = {
-  NavigateMarker,
-  PackageExplorer,
-  DefaultSettings,
-  // BaseWall
-}
-
-const data = {
-  explorerHeaderStore,
-  mobileNaviStore,
-  naviStack,
-  menuClickableStore
-}
 
 
 onMounted(() => {

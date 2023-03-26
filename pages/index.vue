@@ -1,9 +1,11 @@
 <template>
     <div class="main-body" id="main-content-body">
       <div class="main-container">
-        <div class="post-card-wrapper" v-for="(feed, index) in data.feeds" v-bind:key="index">
-          <PostCard :feed="feed" />
-        </div>
+        <client-only>
+          <div class="post-card-wrapper" v-for="(feed, index) in data.feeds" v-bind:key="index">
+            <PostCard :feed="feed" />
+          </div>
+        </client-only>
       </div>
     </div>
 </template>
@@ -14,7 +16,7 @@ import { calPostDate } from "@/utils/settingUtils";
 import { callPostFeed } from "@/utils/postUtil";
 import { feeds } from '@/store/site'
 import PostCard from '@/components/layout/content/component/post-card/PostCard.vue'
-import {onBeforeMount} from "vue";
+import { onMounted } from "vue";
 
 callPostFeed()
 const data = {
@@ -41,7 +43,7 @@ const data = {
   }
 }
 
-onBeforeMount(() => {
+onMounted(() => {
   const wrapper = document.getElementById('main-content-wrapper')!
 
   const handleForScroll = () => {
