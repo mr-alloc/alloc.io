@@ -52,7 +52,6 @@ function highlight (code: string, lang: string) {
 }
 
 const markUp = (markdown: string) => {
-
     const md = new MarkdownIt({
         html: true,
         xhtmlOut: true,
@@ -65,7 +64,6 @@ const markUp = (markdown: string) => {
     highlightLines(md)
     preWrapper(md)
     lineNumbers(md)
-
 
     return md.render(markdown)
 }
