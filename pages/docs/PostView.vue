@@ -5,20 +5,17 @@
     </div>
     <div class="post-area" v-show="data.post_content != null">
       <div class="post-title-area">
-        <span class="title">{{ data.post_content.header.title }}</span>
+        <span class="title" id="post-title"></span>
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-            <span class="date-text">{{
-                data.post_content.header.date
-                    ? data.calPostDate(data.post_content.header.date.toString())
-                    : ''
-              }}</span>
+            <span class="date-text" id="post-date-text"></span>
           </div>
         </div>
       </div>
       <div class="post-content-wrapper" id="document-content">
-        <div class="post-content" v-bind:class="{ hide : data.post_content.header.hide }" @click="clickedContent($event)" v-html="data.post_body"/>
+        <div class="post-content" id="post-content-frame" v-bind:class="{ hide : data.post_content.header.hide }" @click="clickedContent($event)">
+        </div>
         <TagArea :tags="data.post_content.header.tags" />
         <div class="zoom-in-image-wrapper" @click="zoomOut()" v-show="data.zoom_in.isActive">
           <div class="image-resizer">
@@ -49,7 +46,7 @@ import markUp from "~/utils/markUp";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
-import {onBeforeMount} from 'vue';
+import {onBeforeMount, onMounted} from 'vue';
 
 
 const spinnerStore = useSpinnerStore()
@@ -75,11 +72,51 @@ const data = {
   postMapStore
 }
 
-const turnOffSpinner = (second: number) => {
-  setTimeout(()=> {
-    spinnerStore.off()
-  },second)
+const zoomOut = () => {
+  if(data.zoom_in.isActive) {
+    data.zoom_in.isActive = false
+
+    const popup = document.querySelector('.popup')
+
+    if(popup) {
+      popup.classList.remove('popup')
+    }
+  }
 }
+
+const components = {
+  NotFound,
+  TagArea
+}
+
+onMounted(() => {
+  let route = useRoute();
+  const path = route.fullPath
+
+  const postContent: PostContent = postMapStore.map.get(path)
+  if (postContent) {
+    data.post_content = postContent
+    const postTitle = document.getElementById('post-title')
+    const date = document.getElementById('post-date-text')
+    const content = document.getElementById('post-content-frame')
+
+    if (postTitle) {
+      postTitle.innerHTML = postContent.header.title
+    }
+
+    if (date) {
+
+      date.innerHTML = data.calPostDate(data.post_content.header.date.toString())
+    }
+
+    if (content) {
+      content.innerHTML = markUp(postContent.content)
+    }
+
+    setPageTitle(postContent.header.title)
+  }
+
+})
 
 
 const clickedContent = (e: Event) => {
@@ -119,41 +156,6 @@ const clickedContent = (e: Event) => {
   //   }
   // }
 }
-
-const zoomOut = () => {
-  if(data.zoom_in.isActive) {
-    data.zoom_in.isActive = false
-
-    const popup = document.querySelector('.popup')
-
-    if(popup) {
-      popup.classList.remove('popup')
-    }
-  }
-}
-
-const components = {
-  NotFound,
-  TagArea
-}
-
-
-spinnerStore.on()
-turnOffSpinner(5000)
-
-onBeforeMount(() => {
-  let route = useRoute();
-  const path = route.fullPath
-
-  const postContent: PostContent = postMapStore.map.get(path)
-  if(postContent) {
-    data.post_content = postContent
-    data.post_body = markUp(postContent.content) ?? ''
-    setPageTitle(postContent.header.title)
-    spinnerStore.off()
-  }
-
-})
 </script>
 
 <style lang="scss">

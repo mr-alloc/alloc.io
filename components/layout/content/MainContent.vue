@@ -1,6 +1,6 @@
 <template>
   <div class="main-content-view" id="main-content-wrapper">
-    <NuxtPage class="current-content" :page-key="route.fullPath" />
+    <nuxt-page class="current-content" :page-key="route.fullPath" />
     <MainFooter />
     <div class="background" :class="{ active : data.mobileNaviStore.isActive}" v-on:click="data.mobileNaviStore.isActive = false">
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="global-spinner-wrapper" :class="{ on : store.isOn }">
+  <div class="global-spinner-wrapper" :class="{ on : data.isOn }">
     <div class="spinner-background">
       <div class="spinner-area">
       </div>
@@ -11,6 +11,10 @@
 import { useSpinnerStore } from "@/store/SpinnerStore";
 
 const store = useSpinnerStore()
+const data = {
+  isOn: store.isOn
+}
+
 </script>
 
 <style lang="scss">
