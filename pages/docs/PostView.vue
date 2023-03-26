@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="post-content-wrapper" id="document-content">
-        <div class="post-content" id="post-content-frame" v-bind:class="{ hide : data.post_content.header.hide }" @click="clickedContent($event)">
+        <div class="post-content" id="post-content-frame">
         </div>
         <TagArea :tags="data.post_content.header.tags" />
         <div class="zoom-in-image-wrapper" @click="zoomOut()" v-show="data.zoom_in.isActive">
@@ -38,8 +38,6 @@ import {
   fileListStore,
   postMapStore
 } from "~/store";
-import {useSpinnerStore} from "~/store/SpinnerStore";
-import * as DateParser from 'date-format-parse'
 import NotFound from "~/components/layout/content/NotFound.vue";
 // import VueUtterances from 'vue-utterances';
 import markUp from "~/utils/markUp";
@@ -48,17 +46,12 @@ import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {onBeforeMount, onMounted} from 'vue';
 
-
-const spinnerStore = useSpinnerStore()
 const data = {
   post_content: {
     header: {
       title: '',
     }
   } as PostContent,
-  page: {
-
-  },
   is_code_popup: false,
   post_body: '',
   image_map: new Map(),
@@ -105,8 +98,7 @@ onMounted(() => {
     }
 
     if (date) {
-
-      date.innerHTML = data.calPostDate(data.post_content.header.date.toString())
+      date.innerHTML = data.calPostDate(postContent.header.date.toString())
     }
 
     if (content) {
