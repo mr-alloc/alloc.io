@@ -8,7 +8,7 @@
     "generate": "yarn boot && nuxt generate",
     "preview": "yarn boot && nuxt preview",
     "postinstall": "yarn boot && nuxt prepare",
-    "deploy": "NODE_ENV=production yarn boot && nuxt build && push-dir --dir=dist --branch=gh-pages --cleanup"
+    "deploy": "NODE_ENV=production yarn boot && nuxt generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
