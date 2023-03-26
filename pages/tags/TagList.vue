@@ -77,15 +77,6 @@ const page = params.page ? params.page : 0
 const bookedList = tagMap.store.get(booked)
 
 const decoded = decodeURI(booked)
-const decoded2 = decodeURIComponent(booked)
-console.log('params:',params)
-console.log('path:',path)
-console.log('decoded:', decoded)
-console.log('decoded2:', decoded2)
-console.log('type:', typeof bookedList)
-console.log('booked:', booked)
-console.log('bookedList:',bookedList)
-
 const isNotUndefined = typeof bookedList != undefined
 const postList = decoded && isNotUndefined
     ? tagMap.store.get(decoded).map((path) => postMapStore.map.get(path))
