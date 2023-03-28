@@ -5,18 +5,18 @@
     </div>
     <div class="post-area" v-show="data.post_content != null">
       <div class="post-title-area">
-        <span class="title" id="post-title"></span>
+        <span class="title" id="post-title">{{ data.post_title }}</span>
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-            <span class="date-text" id="post-date-text"></span>
+            <span class="date-text" id="post-date-text">{{ data.post_date }}</span>
           </div>
         </div>
       </div>
       <div class="post-content-wrapper" id="document-content">
-        <div class="post-content" id="post-content-frame">
+        <div class="post-content" id="post-content-frame" v-html="data.post_content">
         </div>
-        <TagArea :tags="data.post_content.header.tags" />
+        <TagArea :tags="data.post_tags" />
         <div class="zoom-in-image-wrapper" @click="zoomOut()" v-show="data.zoom_in.isActive">
           <div class="image-resizer">
             <img :src="data.zoom_in.imageLink">
@@ -39,31 +39,49 @@ import {
   postMapStore
 } from "~/store";
 import NotFound from "~/components/layout/content/NotFound.vue";
-// import VueUtterances from 'vue-utterances';
 import markUp from "~/utils/markUp";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
-import {onBeforeMount, onMounted} from 'vue';
+import {onBeforeMount} from 'vue';
+import {useHydration} from "#app";
+// import VueUtterances from 'vue-utterances';
+
+const components = {
+  NotFound,
+  TagArea
+}
 
 const data = {
-  post_content: {
-    header: {
-      title: '',
-    }
-  } as PostContent,
+  post_title: '기본값',
+  post_date: '기본값',
+  post_content: '기본값',
+  post_tags: [] as string [],
   is_code_popup: false,
-  post_body: '',
   image_map: new Map(),
   code_map: new Map(),
   zoom_in: {
     isActive: false,
     imageLink: ''
   },
-  calPostDate,
   fileListStore,
   postMapStore
 }
+
+onBeforeMount(() => {
+  let route = useRoute();
+  const path = route.fullPath
+
+  const postMeta: PostContent = postMapStore.map.get(path)
+  if (postMeta) {
+    data.post_title = postMeta.header.title
+    data.post_date = calPostDate(postMeta.header.date.toString())
+    data.post_content = markUp(postMeta.content)
+    data.post_tags = postMeta.header.tags
+
+    setPageTitle(postMeta.header.title)
+  }
+})
 
 const zoomOut = () => {
   if(data.zoom_in.isActive) {
@@ -76,41 +94,6 @@ const zoomOut = () => {
     }
   }
 }
-
-const components = {
-  NotFound,
-  TagArea
-}
-
-onMounted(() => {
-  let route = useRoute();
-  const path = route.fullPath
-
-  const postContent: PostContent = postMapStore.map.get(path)
-  if (postContent) {
-    data.post_content = postContent
-    const postTitle = document.getElementById('post-title')
-    const date = document.getElementById('post-date-text')
-    const content = document.getElementById('post-content-frame')
-
-    if (postTitle) {
-      postTitle.innerHTML = postContent.header.title
-    }
-
-    if (date) {
-      date.innerHTML = data.calPostDate(postContent.header.date.toString())
-    }
-
-    if (content) {
-      content.innerHTML = markUp(postContent.content)
-    }
-
-    setPageTitle(postContent.header.title)
-  }
-
-})
-
-
 const clickedContent = (e: Event) => {
   // if(e && e.target instanceof Element) {
   //   const target: Element = e.target

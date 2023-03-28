@@ -72,7 +72,7 @@ const route = useRoute()
 
 const params = route.params
 const path = route.fullPath
-const booked = params.tag_name ? params.tag_name : ''
+const booked = params.tag ? params.tag : ''
 const page = params.page ? params.page : 0
 const bookedList = tagMap.store.get(booked)
 
