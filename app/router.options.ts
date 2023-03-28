@@ -15,7 +15,7 @@ export default <RouterConfig> {
         },
         {
             name: 'tag',
-            path: '/tags/:tag_name/:page(\\d+)',
+            path: '/tags/:tag/:page(\\d+)',
             component: () => import('~/pages/tags/TagList.vue')
         },
         {
