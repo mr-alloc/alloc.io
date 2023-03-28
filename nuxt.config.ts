@@ -5,10 +5,10 @@ export default defineNuxtConfig({
     generate: {
         dir: 'dist'
     },
-    target: 'static',
     router: {
         base: '/special-posted-in/'
     },
+    target: 'static',
     typescript: {
         strict: true
     },

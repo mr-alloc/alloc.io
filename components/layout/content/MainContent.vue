@@ -11,7 +11,6 @@
 import MainFooter from "@/components/layout/content/MainFooter.vue";
 import { mobileNaviStore } from "@/store";
 import { useRoute } from "#app";
-import {definePageMeta} from "#imports";
 const route = useRoute()
 
 const components = {
@@ -22,6 +21,7 @@ const data = {
   mobileNaviStore,
   route
 }
+
 </script>
 
 <style lang="scss">

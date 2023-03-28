@@ -6,7 +6,7 @@
     "build": "yarn boot && nuxt build",
     "dev": "yarn boot && nuxt dev",
     "generate": "yarn boot && nuxt generate",
-    "preview": "yarn boot && nuxt preview",
+    "preview": "nuxt preview",
     "postinstall": "yarn boot && nuxt prepare",
     "deploy": "NODE_ENV=production yarn boot && nuxt generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
