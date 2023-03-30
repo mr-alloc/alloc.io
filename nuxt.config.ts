@@ -4,8 +4,7 @@ export default defineNuxtConfig({
     /// false dev 에서 나옴
     ssr: false,
     generate: {
-        dir: 'dist',
-        routes: ['/docs/swift/swift_basic_1']
+        dir: 'dist'
     },
     target: 'static',
     typescript: {
