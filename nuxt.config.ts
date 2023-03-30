@@ -1,12 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
+    /// false dev 에서 나옴
     ssr: false,
     generate: {
-        dir: 'dist'
-    },
-    router: {
-        base: '/special-posted-in/'
+        dir: 'dist',
+        routes: ['/docs/swift/swift_basic_1']
     },
     target: 'static',
     typescript: {
@@ -26,5 +25,5 @@ export default defineNuxtConfig({
     },
     modules: [
         '@pinia/nuxt'
-    ]
+    ],
 })
