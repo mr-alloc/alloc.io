@@ -27,6 +27,26 @@ useHead({
     {
       name: 'theme-color',
       content: '#010409'
+    },
+    {
+      property: 'og:type',
+      content: 'website'
+    },
+    {
+      property: 'og:url',
+      content: 'https://taech.io'
+    },
+    {
+      property: 'og:title',
+      content: 'taechnique의 기술 블로그'
+    },
+    {
+      property: 'og:description',
+      content: '별내용은 없어요 ~'
+    },
+    {
+      property: 'og:image',
+      content: 'https://avatars.githubusercontent.com/u/65699391?v=4'
     }
   ]
 })
