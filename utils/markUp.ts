@@ -3,7 +3,7 @@ import preWrapper from '~/utils/preWrapper'
 import highlightLines from '~/utils/highlightLines'
 
 import escapeHtml from 'escape-html'
-import * as MarkdownIt from 'markdown-it'
+import MarkdownIt from 'markdown-it'
 import Prism from 'prismjs'
 import * as PrismUtils from './prismUtils'
 
@@ -51,7 +51,7 @@ function highlight (code: string, lang: string) {
     return wrap(code, 'text')
 }
 
-const markUp = (markdown: string) => {
+export default (markdown: string) => {
     const md = new MarkdownIt({
         html: true,
         xhtmlOut: true,
@@ -67,7 +67,3 @@ const markUp = (markdown: string) => {
 
     return md.render(markdown)
 }
-
-
-
-export default markUp

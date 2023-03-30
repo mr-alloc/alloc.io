@@ -1,29 +1,29 @@
 <template>
   <div class="post-container">
-    <div class="not-found" v-show="data.post_content === null">
+    <div class="not-found" v-show="post === null">
       <NotFound />
     </div>
-    <div class="post-area" v-show="data.post_content != null">
+    <div class="post-area" v-show="post !== null">
       <div class="post-title-area">
-        <span class="title" id="post-title">{{ data.post_title }}</span>
+        <span class="title" id="post-title">{{ post.title }}</span>
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-            <span class="date-text" id="post-date-text">{{ data.post_date }}</span>
+            <span class="date-text" id="post-date-text">{{ post.date }}</span>
           </div>
         </div>
       </div>
       <div class="post-content-wrapper" id="document-content">
-        <div class="post-content" id="post-content-frame" v-html="data.post_content">
+        <div class="post-content" id="post-content-frame" v-html="post.content">
         </div>
-        <TagArea :tags="data.post_tags" />
+        <TagArea :tags="post.tags" />
         <div class="zoom-in-image-wrapper" @click="zoomOut()" v-show="data.zoom_in.isActive">
           <div class="image-resizer">
             <img :src="data.zoom_in.imageLink">
           </div>
         </div>
       </div>
-      <!--        <vue-utterances repo="taechnique/study-note" crossorigin="anonymous" theme="github-light" issue-term="pathname" async/>-->
+      <!--        <vue-utterances repo="taechnique/special-posted-in" crossorigin="anonymous" theme="github-dark" issue-term="pathname" async/>-->
     </div>
     <div class="zoom-image-aria" :class="{zoom : data.zoom_in.isActive}"></div>
   </div>
@@ -31,7 +31,6 @@
 
 <script lang="ts" setup>
 import {
-  calPostDate,
   setPageTitle
 } from "~/utils/settingUtils";
 import {
@@ -39,24 +38,23 @@ import {
   postMapStore
 } from "~/store";
 import NotFound from "~/components/layout/content/NotFound.vue";
-import markUp from "~/utils/markUp";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
-import {onBeforeMount} from 'vue';
-import {useHydration} from "#app";
+import {PagePost} from "~/class/implement/PagePost";
 // import VueUtterances from 'vue-utterances';
 
-const components = {
-  NotFound,
-  TagArea
+const route = useRoute();
+const path = route.fullPath
+const postMeta: PostContent = postMapStore.map.get(path)
+const pagePost: PagePost | null = PagePost.of(postMeta)
+
+if (pagePost) {
+  setPageTitle(pagePost.title)
 }
 
+const post = ref(pagePost)
 const data = {
-  post_title: '기본값',
-  post_date: '기본값',
-  post_content: '기본값',
-  post_tags: [] as string [],
   is_code_popup: false,
   image_map: new Map(),
   code_map: new Map(),
@@ -68,20 +66,10 @@ const data = {
   postMapStore
 }
 
-onBeforeMount(() => {
-  let route = useRoute();
-  const path = route.fullPath
-
-  const postMeta: PostContent = postMapStore.map.get(path)
-  if (postMeta) {
-    data.post_title = postMeta.header.title
-    data.post_date = calPostDate(postMeta.header.date.toString())
-    data.post_content = markUp(postMeta.content)
-    data.post_tags = postMeta.header.tags
-
-    setPageTitle(postMeta.header.title)
-  }
-})
+const components = {
+  NotFound,
+  TagArea
+}
 
 const zoomOut = () => {
   if(data.zoom_in.isActive) {

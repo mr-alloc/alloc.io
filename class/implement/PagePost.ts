@@ -1,4 +1,6 @@
-import da from "date-format-parse/src/locale/da";
+import {PostContent} from "~/class/implement/PostContent";
+import {calPostDate} from "~/utils/settingUtils";
+import markUp from "~/utils/markUp";
 
 export class PagePost{
     private readonly _title: string
@@ -27,5 +29,17 @@ export class PagePost{
 
     get tags(): string [] {
         return this._tags
+    }
+
+    public static of(postMeta: PostContent): PagePost | null {
+
+        return postMeta
+            ? new PagePost(
+                postMeta.header.title,
+                calPostDate(postMeta.header.date.toString()),
+                markUp(postMeta.content),
+                postMeta.header.tags
+            )
+            : null
     }
 }
