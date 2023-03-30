@@ -1,13 +1,14 @@
 {
   "name": "special-posted-in",
   "homepage": "https://taechnique.github.io/special-posted-in/",
+  "license": "MIT",
   "scripts": {
     "boot": "node script/boot.js",
     "build": "yarn boot && nuxt build",
     "dev": "yarn boot && nuxt dev",
     "generate": "yarn boot && nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "yarn boot && nuxt prepare",
+    "postinstall": "nuxt prepare",
     "deploy": "NODE_ENV=production yarn boot && nuxt generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "dependencies": {
@@ -15,6 +16,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
+    "@nuxt/bridge": "^0.10.1",
     "@pinia/nuxt": "^0.4.7",
     "@types/escape-html": "^1.0.2",
     "@types/prismjs": "^1.26.0",
@@ -31,6 +33,7 @@
     "@types/markdown-it": "^12.2.3",
     "gh-pages": "^5.0.0",
     "nuxt": "^3.2.3",
+    "path": "^0.12.7",
     "push-dir": "^0.4.1",
     "sass": "^1.49.9",
     "sass-loader": "^12.6.0"
