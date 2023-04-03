@@ -294,7 +294,7 @@ onMounted(() => {
   .post-resource-navigator {
     color: $dark-font-color;
     border-right: 1px solid $linear-dark-color;
-    background-color: $main-dark-color;
+    background-color: $point-dark-color;
 
 
     .system-setting-wrapper {

@@ -2,7 +2,7 @@ import {defineStore} from "pinia"
 
 
 export const useDarkModeStore = defineStore('darkModeSwitch', () => {
-    const isDarkMode = ref(true)
+    const isDarkMode = ref(false)
 
     function collapse() {
         isDarkMode.value = !isDarkMode
