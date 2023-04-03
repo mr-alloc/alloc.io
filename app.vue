@@ -10,10 +10,9 @@ import MainHeader from "@/components/layout/header/MainHeader.vue";
 import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import RouteWrapper from "@/components/layout/content/RouteWrapper.vue";
 import { useDarkModeStore } from "@/store/DarkModeStore";
-import Runner from '@/service/DefaultStarterService';
+import Runner from '@/service/DefaultStarterService'
 
 Runner.init()
-
 const store = useDarkModeStore()
 
 const components = {

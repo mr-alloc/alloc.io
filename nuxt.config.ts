@@ -1,10 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import keys from './static/keys.json'
 
 export default defineNuxtConfig({
     /// false dev 에서 나옴
     ssr: false,
     generate: {
-        dir: 'dist'
+        dir: 'dist',
+        routes: Array.from(keys)
     },
     target: 'static',
     typescript: {
