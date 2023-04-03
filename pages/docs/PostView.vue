@@ -174,6 +174,7 @@ const clickedContent = (e: Event) => {
       }
 
       .title {
+        text-shadow: #000000 0px 0px 7px;
         display: table-cell;
         position: relative;
         text-align: center;
@@ -206,6 +207,7 @@ const clickedContent = (e: Event) => {
 
           .date-text {
             margin: 0px 10px;
+            color: white;
           }
         }
       }
@@ -381,7 +383,7 @@ const clickedContent = (e: Event) => {
 
           .keyword {
             color: #535395;
-            font-weight: bold;
+            font-weight: 500;
           }
 
           .string {
@@ -397,10 +399,10 @@ const clickedContent = (e: Event) => {
         }
 
         //== Swift ==//
-        .language-swift {
+        pre.language-swift {
           .keyword {
-            color: #cc99cd;
-            font-weight: bold;
+            color: #5146c9;
+            font-weight: 500;
           }
 
           .number {
@@ -731,7 +733,7 @@ div[class*=language-].line-numbers-mode .highlight-lines .highlighted {
 }
 
 div[class*=language-] .highlight-lines .highlighted {
-  background-color: #bababa;
+  background-color: #5cbdfb59;
 }
 
 /* dark mode */

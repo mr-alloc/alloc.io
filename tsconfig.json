@@ -2,7 +2,7 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "typeRoots": [",./node_modules/@types"],
+    "typeRoots": ["./node_modules/@types"],
     "types": ["paginator"]
   }
 }
