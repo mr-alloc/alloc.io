@@ -6,7 +6,12 @@ export default (md: MarkdownIt) => {
         const token = tokens[idx]
         const rawCode = wrapped(...args)
 
-        return `<div class="language-${token.info.trim()} extra-class">`
+        const lang = token.info
+            ? token.info.trim()
+            : 'text'
+
+
+        return `<div class="language-${lang} extra-class">`
             + `<!--afterbegin-->${rawCode}<!--beforeend--></div>`
     }
 

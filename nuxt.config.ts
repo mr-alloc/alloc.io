@@ -8,6 +8,10 @@ export default defineNuxtConfig({
         dir: 'dist',
         routes: Array.from(keys)
     },
+    router: {
+        base: '/special-posted-in/',
+        dir: 'dist'
+    },
     target: 'static',
     typescript: {
         strict: true

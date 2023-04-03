@@ -830,6 +830,10 @@ div[class*=language-] .highlight-lines .highlighted {
       color: white;
 
     }
+
+    &:hover {
+      top: 15px;
+    }
   }
 
   .highlight-lines {
