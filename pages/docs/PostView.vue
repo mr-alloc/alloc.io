@@ -273,6 +273,7 @@ const clickedContent = (e: Event) => {
           margin: 60px 0px 20px;
           padding: 10px 0px;
           border-bottom: 1.22px solid $point-light-color;
+          color: black;
         }
 
         h4 {
@@ -587,6 +588,7 @@ const clickedContent = (e: Event) => {
 
 /* Code snippet*/
 div[class*=language-] {
+  transition: .6s;
   position: relative;
   background-color: white;
   border-radius: 7px;
@@ -610,6 +612,7 @@ div[class*=language-] {
       margin-bottom: 0px;
     }
   }
+
 }
 
 div[class*=language-].line-numbers-mode pre {
@@ -831,9 +834,6 @@ div[class*=language-] .highlight-lines .highlighted {
 
     }
 
-    &:hover {
-      top: 15px;
-    }
   }
 
   .highlight-lines {
