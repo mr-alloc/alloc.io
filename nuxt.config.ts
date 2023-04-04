@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     ssr: false,
     generate: {
         dir: 'dist',
-        routes: Array.from(keys),
     },
     router: {
         base: '/special-posted-in/',
