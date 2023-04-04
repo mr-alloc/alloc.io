@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     generate: {
         dir: 'dist',
         routes: Array.from(keys),
-        subFolders: false
+        base: '/special-posted-in/'
     },
     target: 'static',
     typescript: {
