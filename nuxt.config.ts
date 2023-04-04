@@ -2,14 +2,14 @@
 import keys from './static/keys.json'
 console.log('keys',keys)
 export default defineNuxtConfig({
-    /// false dev 에서 나옴
     experimental: {
         payloadExtraction: false
     },
     ssr: false,
     generate: {
         dir: 'dist',
-        routes: Array.from(keys)
+        routes: Array.from(keys),
+        subFolders: false
     },
     target: 'static',
     typescript: {
