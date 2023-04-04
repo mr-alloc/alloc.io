@@ -1,8 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import keys from './static/keys.json'
-
+console.log('keys',keys)
 export default defineNuxtConfig({
     /// false dev 에서 나옴
+    experimental: {
+        payloadExtraction: false
+    },
     ssr: false,
     generate: {
         dir: 'dist',
