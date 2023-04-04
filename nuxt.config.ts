@@ -9,7 +9,10 @@ export default defineNuxtConfig({
     generate: {
         dir: 'dist',
         routes: Array.from(keys),
-        base: '/special-posted-in/'
+    },
+    router: {
+        base: '/special-posted-in/',
+        trailingSlash: false
     },
     target: 'static',
     typescript: {
