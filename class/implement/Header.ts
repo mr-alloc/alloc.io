@@ -31,8 +31,7 @@ export class Header {
     getOrDefaultThumbnail (path :string | undefined | null): string {
         const defaultImages = ['default1.JPG', 'default2.jpeg', 'default3.jpeg']//, 'default4.jpeg', 'default5.JPG']
         const r = Math.floor(Math.random() * defaultImages.length)
-        const baseImagePath = 'https://raw.githubusercontent.com/taechnique/study-note/main/src'
-        const returnPath = path ? `${baseImagePath}/${path}` : `${baseImagePath}/assets/blogging/default/${defaultImages[r]}`
+        const returnPath = path ? path : `/assets/blogging/default/${defaultImages[r]}`
 
         return returnPath
     }

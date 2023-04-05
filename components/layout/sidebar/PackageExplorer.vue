@@ -265,6 +265,11 @@ const methods = {
 
   &.meet-up {
     margin-left: $pc-navigator-width * (-0.3);
+    background-color: rgba(0, 0, 0, 0.09);
+
+    .explored-directory-element {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
   }
 }
 

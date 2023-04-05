@@ -9,6 +9,7 @@
 
 <script lang="ts" setup>
 import { useRoute } from "#app";
+import da from "date-format-parse/src/locale/da";
 
 const route = useRoute()
 
@@ -16,7 +17,7 @@ const props = defineProps({
   tags: Array
 })
 const data = {
-  booked: route.params.tag_name,
+  booked: route.params.tag,
 }
 
 const methods = {

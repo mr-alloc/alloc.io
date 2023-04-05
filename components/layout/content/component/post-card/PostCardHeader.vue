@@ -80,8 +80,15 @@ const method = {
       line-height: 18px;
 
       &.author-name {
-        color: #2997ff;
         display: inline-block;
+        color: black;
+        font-weight: bold;
+        transition: color 0s;
+
+        &:hover {
+          color: #2997ff;
+          text-decoration: underline;
+        }
       }
 
       &.posting-date {
