@@ -3,7 +3,7 @@
     <div class="mobile-controller" :class="{ active: mobileNaviStore.isActive }">
       <div class="control-panel">
         <span class="control-button" v-on:click="mobileNaviStore.isActive = !mobileNaviStore.isActive">
-<!--          <font-awesome-icon class="button-text" :icon="['fas', 'plus']"/>-->
+          <font-awesome-icon class="button-text" :icon="['fas', 'plus']"/>
         </span>
       </div>
     </div>
@@ -271,6 +271,7 @@ const methods = {
   .header-wrapper {
     height: 0px;
     background-color: transparent;
+    border-bottom: none;
 
     .mobile-controller {
       display: flex;

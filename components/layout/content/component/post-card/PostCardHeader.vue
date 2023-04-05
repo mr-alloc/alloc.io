@@ -1,4 +1,4 @@
-<template>
+\<template>
   <div class="post-preview-header">
     <div class="profile-image">
       <img :src="`${method.getProfileOrDefault(props.header.profile_image)}`" />
@@ -37,10 +37,11 @@ const props = defineProps({
 
 const method = {
   getProfileOrDefault(path: string) {
-    const defaultPath = 'https://avatars.githubusercontent.com/u/65699391?v=4'
-    const basePath = 'https://raw.githubusercontent.com/taechnique/study-note/main/src'
+    const defaultPath = '/assets/blogging/profile/default.jpeg'
 
-    const returnPath = path == undefined || path == null ? defaultPath : basePath + path
+    const returnPath = path == undefined
+        ? defaultPath
+        : path
 
     return returnPath
   }

@@ -4,6 +4,7 @@ title: -Algorithm- Heap sort (힙 정렬) feat.java
 categories: [Development, Algorithm]
 tags: [Java, Algorithm, Sort, Heap Sort, Heap]
 date: 2022-05-06 20:53:00 +0900
+profile_image: /assets/blogging/profile/profile4.jpeg
 thumbnail: "/assets/blogging/algorithm/heap/heap_sort_intro.png"
 current_company: Herit Corporation
 current_position: Backend Server Developer
@@ -46,7 +47,7 @@ hide: false
 * 같은 계층의 노드들과는 정렬하지 않습니다.
 * 루트(뿌리)노드로 부터 내려오는 위치의 노드들 오름차순(**또는 내림차순**)입니다
 
-![어떤것이 힙일까요?](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/tree_images.svg)
+![어떤것이 힙일까요?](/assets/blogging/algorithm/heap/tree_images.svg)
 
 트리 A: 잎을 제외한 노드는 모두 정렬되었지만, 왼쪽부터 채워지지않아 Heap이 아닙니다.
 트리 B: 왼쪽부터 채워졌지만, 2번노드의 값은 그 자식에값보다 작습니다. 따라서 Heap이 아닙니다.
@@ -78,7 +79,7 @@ hide: false
 위 의 내용을 정리하면 아래와 같습니다.
 
 
-![힙 만들기 1단계](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/first_iteration.svg)
+![힙 만들기 1단계](/assets/blogging/algorithm/heap/first_iteration.svg)
 
 > 위의 트리는 *완전 이진트리* 입니다. 힙은 완전이진트리에서 만들수 있으므로, 일반 이진트리는 Compact하게 완전이진트리로 바꿔야
 > 힙을 만들수 있습니다.
@@ -87,7 +88,7 @@ hide: false
 > 순회는 내부 노드의 마지막 힙의 위치에서 부터 1까지 이어집니다. 따라서 다음 인덱스인 3번 노드(9)로 넘어갑니다.
 > 3번노드는 자신의 자식들 중 6번째, 7번째 (7, 12)와 비교하여 더 큰값을 가지는 12와 바꿉니다.
 
-![힙 만들기 중간 단계](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/other_iteration.svg)
+![힙 만들기 중간 단계](/assets/blogging/algorithm/heap/other_iteration.svg)
 
 > 이후 과정은 위와 같이 반복됩니다. 내부노드를 순회하며 자신의 자식노드가 있는지 확인하고 있다면, 자신과 비교하여 더큰 값으로
 > 바꿉니다. 이는 바꾼이후에도 `3.`이 반복되게 됩니다.
@@ -96,7 +97,7 @@ hide: false
 > 마지막까지 바꾼 최종트리는 아래와 같습니다. 
 
 
-![힙 만들기 마지막 단계](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/last_iteration.svg)
+![힙 만들기 마지막 단계](/assets/blogging/algorithm/heap/last_iteration.svg)
 
 * 최상위 노드(루트)가 가장 큰값이 되며, 위는 최대힙을 만드는 단계였습니다.
 * 부모노드와 자식노드끼리는 순서의 값을 가지며, 항상 최대의 값을 가집니다.  
@@ -112,8 +113,8 @@ hide: false
 힙트리에서 값을 추가 할때는 마지막 노드로 붙여주고 위에서 했던것과 동일하게 힙을 만들어 줍니다.
 만약 새로운 값 17이 힙에 들어온다면 순서는 아래와 같이 바뀝니다.
 
-![힙 유지하기 1단계](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/add_new_17.svg)
-![힙 유지하기 2단계](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/add_new_17_2.svg)
+![힙 유지하기 1단계](/assets/blogging/algorithm/heap/add_new_17.svg)
+![힙 유지하기 2단계](/assets/blogging/algorithm/heap/add_new_17_2.svg)
 
 
 > A: 새로 들어온 값 17은 트리의 맨뒤인 10번노드로 들어갑니다.   
@@ -146,14 +147,14 @@ hide: false
 
 위의 순서를 반복하며, 만든 힙 정렬은 아래와 같습니다.
 
-![힙 정렬 1](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/heap_sort_1_1.svg)
-![힙 정렬 2](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/heap_sort_1_2.svg)
-![힙 정렬 3](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/heap_sort_1_3.svg)
-![힙 정렬 4](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/heap_sort_1_4.svg)
-![힙 정렬 5](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/heap_sort_1_5.svg)
-![힙 정렬 6](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/heap_sort_1_6.svg)
-![힙 정렬 7](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/heap_sort_1_7.svg)
-![힙 정렬 8](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/algorithm/heap/heap_sort_1_8.svg)
+![힙 정렬 1](/assets/blogging/algorithm/heap/heap_sort_1_1.svg)
+![힙 정렬 2](/assets/blogging/algorithm/heap/heap_sort_1_2.svg)
+![힙 정렬 3](/assets/blogging/algorithm/heap/heap_sort_1_3.svg)
+![힙 정렬 4](/assets/blogging/algorithm/heap/heap_sort_1_4.svg)
+![힙 정렬 5](/assets/blogging/algorithm/heap/heap_sort_1_5.svg)
+![힙 정렬 6](/assets/blogging/algorithm/heap/heap_sort_1_6.svg)
+![힙 정렬 7](/assets/blogging/algorithm/heap/heap_sort_1_7.svg)
+![힙 정렬 8](/assets/blogging/algorithm/heap/heap_sort_1_8.svg)
 
 ## 구현 코드 (Java)
 
