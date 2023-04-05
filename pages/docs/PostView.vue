@@ -1,5 +1,5 @@
 <template>
-  <div class="post-container">
+  <div class="post-container" :class="{prepare : preparePost}">
     <div class="not-found" v-show="post === null">
       <NotFound />
     </div>
@@ -52,6 +52,11 @@ const pagePost: PagePost | null = PagePost.of(postMeta)
 if (pagePost) {
   setPageTitle(pagePost.title)
 }
+const preparePost = ref(true)
+
+setTimeout(() => {
+  preparePost.value = false
+}, 200)
 
 const post = ref(pagePost)
 const data = {
@@ -119,6 +124,7 @@ const clickedContent = (e: Event) => {
   //   }
   // }
 }
+
 </script>
 
 <style lang="scss">
@@ -128,6 +134,11 @@ const clickedContent = (e: Event) => {
 .post-container {
   padding: $pc-header-interval 0px;
   min-height: 700px;
+
+  &.prepare {
+    margin-left: 60px;
+    opacity: 0.1;
+  }
 
   .post-explorer {
     padding: 5px 3px;
