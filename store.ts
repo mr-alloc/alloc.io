@@ -34,6 +34,10 @@ export const mobileNaviStore = reactive({
     isActive: false
 })
 
+export const tabletNaviStore = reactive({
+    isActive: false
+})
+
 export const menuClickableStore = reactive({
     isNotClickable: false
 })

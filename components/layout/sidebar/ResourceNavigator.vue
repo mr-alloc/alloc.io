@@ -1,5 +1,5 @@
 <template>
-  <div class="post-resource-navigator" :class="{ active: mobileNaviStore.isActive }">
+  <div class="post-resource-navigator" :class="[{ active: mobileNaviStore.isActive }, { hide: tabletNaviStore.isActive}]">
     <div id="element-wrapper" class="navigate-element-wrapper" :class="{ fixed : explorerHeaderStore.isActive }">
       <NavigateMarker />
       <client-only>
@@ -12,7 +12,7 @@
       <div class="profile-element-wrapper">
         <div class="profile-image-area">
           <div class="round-image-frame">
-            <img src="https://avatars.githubusercontent.com/u/65699391?v=4" alt="프로필 이미지"/>
+            <img src="/assets/blogging/profile/default.jpeg" alt="프로필 이미지"/>
           </div>
         </div>
         <div class="profile-info-area">
@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import {explorerHeaderStore, menuClickableStore, mobileNaviStore} from "@/store";
+import {explorerHeaderStore, menuClickableStore, mobileNaviStore, tabletNaviStore} from "@/store";
 import PackageExplorer from "@/components/layout/sidebar/PackageExplorer.vue";
 import NavigateMarker from "@/components/layout/sidebar/NavigateMarker.vue";
 import DefaultSettings from "@/components/layout/sidebar/DefaultSettings.vue";
@@ -114,7 +114,7 @@ onMounted(() => {
   flex-direction: column;
 
   * {
-    transition: .4s;
+    transition: .6s;
     -webkit-tap-highlight-color:transparent;
     -ms-user-select: none;
     -moz-user-select: -moz-none;
@@ -324,7 +324,11 @@ onMounted(() => {
 @include tablet {
 
   .post-resource-navigator {
-    width: $tablet-navigator-width;
+    position: relative;
+
+    &.hide {
+      margin-left: -$tablet-navigator-width;
+    }
 
     .navigate-element-wrapper {
 
@@ -370,6 +374,7 @@ onMounted(() => {
       width: auto;
 
     }
+
   }
 
 }

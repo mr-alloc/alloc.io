@@ -502,7 +502,7 @@ const clickedContent = (e: Event) => {
     padding: 0px;
 
     .post {
-      max-width: 80%;
+      max-width: 100%;
       margin: 40px auto;
     }
 
