@@ -17,18 +17,18 @@ Intellij 단축키 및 설정 사용법 for Mac
 ##  Live Template
 Setting > Live Template 검색  
 custom 으로 등록  
-![Live Template 설정](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/intellij/intellij1.png)
+![Live Template 설정](/assets/blogging/intellij/intellij1.png)
 
 ## Build 환경 설정
 Setting > Gradle 검색  
-![Gradle 빌드 설정](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/intellij/intellij2.png)
+![Gradle 빌드 설정](/assets/blogging/intellij/intellij2.png)
 
 위 `build` 설정은 testCase를 만들시 gradle에서 빌드하던것을 intellij 로 빌드 하도록 바꿔준 것이다.
 
 testCase 빌드 안될시 체크.
 
 ## Annotation Error
-![AnnotationError](https://raw.githubusercontent.com/taechnique/study-note/main/src/assets/blogging/intellij/tableAnnotationError.png)
+![AnnotationError](/assets/blogging/intellij/tableAnnotationError.png)
 
 ## Intellij ShortCuts
 

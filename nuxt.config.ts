@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import keys from './static/keys.json'
-console.log('keys',keys)
+
 export default defineNuxtConfig({
     experimental: {
         payloadExtraction: false

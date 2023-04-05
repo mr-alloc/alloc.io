@@ -14,7 +14,7 @@ const routePaths = new Array()
 /* Sort and indexing */
 const posts = postStore.sort((a, b) => b.header.date - a.header.date)
     .map((post) => {
-        routePaths.push('/special-posted-in' + post._path)
+        routePaths.push(post._path)
         return post
     });
 /* explored data for navigate */

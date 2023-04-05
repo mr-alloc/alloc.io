@@ -84,7 +84,7 @@ const changeDarkMode = () => {
 }
 
 const data = {
-  darkModeIcon: 'moon'
+  darkModeIcon: 'sun'
 }
 const components = {
   SwitchButton
