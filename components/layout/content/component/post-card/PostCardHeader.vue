@@ -1,7 +1,7 @@
 \<template>
   <div class="post-preview-header">
     <div class="profile-image">
-      <img :src="`${method.getProfileOrDefault(props.header.profile_image)}`" />
+      <img :src="`${methods.getProfileOrDefault(props.header.profile_image)}`" />
     </div>
     <div class="author-info">
       <a href="https://github.com/taechnique" target="_blank">
@@ -35,7 +35,7 @@ const props = defineProps({
   header: Header,
 })
 
-const method = {
+const methods = {
   getProfileOrDefault(path: string) {
     const defaultPath = '/assets/blogging/profile/default.jpeg'
 
@@ -44,6 +44,11 @@ const method = {
         : path
 
     return returnPath
+  },
+  getCompanyLogoPath(company: string) {
+    if (company) {
+      return `/assets/company/${company.toLowerCase().replace(' ', '')}.png`
+    }
   }
 }
 </script>
@@ -73,7 +78,10 @@ const method = {
     padding: 0px 10px;
     width: 80%;
 
-
+    img {
+      width: 15px;
+      height: 15px;
+    }
     span {
       display: block;
       color: #6b6b6b;

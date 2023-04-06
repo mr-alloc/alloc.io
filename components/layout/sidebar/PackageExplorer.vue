@@ -23,6 +23,7 @@
           </li>
       </ul>
     </div>
+    <div class="curtain"></div>
   </div>
 </template>
 
@@ -132,7 +133,7 @@ const methods = {
   position: absolute;
   width: calc($pc-navigator-width - ($pc-navigator-padding * 2));
   padding: 90px 20px 40px;
-  background-color: #f2f1f7;
+  background-color: #ededed;
   min-height: calc(100% - 60px);
   transition: color 0s;
 
@@ -247,6 +248,12 @@ const methods = {
     }
   }
 
+  .curtain {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+  }
+
   &:not(:first-child) {
     padding-top: 55px;
   }
@@ -265,10 +272,14 @@ const methods = {
 
   &.meet-up {
     margin-left: $pc-navigator-width * (-0.3);
-    background-color: rgba(0, 0, 0, 0.09);
+    //
+    //.explored-directory-element {
+    //  background-color: rgba(0, 0, 0, 0.09);
+    //}
 
-    .explored-directory-element {
-      background-color: rgba(0, 0, 0, 0.04);
+    .curtain {
+      background-color: rgba(0, 0, 0, 0.09);
+      height: 500px;
     }
   }
 }

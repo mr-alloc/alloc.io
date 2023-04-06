@@ -6,7 +6,8 @@ export default defineNuxtConfig({
     },
     ssr: false,
     generate: {
-        dir: 'dist'
+        dir: 'dist',
+        fallback: true
     },
     router: {
         base: '/special-posted-in/',
