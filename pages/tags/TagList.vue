@@ -104,7 +104,8 @@ const components = {
 const methods = {
   getPage(path, page) {
     const idx = path.lastIndexOf('/') +1
-    return path.replace(path.substring(idx), page)
+    const num = path.replace(path.substring(idx), page)
+    return num === '/-1' || num === '/1' ? '#' : num
   },
   rangeArray(start, end) {
     return [...Array(end - start + 1)]

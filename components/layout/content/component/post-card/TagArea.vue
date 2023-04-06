@@ -53,14 +53,16 @@ const methods = {
       background-color: #b7b4b4;
       font-size: .78rem;
       padding: 0px 10px;
-      color: white;
+      background-color: #2855ab;
       display: inline-block;
       cursor: pointer;
+      color: #fff;
 
 
       &:hover,:active {
-        background-color: #2855ab;
         transition: 0.1s;
+        background-color: white;
+        color: black
       }
 
       &.current {

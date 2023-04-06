@@ -23,7 +23,6 @@
           </div>
         </div>
       </div>
-      <!--        <vue-utterances repo="taechnique/special-posted-in" crossorigin="anonymous" theme="github-dark" issue-term="pathname" async/>-->
     </div>
     <div class="zoom-image-aria" :class="{zoom : data.zoom_in.isActive}"></div>
   </div>
@@ -42,7 +41,6 @@ import TagArea from "~/components/layout/content/component/post-card/TagArea.vue
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
-// import VueUtterances from 'vue-utterances';
 
 const route = useRoute();
 const path = route.fullPath
@@ -284,7 +282,7 @@ const clickedContent = (e: Event) => {
           margin: 60px 0px 20px;
           padding: 10px 0px;
           border-bottom: 1.22px solid $point-light-color;
-          color: black;
+          color: #24238f;
         }
 
         h4 {
@@ -297,7 +295,7 @@ const clickedContent = (e: Event) => {
 
           code {
             border: none;
-            color: #666;
+            color: #fff;
             background-color: transparent;
 
           }
@@ -389,12 +387,12 @@ const clickedContent = (e: Event) => {
           }
 
           .constant {
-            color: #7e0b7e;
+            color: #9c6b9d;
 
           }
 
           .keyword {
-            color: #535395;
+            color: #7171af;
             font-weight: 500;
           }
 
@@ -412,17 +410,30 @@ const clickedContent = (e: Event) => {
 
         //== Swift ==//
         pre.language-swift {
+
+          .operator {
+            color: #67cdcc;
+          }
+
           .keyword {
-            color: #5146c9;
+            color: #cc99cd;
             font-weight: 500;
           }
 
           .number {
-            color: #4242ff;
+            color: #8181f3;
           }
 
           .string-literal {
             color: #7ec699;
+          }
+
+          .interpolation {
+            color: white;
+          }
+
+          .interpolation-punctuation {
+            color: #f08d49;
           }
 
           .function {
@@ -601,7 +612,7 @@ const clickedContent = (e: Event) => {
 div[class*=language-] {
   transition: .6s;
   position: relative;
-  background-color: white;
+  background-color: #2d2d2d;
   border-radius: 7px;
   box-shadow: 0 18px 22px rgba(0, 0, 0, 0.6);
   margin: 40px 0px;
@@ -646,6 +657,7 @@ div[class*=language-].line-numbers-mode {
     .line-number {
       position: relative;
       user-select: none;
+      color: #999;
 
       &:before {
         counter-increment: line-number;
@@ -760,15 +772,16 @@ div[class*=language-] .highlight-lines .highlighted {
 
 
 
-    h1, h2, h3, h4 {
-      color: #51c470;
-      border-bottom-color: $linear-dark-color !important;
-    }
   }
 
   .post-content-wrapper {
 
     .post-content {
+
+      h1, h2, h3, h4 {
+        color: #51c470;
+        border-bottom-color: $linear-dark-color !important;
+      }
 
       div[class*=language-].line-numbers-mode:after {
         border-color: $linear-dark-color;

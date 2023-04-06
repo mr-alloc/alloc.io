@@ -173,30 +173,29 @@ a {
 
 .window-controller {
   display: block;
-  padding: 10px;
-  background-color: $point-light-color;
   border-radius: 15px 15px 0px 0px;
 
-  & .window {
+  &:before {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     display: inline-block;
     margin: 5px 4px;
-
-  }
-
-  & .window-close {
     background-color: #FF605C;
     border: 1.12px solid #f35854;
   }
 
-  & .window-minimize {
-    background-color: #FFBD44;
-    border: 1.12px solid #f6b73b;
+ .window-close {
+  background-color: #FF605C;
+  border: 1.12px solid #f35854;
   }
 
-  & .window-maximize {
+ .window-minimize {
+  background-color: #FFBD44;
+  border: 1.12px solid #f6b73b;
+  }
+
+   .window-maximize {
     background-color: #00CA4E;
     border: 1.12px solid #02be4a;
   }

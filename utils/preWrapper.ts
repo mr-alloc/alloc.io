@@ -11,8 +11,13 @@ export default (md: MarkdownIt) => {
             : 'text'
 
 
-        return `<div class="language-${lang} extra-class">`
-            + `<!--afterbegin-->${rawCode}<!--beforeend--></div>`
+        return `<div class="window-controller">
+                    <div class="language-${lang} extra-class ">
+                    <!--afterbegin-->
+                        ${rawCode}
+                    <!--beforeend-->
+                    </div>
+                </div>`
     }
 
     const { fence } = md.renderer.rules

@@ -108,13 +108,13 @@ onMounted(() => {
 
 .post-resource-navigator {
   width : $pc-navigator-width;
-  background-color: $settings-light-color;
+  background-color: $point-light-color;
   border-right: 1px solid #d3d1d1;
   display: flex;
   flex-direction: column;
 
   * {
-    transition: .6s;
+    transition: .4s;
     -webkit-tap-highlight-color:transparent;
     -ms-user-select: none;
     -moz-user-select: -moz-none;
@@ -158,7 +158,7 @@ onMounted(() => {
 
   .system-setting-wrapper {
     flex-grow: 1;
-    background-color: #f2f1f7;
+    background-color: #ededed;
     padding: 20px;
     border-top: 1px solid #d3d1d1;
     width: ($pc-navigator-width - ($pc-navigator-padding * 2));
