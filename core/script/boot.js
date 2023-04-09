@@ -21,9 +21,8 @@ const posts = postStore.sort((a, b) => b.header.date - a.header.date)
     });
 
 createSitemap().then((data) => {
-    const file = data.toString().replace(/\\"/g, '"')
-    console.log(file)
-    refresh(__SITEMAP__, file)
+    const file = data.toString().replace(/\\(.)/mg, '$1')
+    refresh(__SITEMAP__, file, true)
 })
 
 /* explored data for navigate */
