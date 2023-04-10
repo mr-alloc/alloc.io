@@ -12,6 +12,7 @@ function wrap(code: string, lang: string) {
         code = escapeHtml(code)
     }
 
+
     return `<pre class="language-${lang} code-snippet"><code>${code}</code></pre>`
 }
 
@@ -37,6 +38,7 @@ function highlight (code: string, lang: string) {
     if (!lang) {
         return wrap(code, 'text')
     }
+    console.log('code:\n',code)
 
     lang = lang.toLowerCase()
     const rawLang = lang
