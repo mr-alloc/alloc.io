@@ -8,7 +8,7 @@ current_company: NEOWIZ
 current_position: Software Engineer
 summary: 조건문과 반복문
 excerpt_separator: <!--more-->
-hide: true
+hide: false
 ---
 Swift의 조건문과 반복문입니다.
 아주 간단한 예제로 알아봅니다. 🧐
@@ -61,7 +61,15 @@ default:
 for i in 0 ..< 4 {
     print("\(i)")
 }
-```
+```{
+0
+1
+2
+3
+}
+
+
+
 **결과**
 ```
 0
