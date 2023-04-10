@@ -127,6 +127,7 @@ const clickedContent = (e: Event) => {
 
 <style lang="scss">
 @import '@/styles';
+@import '@/styles/languages.scss';
 
 
 .post-container {
@@ -379,67 +380,6 @@ const clickedContent = (e: Event) => {
           }
         }
 
-        //== Java ==//
-        .language-java {
-
-          .annotation {
-            color: #cccc20;
-          }
-
-          .constant {
-            color: #9c6b9d;
-
-          }
-
-          .keyword {
-            color: #7171af;
-            font-weight: 500;
-          }
-
-          .string {
-            color: #4db46d;
-          }
-
-          .class-name:hover {
-            color: #5cbdfb;
-            text-decoration: underline #5cbdfb;
-            text-shadow: 0 0 3vw #8298e3;
-            transition: 0s;
-          }
-        }
-
-        //== Swift ==//
-        pre.language-swift {
-
-          .operator {
-            color: #67cdcc;
-          }
-
-          .keyword {
-            color: #cc99cd;
-            font-weight: 500;
-          }
-
-          .number {
-            color: #8181f3;
-          }
-
-          .string-literal {
-            color: #7ec699;
-          }
-
-          .interpolation {
-            color: white;
-          }
-
-          .interpolation-punctuation {
-            color: #f08d49;
-          }
-
-          .function {
-            color: #f08d49;
-          }
-        }
       }
 
       .hide-box {
