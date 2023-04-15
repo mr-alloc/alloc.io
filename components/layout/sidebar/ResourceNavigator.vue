@@ -60,6 +60,12 @@ onMounted(() => {
         menuClickableStore.isNotClickable = status
       }, 700)
     }
+    const panel = document.getElementById('element-wrapper')
+    panel?.scrollTo({
+      behavior: 'smooth',
+      top: 0,
+      left: 0
+    })
   })
 
   const titleElement = document.getElementById('navigator-title-ele')
@@ -132,7 +138,7 @@ onMounted(() => {
   }
 
   .navigate-element-wrapper {
-    height: 400px;
+    height: 350px;
     overflow-y: scroll;
     flex-shrink: 0;
 

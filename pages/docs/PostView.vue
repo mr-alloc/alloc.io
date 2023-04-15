@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="post-content-wrapper" id="document-content">
-        <div class="post-content" id="post-content-frame" v-html="post.content">
+        <div class="post-content" :class="{ hide: meta.header.hide }" id="post-content-frame" v-html="post.content">
         </div>
         <TagArea :tags="post.tags" />
         <div class="zoom-in-image-wrapper" @click="zoomOut()" v-show="data.zoom_in.isActive">
@@ -57,6 +57,7 @@ setTimeout(() => {
 }, 200)
 
 const post = ref(pagePost)
+const meta = ref(postMeta)
 const data = {
   is_code_popup: false,
   image_map: new Map(),
@@ -133,6 +134,7 @@ const clickedContent = (e: Event) => {
 .post-container {
   padding: $pc-header-interval 0px;
   min-height: 700px;
+  font-family: -apple-system,BlinkMacSystemFont;
 
   &.prepare {
     margin-left: 60px;
@@ -233,7 +235,7 @@ const clickedContent = (e: Event) => {
         font-weight: 400;
         -webkit-text-size-adjust: 100%;
         -webkit-font-smoothing: antialiased;
-        color: #666;
+        color: #2c3e50;
         //
         //&.hide {
         //  height: 400px;
@@ -264,7 +266,7 @@ const clickedContent = (e: Event) => {
         }
 
         p {
-          margin: 7px 0px;
+          margin-bottom: 40px;
           line-height: 30px;
           width: 100%;
         }
@@ -283,7 +285,7 @@ const clickedContent = (e: Event) => {
           margin: 60px 0px 20px;
           padding: 10px 0px;
           border-bottom: 1.22px solid $point-light-color;
-          color: #24238f;
+          color: #0385d1;
         }
 
         h4 {
@@ -308,6 +310,9 @@ const clickedContent = (e: Event) => {
           border-radius: 6px;
           padding: 0.082em 0.5em;
           word-break: break-word;
+          color: #0385d1;
+          position: relative;
+          top: -1px;
           font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
         }
         hr {
@@ -616,7 +621,7 @@ div[class*=language-].line-numbers-mode {
     width: $code-ln-wrapper-width;
     height: 100%;
     border-radius: 6px 0 0 6px;
-    border-right: 1px solid $linear-color;
+    border-right: 1px solid #777777;
   }
 }
 

@@ -20,12 +20,11 @@ const components = {
   LoadingBar,
   MainHeader
 }
-
 useHead({
   meta: [
     {
       name: 'theme-color',
-      content: '#010409'
+      content: store.isDarkMode ? '#010409': '#fcfcfc'
     },
     {
       property: 'og:type',
@@ -131,8 +130,8 @@ body {
 
 
 #__nuxt {
-  font-family: AppleSDGothicNeoL, Consolas;
   color: $main-font-color;
+  font-font: -apple-system, BlinkMacSystemFont;
 
   .dark {
     background-color: $point-dark-color;
