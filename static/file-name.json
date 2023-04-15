@@ -2,6 +2,7 @@
   "algorithm": "알고리즘",
   "java": "자바",
   "javascript": "자바스크립트",
+  "typescript": "타입스크립트",
   "spring": "스프링",
   "boot": "부트",
   "framework": "프레임워크",

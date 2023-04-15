@@ -153,7 +153,6 @@ $card-width: 200px;
         .connected-post-card {
           border-radius: 15px;
           font-size: .84rem;
-          height: 200px;
           width: calc($card-width - 40px);
 
           .post-image {

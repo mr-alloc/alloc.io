@@ -63,6 +63,70 @@ div[class^=language-] {
     }
 
 
+    /* javascript */
+    pre.language-javascript {
+
+        .operator {
+            color: #67cdcc;
+        }
+
+        .keyword {
+            color: #cc99cd;
+            font-weight: 500;
+        }
+
+        .number {
+            color: #8181f3;
+        }
+
+        .string {
+            color: #7ec699;
+        }
+
+        .interpolation {
+            color: white;
+        }
+
+        .function {
+            color: #f08d49;
+        }
+    }
+
+    /* typescript */
+    pre.language-typescript {
+        .class-name {
+            color: #61afef;
+        }
+
+        .operator {
+            color: #67cdcc;
+        }
+
+        .keyword {
+            color: #cc99cd;
+            font-weight: 500;
+        }
+
+        .number {
+            color: #8181f3;
+        }
+
+        .string {
+            color: #7ec699;
+        }
+
+        .interpolation {
+            color: white;
+        }
+
+        .function {
+            color: #f08d49;
+        }
+
+        .builtin {
+            color: #cc99cd;
+        }
+    }
 
     &:before {
         position: absolute;
