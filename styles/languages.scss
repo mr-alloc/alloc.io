@@ -144,4 +144,22 @@ div[class^=language-] {
     &.language-swift:before {
         content: "swift"
     }
+
+
+
+    &.language-javascript:before {
+        content: "js";
+    }
+
+    &.language-typescript:before {
+        content: "ts";
+    }
+
+    &.language-swift:before {
+        content: "swift";
+    }
+
+    &.language-java:before {
+        content: "java";
+    }
 }

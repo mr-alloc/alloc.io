@@ -11,12 +11,10 @@ export default (md: MarkdownIt) => {
             : 'text'
 
 
-        return `<div class="window-controller">
-                    <div class="language-${lang} extra-class ">
+        return `<div class="language-${lang} extra-class ">
                     <!--afterbegin-->
                         ${rawCode}
                     <!--beforeend-->
-                    </div>
                 </div>`
     }
 
