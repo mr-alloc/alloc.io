@@ -49,10 +49,10 @@ const methods = {
 
     span {
       margin: 3px 2px;
-      border-radius: 7px;
+      border-radius: 3px;
       background-color: #b7b4b4;
       font-size: .78rem;
-      padding: 0px 10px;
+      padding: 2px 10px;
       background-color: #2855ab;
       display: inline-block;
       cursor: pointer;
