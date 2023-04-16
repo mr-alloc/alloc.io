@@ -9,6 +9,14 @@ div[class^=language-] {
     /* Java */
     pre.language-java {
 
+        .operator {
+            color: #67cdcc;
+        }
+
+        .number {
+            color: #8181f3;
+        }
+
         .annotation {
             color: #cccc20;
         }
@@ -19,7 +27,7 @@ div[class^=language-] {
         }
 
         .keyword {
-            color: #7171af;
+            color: #cc99cd;
             font-weight: 500;
         }
 

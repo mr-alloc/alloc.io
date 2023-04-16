@@ -1,13 +1,13 @@
 ---
 layout: post
-title: -Algorithm- Insertion Sort (삽입정렬 알고리즘) feat.java
+title: 삽입 정렬 알아보기(Java)
 categories: [Development, Algorithm]
 tags: [Java, Algorithm, Sort, Insertion Sort]
 date: 2022-04-21 23:25:00 +0900
 thumbnail: "/assets/blogging/algorithm/insertion_sort_intro.png"
 current_company: Herit Corporation
 current_position: Backend Server Developer
-summary: 삽입 정렬
+summary: 삽입 정렬 알아보기
 excerpt_separator: <!--more-->
 hide: false
 ---
@@ -225,5 +225,3 @@ public class InsertionSort {
     }
 }
 ```
-
-> 잘못된 설명이 있거나, 조언은 아래 댓글로 부탁드립니다. 😄
