@@ -81,7 +81,7 @@ class Person {
     name: string
     age: number
 
-    constructor(name: string, age: number) {
+    _constructor(name: string, _age_: number) {_
         this.name = name
         this.age = age
     }
@@ -101,3 +101,65 @@ const person: Person = makePerson('Kim', 4)
 ## 타입스크립트의 주요 문법
 
 앞서 말한것처럼 `Typescript`는 `ESNext`, `ES5`모두 포괄하고 있는 상위 집합이기에, 두가지 문법을 모두 사용할 수 있다.
+
+### 비구조화 할당
+
+`비구조화 할당(destructuring assignment)`는 객체와 배열에 적용할 수 있으며, 말그대로 구조화 하지않은 채 값을 특정 변수로 할당 하는 것 이다.
+이는 `ESNext`에서 제공되며,
+```javascript{6}
+let person = {
+    first_name: 'John',
+    age: 30
+}
+
+let { first_name, age } = person
+
+console.log(typeof age) // "number"
+console.log(age)        // 30
+console.log(first_name) // "John"
+```
+
+person을 이용하여, 비구조화 할당을 통해 `first_name` field와 `age`필드를 할당 할 수 있다.
+그럼 이 할당을 통해, `let { first_name, age }`의 값 중 `first_name`의 값을 바꾸면 어떻게 될까?
+
+```javascript
+let person = {
+    first_name: 'John',
+    age: 30
+}
+
+let { first_name, age } = person
+
+first_name = 'Micheal'
+console.log('person:', person)
+/*
+    person: {
+        "first_name": "John",
+        "age": 30
+    }
+ */
+person.first_name = 'Smith'
+console.log('first_name:', first_name)
+/*
+    first_name: Micheal
+ */
+```
+
+첫번째로 할당된 `first_name`의 값을 변경했지만, 변경 되지 않았다.
+또한, 반대로 `person.first_name`의 값을 변경 했지만, 역시나 `first_name`의 값이 변경 되지 않았다.
+여기서 `비구조화 할당`은 얕은복사를 하는걸 알 수 있다.
+배열의 비구조화 할 당은 어떻게 사용할 수 있을까?
+
+```javascript{2}
+let array = [1, 7, 54, 66, 90]
+let [first, ...mod] = array
+
+console.log(array) // [1, 7, 54, 66, 90]
+console.log(first) // 1
+console.log(mod)   // [7, 54, 66, 90]
+```
+
+>2번 라인의 `...mod`는 `스프레드 연산자`이며, 내부 요소를 한번에 가져온다.
+
+`first`와 `mod`로 나누어 할당 했고 출력 결과는 위 처럼 배열의 순서에 맞는 값들로 나뉘어졌다.
+

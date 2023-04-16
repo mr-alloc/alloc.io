@@ -6,6 +6,9 @@ import escapeHtml from 'escape-html'
 import MarkdownIt from 'markdown-it'
 import Prism from 'prismjs'
 import * as PrismUtils from './prismUtils'
+import putInEachLines from "~/utils/putInEachLines";
+
+
 
 function wrap(code: string, lang: string) {
     if(lang === 'text') {
@@ -38,7 +41,6 @@ function highlight (code: string, lang: string) {
     if (!lang) {
         return wrap(code, 'text')
     }
-    console.log('code:\n',code)
 
     lang = lang.toLowerCase()
     const rawLang = lang
@@ -59,10 +61,10 @@ export default (markdown: string) => {
         xhtmlOut: true,
 
         highlight: (code: string, lang: string) => {
+            putInEachLines(code)
             return highlight(code, lang)
         }
     })
-
     highlightLines(md)
     preWrapper(md)
     lineNumbers(md)
