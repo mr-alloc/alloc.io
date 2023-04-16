@@ -352,6 +352,7 @@ const clickedContent = (e: Event) => {
         }
 
         blockquote {
+          display: inline-block;
           padding: 0px 10px;
           margin: 20px 0px 50px;
           color: #004085;
@@ -359,6 +360,9 @@ const clickedContent = (e: Event) => {
           border: 1px #b8daff solid;
           border-radius: 6px;
 
+          p {
+            margin: 0;
+          }
         }
 
         table.case-table {
