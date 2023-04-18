@@ -98,9 +98,10 @@ const person: Person = makePerson('Kim', 4)
 클래스 생성을 통해, 의도한 값을 가지는 타입의 객체가 생성되었다. 이는 정말 중요한 내용이다.
 기존에 자바스크립트에서 할 수 없었던, 그리고 걱정하지 않아도 되었던, 코드를 작성할 수 있게된다.
 
-## 타입스크립트의 주요 문법
+## 타입스크립트를 배우기전 ES5 또는 ESNext의 주요 문법을 알아보자
 
 앞서 말한것처럼 `Typescript`는 `ESNext`, `ES5`모두 포괄하고 있는 상위 집합이기에, 두가지 문법을 모두 사용할 수 있다.
+타입스크립몇가지 간단한 문법을 
 
 ### 비구조화 할당
 
@@ -160,6 +161,85 @@ console.log(mod)   // [7, 54, 66, 90]
 ```
 
 >2번 라인의 `...mod`는 `스프레드 연산자`이며, 내부 요소를 한번에 가져온다.
+> 스프레드 연산자는 인자의 마지막에만 사용할 수 있다.
 
 `first`와 `mod`로 나누어 할당 했고 출력 결과는 위 처럼 배열의 순서에 맞는 값들로 나뉘어졌다.
+`객체`또는 `배열`의 구조를 분해해서 할당하기 때문에 `구조분해 할당`(`또는 "비구조화 할당"`)이라고 칭한다.
 
+
+### 화살표 함수 (arrow function)
+
+```javascript
+// 일반 함수형
+function toUpperCase(str) {
+    return str.toUpperCase()
+}
+
+// 화살표 함수형
+const toUpperCase = () => str.toUpperCase()
+```
+
+자바스크립트에서는 함수또한 객체로 취급되며, 위와 같은 표현식으로 선언할 수 있다.
+이 화살표 함수(`arrow function`)은 내부로직이 한줄로 표현이 된다면, `{}`괄호와 `return`을 생략할 수있다.
+중요한 부분은 `=`다음으로 오는 `() => {}`구문이다. `()`에는 일반함수처럼 매개변수를 받을 수 있고, `{}` 내부 또한 함수와 동일하게 작성할 수 있다.
+*주의할 점*은 `화살표 함수` 내에서 `this` 키워드는 함수 `자신`을 의미한다는 점을 알고 있어야 한다. 
+이는 `javascript`객체와 관련된 부분인데, `javascript`에서 `this`는 객체의 참조를 의미한다. 
+`class` 또는 모듈에서 사용한다면, 현재 속해있는 객체(`브라우저`일반적으로 `window: DOM tree`로 바인딩) 에대해 바인딩 하기때문에, 
+객체 자체인 `arrow`함수는 `this`에 대해 자기 자신이 바인드 되는 것이다.
+
+### 클래스 (class)
+
+일반적으로 객체지향 언어에서 지원 하는 `class`의 개념은 어떤 객체에 대해 정적인 관점에서 서술 할 때 사용 된다.
+아래의 예제를 통해 `알람시계`가 갖고있는 정적인 관점의 상태와 책임에 대해 좀더 객체지향적으로 이해하기 위해 `typescript`를 통해 알아보자.
+
+```typescript
+
+class Speaker {
+    ringing() {
+        //저장된 음악으로, 스피커 동작 로직    
+    }
+}
+
+interface Alarm {
+    alert(message: string): never
+}
+
+class Clock implements Alarm {
+
+    private readonly _speaker: Speaker
+
+    constructor(speaker: Speaker) {
+        this._speaker = speaker
+    }
+    
+    setTimeOfRinging(milis: number, message: string): never {
+        setTimeout(() => {
+            this._speaker.ringing()
+            alert()
+        }, milis)
+    }
+    
+    alert(message: string): never {
+        console.log(message)
+    }
+}
+
+const clock: Clock = new Clock(new Speaker())
+clock.setTimeOfRinging(1000, '1초가 지났습니다.')
+```
+
+기존에 `javascript`에서는 할 수 없던, 객체의 상속, 추상화가 가능 하므로서, 간단한 알람시계 클래스지만,각 객체들의 `책임`을 부여하므로써,
+좀 더 견고한 `어플리케이션`을 만들 수 있다.
+
+### async 그리고 await
+
+`class`는 객체의 개념을 설명하기위해 어쩔수 없이 `typescript`로 예를 들었었다.
+`async`, `await`은 `javascript`에서도 사용할 수 있다. `javascript Runtime`는 기본적으로 동기와 `block`으로 `Single thread`에 의해 동작한다.
+하지만, 이벤트 루프에 등록되는 `Web API`(Timer API, XHR API 등등)는 런타임에서 비동기적으로 동작하기 때문에, 비동기 로직을 제어할 순간이 온다.
+이는 `javascript`에서 제공되는 `async`,`await`이 `C#`의 구문과 동작을 빌려(`Javascript 런타임은 C,C++,C#`으로 구현) 해결 되었다.
+
+```javascript
+async function doIt() {
+    
+}
+```
