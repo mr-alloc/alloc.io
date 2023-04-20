@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import Keys from './static/keys.json'
 
 export default defineNuxtConfig({
     experimental: {
@@ -7,7 +8,8 @@ export default defineNuxtConfig({
     ssr: false,
     generate: {
         dir: 'dist',
-        fallback: true
+        fallback: true,
+        routes: [...Keys]
     },
     router: {
         base: '/special-posted-in/',
