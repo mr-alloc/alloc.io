@@ -230,16 +230,3 @@ clock.setTimeOfRinging(1000, '1초가 지났습니다.')
 
 기존에 `javascript`에서는 할 수 없던, 객체의 상속, 추상화가 가능 하므로서, 간단한 알람시계 클래스지만,각 객체들의 `책임`을 부여하므로써,
 좀 더 견고한 `어플리케이션`을 만들 수 있다.
-
-### async 그리고 await
-
-`class`는 객체의 개념을 설명하기위해 어쩔수 없이 `typescript`로 예를 들었었다.
-`async`, `await`은 `javascript`에서도 사용할 수 있다. `javascript Runtime`는 기본적으로 동기와 `block`으로 `Single thread`에 의해 동작한다.
-하지만, 이벤트 루프에 등록되는 `Web API`(Timer API, XHR API 등등)는 런타임에서 비동기적으로 동작하기 때문에, 비동기 로직을 제어할 순간이 온다.
-이는 `javascript`에서 제공되는 `async`,`await`이 `C#`의 구문과 동작을 빌려(`Javascript 런타임은 C,C++,C#`으로 구현) 해결 되었다.
-
-```javascript
-async function doIt() {
-    
-}
-```
