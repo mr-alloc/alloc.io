@@ -1,5 +1,5 @@
 <template>
-  <div class="post-container" :class="{prepare : data.preparePost}">
+  <div class="post-container" :class="{prepare : prepareStore.isPrepare}">
     <div class="not-found" v-show="data.post === null">
       <NotFound />
     </div>
@@ -43,7 +43,7 @@ import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
 import {onBeforeMount, onMounted} from "vue";
 import {PageMeta} from "nuxt/app";
-
+import {usePagePrepareStore} from "~/store/PreparePostStore";
 const data = {
   post: {
     title: '',
@@ -56,7 +56,6 @@ const data = {
       hide: true
     } as PageMeta
   },
-  preparePost: true,
   is_code_popup: false,
   image_map: new Map(),
   code_map: new Map(),
@@ -67,6 +66,7 @@ const data = {
   fileListStore,
   postMapStore
 }
+const prepareStore = usePagePrepareStore();
 
 onBeforeMount(() => {
   const route = useRoute();
@@ -78,17 +78,13 @@ onBeforeMount(() => {
     data.meta = postMeta
     setPageTitle(pagePost.title)
   }
-
+  prepareStore.prepare()
+  setTimeout(() => {
+    prepareStore.done()
+  }, 200)
 })
 
 onMounted(() => {
-  console.log('s date:',new Date())
-  setTimeout(() => {
-    console.log('data',data)
-    console.log('data.preparePost',data.preparePost)
-    data.preparePost = false
-    console.log('e date:',new Date())
-  }, 200)
 })
 
 const components = {
