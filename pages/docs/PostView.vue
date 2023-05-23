@@ -41,7 +41,7 @@ import TagArea from "~/components/layout/content/component/post-card/TagArea.vue
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
-import {onBeforeMount, onMounted} from "vue";
+import {onBeforeMount, onMounted, onUpdated} from "vue";
 import {PageMeta} from "nuxt/app";
 
 const data = {
@@ -86,7 +86,13 @@ onBeforeMount(() => {
     data.preparePost = false
   }, 200)
 })
-
+onUpdated(() => {
+  console.log('onUpdated')
+  const route = useRoute();
+  const path = route.fullPath
+  const postMeta: PostContent = postMapStore.map.get(path)
+  console.log('meta:',postMeta)
+})
 onMounted(() => {
   console.log('onMounted')
   const route = useRoute();
