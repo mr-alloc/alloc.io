@@ -43,6 +43,7 @@ import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
 import {onBeforeMount, onMounted, onUpdated} from "vue";
 import {PageMeta} from "nuxt/app";
+import {onServerPrefetch} from "@vue/runtime-core";
 
 const data = {
   post: {
@@ -67,7 +68,7 @@ const data = {
   fileListStore,
   postMapStore
 }
-console.log('init data:',data)
+
 onBeforeMount(() => {
   console.log('onBeforeMount')
   const route = useRoute();
@@ -82,25 +83,38 @@ onBeforeMount(() => {
     setPageTitle(pagePost.title)
   }
 
-  setTimeout(() => {
-    data.preparePost = false
-  }, 200)
 })
+
 onUpdated(() => {
   console.log('onUpdated')
   const route = useRoute();
   const path = route.fullPath
   const postMeta: PostContent = postMapStore.map.get(path)
   console.log('meta:',postMeta)
+  console.log('map',postMapStore.map)
+
 })
+
 onMounted(() => {
   console.log('onMounted')
   const route = useRoute();
   const path = route.fullPath
   const postMeta: PostContent = postMapStore.map.get(path)
   console.log('meta:',postMeta)
-})
+  console.log('map',postMapStore.map)
 
+  setTimeout(() => {
+    data.preparePost = false
+  }, 200)
+})
+onServerPrefetch(() => {
+  console.log('onServerPrefetch')
+  const route = useRoute();
+  const path = route.fullPath
+  const postMeta: PostContent = postMapStore.map.get(path)
+  console.log('meta:',postMeta)
+  console.log('map',postMapStore.map)
+})
 const components = {
   NotFound,
   TagArea
