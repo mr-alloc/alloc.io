@@ -201,7 +201,6 @@ $card-width: 200px;
             .page-link {
               text-decoration: none;
               color: #007bff;
-              display: block;
               border: 1px solid #dee2e6;
               position: relative;
               display: block;
