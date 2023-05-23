@@ -5,7 +5,7 @@
     </div>
     <div class="post-area" v-show="post !== null">
       <div class="post-title-area">
-        <span class="title" id="post-title">{{ post.title }}</span>
+        <span class="title" id="post-title">{{ post.value.title }}</span>
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
@@ -58,7 +58,6 @@ setTimeout(() => {
 
 const meta = ref(postMeta)
 const post = ref(pagePost)
-console.log('post: ',post)
 const data = {
   is_code_popup: false,
   image_map: new Map(),
