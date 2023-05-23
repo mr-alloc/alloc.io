@@ -5,18 +5,18 @@
     </div>
     <div class="post-area" v-show="post !== null">
       <div class="post-title-area">
-        <span class="title" id="post-title">{{ post.title }}</span>
+        <span class="title" id="post-title">{{ post._title }}</span>
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-            <span class="date-text" id="post-date-text">{{ post.date }}</span>
+            <span class="date-text" id="post-date-text">{{ post._date }}</span>
           </div>
         </div>
       </div>
       <div class="post-content-wrapper" id="document-content">
-        <div class="post-content" :class="{ hide: meta.header.hide }" id="post-content-frame" v-html="post.content">
+        <div class="post-content" :class="{ hide: meta._header.hide }" id="post-content-frame" v-html="post._content">
         </div>
-        <TagArea :tags="post.tags" />
+        <TagArea :tags="post._tags" />
         <div class="zoom-in-image-wrapper" @click="zoomOut()" v-show="data.zoom_in.isActive">
           <div class="image-resizer">
             <img :src="data.zoom_in.imageLink">
@@ -46,10 +46,10 @@ const route = useRoute();
 const path = route.fullPath
 const postMeta: PostContent = postMapStore.map.get(path)
 const pagePost: PagePost | null = PagePost.of(postMeta)
-
-if (pagePost) {
-  setPageTitle(pagePost.title)
-}
+//
+// if (pagePost) {
+//   setPageTitle(pagePost.title)
+// }
 const preparePost = ref(true)
 
 setTimeout(() => {
