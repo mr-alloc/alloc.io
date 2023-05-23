@@ -35,10 +35,10 @@ export class PagePost{
 
         return postMeta
             ? new PagePost(
-                postMeta.header.title,
-                calPostDate(postMeta.header.date.toString()),
+                postMeta._header.title,
+                calPostDate(postMeta._header.date.toString()),
                 markUp(postMeta.content),
-                postMeta.header.tags
+                postMeta._header.tags
             )
             : null
     }
