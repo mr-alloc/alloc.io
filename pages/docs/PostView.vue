@@ -58,6 +58,7 @@ setTimeout(() => {
 
 const meta = ref(postMeta)
 const post = ref(pagePost)
+console.log('post: ',post)
 const data = {
   is_code_popup: false,
   image_map: new Map(),
