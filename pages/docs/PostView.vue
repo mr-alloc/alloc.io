@@ -72,11 +72,14 @@ const data = {
 onBeforeMount(() => {
   console.log('onBeforeMount')
   const route = useRoute();
-  const path = route.fullPath
+  const path = route.fullPath.replace(/(\/docs\/.+)\/$/g, '$1')
   const postMeta: PostContent = postMapStore.map.get(path)
   const pagePost: PagePost | null = PagePost.of(postMeta)
+  console.log('fullPath:',route.fullPath)
+  console.log('path:',path)
   console.log('meta:', postMeta)
   console.log('pagePost', pagePost)
+  console.log('map',postMapStore.map)
   if (pagePost) {
     data.post = pagePost
     data.meta = postMeta
@@ -85,36 +88,6 @@ onBeforeMount(() => {
 
 })
 
-onUpdated(() => {
-  console.log('onUpdated')
-  const route = useRoute();
-  const path = route.fullPath
-  const postMeta: PostContent = postMapStore.map.get(path)
-  console.log('meta:',postMeta)
-  console.log('map',postMapStore.map)
-
-})
-
-onMounted(() => {
-  console.log('onMounted')
-  const route = useRoute();
-  const path = route.fullPath
-  const postMeta: PostContent = postMapStore.map.get(path)
-  console.log('meta:',postMeta)
-  console.log('map',postMapStore.map)
-
-  setTimeout(() => {
-    data.preparePost = false
-  }, 200)
-})
-onServerPrefetch(() => {
-  console.log('onServerPrefetch')
-  const route = useRoute();
-  const path = route.fullPath
-  const postMeta: PostContent = postMapStore.map.get(path)
-  console.log('meta:',postMeta)
-  console.log('map',postMapStore.map)
-})
 const components = {
   NotFound,
   TagArea
