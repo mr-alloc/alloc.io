@@ -41,7 +41,7 @@ import TagArea from "~/components/layout/content/component/post-card/TagArea.vue
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
-import {onBeforeMount} from "vue";
+import {onBeforeMount, onMounted} from "vue";
 import {PageMeta} from "nuxt/app";
 
 const data = {
@@ -67,13 +67,15 @@ const data = {
   fileListStore,
   postMapStore
 }
-
+console.log('init data:',data)
 onBeforeMount(() => {
+  console.log('onBeforeMount')
   const route = useRoute();
   const path = route.fullPath
   const postMeta: PostContent = postMapStore.map.get(path)
   const pagePost: PagePost | null = PagePost.of(postMeta)
-
+  console.log('meta:', postMeta)
+  console.log('pagePost', pagePost)
   if (pagePost) {
     data.post = pagePost
     data.meta = postMeta
@@ -85,7 +87,13 @@ onBeforeMount(() => {
   }, 200)
 })
 
-
+onMounted(() => {
+  console.log('onMounted')
+  const route = useRoute();
+  const path = route.fullPath
+  const postMeta: PostContent = postMapStore.map.get(path)
+  console.log('meta:',postMeta)
+})
 
 const components = {
   NotFound,
@@ -140,7 +148,7 @@ const clickedContent = (e: Event) => {
   //   }
   // }
 }
-
+console.log('script end')
 </script>
 
 <style lang="scss">
