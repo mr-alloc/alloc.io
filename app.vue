@@ -131,7 +131,7 @@ body {
 
 #__nuxt {
   color: $main-font-color;
-  font-font: -apple-system, BlinkMacSystemFont;
+  font-family: -apple-system, BlinkMacSystemFont;
 
   .dark {
     background-color: $point-dark-color;
