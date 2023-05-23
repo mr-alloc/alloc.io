@@ -225,7 +225,7 @@ const methods = {
   }
 
   .dist {
-    font-weight: bold;
+    font-weight: 400;
     font-size: 2rem;
     top: 45px;
     left: 20px;

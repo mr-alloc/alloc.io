@@ -13,7 +13,6 @@ export default defineNuxtConfig({
     },
     router: {
         base: '/special-posted-in/',
-        trailingSlash: false
     },
     target: 'static',
     typescript: {
