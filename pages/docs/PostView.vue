@@ -1,22 +1,22 @@
 <template>
-  <div class="post-container" :class="{prepare : preparePost}">
-    <div class="not-found" v-show="post === null">
+  <div class="post-container" :class="{prepare : data.preparePost}">
+    <div class="not-found" v-show="data.post === null">
       <NotFound />
     </div>
-    <div class="post-area" v-show="post !== null">
+    <div class="post-area" v-show="data.post !== null">
       <div class="post-title-area">
-        <span class="title" id="post-title">{{ post.value.title }}</span>
+        <span class="title" id="post-title">{{ data.post.title }}</span>
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-            <span class="date-text" id="post-date-text">{{ post.date }}</span>
+            <span class="date-text" id="post-date-text">{{ data.post.date }}</span>
           </div>
         </div>
       </div>
       <div class="post-content-wrapper" id="document-content">
-        <div class="post-content" :class="{ hide: meta._header.hide }" id="post-content-frame" v-html="post.content">
+        <div class="post-content" :class="{ hide: data.meta.header.hide }" id="post-content-frame" v-html="data.post.content">
         </div>
-        <TagArea :tags="post.tags" />
+        <TagArea :tags="data.post.tags" />
         <div class="zoom-in-image-wrapper" @click="zoomOut()" v-show="data.zoom_in.isActive">
           <div class="image-resizer">
             <img :src="data.zoom_in.imageLink">
@@ -41,24 +41,22 @@ import TagArea from "~/components/layout/content/component/post-card/TagArea.vue
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
+import {onBeforeMount} from "vue";
+import {PageMeta} from "nuxt/app";
 
-const route = useRoute();
-const path = route.fullPath
-const postMeta: PostContent = postMapStore.map.get(path)
-const pagePost: PagePost | null = PagePost.of(postMeta)
-//
-// if (pagePost) {
-//   setPageTitle(pagePost.title)
-// }
-const preparePost = ref(true)
-
-setTimeout(() => {
-  preparePost.value = false
-}, 200)
-
-const meta = ref(postMeta)
-const post = ref(pagePost)
 const data = {
+  post: {
+    title: '',
+    date: '',
+    content: '',
+    tags: [] as string[]
+  } ,
+  meta: {
+    header: {
+      hide: true
+    } as PageMeta
+  },
+  preparePost: true,
   is_code_popup: false,
   image_map: new Map(),
   code_map: new Map(),
@@ -69,6 +67,25 @@ const data = {
   fileListStore,
   postMapStore
 }
+
+onBeforeMount(() => {
+  const route = useRoute();
+  const path = route.fullPath
+  const postMeta: PostContent = postMapStore.map.get(path)
+  const pagePost: PagePost | null = PagePost.of(postMeta)
+
+  if (pagePost) {
+    data.post = pagePost
+    data.meta = postMeta
+    setPageTitle(pagePost.title)
+  }
+
+  setTimeout(() => {
+    data.preparePost = false
+  }, 200)
+})
+
+
 
 const components = {
   NotFound,
