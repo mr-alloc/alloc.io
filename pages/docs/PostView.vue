@@ -41,9 +41,8 @@ import TagArea from "~/components/layout/content/component/post-card/TagArea.vue
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
-import {onBeforeMount, onMounted, onUpdated} from "vue";
+import {onBeforeMount, onMounted} from "vue";
 import {PageMeta} from "nuxt/app";
-import {onServerPrefetch} from "@vue/runtime-core";
 
 const data = {
   post: {
@@ -83,9 +82,12 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-
+  console.log('s date:',new Date())
   setTimeout(() => {
+    console.log('data',data)
+    console.log('data.preparePost',data.preparePost)
     data.preparePost = false
+    console.log('e date:',new Date())
   }, 200)
 })
 
@@ -142,7 +144,6 @@ const clickedContent = (e: Event) => {
   //   }
   // }
 }
-console.log('script end')
 </script>
 
 <style lang="scss">
