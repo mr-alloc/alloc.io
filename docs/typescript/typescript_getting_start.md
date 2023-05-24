@@ -81,7 +81,7 @@ class Person {
     name: string
     age: number
 
-    _constructor(name: string, _age_: number) {_
+    constructor(name: string, _age_: number) {
         this.name = name
         this.age = age
     }

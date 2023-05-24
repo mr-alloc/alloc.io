@@ -84,8 +84,6 @@ onBeforeMount(() => {
   }, 200)
 })
 
-onMounted(() => {
-})
 
 const components = {
   NotFound,
