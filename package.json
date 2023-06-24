@@ -1,6 +1,6 @@
 {
   "name": "special-posted-in",
-  "homepage": "https://taechnique.github.io/special-posted-in/",
+  "homepage": "https://salarman.github.io/special-posted-in/",
   "license": "MIT",
   "scripts": {
     "boot": "node core/script/boot.js",

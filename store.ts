@@ -5,7 +5,7 @@ import {PostListWrapper} from "@/class/implement/PostListWrapper";
 
 
 export const userInfoStore = reactive<UserData>({
-    name: 'taechnique',
+    name: 'salarman',
     blog: 'https://tech.salar.kr',
     company: 'Herit Corporation',
     position: 'Backend Server Developer',
