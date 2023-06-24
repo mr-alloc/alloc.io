@@ -11,7 +11,7 @@ module.exports = () => {
         return link
     })
     const stream = new SitemapStream({
-        hostname: 'https://taech.io'
+        hostname: 'https://tech.salar.kr'
     })
     return streamToPromise(Readable.from(links).pipe(stream))
 }
