@@ -32,11 +32,11 @@ useHead({
     },
     {
       property: 'og:url',
-      content: 'https://taech.io'
+      content: 'https://tech.salar.kr'
     },
     {
       property: 'og:title',
-      content: 'taechnique의 기술 블로그'
+      content: 'salarman의 기술 블로그'
     },
     {
       property: 'og:description',

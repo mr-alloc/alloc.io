@@ -26,7 +26,7 @@ export const calPostDate = (date: string): string => {
 }
 
 export const setPageTitle = (title: string) => {
-    const blogName = 'taechnique 기술 블로그'
+    const blogName = 'salar의 기술 블로그'
     document.title = title ? `${title} | ${blogName}` : blogName;
 }
 

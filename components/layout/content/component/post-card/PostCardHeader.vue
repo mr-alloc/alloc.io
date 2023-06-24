@@ -4,7 +4,7 @@
       <img :src="`${methods.getProfileOrDefault(props.header.profile_image)}`" />
     </div>
     <div class="author-info">
-      <a href="https://github.com/taechnique" target="_blank">
+      <a href="https://github.com/salarman" target="_blank">
         <span class="author-name">
             {{ userInfoStore.name }}
         </span>
