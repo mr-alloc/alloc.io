@@ -1,16 +1,6 @@
 import { reactive } from 'vue'
-import {UserData} from "@/class/implement/UserData";
 import {FileListData} from "@/class/implement/FileListData";
 import {PostListWrapper} from "@/class/implement/PostListWrapper";
-
-
-export const userInfoStore = reactive<UserData>({
-    name: 'salarman',
-    blog: 'https://tech.salar.kr',
-    company: 'Herit Corporation',
-    position: 'Backend Server Developer',
-    profile_image: 'https://avatars.githubusercontent.com/u/65699391?v=4'
-})
 
 export const fileListStore = reactive<FileListData>({
     file_list: []

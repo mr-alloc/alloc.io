@@ -163,7 +163,7 @@ const clickedContent = (e: Event) => {
     max-width: 786px;
     word-break: break-word;
 
-    & span {
+    span {
 
       &:nth-child(n+2):before {
         content: '>';
@@ -171,11 +171,12 @@ const clickedContent = (e: Event) => {
       }
     }
   }
+
   .post-area {
-    max-width: 768px;
+    max-width: 968px;
     background-color: $main-light-color;
     border: 1.29px solid #d3d1d1;
-    margin: 0 auto;
+    margin: 0 100px;
     border-radius: 15px;
     color: #344063;
 
@@ -295,7 +296,7 @@ const clickedContent = (e: Event) => {
           }
         }
 
-        & h1, h2, h3, h4 {
+        h1, h2, h3, h4 {
           margin: 60px 0px 20px;
           padding: 10px 0px;
           border-bottom: 1.22px solid $point-light-color;

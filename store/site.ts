@@ -1,6 +1,8 @@
 import { reactive } from "vue"
 import { FileNodeWrapper } from "@/class/implement/FileNodeWrapper"
 import { PostContent } from "@/class/implement/PostContent";
+import packageJson from '@/package.json'
+import {BlogInfo} from "~/class/implement/BlogInfo";
 
 /* 포스팅 메타파일 읽고 저장 */
 export const postContents =  reactive<PostContent[]>([])
@@ -15,3 +17,15 @@ export const feeds = reactive<PostContent[]>([])
 export const tagMap = reactive({
     store: new Map()
 })
+
+
+export const blogInfo = reactive<BlogInfo>(
+    BlogInfo.create(
+        packageJson.fullname,
+        packageJson.username,
+        packageJson.domain,
+        packageJson.title,
+        packageJson.description,
+        packageJson.defaultProfile
+    )
+)

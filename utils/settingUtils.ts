@@ -1,3 +1,4 @@
+import {blogInfo} from "~/store/site";
 
 export const calPostDate = (date: string): string => {
     const timeValue = Date.parse(date)
@@ -26,7 +27,7 @@ export const calPostDate = (date: string): string => {
 }
 
 export const setPageTitle = (title: string) => {
-    const blogName = 'salar의 기술 블로그'
+    const blogName = blogInfo.description
     document.title = title ? `${title} | ${blogName}` : blogName;
 }
 

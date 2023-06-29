@@ -4,9 +4,9 @@
       <img :src="`${methods.getProfileOrDefault(props.header.profile_image)}`" />
     </div>
     <div class="author-info">
-      <a href="https://github.com/salarman" target="_blank">
+      <a href="{{`https://github.com/${b}`}}" target="_blank">
         <span class="author-name">
-            {{ userInfoStore.name }}
+            {{ blogInfo.fullname }}
         </span>
       </a>
       <span class="author-work-at">{{ props.header.current_position }}, {{ props.header.current_company }}</span>
@@ -21,13 +21,11 @@
 
 <script lang="ts" setup>
 
-import {userInfoStore} from "~/store";
-import {PostContent} from "~/class/implement/PostContent";
+import {blogInfo} from "~/store/site";
 import {calPostDate} from "~/utils/settingUtils";
 import {Header} from "~/class/implement/Header";
 
 const data = {
-  userInfoStore,
   calPostDate
 }
 
