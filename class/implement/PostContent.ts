@@ -1,7 +1,7 @@
 import {Header} from "@/class/implement/Header";
 import {IPostContent} from "@/class/IPostContent";
 
-export class PostContent implements IPostContent{
+export class PostContent implements IPostContent {
     _path: string
     _header: Header
     _description: string

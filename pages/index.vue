@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { postListStore, postCallStore, userInfoStore, fileListStore, mobileNaviStore } from "@/store";
+import { postListStore, postCallStore, fileListStore, mobileNaviStore } from "@/store";
 import { calPostDate } from "@/utils/settingUtils";
 import { callPostFeed } from "@/utils/postUtil";
 import { feeds } from '@/store/site'
@@ -22,7 +22,6 @@ callPostFeed()
 const data = {
   feeds: feeds,
   postListStore,
-  userInfoStore,
   fileListStore,
   postCallStore,
   mobileNaviStore,
@@ -76,13 +75,13 @@ onMounted(() => {
   display: flex;
   max-width: 786px;
   min-height: 800px;
-  margin: 0px auto 20px;
+  margin: 0px 50px 20px;
 
 
-  & .main-container {
+  .main-container {
     width: 100%;
 
-    & .post-card-wrapper {
+    .post-card-wrapper {
       width: 70%;
       margin: 10px auto;
       min-height: 600px;

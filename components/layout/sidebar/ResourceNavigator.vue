@@ -18,7 +18,7 @@
         <div class="profile-info-area">
           <div class="author-text-area">
             <div class="profile-author-name">
-              <span>salar(살라르)</span>
+              <span>{{ blogInfo.fullname }}</span>
             </div>
             <span class="intro">누군지 궁금하세요?</span>
           </div>
@@ -47,6 +47,8 @@ import DefaultSettings from "@/components/layout/sidebar/DefaultSettings.vue";
 import {naviStack} from "@/store/site";
 import {useNuxtApp} from "#app";
 import {onMounted} from "vue";
+import { blogInfo } from "@/store/site";
+
 const { $emitter } = useNuxtApp()
 
 

@@ -6,7 +6,7 @@ tags: [Swift]
 date: 2022-09-05 23:42:00 +0900
 current_company: NEOWIZ
 current_position: Software Engineer
-summary: func clickThis() {}
+summary: Swift 함수 사용하기
 excerpt_separator: <!--more-->
 hide: true
 ---

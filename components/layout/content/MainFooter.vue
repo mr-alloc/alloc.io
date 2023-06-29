@@ -1,16 +1,17 @@
 <template>
   <div class="main-footer">
     <div class="footer-text">
-      <span>© 2022 <a href="https://github.com/salarman">salarman.</a> All rights reserved.</span>
+      <span>© 2022 <a :href="`https://github.com/${blogInfo.fullname}`">{{ blogInfo.username }}.</a> All rights reserved.</span>
     </div>
   </div>
 </template>
 
 <script>
+import { blogInfo } from "~/store/site";
 export default {
   data() {
     return {
-
+      blogInfo
     }
   }
 
