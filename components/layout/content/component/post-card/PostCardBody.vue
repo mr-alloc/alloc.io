@@ -10,7 +10,7 @@
         </div>
         <div class="post-title-box">
           <span class="post-title">{{ props.header.summary }}</span>
-          <span class="post-path">taech.io</span>
+          <span class="post-path">devis.kr</span>
         </div>
       </div>
     </nuxt-link>
