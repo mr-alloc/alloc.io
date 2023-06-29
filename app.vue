@@ -11,6 +11,7 @@ import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import RouteWrapper from "@/components/layout/content/RouteWrapper.vue";
 import { useDarkModeStore } from "@/store/DarkModeStore";
 import Runner from '@/service/DefaultStarterService'
+import {blogInfo} from "~/store/site";
 
 Runner.init()
 const store = useDarkModeStore()
@@ -32,19 +33,19 @@ useHead({
     },
     {
       property: 'og:url',
-      content: 'https://tech.salar.kr'
+      content: blogInfo.domain
     },
     {
       property: 'og:title',
-      content: 'salarman의 기술 블로그'
+      content: blogInfo.title
     },
     {
       property: 'og:description',
-      content: '별내용은 없어요 ~'
+      content: blogInfo.description
     },
     {
       property: 'og:image',
-      content: 'https://avatars.githubusercontent.com/u/65699391?v=4'
+      content: blogInfo.defaultProfile
     }
   ]
 })

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts" setup>
-import {userInfoStore, searchInputStore, mobileNaviStore, tabletNaviStore} from "@/store";
+import {searchInputStore, mobileNaviStore, tabletNaviStore} from "@/store";
 import { calPostDate } from "@/utils/settingUtils";
 import { useNuxtApp } from "#app";
 import {onMounted} from "vue";
@@ -24,10 +24,6 @@ const data = {
 
     calPostDate,
     is_hide: false,
-    me: {
-      profile_image: 'https://github.com/Dev-Phantom/study-node/blob/main/src/assets/images/profile.png?raw=true'
-    },
-    userInfoStore,
     searchInputStore,
     mobileNaviStore,
     search_input: '',
@@ -36,7 +32,6 @@ const data = {
         is_focus: false
       },
       mobile: {
-        vue_image: 'https://github.com/Dev-Phantom/study-node/blob/main/src/assets/logo.png?raw=true',
         is_navi_active: mobileNaviStore.isActive
       },
       menus: [
