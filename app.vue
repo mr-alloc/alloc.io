@@ -3,6 +3,7 @@
     <MainHeader />
     <RouteWrapper />
     <LoadingBar />
+    <MobileExpander/>
   </div>
 </template>
 <script lang="ts" setup>
@@ -12,6 +13,7 @@ import RouteWrapper from "@/components/layout/content/RouteWrapper.vue";
 import { useDarkModeStore } from "@/store/DarkModeStore";
 import Runner from '@/service/DefaultStarterService'
 import {blogInfo} from "~/store/site";
+import MobileExpander from "~/components/layout/header/MobileExpander.vue";
 
 Runner.init()
 const store = useDarkModeStore()

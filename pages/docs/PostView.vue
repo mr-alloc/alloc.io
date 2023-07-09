@@ -484,6 +484,7 @@ const clickedContent = (e: Event) => {
     .post-area {
       width: 100%;
       border: none;
+      margin: 0;
 
       .post-title-area {
         border-radius: 0px;
@@ -530,6 +531,7 @@ const clickedContent = (e: Event) => {
 
 
     .post-area {
+      margin: 0;
       width: 100%;
       border-radius: 0px;
 

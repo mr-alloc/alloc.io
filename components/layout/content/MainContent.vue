@@ -72,6 +72,10 @@ const data = {
   .main-content-view {
     border-top: none;
     height: 100%;
+
+    .main-body {
+      margin: 0;
+    }
   }
 }
 </style>

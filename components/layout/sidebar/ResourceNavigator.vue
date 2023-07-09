@@ -8,7 +8,7 @@
         </div>
       </client-only>
     </div>
-    <div class="system-setting-wrapper">
+    <div class="system-setting-wrapper" v-if="false">
       <div class="profile-element-wrapper">
         <div class="profile-image-area">
           <div class="round-image-frame">
@@ -140,11 +140,13 @@ onMounted(() => {
   }
 
   .navigate-element-wrapper {
-    height: 350px;
+    //height: 350px;
+    height: 100%;
     overflow-y: scroll;
     flex-shrink: 0;
 
     .explored-control-panel {
+      width: 300px;
       position: relative;
       height: 100%;
     }
@@ -360,7 +362,7 @@ onMounted(() => {
   .post-resource-navigator {
     position: fixed;
     overflow-x: hidden;
-    width: $mobile-navigator-width;
+    width: 80%;
     height: 100%;
     top: 0px;
     left: -105%;
@@ -381,6 +383,13 @@ onMounted(() => {
     .system-setting-wrapper {
       width: auto;
 
+    }
+
+    .navigate-element-wrapper {
+
+      .explored-control-panel {
+        width: 100%;
+      }
     }
 
   }
