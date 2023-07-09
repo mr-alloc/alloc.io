@@ -27,7 +27,7 @@ export const calPostDate = (date: string): string => {
 }
 
 export const setPageTitle = (title: string) => {
-    const blogName = blogInfo.description
+    const blogName = blogInfo.title
     document.title = title ? `${title} | ${blogName}` : blogName;
 }
 

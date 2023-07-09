@@ -1,11 +1,11 @@
 <template>
   <div class="header-wrapper">
-    <div class="mobile-controller" :class="[{ active: mobileNaviStore.isActive }, { close: (mobileNaviStore.isActive || tabletNaviStore.isActive) }]">
-      <div class="control-panel">
-        <span class="control-button" v-on:click="methods.openAppropriateMenu()">
-          <font-awesome-icon class="button-text" :icon="['fas', 'plus']"/>
-        </span>
-      </div>
+    <div class="blog-ci-area">
+      <nuxt-link to="/">
+        <div class="ci-logo-panel">
+          <span>{{ blogInfo.title }}</span>
+        </div>
+      </nuxt-link>
     </div>
     <div class="progress-area" :class="{ hide : mobileNaviStore.isActive }">
       <span class="progress-bar"></span>
@@ -18,10 +18,11 @@ import {searchInputStore, mobileNaviStore, tabletNaviStore} from "@/store";
 import { calPostDate } from "@/utils/settingUtils";
 import { useNuxtApp } from "#app";
 import {onMounted} from "vue";
+import {blogInfo} from "~/store/site";
 const { $emitter } = useNuxtApp()
 
 const data = {
-
+    blogInfo,
     calPostDate,
     is_hide: false,
     searchInputStore,
@@ -65,18 +66,6 @@ onMounted(() => {
 })
 const methods = {
 
-  openAppropriateMenu() {
-    const mainWrapper = document.getElementById('__nuxt')!
-    const width = mainWrapper.clientWidth
-    /* tablet */
-    if (768 <= width && width <= 1023) {
-      tabletNaviStore.isActive = !tabletNaviStore.isActive
-    }
-    /* mobile */
-    else if (width < 768) {
-      mobileNaviStore.isActive = !mobileNaviStore.isActive
-    }
-  }
 
   // searchContents: (word: string) => {
   //   const result_list: FileData [] = fileListStore.file_list.filter(e => {
@@ -95,6 +84,8 @@ const methods = {
   flex-shrink: 0;
   height: $pc-header-interval;
   border-bottom: 1px solid $linear-color;
+  box-shadow: 0 3px 12px 2px rgba(0, 0, 0, 0.6);
+  z-index: 1;
 
   * {
     -webkit-tap-highlight-color:transparent;
@@ -102,43 +93,19 @@ const methods = {
 
   }
 
-  .mobile-header {
-    display: none;
-  }
+  .blog-ci-area {
+    margin: 0 20px;
+    display: table;
+    height: 100%;
 
-  .mobile-controller {
-    display: none;
-    z-index: 1000;
-    position: fixed;
-    bottom: 20px;
-    width: 100%;
-    flex-direction: row-reverse;
-
-    &.close {
-      .control-button {
-        transform: rotate(135deg);
-      }
-    }
-
-    .control-panel {
-      height: 60px;
-      width: 60px;
-      background-color: #ae70ce;
-      margin-right: 20px;
-      border-radius: 40px;
-      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-      display: table;
-
-      .control-button {
-        display: table-cell;
-        vertical-align: middle;
-        text-align: center;
-
-        .button-text {
-          font-size: 2.32rem;
-          color: white;
-        }
-      }
+    .ci-logo-panel {
+      position: absolute;
+      top: 10px;
+      display: table-cell;
+      font-weight: bold;
+      font-size: 1.79rem;
+      color: black;
+      vertical-align: middle;
     }
   }
 
@@ -255,48 +222,6 @@ const methods = {
 
   .header-wrapper {
 
-    .mobile-controller {
-      display: flex;
-    }
-    .main-header {
-      margin: 0 auto;
-      box-shadow: 0px 1px 30px 0 rgb(32 33 36 / 34%);
-
-      .menu-info {
-
-      }
-
-      & .header-item-layer {
-        display: grid;
-        grid-template-columns: 50% 50%;
-        grid-template-rows: 100%;
-
-        & .author-profile {
-          display: grid;
-
-          & .profile-image {
-            width: 150px;
-            height: 150px;
-            margin: 7px auto;
-          }
-
-          & .author-info {
-            display: inline-block;
-            padding: 7px 20%;
-            text-align: center;
-
-            & .author {
-              margin: 3px auto;
-              font-size: 1.45rem;
-            }
-
-            & .author-says {
-              font-size: 0.92rem;
-            }
-          }
-        }
-      }
-    }
   }
 }
 @include mobile {
@@ -306,156 +231,6 @@ const methods = {
     background-color: transparent;
     border-bottom: none;
 
-    .mobile-controller {
-      display: flex;
-
-      .control-panel {
-        display: table;
-      }
-
-      &.active {
-        .control-panel {
-          background-color: #86569d;
-        }
-      }
-
-    }
-
-    .mobile-header {
-      z-index: 99;
-      display: block;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      background-color: rgba(255,255,255,0.89);
-      border-bottom: $point-light-color 1px solid;
-      width: 100%;
-      height: 50px;
-      font-size: 1.7rem;
-
-      & .burger {
-        padding: 2px 20px;
-        margin: 2px auto;
-
-        & img {
-          width: 40px;
-          position: absolute;
-          top: 5px;
-          left: 45%;
-        }
-
-        & svg {
-          -webkit-tap-highlight-color:transparent;
-          float: right;
-          margin-top: 5px;
-
-        }
-
-      }
-
-      & .background {
-        position: fixed;
-        top:0;
-        left: 0;
-        width: 100%;
-        transition: height 0s, background-color .6s;
-
-      }
-
-      & .mobile-navigator-wrapper {
-        position: fixed;
-        top: 0;
-        left: -1999px;
-        height: 100%;
-        width: 77%;
-        transition: 2s;
-
-
-        & .nav-panel-box {
-          display: flex;
-          width: 100%;
-          height: 100%;
-          padding: 20px 10px;
-          flex-direction: column;
-          background-color: $main-light-color;
-
-          & .nav-items {
-            padding: 20px 40px;
-
-            ul {
-              list-style: none;
-
-              li {
-                height: 40px;
-              }
-            }
-          }
-
-          & .search-items {
-
-            width: 100%;
-
-            & .search-box {
-              margin: 4px auto;
-              height: 40px;
-              border-radius: 15px;
-              border: 3.34px lightgray solid;
-              overflow: hidden;
-
-              & input {
-                line-height: 32px;
-                border: 0px;
-                width: 100%;
-                height: 100%;
-                padding: 3px 5px;;
-                background-color: $main-light-color;
-                font-size: .92rem;
-
-                &:focus {
-                  outline: none;
-                }
-              }
-
-              &.focus {
-                border-color: #2c3e50;
-              }
-            }
-
-          }
-
-          & .search-result {
-
-            .search-card {
-
-              .card-date {
-                font-size: .72rem;
-              }
-              .card-title {
-                font-size: 1.12rem;
-              }
-            }
-          }
-        }
-      }
-
-      &.active {
-
-        .mobile-navigator-wrapper {
-          left: 0;
-          z-index: 2;
-          transition: .6s;
-        }
-      }
-    }
-
-    .main-header {
-      display: none;
-      width: 90%;
-      height: 400px;
-      margin-top: 80px;
-
-
-    }
 
     .progress-area {
       top: 0px;

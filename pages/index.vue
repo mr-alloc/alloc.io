@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import { postListStore, postCallStore, fileListStore, mobileNaviStore } from "@/store";
-import { calPostDate } from "@/utils/settingUtils";
+import {calPostDate, setPageTitle} from "@/utils/settingUtils";
 import { callPostFeed } from "@/utils/postUtil";
 import { feeds } from '@/store/site'
 import PostCard from '@/components/layout/content/component/post-card/PostCard.vue'
@@ -44,6 +44,7 @@ const data = {
 
 onMounted(() => {
   const wrapper = document.getElementById('main-content-wrapper')!
+  setPageTitle('')
 
   const handleForScroll = () => {
 

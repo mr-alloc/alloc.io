@@ -279,7 +279,8 @@ const methods = {
 
     .curtain {
       background-color: rgba(0, 0, 0, 0.09);
-      height: 500px;
+      //height: 500px;
+      height: 100%;
     }
   }
 }
