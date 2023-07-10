@@ -7,7 +7,31 @@
         </div>
       </nuxt-link>
     </div>
-    <div class="progress-area" :class="{ hide : mobileNaviStore.isActive }">
+    <div class="top-menu-area">
+      <div class="top-level-menu">
+        <ul class="top-menu-list">
+          <li class="menu-item">
+            <div class="search-box">
+              <div class="menu-icon">
+                <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+              </div>
+              <div class="menu-title">
+                <span>찾기</span>
+              </div>
+            </div>
+          </li>
+          <li class="menu-item">
+            <div class="menu-icon">
+              <font-awesome-icon :icon="['fa', 'tags']"/>
+            </div>
+            <div class="menu-title">
+              <span>태그</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="progress-area" v-if="false" :class="{ hide : mobileNaviStore.isActive }">
       <span class="progress-bar"></span>
     </div>
   </div>
@@ -82,36 +106,111 @@ const methods = {
 @import "@/styles";
 .header-wrapper {
   flex-shrink: 0;
-  height: $pc-header-interval;
+  height: $pc-header-height;
+  width: 90%;
   border-bottom: 1px solid $linear-color;
   box-shadow: 0 3px 12px 2px rgba(0, 0, 0, 0.6);
-  z-index: 1;
+  position: absolute;
+  z-index: 10;
+  margin-top: 10px;
+  background-color: $main-light-color;
+  left: 50%;
+  top: 40px;
+  transform: translate3d(-50%, -50%, 0);
+  border-radius: 15px;
+  display: flex;
+
 
   * {
     -webkit-tap-highlight-color:transparent;
     user-select: none;
 
   }
+  &.fold {
+    margin-top: -50px;
+  }
 
   .blog-ci-area {
     margin: 0 20px;
     display: table;
     height: 100%;
+    flex-shrink: 0;
+    width: 250px;
+    text-align: center;
+
 
     .ci-logo-panel {
       position: absolute;
-      top: 10px;
+      top: $pc-header-interval + 10;
       display: table-cell;
       font-weight: bold;
-      font-size: 1.79rem;
+      font-size: 1.19rem;
       color: black;
       vertical-align: middle;
     }
   }
 
+  .top-menu-area {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .top-level-menu {
+      width: 100%;
+
+      .top-menu-list {
+        list-style: none;
+        display: flex;
+        justify-content: space-evenly;
+
+        .search-box {
+          display: flex;
+          color: $linear-color;
+          border-radius: 10px;
+          border: 1.42px solid $linear-color;
+          cursor: pointer;
+          transition: .4s;
+
+          .menu-icon {
+            flex-shrink: 0;
+          }
+
+          .menu-title {
+            flex-grow: 1;
+            padding-right: 10px !important;
+          }
+
+          &:hover {
+            transition: .4s;
+            border-color: #1d456d;
+            color: #1d456d;
+          }
+        }
+
+        .menu-item {
+          min-width: 50px;
+          display: inline-block;
+
+          .menu-icon {
+            padding: 0 5px;
+            display: inline-block;
+            font-size: 1.2rem;
+          }
+
+          .menu-title {
+            padding: 0 5px;
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+  }
+
   .progress-area {
     position: fixed;
-    top: $pc-header-interval;
+    top: $pc-header-height;
     left: 0;
     width: 100%;
     height: 4px;
