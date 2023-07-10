@@ -146,7 +146,6 @@ const clickedContent = (e: Event) => {
 
 
 .post-container {
-  padding: $pc-header-interval 0px;
   min-height: 700px;
   font-family: -apple-system,BlinkMacSystemFont;
 
@@ -173,10 +172,10 @@ const clickedContent = (e: Event) => {
   }
 
   .post-area {
-    max-width: 968px;
+    max-width: 768px;
     background-color: $main-light-color;
     border: 1.29px solid #d3d1d1;
-    margin: 0 100px;
+    margin: 100px;
     border-radius: 15px;
     color: #344063;
 
@@ -482,9 +481,9 @@ const clickedContent = (e: Event) => {
     }
 
     .post-area {
-      width: 100%;
+      width: 90%;
       border: none;
-      margin: 0;
+      margin: 100px 0 100px auto;
 
       .post-title-area {
         border-radius: 0px;

@@ -24,7 +24,6 @@ export default {
 .main-footer {
   width: 100%;
   height: 40px;
-  background-color: #2c3e50;
   padding-top: 20px;
 
   & .footer-text {
@@ -33,11 +32,10 @@ export default {
     text-align: center;
 
     & span {
-      color: #cecdcb;
+      color: #2c3e50;
 
       & a {
         text-decoration: underline;
-        color: #cecdcb;
       }
     }
   }
