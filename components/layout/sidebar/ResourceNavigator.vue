@@ -120,6 +120,13 @@ onMounted(() => {
   border-right: 1px solid #d3d1d1;
   display: flex;
   flex-direction: column;
+  left: 20px;
+  border-radius: 15px;
+  position: relative;
+  box-shadow: 0 3px 12px 2px rgba(0, 0, 0, 0.6);
+  height: 83vh;
+  margin-top: 100px;
+
 
   * {
     transition: .4s;
@@ -144,6 +151,7 @@ onMounted(() => {
     height: 100%;
     overflow-y: scroll;
     flex-shrink: 0;
+    border-radius: 15px;
 
     .explored-control-panel {
       width: 300px;

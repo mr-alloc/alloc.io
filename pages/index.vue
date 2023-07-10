@@ -81,6 +81,7 @@ onMounted(() => {
 
   .main-container {
     width: 100%;
+    margin-top: 100px;
 
     .post-card-wrapper {
       width: 70%;

@@ -35,7 +35,6 @@ const data = {
   flex-grow: 1;
   overflow-y: scroll;
   overflow-x: hidden;
-  height: calc(100vh - $pc-header-interval);
 
 
   .background {

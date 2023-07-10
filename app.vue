@@ -144,7 +144,6 @@ body {
 * {
   padding: 0px;
   margin: 0px;
-  transition: .6s;
 
   &:before {
     transition: .6s;
@@ -164,6 +163,7 @@ body {
   --back-to-top-color-hover: #71cda3;
   --nprogress-color: #29d;
   --nprogress-z-index: 1031;
+  transition: all .6s ease-out;
 }
 
 
