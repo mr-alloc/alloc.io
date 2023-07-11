@@ -180,7 +180,6 @@ const methods = {
             border-radius: 5px;
             text-align: center;
             width: 20px;
-            display: block;
             margin: 0px auto;
           }
 

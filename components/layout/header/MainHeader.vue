@@ -7,22 +7,29 @@
         </div>
       </nuxt-link>
     </div>
+    <div class="search-box-wrapper" :class="{ 'search-mode' : searchStatusStore.isSearchMode}">
+      <div class="search-box"
+           v-on:click="methods.activateSearchMode()"
+           v-on:focusout="methods.inactivateSearchMode()"
+      >
+        <div class="menu-icon-wrapper">
+          <span class="menu-icon">
+            <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+          </span>
+        </div>
+        <div class="menu-title">
+          <input type="text" placeholder="찾기">
+        </div>
+      </div>
+    </div>
     <div class="top-menu-area">
       <div class="top-level-menu">
         <ul class="top-menu-list">
           <li class="menu-item">
-            <div class="search-box">
-              <div class="menu-icon">
-                <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
-              </div>
-              <div class="menu-title">
-                <span>찾기</span>
-              </div>
-            </div>
-          </li>
-          <li class="menu-item">
-            <div class="menu-icon">
-              <font-awesome-icon :icon="['fa', 'tags']"/>
+            <div class="menu-icon-wrapper">
+              <span class="menu-icon">
+                <font-awesome-icon :icon="['fa', 'tags']"/>
+              </span>
             </div>
             <div class="menu-title">
               <span>태그</span>
@@ -43,8 +50,9 @@ import { calPostDate } from "@/utils/settingUtils";
 import { useNuxtApp } from "#app";
 import {onMounted} from "vue";
 import {blogInfo} from "~/store/site";
+import {useSearchStatusStore} from "~/store/SearchStatusStore";
 const { $emitter } = useNuxtApp()
-
+const searchStatusStore = useSearchStatusStore()
 const data = {
     blogInfo,
     calPostDate,
@@ -90,15 +98,12 @@ onMounted(() => {
 })
 const methods = {
 
-
-  // searchContents: (word: string) => {
-  //   const result_list: FileData [] = fileListStore.file_list.filter(e => {
-  //     const regex = new RegExp('(?:(.)?('+ word +')+(.)?)', 'gi')
-  //     return regex.test(e.file_title)
-  //   })
-  //
-  //   data.searchInputStore.result_list = result_list
-  // }
+  activateSearchMode: () => {
+    searchStatusStore.searching()
+  },
+  inactivateSearchMode: () => {
+    searchStatusStore.cancelSearch()
+  }
 }
 </script>
 
@@ -135,7 +140,7 @@ const methods = {
     display: table;
     height: 100%;
     flex-shrink: 0;
-    width: 250px;
+    width: 180px;
     text-align: center;
 
 
@@ -147,6 +152,66 @@ const methods = {
       font-size: 1.19rem;
       color: black;
       vertical-align: middle;
+    }
+  }
+  .search-box-wrapper {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    width: 300px;
+
+    .search-box {
+      display: flex;
+      background-color: $linear-color;
+      color: black;
+      border-radius: 10px;
+      border: 1.42px solid $linear-color;
+      cursor: pointer;
+      transition: .4s;
+      width: 90px;
+      vertical-align: middle;
+      justify-content: center;
+      padding: 0 5px;
+      height: 30px;
+      align-items: center;
+      flex-direction: row;
+
+      .menu-icon-wrapper {
+        display: flex;
+        flex-shrink: 0;
+        width: 30px;
+        justify-content: center;
+
+        .menu-icon {
+          color: #757575;
+          display: block;
+          margin: 0 auto
+        }
+      }
+
+      .menu-title {
+        flex-grow: 1;
+
+
+        input {
+          outline: none;
+          border: none;
+          line-height: 2;
+          width: 95%;
+          background-color: transparent;
+        }
+      }
+
+      &:hover {
+        transition: .4s;
+      }
+    }
+
+    &.search-mode {
+
+      .search-box {
+        width: 280px;
+      }
     }
   }
 
@@ -164,38 +229,18 @@ const methods = {
         display: flex;
         justify-content: space-evenly;
 
-        .search-box {
-          display: flex;
-          color: $linear-color;
-          border-radius: 10px;
-          border: 1.42px solid $linear-color;
-          cursor: pointer;
-          transition: .4s;
-
-          .menu-icon {
-            flex-shrink: 0;
-          }
-
-          .menu-title {
-            flex-grow: 1;
-            padding-right: 10px !important;
-          }
-
-          &:hover {
-            transition: .4s;
-            border-color: #1d456d;
-            color: #1d456d;
-          }
-        }
-
         .menu-item {
           min-width: 50px;
           display: inline-block;
 
-          .menu-icon {
+          .menu-icon-wrapper {
             padding: 0 5px;
             display: inline-block;
             font-size: 1.2rem;
+
+            .menu-icon {
+
+            }
           }
 
           .menu-title {
