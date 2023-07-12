@@ -5,23 +5,27 @@
     <div class="background" :class="{ active : data.mobileNaviStore.isActive || !searchStatus.isSearchMode }" v-on:click="data.mobileNaviStore.isActive = false">
       <div v-if="!searchStatus.isSearchMode" class="search-result-area">
         <div class="search-result-panel">
-          <div class="search-result-row">
+          <div class="search-result-row" v-for="b in [1, 2, 3, 4, 5, 6]">
             <div class="category-icon-area">
               <span class="category-icon">
                 <img src="@/assets/icon/algorithm.png"/>
               </span>
             </div>
             <div class="detected-content-area">
-              <div class="result-string">
-                <span>검색을 좋아하는 나는 <strong>육포</strong>를 좋아한다.</span>
-              </div>
-              <div class="result-breadcrumb">
-                <span>
-                  검색
-                <font-awesome-icon :icon="['fas', 'chevron-right']"/>
-                  2022년 07월 21일 일기
-                </span>
-              </div>
+              <ul class="detected-list">
+                <li v-for="a in [1, 2, 3]" class="each-detected-content">
+                  <div class="result-string">
+                    <span>검색을 좋아하는 나는 <strong>육포</strong>를 좋아한다.</span>
+                  </div>
+                  <div class="result-breadcrumb">
+                    <span>
+                      검색
+                    <font-awesome-icon :icon="['fas', 'chevron-right']"/>
+                      2022년 07월 21일 일기
+                    </span>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -86,27 +90,54 @@ const data = {
         max-width: 768px;
         height: 100%;
         margin: 0 auto;
+        padding-top: 3px;
+        overflow-y: scroll;
 
         .search-result-row {
+          margin-top: 3px;
           display: flex;
           flex-direction: row;
 
           .category-icon-area {
+            display: flex;
             flex-shrink: 0;
-            width: 40px;
+            width: 55px;
             justify-content: center;
-            align-items: center;
+            padding-top: 7px;
 
             .category-icon {
               display: inline-block;
+              height: 25px;
+              border: 0.88px $linear-color solid;
+              border-radius: 3px;
 
               img {
                 width: $small-icon-size;
               }
             }
           }
-        }
 
+          .detected-content-area {
+            flex-grow: 1;
+            width: 100%;
+            padding: 8px 5px;
+            border-bottom: 1px $linear-color solid;
+
+            .detected-list {
+              list-style: none;
+
+              .each-detected-content {
+                .result-string {
+                  color: black
+                }
+                .result-breadcrumb {
+                  font-size: 0.71rem;
+                  color: #818080;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
