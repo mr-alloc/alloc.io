@@ -2,10 +2,10 @@
   <div class="main-content-view" id="main-content-wrapper">
     <nuxt-page class="current-content" :page-key="route.fullPath" />
     <MainFooter />
-    <div class="background" :class="{ active : data.mobileNaviStore.isActive || !searchStatus.isSearchMode }" v-on:click="data.mobileNaviStore.isActive = false">
-      <div v-if="!searchStatus.isSearchMode" class="search-result-area">
+    <div class="background" :class="{ active : data.mobileNaviStore.isActive || searchStatus.isSearchMode }" v-on:click="data.mobileNaviStore.isActive = false">
+      <div v-if="searchStatus.isSearchMode" class="search-result-area">
         <div class="search-result-panel">
-          <div class="search-result-row" v-for="b in [1, 2, 3, 4, 5, 6]">
+          <div class="search-result-row">
             <div class="category-icon-area">
               <span class="category-icon">
                 <img src="@/assets/icon/algorithm.png"/>
@@ -13,16 +13,15 @@
             </div>
             <div class="detected-content-area">
               <ul class="detected-list">
-                <li v-for="a in [1, 2, 3]" class="each-detected-content">
+                <li class="each-detected-content">
                   <div class="result-string">
-                    <span>검색을 좋아하는 나는 <strong>육포</strong>를 좋아한다.</span>
+                    <span>검색을 좋아하는 나는 <em>육포</em>를 좋아한다. 이렇게 긴글자도 쓸수 있어요.</span>
                   </div>
                   <div class="result-breadcrumb">
-                    <span>
-                      검색
-                    <font-awesome-icon :icon="['fas', 'chevron-right']"/>
-                      2022년 07월 21일 일기
-                    </span>
+                    <ul>
+                      <li>검색</li>
+                      <li>2022년 07월 21일 일기</li>
+                    </ul>
                   </div>
                 </li>
               </ul>
@@ -39,7 +38,9 @@ import MainFooter from "@/components/layout/content/MainFooter.vue";
 import { mobileNaviStore } from "@/store";
 import { useRoute } from "#app";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
+import {onMounted} from "vue";
 const route = useRoute()
+const { $emitter }= useNuxtApp()
 const searchStatus = useSearchStatusStore()
 const components = {
   MainFooter
@@ -50,6 +51,12 @@ const data = {
   route
 }
 
+onMounted(() => {
+
+  $emitter.on('searchText', () => {
+
+  })
+})
 </script>
 
 <style lang="scss">
@@ -127,12 +134,33 @@ const data = {
               list-style: none;
 
               .each-detected-content {
+
                 .result-string {
-                  color: black
+                  color: black;
+
+                  em {
+                    font-style: normal;
+                    background-color: #F3DDFDCC;
+                    font-weight: bold;
+                  }
                 }
+
                 .result-breadcrumb {
                   font-size: 0.71rem;
                   color: #818080;
+
+                  ul {
+                    list-style: none;
+                    li {
+                      display: inline-block;
+
+
+                      &:not(:last-child):after {
+                        padding: 0 5px;
+                        content: '→';
+                      }
+                    }
+                  }
                 }
               }
             }
