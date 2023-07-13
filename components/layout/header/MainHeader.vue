@@ -7,10 +7,9 @@
         </div>
       </nuxt-link>
     </div>
-    <div class="search-box-wrapper" :class="{ 'search-mode' : searchStatusStore.isSearchMode}">
+    <div class="search-box-wrapper" :class="{ 'search-mode' : searchStatusStore.isSearchMode }">
       <div class="search-box"
            v-on:click="methods.activateSearchMode()"
-           v-on:focusout="methods.inactivateSearchMode()"
       >
         <div class="menu-icon-wrapper">
           <span class="menu-icon">
@@ -18,7 +17,10 @@
           </span>
         </div>
         <div class="menu-title">
-          <input type="text" placeholder="찾기">
+          <input type="text" placeholder="찾기"
+                 v-on:input="methods.typeForText($event)"
+                 v-on:focusout="methods.inactivateSearchMode($event)"
+          >
         </div>
       </div>
     </div>
@@ -90,8 +92,8 @@ onMounted(() => {
     const docHeight = body.scrollHeight
     const percent = (100.000 * currentScroll / (docHeight - winHeight)).toFixed(4) + '%'
 
-    const element: HTMLElement = document.querySelector('.app-container .progress-area .progress-bar')!
-    element.style.width = percent
+    // const element: HTMLElement = document.querySelector('.app-container .progress-area .progress-bar')!
+    // element.style.width = percent
 
   })
 
@@ -101,8 +103,13 @@ const methods = {
   activateSearchMode: () => {
     searchStatusStore.searching()
   },
-  inactivateSearchMode: () => {
+  inactivateSearchMode: (e: FocusEvent) => {
+    const input = e.target as HTMLInputElement
+    input.value = ''
     searchStatusStore.cancelSearch()
+  },
+  typeForText: (e: InputEvent) => {
+
   }
 }
 </script>
