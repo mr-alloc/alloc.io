@@ -29,7 +29,7 @@ function toFilePost (wholePath, file) {
 }
 
 function toFileFolder(wholePath, file) {
-    const nickname = fileNames[file.name] != undefined
+    const nickname = fileNames[file.name] !== undefined
         ? fileNames[file.name]
         : file.name
     const hasIcon = fs.existsSync(`${__ROOT__}/public/assets/icon/${file.name}.png`);
