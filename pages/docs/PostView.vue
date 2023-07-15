@@ -101,43 +101,6 @@ const zoomOut = () => {
     }
   }
 }
-const clickedContent = (e: Event) => {
-  // if(e && e.target instanceof Element) {
-  //   const target: Element = e.target
-  //   const nodeName = target.nodeName
-  //   console.log('clicked node name:',nodeName)
-  //   switch (nodeName) {
-  //     case 'IMG': {
-  //       const src = target.src
-  //       if (data.image_map.size == 0) {
-  //         const postContent: HTMLElement | null = document.getElementById('document-content')
-  //         if(postContent){
-  //           const images = postContent.querySelectorAll('.post-content img')
-  //
-  //           images.forEach(value => {
-  //             data.image_map.set(src, value)
-  //           })
-  //         }
-  //       }
-  //
-  //       if ( ! data.image_map.has(src)) {
-  //         data.image_map.set(src, e.target)
-  //       }
-  //
-  //       break
-  //     }
-  //     case 'PRE': {
-  //       const code = e.target.offsetParent
-  //       code.classList.add('popup')
-  //       data.zoom_in.isActive = true
-  //
-  //       break
-  //     }
-  //     default:
-  //       break
-  //   }
-  // }
-}
 </script>
 
 <style lang="scss">
@@ -146,8 +109,9 @@ const clickedContent = (e: Event) => {
 
 
 .post-container {
+  transition: 0.6s !important;
   min-height: 700px;
-  font-family: -apple-system,BlinkMacSystemFont;
+  font-family: -apple-system, BlinkMacSystemFont;
 
   &.prepare {
     margin-left: 60px;

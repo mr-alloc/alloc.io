@@ -28,14 +28,16 @@
       <div class="top-level-menu">
         <ul class="top-menu-list">
           <li class="menu-item">
-            <div class="menu-icon-wrapper">
-              <span class="menu-icon">
-                <font-awesome-icon :icon="['fa', 'tags']"/>
-              </span>
-            </div>
-            <div class="menu-title">
-              <span>태그</span>
-            </div>
+            <nuxt-link to="/tags">
+              <div class="menu-icon-wrapper">
+                <span class="menu-icon">
+                  <font-awesome-icon :icon="['fa', 'tags']"/>
+                </span>
+              </div>
+              <div class="menu-title">
+                <span>태그</span>
+              </div>
+            </nuxt-link>
           </li>
         </ul>
       </div>
@@ -51,7 +53,7 @@ import {searchInputStore, mobileNaviStore, tabletNaviStore} from "@/store";
 import { calPostDate } from "@/utils/settingUtils";
 import { useNuxtApp } from "#app";
 import {onMounted} from "vue";
-import {blogInfo} from "~/store/site";
+import {blogInfo, postContents} from "~/store/site";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 const { $emitter } = useNuxtApp()
 const searchStatusStore = useSearchStatusStore()
@@ -98,6 +100,8 @@ onMounted(() => {
   })
 
 })
+
+const titleRE = /([a-zA-Z가-힣0-9@\w])/
 const methods = {
 
   activateSearchMode: () => {
@@ -109,7 +113,16 @@ const methods = {
     searchStatusStore.cancelSearch()
   },
   typeForText: (e: InputEvent) => {
-
+    const text = e.data ?? ''
+    if (titleRE.test(text)) {
+      const RE = new RegExp(`.+?(${text}).+`)
+      postContents.forEach(content => {
+        const title = content.header.title
+        if (RE.test(text)) {
+          console.log(title)
+        }
+      })
+    }
   }
 }
 </script>

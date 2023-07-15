@@ -6,7 +6,10 @@ const packageJson = require('../../package.json')
 
 module.exports = () => {
     const links = keys.map(key => {
-        url: key
+        const link = {
+            url: key
+        }
+        return link
     })
     const stream = new SitemapStream({
         hostname: packageJson.domain
