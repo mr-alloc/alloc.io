@@ -11,15 +11,18 @@ class FileNode {
     _type
     _files
     _hasIcon
+    _breadcrumbs
 
-    constructor(filePath, fileName, ext, summary, type, hasIcon) {
+    constructor(filePath, fileName, ext, summary, breadcrumbs, type, hasIcon) {
         this._path = filePath
         this._name = fileName
         this._ext = ext
         this._summary = summary
+        this._breadcrumbs = breadcrumbs
         this._type = type
         this._hasIcon = hasIcon
         this._files = new Array()
+
     }
 
     set files(files) {

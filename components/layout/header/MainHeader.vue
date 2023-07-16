@@ -18,7 +18,7 @@
         </div>
         <div class="menu-title">
           <input type="text" placeholder="찾기"
-                 v-on:input="methods.typeForText($event)"
+                 v-on:input="methods.typeForText($event, this)"
                  v-on:focusout="methods.inactivateSearchMode($event)"
           >
         </div>
@@ -113,13 +113,19 @@ const methods = {
     searchStatusStore.cancelSearch()
   },
   typeForText: (e: InputEvent) => {
-    const text = e.data ?? ''
-    if (titleRE.test(text)) {
-      const RE = new RegExp(`.+?(${text}).+`)
+    const inputElement = e.target as HTMLInputElement
+    const input = e.data ?? ''
+    const text = inputElement.value ?? ''
+
+    if (titleRE.test(input)) {
+      const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i')
+
       postContents.forEach(content => {
         const title = content.header.title
-        if (RE.test(text)) {
+        const result = RE.exec(title)
+        if (result) {
           console.log(title)
+          console.log(content.header.breadcrumbs.join(' > '))
         }
       })
     }
