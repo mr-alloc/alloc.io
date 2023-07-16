@@ -11,6 +11,7 @@ export class Header {
     summary: string
     excerpt_separator: string
     hide: boolean
+    breadcrumbs: string[]
 
     constructor(header: any) {
         this.layout = header.layout
@@ -25,6 +26,7 @@ export class Header {
         this.summary = header.summary
         this.excerpt_separator = header.excerpt_separator
         this.hide = header.hide
+        this.breadcrumbs = header.breadcrumbs
 
     }
 

@@ -23,18 +23,27 @@ function toFilePost (wholePath, file) {
         ? post.header['summary']
         : file.name
     /* 포스팅 정보 추가 */
-    PostStore.push(post)
 
-    return new FileNode(wholePath.replace('.md', '').toLowerCase(), filename, ext, nickname, FileType.POST, false)
+    const pathArray = wholePath.split('/')
+    const breadcrumbs = pathArray
+        .slice(1, pathArray.length -1)
+        .filter(name => name !== '')
+        .map(name => fileNames[name] ?? name)
+    breadcrumbs.push(nickname)
+    PostStore.push(post)
+    post.header.breadcrumbs = breadcrumbs
+
+    return new FileNode(wholePath.replace('.md', '').toLowerCase(), filename, ext, nickname, breadcrumbs, FileType.POST, false)
 }
 
 function toFileFolder(wholePath, file) {
     const nickname = fileNames[file.name] !== undefined
         ? fileNames[file.name]
         : file.name
-    const hasIcon = fs.existsSync(`${__ROOT__}/public/assets/icon/${file.name}.png`);
+    const hasIcon = fs.existsSync(`${__ROOT__}/public/assets/icon/${file.name}.png`)
 
-    return new FileNode(wholePath, file.name, '', nickname, FileType.DIR, hasIcon)
+    const breadcrumbs = wholePath.split('/').filter(name => name !== '').map(name => fileNames[name])
+    return new FileNode(wholePath, file.name, '', nickname, breadcrumbs, FileType.DIR, hasIcon)
 }
 
 module.exports = (path) => {
