@@ -1,4 +1,6 @@
 import {blogInfo} from "~/store/site";
+import {PostContent} from "~/class/implement/PostContent";
+import {PostContentGroup} from "~/class/implement/PostContentGroup";
 
 export const calPostDate = (date: string): string => {
     const timeValue = Date.parse(date)
@@ -31,6 +33,22 @@ export const setPageTitle = (title: string) => {
     document.title = title ? `${title} | ${blogName}` : blogName;
 }
 
+
+export function groupingBy<T>(contents: PostContent[], keyMapper: (content: PostContent) => T): Map<T, PostContent[]> {
+    const map = new Map<T, PostContent[]>()
+    for (let content of contents) {
+        const key: T = keyMapper(content)
+        const array = map.has(key)
+            ? map.get(key)
+            : new Array(content)
+
+        if (array) {
+            array.push(content)
+            map.set(key, array)
+        }
+    }
+    return map
+}
 
 
 

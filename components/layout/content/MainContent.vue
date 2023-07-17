@@ -5,28 +5,7 @@
     <div class="background" :class="{ active : data.mobileNaviStore.isActive || searchStatus.isSearchMode }" v-on:click="data.mobileNaviStore.isActive = false">
       <div v-if="searchStatus.isSearchMode" class="search-result-area">
         <div class="search-result-panel">
-          <div class="search-result-row">
-            <div class="category-icon-area">
-              <span class="category-icon">
-                <img src="@/assets/icon/algorithm.png"/>
-              </span>
-            </div>
-            <div class="detected-content-area">
-              <ul class="detected-list">
-                <li class="each-detected-content">
-                  <div class="result-string">
-                    <span>검색을 좋아하는 나는 <em>육포</em>를 좋아한다. 이렇게 긴글자도 쓸수 있어요.</span>
-                  </div>
-                  <div class="result-breadcrumb">
-                    <ul>
-                      <li>검색</li>
-                      <li>2022년 07월 21일 일기</li>
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <SearchResult />
         </div>
       </div>
     </div>
@@ -39,9 +18,13 @@ import { mobileNaviStore } from "@/store";
 import { useRoute } from "#app";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {onMounted} from "vue";
+import {PostContent} from "~/class/implement/PostContent";
+import {PostContentGroup} from "~/class/implement/PostContentGroup";
+
 const route = useRoute()
 const { $emitter }= useNuxtApp()
 const searchStatus = useSearchStatusStore()
+
 const components = {
   MainFooter
 }
@@ -52,9 +35,11 @@ const data = {
 }
 
 onMounted(() => {
-
-  $emitter.on('searchText', () => {
-
+  //검색 결과
+  $emitter.on('searchText', (result: PostContentGroup[]) => {
+    //SettingUtils.groupingBy() 사용
+    // const entryArray = [...map.entries()]
+    // return entryArray.map(([k, v]) => new PostContentGroup(k, v))
   })
 })
 </script>
@@ -100,72 +85,6 @@ onMounted(() => {
         padding-top: 3px;
         overflow-y: scroll;
 
-        .search-result-row {
-          margin-top: 3px;
-          display: flex;
-          flex-direction: row;
-
-          .category-icon-area {
-            display: flex;
-            flex-shrink: 0;
-            width: 55px;
-            justify-content: center;
-            padding-top: 7px;
-
-            .category-icon {
-              display: inline-block;
-              height: 25px;
-              border: 0.88px $linear-color solid;
-              border-radius: 3px;
-
-              img {
-                width: $small-icon-size;
-              }
-            }
-          }
-
-          .detected-content-area {
-            flex-grow: 1;
-            width: 100%;
-            padding: 8px 5px;
-            border-bottom: 1px $linear-color solid;
-
-            .detected-list {
-              list-style: none;
-
-              .each-detected-content {
-
-                .result-string {
-                  color: black;
-
-                  em {
-                    font-style: normal;
-                    background-color: #F3DDFDCC;
-                    font-weight: bold;
-                  }
-                }
-
-                .result-breadcrumb {
-                  font-size: 0.71rem;
-                  color: #818080;
-
-                  ul {
-                    list-style: none;
-                    li {
-                      display: inline-block;
-
-
-                      &:not(:last-child):after {
-                        padding: 0 5px;
-                        content: '→';
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     }
   }

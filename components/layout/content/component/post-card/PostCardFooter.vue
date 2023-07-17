@@ -7,7 +7,6 @@
 </template>
 
 <script lang="ts" setup>
-import {PostContent} from "@/class/implement/PostContent";
 import {mobileNaviStore} from "@/store";
 import PostCardFooterButton from "@/components/layout/content/component/post-card/PostCardFooterButton.vue";
 import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
