@@ -56,6 +56,7 @@ import {onMounted} from "vue";
 import {blogInfo, postContents} from "~/store/site";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {PostContent} from "~/class/implement/PostContent";
+
 const { $emitter } = useNuxtApp()
 const searchStatusStore = useSearchStatusStore()
 const data = {
@@ -122,7 +123,6 @@ const methods = {
       const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i')
 
       const result: PostContent [] = postContents.filter(content => RE.exec(content.header.title))
-
       $emitter.emit('searchText', result)
     }
   }

@@ -18,6 +18,10 @@ export const tagMap = reactive({
     store: new Map()
 })
 
+/* 경로별 파일노드 맵 */
+export const fileNodeMap = reactive({
+    store: new Map()
+})
 
 export const blogInfo = reactive<BlogInfo>(
     BlogInfo.create(
