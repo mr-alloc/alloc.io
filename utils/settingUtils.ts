@@ -1,6 +1,7 @@
 import {blogInfo} from "~/store/site";
 import {PostContent} from "~/class/implement/PostContent";
 import {PostContentGroup} from "~/class/implement/PostContentGroup";
+import {FileNode} from "~/class/implement/FileNode";
 
 export const calPostDate = (date: string): string => {
     const timeValue = Date.parse(date)
@@ -40,7 +41,7 @@ export function groupingBy<T>(contents: PostContent[], keyMapper: (content: Post
         const key: T = keyMapper(content)
         const array = map.has(key)
             ? map.get(key)
-            : new Array(content)
+            : new Array()
 
         if (array) {
             array.push(content)
@@ -50,7 +51,16 @@ export function groupingBy<T>(contents: PostContent[], keyMapper: (content: Post
     return map
 }
 
-
-
+export function getFileIcon(node: FileNode) {
+    let iconName;
+    if(node.hasIcon()) {
+        iconName = node._name
+    } else if(node.isDirectory()) {
+        iconName = 'folder_default'
+    } else {
+        iconName = 'post_default'
+    }
+    return iconName
+}
 
 

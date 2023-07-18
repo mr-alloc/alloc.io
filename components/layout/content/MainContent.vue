@@ -2,10 +2,10 @@
   <div class="main-content-view" id="main-content-wrapper">
     <nuxt-page class="current-content" :page-key="route.fullPath" />
     <MainFooter />
-    <div class="background" :class="{ active : data.mobileNaviStore.isActive || searchStatus.isSearchMode }" v-on:click="data.mobileNaviStore.isActive = false">
-      <div v-if="searchStatus.isSearchMode" class="search-result-area">
+    <div class="background" :class="{ active : data.mobileNaviStore.isActive || !searchStatus.isSearchMode }" v-on:click="data.mobileNaviStore.isActive = false">
+      <div v-if="!searchStatus.isSearchMode" class="search-result-area">
         <div class="search-result-panel">
-          <SearchResult />
+          <SearchResult v-for="group in data.groups" :key="group.icon" :row="group" />
         </div>
       </div>
     </div>
@@ -14,12 +14,15 @@
 
 <script lang="ts" setup>
 import MainFooter from "@/components/layout/content/MainFooter.vue";
-import { mobileNaviStore } from "@/store";
+import {mobileNaviStore, postMapStore} from "@/store";
 import { useRoute } from "#app";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {onMounted} from "vue";
 import {PostContent} from "~/class/implement/PostContent";
 import {PostContentGroup} from "~/class/implement/PostContentGroup";
+import {getFileIcon, groupingBy} from "~/utils/settingUtils";
+import SearchResult from "@/components/layout/header/SearchResult.vue"
+import {fileNodeMap} from "~/store/site";
 
 const route = useRoute()
 const { $emitter }= useNuxtApp()
@@ -31,15 +34,20 @@ const components = {
 
 const data = {
   mobileNaviStore,
-  route
+  route,
+  groups: [] as PostContentGroup[]
 }
 
 onMounted(() => {
   //검색 결과
-  $emitter.on('searchText', (result: PostContentGroup[]) => {
-    //SettingUtils.groupingBy() 사용
-    // const entryArray = [...map.entries()]
-    // return entryArray.map(([k, v]) => new PostContentGroup(k, v))
+  $emitter.on('searchText', (result: PostContent[]) => {
+    const map: Map<string, PostContent[]> = groupingBy<string>(result, (content)=> {
+      const node = fileNodeMap.store.get(content.path)
+      return getFileIcon(node)
+    })
+
+    const entryArray = [...map.entries()]
+    entryArray.forEach(([k, v]) => data.groups.push(new PostContentGroup(k, v)))
   })
 })
 </script>

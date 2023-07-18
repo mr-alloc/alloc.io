@@ -7,24 +7,22 @@
     </div>
     <div class="detected-content-area">
       <ul class="detected-list">
-        <li class="each-detected-content" v-for="content in props.row.contents">
+        <li class="each-detected-content" v-for="content in props.row.contents" :key="content.path">
           <div class="result-string">
             <span>{{ content.header.title }}</span>
           </div>
           <div class="result-breadcrumb">
-            <ul v-for="crumb in content.header.breadcrumbs">
-              <li>{{ crumb }}</li>
+            <ul>
+              <li v-for="crumb in content.header.breadcrumbs">{{ crumb }}</li>
             </ul>
           </div>
         </li>
       </ul>
     </div>
   </div>
-
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
 import {PostContentGroup} from "~/class/implement/PostContentGroup";
 
 const props = defineProps({
@@ -90,13 +88,16 @@ const props = defineProps({
             li {
               display: inline-block;
 
-
               &:not(:last-child):after {
                 padding: 0 5px;
                 content: '→';
               }
             }
           }
+        }
+
+        &:not(:last-child) {
+          border-bottom: 1px $linear-color solid;
         }
       }
     }

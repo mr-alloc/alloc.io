@@ -1,6 +1,6 @@
 import StarterService from "@/service/StarterService";
 import { FileNode } from "@/class/implement/FileNode";
-import {naviStack, postContents, tagMap} from "@/store/site";
+import {fileNodeMap, naviStack, postContents, tagMap} from "@/store/site";
 import {FileNodeWrapper} from "@/class/implement/FileNodeWrapper";
 import {PostContent} from "@/class/implement/PostContent";
 import {postMapStore} from "~/store";
@@ -28,8 +28,19 @@ class DefaultStarterService implements StarterService {
     }
 
     private settingFileNodes(): void {
-        const nodes: FileNode [] = FileNode.toFileTrees(fileNode)
+        const nodes: IFileNode [] = FileNode.toFileTrees(fileNode)
         naviStack.push(new FileNodeWrapper('탐색', nodes))
+        this.cacheFileNodeMap(nodes)
+    }
+
+    private cacheFileNodeMap(fileNodes: IFileNode[]): void {
+        for (let node of fileNodes) {
+            fileNodeMap.store.set(node._path, node)
+
+            if (node._files) {
+                this.cacheFileNodeMap(node._files)
+            }
+        }
     }
 
     private settingPostMap(): void {
