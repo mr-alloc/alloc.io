@@ -7,16 +7,16 @@ const PostStore = require('./postStore.js')
 const { FileType, FileNode } = require("./storeFileMap.js")
 
 const __ROOT__ = process.env.PWD
-const fileRE = /([^.]+)(?:(\.)([^.]+))?/g
+const fileRE = new RegExp('([^.]+)(?:(\.)([^.]+))?', 'g')
 
 function toFilePost (wholePath, file) {
     let filename, ext
     const post = readMarkdown(wholePath)
-    const parsed_name = fileRE.exec(file.name)
+    const parsedName = fileRE.exec(file.name)
 
-    if(parsed_name != undefined) {
-        ext = parsed_name[1]
-        filename = parsed_name[3]
+    if(parsedName) {
+        filename = parsedName[1]
+        ext = parsedName[3]
     }
 
     const nickname = post.header['summary'] != undefined
@@ -25,15 +25,16 @@ function toFilePost (wholePath, file) {
     /* 포스팅 정보 추가 */
 
     const pathArray = wholePath.split('/')
+        .filter(name => name !== '')
     const breadcrumbs = pathArray
         .slice(1, pathArray.length -1)
-        .filter(name => name !== '')
         .map(name => fileNames[name] ?? name)
     breadcrumbs.push(nickname)
     PostStore.push(post)
     post.header.breadcrumbs = breadcrumbs
+    const group = pathArray[1] ?? 'etc'
 
-    return new FileNode(wholePath.replace('.md', '').toLowerCase(), filename, ext, nickname, breadcrumbs, FileType.POST, false)
+    return new FileNode(wholePath.replace('.md', '').toLowerCase(), filename, ext, nickname, breadcrumbs, FileType.POST, false, group)
 }
 
 function toFileFolder(wholePath, file) {
@@ -42,8 +43,10 @@ function toFileFolder(wholePath, file) {
         : file.name
     const hasIcon = fs.existsSync(`${__ROOT__}/public/assets/icon/${file.name}.png`)
 
-    const breadcrumbs = wholePath.split('/').filter(name => name !== '').map(name => fileNames[name])
-    return new FileNode(wholePath, file.name, '', nickname, breadcrumbs, FileType.DIR, hasIcon)
+    const splitedPath = wholePath.split('/').filter(name => name !== '')
+    const breadcrumbs = splitedPath.map(name => fileNames[name])
+    const group = splitedPath[0] ?? 'etc'
+    return new FileNode(wholePath, file.name, '', nickname, breadcrumbs, FileType.DIR, hasIcon, group)
 }
 
 module.exports = (path) => {
