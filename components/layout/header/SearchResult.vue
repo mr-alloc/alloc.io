@@ -24,9 +24,18 @@
 
 <script lang="ts" setup>
 import {PostContentGroup} from "~/class/implement/PostContentGroup";
+import {onMounted, onUnmounted} from "vue";
 
 const props = defineProps({
   row: PostContentGroup
+})
+
+onMounted(() => {
+  console.log('mounted: ', props.row?.icon)
+})
+
+onUnmounted(() => {
+  console.log('Unmounted: ', props.row?.icon)
 })
 
 </script>
@@ -61,13 +70,13 @@ const props = defineProps({
   .detected-content-area {
     flex-grow: 1;
     width: 100%;
-    padding: 8px 5px;
     border-bottom: 1px $linear-color solid;
 
     .detected-list {
       list-style: none;
 
       .each-detected-content {
+        padding: 8px 5px;
 
         .result-string {
           color: black;

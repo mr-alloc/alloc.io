@@ -12,8 +12,9 @@ class FileNode {
     _files
     _hasIcon
     _breadcrumbs
+    _group
 
-    constructor(filePath, fileName, ext, summary, breadcrumbs, type, hasIcon) {
+    constructor(filePath, fileName, ext, summary, breadcrumbs, type, hasIcon, group) {
         this._path = filePath
         this._name = fileName
         this._ext = ext
@@ -22,7 +23,7 @@ class FileNode {
         this._type = type
         this._hasIcon = hasIcon
         this._files = new Array()
-
+        this._group = group
     }
 
     set files(files) {

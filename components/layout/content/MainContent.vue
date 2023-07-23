@@ -5,7 +5,7 @@
     <div class="background" :class="{ active : data.mobileNaviStore.isActive || !searchStatus.isSearchMode }" v-on:click="data.mobileNaviStore.isActive = false">
       <div v-if="!searchStatus.isSearchMode" class="search-result-area">
         <div class="search-result-panel">
-          <SearchResult v-for="group in data.groups" :key="group.icon" :row="group" />
+          <SearchResult v-for="group in data.groups.values()" :key="group" :row="group" />
         </div>
       </div>
     </div>
@@ -23,6 +23,7 @@ import {PostContentGroup} from "~/class/implement/PostContentGroup";
 import {getFileIcon, groupingBy} from "~/utils/settingUtils";
 import SearchResult from "@/components/layout/header/SearchResult.vue"
 import {fileNodeMap} from "~/store/site";
+import da from "date-format-parse/src/locale/da";
 
 const route = useRoute()
 const { $emitter }= useNuxtApp()
@@ -35,7 +36,7 @@ const components = {
 const data = {
   mobileNaviStore,
   route,
-  groups: [] as PostContentGroup[]
+  groups: new Map<string, PostContentGroup>()
 }
 
 onMounted(() => {
@@ -43,11 +44,17 @@ onMounted(() => {
   $emitter.on('searchText', (result: PostContent[]) => {
     const map: Map<string, PostContent[]> = groupingBy<string>(result, (content)=> {
       const node = fileNodeMap.store.get(content.path)
-      return getFileIcon(node)
+      return node.group
     })
 
     const entryArray = [...map.entries()]
-    entryArray.forEach(([k, v]) => data.groups.push(new PostContentGroup(k, v)))
+    entryArray.forEach(([k, v]) => {
+      if (data.groups.has(k)) {
+        data.groups.get(k)?.update(v)
+        return
+      }
+      data.groups.set(k, new PostContentGroup(k, v))
+    })
   })
 })
 </script>
@@ -90,7 +97,6 @@ onMounted(() => {
         max-width: 768px;
         height: 100%;
         margin: 0 auto;
-        padding-top: 3px;
         overflow-y: scroll;
 
       }
