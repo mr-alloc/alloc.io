@@ -6,6 +6,7 @@ export interface IFileNode {
     readonly _ext: string
     readonly _hasIcon: boolean
     readonly _files?: IFileNode []
+    readonly _group: string
 
     isDirectory(): boolean
 

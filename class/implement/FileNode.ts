@@ -9,6 +9,7 @@ export class FileNode implements IFileNode {
     readonly _ext: string
     readonly _hasIcon: boolean
     readonly _files?: IFileNode []
+    readonly _group: string
 
     constructor(value: IFileNode) {
         this._path = value._path
@@ -18,6 +19,7 @@ export class FileNode implements IFileNode {
         this._ext = value._ext
         this._hasIcon = value._hasIcon
         this._files = value._files !== undefined ? FileNode.toFileTrees(value._files) : undefined
+        this._group = value._group
     }
 
     get type(): string {
@@ -28,6 +30,10 @@ export class FileNode implements IFileNode {
         return this._path
     }
 
+    get name(): string {
+        return this._name
+    }
+
     get files(): IFileNode[] | undefined {
         return this._files
     }
@@ -36,6 +42,9 @@ export class FileNode implements IFileNode {
         return this._summary
     }
 
+    get group(): string {
+        return this._group
+    }
     isDirectory(): boolean {
         return this._type == FileType.DIR
     }
