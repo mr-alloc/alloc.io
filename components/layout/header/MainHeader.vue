@@ -17,7 +17,7 @@
           </span>
         </div>
         <div class="menu-title">
-          <input type="text" placeholder="찾기"
+          <input type="text" placeholder="찾기" id="search-bar"
                  v-on:input="methods.typeForText($event, this)"
                  v-on:focusout="methods.inactivateSearchMode($event)"
           >
@@ -55,7 +55,7 @@ import { useNuxtApp } from "#app";
 import {onMounted} from "vue";
 import {blogInfo, postContents} from "~/store/site";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
-import {PostContent} from "~/class/implement/PostContent";
+import {PostSearchResult} from "~/class/implement/PostSearchResult";
 
 const { $emitter } = useNuxtApp()
 const searchStatusStore = useSearchStatusStore()
@@ -109,10 +109,10 @@ const methods = {
   activateSearchMode: () => {
     searchStatusStore.searching()
   },
-  inactivateSearchMode: (e: FocusEvent) => {
-    const input = e.target as HTMLInputElement
+  inactivateSearchMode: (e: FocusEvent | null) => {
+    const input = e ? e.target as HTMLInputElement
+        : document.getElementById('search-bar') as HTMLInputElement
     input.value = ''
-    searchStatusStore.cancelSearch()
   },
   typeForText: (e: InputEvent) => {
     const inputElement = e.target as HTMLInputElement
@@ -122,7 +122,9 @@ const methods = {
     if (titleRE.test(input)) {
       const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i')
 
-      const result: PostContent [] = postContents.filter(content => RE.exec(content.header.title))
+      const result: PostSearchResult [] = postContents
+          .filter(content => RE.exec(content.header.title))
+          .map(content => new PostSearchResult(content))
       $emitter.emit('searchText', result)
     }
   }

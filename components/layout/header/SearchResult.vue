@@ -7,13 +7,13 @@
     </div>
     <div class="detected-content-area">
       <ul class="detected-list">
-        <li class="each-detected-content" v-for="content in props.row.contents" :key="content.path">
+        <li class="each-detected-content" :class="`${result.status}`" v-for="result in props.row.results" :key="result.content.path">
           <div class="result-string">
-            <span>{{ content.header.title }}</span>
+            <span>{{ result.content.header.title }}</span>
           </div>
           <div class="result-breadcrumb">
             <ul>
-              <li v-for="crumb in content.header.breadcrumbs">{{ crumb }}</li>
+              <li v-for="crumb in result.content.header.breadcrumbs">{{ crumb }}</li>
             </ul>
           </div>
         </li>
@@ -23,11 +23,11 @@
 </template>
 
 <script lang="ts" setup>
-import {PostContentGroup} from "~/class/implement/PostContentGroup";
+import {PostSearchGroup} from "~/class/implement/PostSearchGroup";
 import {onMounted, onUnmounted} from "vue";
 
 const props = defineProps({
-  row: PostContentGroup
+  row: PostSearchGroup
 })
 
 onMounted(() => {

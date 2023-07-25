@@ -1,6 +1,6 @@
 import {blogInfo} from "~/store/site";
 import {PostContent} from "~/class/implement/PostContent";
-import {PostContentGroup} from "~/class/implement/PostContentGroup";
+import {PostSearchGroup} from "~/class/implement/PostSearchGroup";
 import {FileNode} from "~/class/implement/FileNode";
 
 export const calPostDate = (date: string): string => {
@@ -35,8 +35,8 @@ export const setPageTitle = (title: string) => {
 }
 
 
-export function groupingBy<T>(contents: PostContent[], keyMapper: (content: PostContent) => T): Map<T, PostContent[]> {
-    const map = new Map<T, PostContent[]>()
+export function groupingBy<T, E>(contents: E[], keyMapper: (content: E) => T): Map<T, E[]> {
+    const map = new Map<T, E[]>()
     for (let content of contents) {
         const key: T = keyMapper(content)
         const array = map.has(key)
