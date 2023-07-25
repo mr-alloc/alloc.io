@@ -2,10 +2,15 @@
   <div class="main-content-view" id="main-content-wrapper">
     <nuxt-page class="current-content" :page-key="route.fullPath" />
     <MainFooter />
-    <div class="background" :class="{ active : data.mobileNaviStore.isActive || !searchStatus.isSearchMode }" v-on:click="data.mobileNaviStore.isActive = false">
-      <div v-if="!searchStatus.isSearchMode" class="search-result-area">
+    <div class="background" :class="{ active : data.mobileNaviStore.isActive || searchStatus.isSearchMode }"
+         v-on:click="() => {
+           data.mobileNaviStore.isActive = false
+           searchStatus.cancelSearch()
+         }"
+    >
+      <div v-if="searchStatus.isSearchMode" class="search-result-area">
         <div class="search-result-panel">
-          <SearchResult v-for="group in data.groups.values()" :key="group" :row="group" />
+          <SearchResult v-for="group in groups.values()" :key="group" :row="group" />
         </div>
       </div>
     </div>
@@ -14,16 +19,15 @@
 
 <script lang="ts" setup>
 import MainFooter from "@/components/layout/content/MainFooter.vue";
-import {mobileNaviStore, postMapStore} from "@/store";
+import {mobileNaviStore} from "@/store";
 import { useRoute } from "#app";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {onMounted} from "vue";
-import {PostContent} from "~/class/implement/PostContent";
-import {PostContentGroup} from "~/class/implement/PostContentGroup";
-import {getFileIcon, groupingBy} from "~/utils/settingUtils";
+import {PostSearchGroup} from "~/class/implement/PostSearchGroup";
+import {groupingBy} from "~/utils/settingUtils";
 import SearchResult from "@/components/layout/header/SearchResult.vue"
 import {fileNodeMap} from "~/store/site";
-import da from "date-format-parse/src/locale/da";
+import {PostSearchResult} from "~/class/implement/PostSearchResult";
 
 const route = useRoute()
 const { $emitter }= useNuxtApp()
@@ -35,25 +39,27 @@ const components = {
 
 const data = {
   mobileNaviStore,
-  route,
-  groups: new Map<string, PostContentGroup>()
+  route
 }
+
+const groups = ref(new Map<string, PostSearchGroup>())
 
 onMounted(() => {
   //검색 결과
-  $emitter.on('searchText', (result: PostContent[]) => {
-    const map: Map<string, PostContent[]> = groupingBy<string>(result, (content)=> {
-      const node = fileNodeMap.store.get(content.path)
+  $emitter.on('searchText', (result: PostSearchResult[]) => {
+    const map: Map<string, PostSearchResult[]> = groupingBy<string, PostSearchResult>(result, (result)=> {
+      const node = fileNodeMap.store.get(result.content.path)
       return node.group
     })
 
     const entryArray = [...map.entries()]
+    console.log('received:', entryArray)
     entryArray.forEach(([k, v]) => {
-      if (data.groups.has(k)) {
-        data.groups.get(k)?.update(v)
+      if (groups.value.has(k)) {
+        groups.value.get(k)?.update(v)
         return
       }
-      data.groups.set(k, new PostContentGroup(k, v))
+      groups.value.set(k, new PostSearchGroup(k, v))
     })
   })
 })
@@ -98,6 +104,7 @@ onMounted(() => {
         height: 100%;
         margin: 0 auto;
         overflow-y: scroll;
+        border-radius: 8px;
 
       }
     }
