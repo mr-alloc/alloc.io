@@ -3,7 +3,7 @@ import {SearchStatus} from "~/class/implement/SearchStatus";
 
 export class PostSearchResult {
 
-    readonly _status: SearchStatus
+    _status: SearchStatus
     readonly _postContent: PostContent
 
     constructor(content: PostContent) {
@@ -17,5 +17,21 @@ export class PostSearchResult {
 
     get status(): String {
         return this._status
+    }
+
+    finalize() {
+        this._status = SearchStatus.FINALIZE
+    }
+
+    carryOn() {
+        this._status = SearchStatus.CARRY_ON
+    }
+
+    isFinalize(): boolean {
+        return this._status == SearchStatus.FINALIZE
+    }
+
+    disappear() {
+        this._status = SearchStatus.DISAPPEAR
     }
 }
