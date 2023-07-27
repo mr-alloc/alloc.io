@@ -51,6 +51,18 @@ export function groupingBy<T, E>(contents: E[], keyMapper: (content: E) => T): M
     return map
 }
 
+export function toMap<T, E>(contents: E[], keyMapper: (content: E) => T): Map<T, E> {
+    const map = new Map<T, E>()
+    for (let content of contents) {
+        const key: T = keyMapper(content)
+        if (map.has(key)) {
+            throw Promise.reject(`Can\'t Mapped by duplicated key '${key}'. `)
+        }
+        map.set(key, content)
+    }
+    return map
+}
+
 export function getFileIcon(node: FileNode) {
     let iconName;
     if(node.hasIcon()) {

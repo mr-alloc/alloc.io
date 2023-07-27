@@ -12,6 +12,6 @@ export const useSearchStatusStore = defineStore('searchStatus', () => {
     }
 
     return {
-        isSearchMode, searching, cancelSearch
+        isSearchMode, searching, cancelSearch: cancelSearch
     }
 })
