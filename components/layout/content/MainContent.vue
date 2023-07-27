@@ -3,13 +3,10 @@
     <nuxt-page class="current-content" :page-key="route.fullPath" />
     <MainFooter />
     <div class="background" :class="{ active : data.mobileNaviStore.isActive || searchStatus.isSearchMode }"
-         v-on:click="() => {
-           data.mobileNaviStore.isActive = false
-           searchStatus.cancelSearch()
-         }"
+         v-on:click="methods.clickBackground($event)"
     >
       <div v-if="searchStatus.isSearchMode" class="search-result-area">
-        <div class="search-result-panel">
+        <div class="search-result-panel" v-on:click="$event.stopPropagation()">
           <SearchResult v-for="group in groups.values()" :key="group" :row="group" />
         </div>
       </div>
@@ -44,6 +41,12 @@ const data = {
 
 const groups = ref(new Map<string, PostSearchGroup>())
 
+const methods = {
+  clickBackground: (e: PointerEvent) => {
+    data.mobileNaviStore.isActive = false
+    searchStatus.cancelSearch()
+  }
+}
 onMounted(() => {
   //검색 결과
   $emitter.on('searchText', (result: PostSearchResult[]) => {
@@ -54,6 +57,7 @@ onMounted(() => {
 
     const entryArray = [...map.entries()]
     console.log('received:', entryArray)
+    //그룹 데이터 (k: 그룹명, v: 포스트 리스트)
     entryArray.forEach(([k, v]) => {
       if (groups.value.has(k)) {
         groups.value.get(k)?.update(v)
