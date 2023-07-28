@@ -56,7 +56,6 @@ onMounted(() => {
     })
 
     const entryArray = [...map.entries()]
-    console.log('received:', entryArray)
     //그룹 데이터 (k: 그룹명, v: 포스트 리스트)
     entryArray.forEach(([k, v]) => {
       if (groups.value.has(k)) {
