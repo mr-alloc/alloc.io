@@ -30,13 +30,6 @@ const props = defineProps({
   row: PostSearchGroup
 })
 
-onMounted(() => {
-  console.log('mounted: ', props.row?.icon)
-})
-
-onUnmounted(() => {
-  console.log('Unmounted: ', props.row?.icon)
-})
 
 </script>
 

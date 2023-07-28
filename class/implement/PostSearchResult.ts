@@ -19,19 +19,11 @@ export class PostSearchResult {
         return this._status
     }
 
-    finalize() {
-        this._status = SearchStatus.FINALIZE
+    is(status: SearchStatus): boolean {
+        return this._status == status
     }
 
-    carryOn() {
-        this._status = SearchStatus.CARRY_ON
-    }
-
-    isFinalize(): boolean {
-        return this._status == SearchStatus.FINALIZE
-    }
-
-    disappear() {
-        this._status = SearchStatus.DISAPPEAR
+    change(status: SearchStatus) {
+        this._status = status
     }
 }
