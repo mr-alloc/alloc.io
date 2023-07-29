@@ -18,8 +18,9 @@
         </div>
         <div class="menu-title">
           <input type="text" placeholder="찾기" id="search-bar"
-                 v-on:input="methods.typeForText($event, this)"
+                 v-on:input="methods.typeForText()"
                  v-on:focusout="methods.inactivateSearchMode($event)"
+                 v-on:keyup="methods.sendKeyboardEvent($event)"
           >
         </div>
       </div>
@@ -56,6 +57,7 @@ import {onMounted} from "vue";
 import {blogInfo, postContents} from "~/store/site";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {PostSearchResult} from "~/class/implement/PostSearchResult";
+import {Key} from "~/class/implement/Key";
 
 const { $emitter } = useNuxtApp()
 const searchStatusStore = useSearchStatusStore()
@@ -103,7 +105,7 @@ onMounted(() => {
 
 })
 
-const titleRE = /([a-zA-Z가-힣0-9@\w])/
+const titleRE = /([a-zA-Z가-힣0-9@\W])/
 const methods = {
 
   activateSearchMode: () => {
@@ -114,17 +116,29 @@ const methods = {
         : document.getElementById('search-bar') as HTMLInputElement
     input.value = ''
   },
-  typeForText: (e: InputEvent) => {
-    const inputElement = e.target as HTMLInputElement
-    const input = e.data ?? ''
+  typeForText: () => {
+    const inputElement = document.getElementById('search-bar') as HTMLInputElement
     const text = inputElement.value ?? ''
 
-    if (titleRE.test(input)) {
+    methods.searchText(text)
+  },
+  sendKeyboardEvent: (e: KeyboardEvent) => {
+    if (e.code == Key.BACKSPACE) {
+      methods.typeForText()
+    }
+  },
+  searchText: (text: string) => {
+    if (text === '') {
+      $emitter.emit('searchText', [])
+    }
+
+    if (titleRE.test(text)) {
       const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i')
 
       const result: PostSearchResult [] = postContents
           .filter(content => RE.exec(content.header.title))
           .map(content => new PostSearchResult(content))
+      console.debug(`-----검색어: "${text}"-----------`)
       $emitter.emit('searchText', result)
     }
   }
