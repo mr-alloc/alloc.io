@@ -59,11 +59,39 @@ onMounted(() => {
     //그룹 데이터 (k: 그룹명, v: 포스트 리스트)
     entryArray.forEach(([k, v]) => {
       if (groups.value.has(k)) {
-        groups.value.get(k)?.update(v)
+        const oldResult = groups.value.get(k);
+        oldResult?.update(v)
+        if (oldResult?.results.length == 0) {
+          console.log(`${k}: 모두 제거됨`)
+          groups.value.delete(k)
+        }
         return
       }
       groups.value.set(k, new PostSearchGroup(k, v))
     })
+
+    const keys = [...groups.value.keys()]
+    // clonedArray: Map<string, PostSearchGroup> = 기존 검색 결과
+    // map: Map<string, PostSearchResult[]> = 신규 검색 결과
+    keys.forEach(key => {
+      // 기존 검색결과 와 같은 그룹이라면 업데이트
+      if (map.has(key)) {
+        const newResult = map.get(key) ?? [];
+        const oldResult = groups.value.get(key);
+        oldResult?.update(newResult)
+        console.log('oldResult:', oldResult)
+
+        if (oldResult?.results.length == 0) {
+          console.log(`${key}: 모두 제거됨`)
+          groups.value.delete(key)
+        }
+      }
+    })
+
+
+    const array = [...groups.value.values()]
+    const status = array.map(group => `\n(${group.results.length}) ${group.icon}\n${group.results.map((re, i) => `\t${++i}. ${re.content.header.title}`).join('\n')}`).join('\n')
+    console.debug(status)
   })
 })
 </script>

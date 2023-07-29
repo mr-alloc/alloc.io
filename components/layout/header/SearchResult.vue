@@ -37,7 +37,7 @@ const props = defineProps({
 @import '@/styles';
 
 .search-result-row {
-  margin-top: 3px;
+  //margin-top: 3px;
   display: flex;
   flex-direction: row;
 
@@ -63,13 +63,17 @@ const props = defineProps({
   .detected-content-area {
     flex-grow: 1;
     width: 100%;
-    border-bottom: 1px $linear-color solid;
+    //border-bottom: 1px $linear-color solid;
+    padding: 3px 0;
 
     .detected-list {
       list-style: none;
 
       .each-detected-content {
         padding: 8px 5px;
+        border-radius: 5px;
+        transition: 0.4s;
+        margin: 3px 5px;
 
         .result-string {
           color: black;
@@ -99,7 +103,11 @@ const props = defineProps({
         }
 
         &:not(:last-child) {
-          border-bottom: 1px $linear-color solid;
+          //border-bottom: 1px $linear-color solid;
+        }
+
+        &:hover {
+          background-color: rgb(0,0,0,0.2);
         }
       }
     }

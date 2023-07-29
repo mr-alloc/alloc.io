@@ -32,7 +32,6 @@ export class PostSearchGroup {
                     console.log('internal element:', this._searchResults.get(key))
                     return
                 }
-                console.log('carry-on 상태가 아님', result.content.header.title)
             }
             //Appear 상태로 신규결과 추가 (추가되는 연출)
             else {
@@ -43,6 +42,10 @@ export class PostSearchGroup {
         //아직 까지 Carry-on으로 되어있다면, 신규 결과에 없다는 의미이므로, Finalize
         //Finalize변경되면서, 제거되는 연출)
         this.results.forEach(element => {
+            if(element.is(SearchStatus.APPEAR)) {
+                element.change(SearchStatus.READY)
+            }
+
             if (element.is(SearchStatus.CARRY_ON)) {
                 //Finalize 된 대상들은 이미 스타일이 제거 되었으므로, 실제로 데이터를 제거
                 element.change(SearchStatus.FINALIZE)
@@ -50,7 +53,7 @@ export class PostSearchGroup {
                 this._searchResults.delete(element.content.path)
             }
         })
-        //Finalize 된 대상들은 이미 스타일이 제거 되었으므로, 실제로 데이터를 제거
 
+        //Finalize 된 대상들은 이미 스타일이 제거 되었으므로, 실제로 데이터를 제거
     }
 }
