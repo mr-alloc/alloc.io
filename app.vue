@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container" :class="{ dark: store.isDarkMode }">
+  <div id="application-container" class="app-container" :class="{ dark: store.isDarkMode }">
     <MainHeader />
     <RouteWrapper />
     <LoadingBar />
@@ -12,8 +12,10 @@ import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import RouteWrapper from "@/components/layout/content/RouteWrapper.vue";
 import { useDarkModeStore } from "@/store/DarkModeStore";
 import Runner from '@/service/DefaultStarterService'
-import {blogInfo} from "~/store/site";
+import {blogInfo, postContents} from "~/store/site";
 import MobileExpander from "~/components/layout/header/MobileExpander.vue";
+import {onMounted} from "vue";
+
 
 Runner.init()
 const store = useDarkModeStore()
@@ -23,6 +25,7 @@ const components = {
   LoadingBar,
   MainHeader
 }
+
 useHead({
   meta: [
     {
@@ -50,6 +53,9 @@ useHead({
       content: blogInfo.defaultProfile
     }
   ]
+})
+
+onMounted(() => {
 })
 </script>
 

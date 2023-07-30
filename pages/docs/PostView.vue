@@ -81,7 +81,7 @@ onBeforeMount(() => {
   prepareStore.prepare()
   setTimeout(() => {
     prepareStore.done()
-  }, 200)
+  }, 150)
 })
 
 
@@ -447,7 +447,7 @@ const zoomOut = () => {
     .post-area {
       width: 90%;
       border: none;
-      margin: 100px 0 100px auto;
+      margin: 100px 0 100px 50px;
 
       .post-title-area {
         border-radius: 0px;

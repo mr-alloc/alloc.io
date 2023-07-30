@@ -1,6 +1,6 @@
 import StarterService from "@/service/StarterService";
 import { FileNode } from "@/class/implement/FileNode";
-import {fileNodeMap, naviStack, postContents, tagMap} from "@/store/site";
+import {contentsForSearch, fileNodeMap, naviStack, postContents, tagMap} from "@/store/site";
 import {FileNodeWrapper} from "@/class/implement/FileNodeWrapper";
 import {PostContent} from "@/class/implement/PostContent";
 import {postMapStore} from "~/store";
@@ -16,12 +16,15 @@ const fileNode: IFileNode[] = fileNodeJson
 const posts: IPostContent[] = postJson
 
 class DefaultStarterService implements StarterService {
-
+    isInitialized: boolean
     private static instance: StarterService
+    constructor(isInitialized: boolean) {
+        this.isInitialized = false
+    }
 
     public static getInstance(): StarterService {
         if(!DefaultStarterService.instance) {
-            DefaultStarterService.instance = new DefaultStarterService()
+            DefaultStarterService.instance = new DefaultStarterService(false)
         }
 
         return DefaultStarterService.instance
@@ -47,17 +50,27 @@ class DefaultStarterService implements StarterService {
         PostContent.toPosts(posts)
             .sort((a, b) => b.header.date.getTime() - a.header.date.getTime())
             .forEach(post => {
-                postMapStore.map.set(post._path, post)
+                //피드용
                 postContents.push(post)
+                // 새로고침시 피드용만 초기화
+                if (this.isInitialized) return
+
+                postMapStore.map.set(post._path, post)
+                //검색용
+                contentsForSearch.push(post)
                 if(post.header) {
                     this.setTags(post.header, post._path)
                 }
             })
+
     }
 
     init(): void {
-        this.settingFileNodes()
         this.settingPostMap()
+        if (this.isInitialized) {
+            return
+        }
+        this.settingFileNodes()
     }
 
     private setTags(header: Header, path: string): void {
