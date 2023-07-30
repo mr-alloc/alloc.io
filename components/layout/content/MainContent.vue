@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import MainFooter from "@/components/layout/content/MainFooter.vue";
 import {mobileNaviStore} from "@/store";
-import { useRoute } from "#app";
+import {useRoute} from "#app";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {onMounted} from "vue";
 import {PostSearchGroup} from "~/class/implement/PostSearchGroup";
@@ -25,10 +25,13 @@ import {groupingBy} from "~/utils/settingUtils";
 import SearchResult from "@/components/layout/header/SearchResult.vue"
 import {fileNodeMap} from "~/store/site";
 import {PostSearchResult} from "~/class/implement/PostSearchResult";
+import {Pair} from "~/class/implement/Pair";
+import {useRouter} from "vue-router";
 
 const route = useRoute()
 const { $emitter }= useNuxtApp()
 const searchStatus = useSearchStatusStore()
+const router = useRouter()
 
 const components = {
   MainFooter
@@ -40,7 +43,8 @@ const data = {
 }
 
 const groups = ref(new Map<string, PostSearchGroup>())
-
+const searchLocationPair = ref<Pair<string, number>[]>([])
+const currentLocationIndex = ref(0)
 const methods = {
   clickBackground: (e: PointerEvent) => {
     data.mobileNaviStore.isActive = false
@@ -55,43 +59,89 @@ onMounted(() => {
       return node.group
     })
 
-    const entryArray = [...map.entries()]
-    //그룹 데이터 (k: 그룹명, v: 포스트 리스트)
-    entryArray.forEach(([k, v]) => {
-      if (groups.value.has(k)) {
-        const oldResult = groups.value.get(k);
-        oldResult?.update(v)
-        if (oldResult?.results.length == 0) {
-          console.log(`${k}: 모두 제거됨`)
-          groups.value.delete(k)
-        }
-        return
-      }
-      groups.value.set(k, new PostSearchGroup(k, v))
-    })
-
     const keys = [...groups.value.keys()]
     // clonedArray: Map<string, PostSearchGroup> = 기존 검색 결과
     // map: Map<string, PostSearchResult[]> = 신규 검색 결과
     keys.forEach(key => {
       // 기존 검색결과 와 같은 그룹이라면 업데이트
       if (map.has(key)) {
-        const newResult = map.get(key) ?? [];
-        const oldResult = groups.value.get(key);
+        const newResult = map.get(key) ?? []
+        map.delete(key)
+        const oldResult = groups.value.get(key)
         oldResult?.update(newResult)
-        console.log('oldResult:', oldResult)
 
         if (oldResult?.results.length == 0) {
-          console.log(`${key}: 모두 제거됨`)
           groups.value.delete(key)
         }
+        return
+      }
+      // 기존 그룹에있지만, 신규 결과에서 그룹이 없는 경우
+      else {
+        groups.value.delete(key)
       }
     })
 
+    //기존에 그룹에는 없고, 신규 결과에서 그룹이 있는경우
+    const newKeys = [...map.entries()]
+    newKeys.forEach(([key, value]) => {
+      const group = new PostSearchGroup(key, value)
+      groups.value.set(key, group)
+      group.updateNewer()
+    })
 
     const array = [...groups.value.values()]
-    const status = array.map(group => `\n(${group.results.length}) ${group.icon}\n${group.results.map((re, i) => `\t${++i}. ${re.content.header.title}`).join('\n')}`).join('\n')
-    console.debug(status)
+    const pairs = array.map(val => val.results.map((res, idx) => new Pair<string, number>(val.icon, idx))).flat()
+    searchLocationPair.value = pairs
+    currentLocationIndex.value = 0
+
+    // const status = array.map(group => `\n(${group.results.length}) ${group.icon}\n${group.results.map((re, i) => `\t[${re.status}]${++i}. ${re.content.header.title}`).join('\n')}`).join('\n')
+    // console.debug(status)
+
+  })
+
+  $emitter.on('selectResult', (select: number) => {
+    const length = searchLocationPair.value.length
+    //검색 결과가 없다면,
+    if (length === 0) {
+      currentLocationIndex.value = 0
+      return
+    }
+    const cIndex = currentLocationIndex.value
+    const pair = searchLocationPair.value[cIndex]
+    //DOWN
+    const currentTarget = groups.value.get(pair.left)?.results[pair.right]
+
+    // 검색 결과 중 첫번째 요소가 아직 선택되지 않았다면 선택 처리
+    if (cIndex === 0 && ! currentTarget?.isSelected){
+      currentTarget?.selected(true)
+      return
+    }
+    //0: Arrow down, 1: arrow up
+    const nextIndex = (select == 0)
+        ? cIndex +1 > length-1 ? length-1 : cIndex +1
+        : cIndex -1 < 0 ? 0 : cIndex -1
+
+    const nextPair = searchLocationPair.value[nextIndex]
+    currentTarget?.selected(false)
+
+    const nextTarget = groups.value.get(nextPair.left)?.results[nextPair.right]
+    nextTarget?.selected(true)
+    currentLocationIndex.value = nextIndex
+  })
+
+  $emitter.on('moveToSelectedPost', () => {
+    const cIndex = currentLocationIndex.value
+    const pair = searchLocationPair.value[cIndex]
+    //DOWN
+    const currentTarget = groups.value.get(pair.left)?.results[pair.right]
+    if (currentLocationIndex.value === 0 && ! currentTarget?.isSelected) {
+      return
+    }
+
+    router.push(currentTarget?.content.path ?? '')
+    searchStatus.cancelSearch()
+    currentLocationIndex.value = 0
+    $emitter.emit('resetSearchBar')
   })
 })
 </script>

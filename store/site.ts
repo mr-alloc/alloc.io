@@ -3,9 +3,13 @@ import { FileNodeWrapper } from "@/class/implement/FileNodeWrapper"
 import { PostContent } from "@/class/implement/PostContent";
 import packageJson from '@/package.json'
 import {BlogInfo} from "~/class/implement/BlogInfo";
+import {Pair} from "~/class/implement/Pair";
 
-/* 포스팅 메타파일 읽고 저장 */
+/* (피드용) 포스팅 메타파일 읽고 저장 */
 export const postContents =  reactive<PostContent[]>([])
+
+/* (검색용) 포스팅 메타 정보 */
+export const contentsForSearch = reactive<PostContent[]>([])
 
 /* 사이트 네비게이터 스택 */
 export const naviStack = reactive<FileNodeWrapper[]>([])

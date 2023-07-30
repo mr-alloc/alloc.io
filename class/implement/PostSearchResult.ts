@@ -4,10 +4,12 @@ import {SearchStatus} from "~/class/implement/SearchStatus";
 export class PostSearchResult {
 
     _status: SearchStatus
+    _isSelected: boolean
     readonly _postContent: PostContent
 
     constructor(content: PostContent) {
         this._status = SearchStatus.APPEAR
+        this._isSelected = false
         this._postContent = content
     }
 
@@ -17,6 +19,15 @@ export class PostSearchResult {
 
     get status(): String {
         return this._status
+    }
+
+    selected(isSelected: boolean): void {
+        this._isSelected = isSelected
+    }
+
+
+    get isSelected(): boolean {
+        return this._isSelected
     }
 
     is(status: SearchStatus): boolean {

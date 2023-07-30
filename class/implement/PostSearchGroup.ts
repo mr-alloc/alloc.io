@@ -28,8 +28,6 @@ export class PostSearchGroup {
                 if (existed?.is(SearchStatus.CARRY_ON)) {
                     existed?.change(SearchStatus.READY)
                     //꺼내와서도 값이 변경되는 지 확인
-                    console.log('existed:', existed)
-                    console.log('internal element:', this._searchResults.get(key))
                     return
                 }
             }
@@ -49,11 +47,18 @@ export class PostSearchGroup {
             if (element.is(SearchStatus.CARRY_ON)) {
                 //Finalize 된 대상들은 이미 스타일이 제거 되었으므로, 실제로 데이터를 제거
                 element.change(SearchStatus.FINALIZE)
-                console.log('finalize with ', element.content.header.title)
                 this._searchResults.delete(element.content.path)
             }
         })
 
         //Finalize 된 대상들은 이미 스타일이 제거 되었으므로, 실제로 데이터를 제거
+    }
+
+    updateNewer() {
+        this.results.forEach(element => {
+            if(element.is(SearchStatus.APPEAR)) {
+                element.change(SearchStatus.READY)
+            }
+        })
     }
 }

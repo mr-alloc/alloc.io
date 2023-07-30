@@ -7,7 +7,11 @@
     </div>
     <div class="detected-content-area">
       <ul class="detected-list">
-        <li class="each-detected-content" :class="`${result.status}`" v-for="result in props.row.results" :key="result.content.path">
+        <li class="each-detected-content"
+            :class="[`${result.status}`, { select: result.isSelected}]"
+            v-for="result in props.row.results"
+            :key="result.content.path"
+        >
           <div class="result-string">
             <span>{{ result.content.header.title }}</span>
           </div>
@@ -74,6 +78,7 @@ const props = defineProps({
         border-radius: 5px;
         transition: 0.4s;
         margin: 3px 5px;
+        cursor: pointer;
 
         .result-string {
           color: black;
@@ -108,6 +113,31 @@ const props = defineProps({
 
         &:hover {
           background-color: rgb(0,0,0,0.2);
+        }
+
+        &.select {
+          background-color: rgb(0,0,0,0.2);
+        }
+        //최로 로드(연출상 비활성화)
+        &.appear {
+          //opacity: 0;
+          //position: fixed;
+        }
+        //준비 (출현 연출)
+        &.ready {
+
+        }
+        //유지 - 기존 결과
+        &.carry-on {
+
+        }
+        //삭제대상 (제거 연출)
+        &.finalize {
+
+        }
+        //실제 제거
+        &.disappear {
+
         }
       }
     }
