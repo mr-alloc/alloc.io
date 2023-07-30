@@ -50,11 +50,11 @@
 </template>
 
 <script lang="ts" setup>
-import {searchInputStore, mobileNaviStore, tabletNaviStore} from "@/store";
+import {searchInputStore, mobileNaviStore} from "@/store";
 import { calPostDate } from "@/utils/settingUtils";
 import { useNuxtApp } from "#app";
 import {onMounted} from "vue";
-import {blogInfo, postContents} from "~/store/site";
+import {blogInfo, contentsForSearch} from "~/store/site";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {PostSearchResult} from "~/class/implement/PostSearchResult";
 import {Key} from "~/class/implement/Key";
@@ -103,18 +103,26 @@ onMounted(() => {
 
   })
 
+  $emitter.on('resetSearchBar', () => {
+    methods.inactivateSearchMode(null)
+
+  })
+
 })
 
-const titleRE = /([a-zA-Z가-힣0-9@\W])/
+const titleRE = /([a-zA-Z가-힣0-9@\W\-\_])/
 const methods = {
 
   activateSearchMode: () => {
     searchStatusStore.searching()
+    const input = document.getElementById('search-bar') as HTMLInputElement
+    input.focus()
   },
   inactivateSearchMode: (e: FocusEvent | null) => {
     const input = e ? e.target as HTMLInputElement
         : document.getElementById('search-bar') as HTMLInputElement
     input.value = ''
+    input.blur()
   },
   typeForText: () => {
     const inputElement = document.getElementById('search-bar') as HTMLInputElement
@@ -123,8 +131,18 @@ const methods = {
     methods.searchText(text)
   },
   sendKeyboardEvent: (e: KeyboardEvent) => {
-    if (e.code == Key.BACKSPACE) {
-      methods.typeForText()
+    if (e.code == Key.ESC) {
+      methods.inactivateSearchMode(null)
+      searchStatusStore.cancelSearch()
+    }
+    else if (e.code == Key.ENTER) {
+      $emitter.emit('moveToSelectedPost')
+      return
+    }
+
+    else if(e.code == Key.ARROW_DOWN || e.code == Key.ARROW_UP) {
+      const select = e.code == Key.ARROW_DOWN ? 0 : 1
+      $emitter.emit('selectResult', select)
     }
   },
   searchText: (text: string) => {
@@ -134,11 +152,14 @@ const methods = {
 
     if (titleRE.test(text)) {
       const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i')
-
-      const result: PostSearchResult [] = postContents
-          .filter(content => RE.exec(content.header.title))
+      const result: PostSearchResult [] = contentsForSearch
+          .filter(content => {
+            const title = content.header.title;
+            const isMatch = RE.test(title)
+            return isMatch
+          })
           .map(content => new PostSearchResult(content))
-      console.debug(`-----검색어: "${text}"-----------`)
+      // console.debug(`-----검색어: "${text}"-----------`)
       $emitter.emit('searchText', result)
     }
   }
