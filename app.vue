@@ -12,7 +12,7 @@ import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import RouteWrapper from "@/components/layout/content/RouteWrapper.vue";
 import { useDarkModeStore } from "@/store/DarkModeStore";
 import Runner from '@/service/DefaultStarterService'
-import {blogInfo, postContents} from "~/store/site";
+import {blogInfo} from "~/store/site";
 import MobileExpander from "~/components/layout/header/MobileExpander.vue";
 import {onMounted} from "vue";
 
@@ -56,6 +56,12 @@ useHead({
 })
 
 onMounted(() => {
+
+  document.addEventListener('keydown', (e) => {
+      console.log('e', e)
+    const a = [1,232,3,2]
+    delete a[0]
+  })
 })
 </script>
 
@@ -157,6 +163,9 @@ body {
 
   &:after {
     transition: .6s;
+  }
+  .only-mobile {
+    display: none;
   }
 }
 

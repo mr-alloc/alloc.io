@@ -1,5 +1,5 @@
 <template>
-  <div class="post-resource-navigator" :class="[{ active: mobileNaviStore.isActive }, { hide: tabletNaviStore.isActive}]">
+  <div class="post-resource-navigator" :class="[{ active: mobileNaviStore.isActive }, { fold: !tabletNaviStore.isActive, open: tabletNaviStore.isActive}]">
     <div id="element-wrapper" class="navigate-element-wrapper" :class="{ fixed : explorerHeaderStore.isActive }">
       <NavigateMarker />
       <client-only>
@@ -342,10 +342,21 @@ onMounted(() => {
 @include tablet {
 
   .post-resource-navigator {
-    position: relative;
+    position: fixed;
+    z-index: 2;
 
-    &.hide {
-      margin-left: -$tablet-navigator-width;
+    &.open {
+      animation-timing-function: ease-out;
+      animation: tablet-menu-open;
+      animation-duration: .6s;
+      left: $tablet-opened-left;
+    }
+
+    &.fold {
+      animation-timing-function: ease-out;
+      animation: tablet-menu-fold;
+      animation-duration: .6s;
+      left: $tablet-folded-left;
     }
 
     .navigate-element-wrapper {

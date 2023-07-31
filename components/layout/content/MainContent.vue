@@ -202,7 +202,18 @@ onMounted(() => {
 }
 
 @include tablet {
+  .main-content-view {
 
+    .background {
+
+      .search-result-area {
+
+        .search-result-panel {
+          max-width: 496px;
+        }
+      }
+    }
+  }
 }
 
 @include  mobile {
