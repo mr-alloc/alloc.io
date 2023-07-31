@@ -60,6 +60,7 @@ const methods = {
     display: table;
 
     .control-button {
+      transition: .6s;
       display: table-cell;
       vertical-align: middle;
       text-align: center;

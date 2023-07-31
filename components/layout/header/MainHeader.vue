@@ -3,7 +3,10 @@
     <div class="blog-ci-area">
       <nuxt-link to="/">
         <div class="ci-logo-panel">
-          <span>{{ blogInfo.title }}</span>
+          <span class="not-mobile">{{ blogInfo.title }}</span>
+          <span class="only-mobile">
+            <img src="/assets/favicon.ico"/>
+          </span>
         </div>
       </nuxt-link>
     </div>
@@ -23,6 +26,9 @@
                  v-on:keyup="methods.sendKeyboardEvent($event)"
           >
         </div>
+      </div>
+      <div class="cancel-search">
+        <button type="button" class="cancel-button">Cancel</button>
       </div>
     </div>
     <div class="top-menu-area">
@@ -105,7 +111,6 @@ onMounted(() => {
 
   $emitter.on('resetSearchBar', () => {
     methods.inactivateSearchMode(null)
-
   })
 
 })
@@ -266,6 +271,9 @@ const methods = {
       }
     }
 
+    .cancel-search {
+    }
+
     &.search-mode {
 
       .search-box {
@@ -422,17 +430,111 @@ const methods = {
 }
 
 @include tablet {
-
   .header-wrapper {
+    .search-box-wrapper {
+      display: flex;
+      width: 250px;
 
+      .search-box {
+        width: 100%;
+      }
+
+      .cancel-search {
+        width: 0px;
+        opacity: 0;
+        transition: .6s;
+
+        .cancel-button {
+          cursor: default;
+          outline: none;
+          border: none;
+          background: transparent;
+          color: #0a66c2;
+        }
+      }
+
+      &.search-mode {
+        .search-box {
+          flex-shrink: 0;
+          width: 190px;
+        }
+
+        .cancel-search {
+          width: 40px;
+          margin: 0 5px;
+          opacity: 1;
+
+          .cancel-button {
+            cursor: pointer;
+          }
+        }
+      }
+    }
   }
 }
 @include mobile {
 
   .header-wrapper {
-    height: 0px;
-    background-color: transparent;
-    border-bottom: none;
+    .blog-ci-area {
+      width: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .ci-logo-panel {
+        position: inherit;
+        top: 0px;
+        width: 50px;
+        height: 50px;
+
+        .only-mobile {
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    .search-box-wrapper {
+      display: flex;
+      width: 250px;
+
+      .search-box {
+        width: 100%;
+      }
+
+      .cancel-search {
+        width: 0px;
+        opacity: 0;
+        transition: .6s;
+
+        .cancel-button {
+          cursor: default;
+          outline: none;
+          border: none;
+          background: transparent;
+          color: #0a66c2;
+        }
+      }
+
+      &.search-mode {
+        .search-box {
+          flex-shrink: 0;
+          width: 190px;
+        }
+
+        .cancel-search {
+          width: 40px;
+          margin: 0 5px;
+          opacity: 1;
+
+          .cancel-button {
+            cursor: pointer;
+          }
+        }
+      }
+    }
 
 
     .progress-area {

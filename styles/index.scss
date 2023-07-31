@@ -35,18 +35,52 @@ $code-ln-wrapper-width: 3.5rem;
 $small-icon-size: 25px;
 
 
-
 @mixin tablet {
   @media (min-width: 768px) and (max-width: 1023px) {
     @content;
 
+    .only-mobile {
+      display: none;
+    }
   }
 }
 
 @mixin mobile {
   @media (max-width: 767px) {
     @content;
+    .not-mobile {
+      display: none;
+    }
 
+    .only-mobile {
+      display: inline-block;
+    }
   }
 }
 
+
+
+/* Animations */
+$tablet-opened-left: 60px;
+$tablet-folded-left: -320px;
+
+@keyframes tablet-menu-open {
+
+  from {
+    left: $tablet-folded-left;
+  }
+  to {
+    left: $tablet-opened-left;
+  }
+}
+
+
+@keyframes tablet-menu-fold {
+  from {
+    left: $tablet-opened-left;
+  }
+
+  to {
+    left: $tablet-folded-left;
+  }
+}
