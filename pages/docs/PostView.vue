@@ -447,7 +447,7 @@ const zoomOut = () => {
     .post-area {
       width: 90%;
       border: none;
-      margin: 100px 0 100px 50px;
+      margin: 100px auto;
 
       .post-title-area {
         border-radius: 0px;
