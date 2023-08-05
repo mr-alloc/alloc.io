@@ -58,9 +58,7 @@ useHead({
 onMounted(() => {
 
   document.addEventListener('keydown', (e) => {
-      console.log('e', e)
-    const a = [1,232,3,2]
-    delete a[0]
+
   })
 })
 </script>
@@ -117,27 +115,7 @@ onMounted(() => {
 }
 
 body {
-
   overflow: hidden;
-
-
-  //& ::-webkit-scrollbar-thumb {
-  //  background-color: #e1e1e1;
-  //  border-radius: 10px;
-  //  background-clip: padding-box;
-  //  border: 10px solid transparent;
-  //  //border: 3px solid transparent;
-  //}
-  //
-  //& ::-webkit-scrollbar-track {
-  //  background-color: $point-light-color;
-  //  border-radius: 10px;
-  //}
-  //
-  //& ::-webkit-scrollbar {
-  //  height: 4px;
-  //  width: 4px;
-  //}
 
   .dark {
   }
@@ -145,7 +123,6 @@ body {
 
 
 #__nuxt {
-  color: $main-font-color;
   font-family: -apple-system, BlinkMacSystemFont;
 
   .dark {

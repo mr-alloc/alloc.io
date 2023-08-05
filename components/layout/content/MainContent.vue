@@ -225,6 +225,15 @@ onMounted(() => {
     .main-body {
       margin: 0;
     }
+
+    .background {
+      display: flex;
+      justify-content: center;
+
+      .search-result-area {
+        width: 95%;
+      }
+    }
   }
 }
 </style>
