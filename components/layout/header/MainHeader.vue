@@ -1,19 +1,10 @@
 <template>
   <div class="header-wrapper">
     <div class="blog-ci-area">
-      <nuxt-link to="/">
-        <div class="ci-logo-panel">
-          <span class="not-mobile">{{ blogInfo.title }}</span>
-          <span class="only-mobile">
-            <img src="/assets/favicon.ico"/>
-          </span>
-        </div>
-      </nuxt-link>
+      <span class="blog-logo-wrapper" v-on:click="router.push('/')"></span>
     </div>
     <div class="search-box-wrapper" :class="{ 'search-mode' : searchStatusStore.isSearchMode }">
-      <div class="search-box"
-           v-on:click="methods.activateSearchMode()"
-      >
+      <div class="search-box" v-on:click="methods.activateSearchMode()">
         <div class="menu-icon-wrapper">
           <span class="menu-icon">
             <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
@@ -22,13 +13,13 @@
         <div class="menu-title">
           <input type="text" placeholder="찾기" id="search-bar"
                  v-on:input="methods.typeForText()"
-                 v-on:focusout="methods.inactivateSearchMode($event)"
+                 v-on:focusout="methods.inactivateSearchMode()"
                  v-on:keyup="methods.sendKeyboardEvent($event)"
           >
         </div>
       </div>
       <div class="cancel-search">
-        <button type="button" class="cancel-button">Cancel</button>
+        <button type="button" class="cancel-button" v-on:click="methods.inactivateSearchMode()">Cancel</button>
       </div>
     </div>
     <div class="top-menu-area">
@@ -58,13 +49,15 @@
 <script lang="ts" setup>
 import {searchInputStore, mobileNaviStore} from "@/store";
 import { calPostDate } from "@/utils/settingUtils";
-import { useNuxtApp } from "#app";
+import {useNuxtApp, useRouter} from "#app";
 import {onMounted} from "vue";
 import {blogInfo, contentsForSearch} from "~/store/site";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {PostSearchResult} from "~/class/implement/PostSearchResult";
 import {Key} from "~/class/implement/Key";
 
+
+const router = useRouter()
 const { $emitter } = useNuxtApp()
 const searchStatusStore = useSearchStatusStore()
 const data = {
@@ -110,8 +103,9 @@ onMounted(() => {
   })
 
   $emitter.on('resetSearchBar', () => {
-    methods.inactivateSearchMode(null)
+    methods.inactivateSearchMode()
   })
+
 
 })
 
@@ -123,11 +117,12 @@ const methods = {
     const input = document.getElementById('search-bar') as HTMLInputElement
     input.focus()
   },
-  inactivateSearchMode: (e: FocusEvent | null) => {
-    const input = e ? e.target as HTMLInputElement
-        : document.getElementById('search-bar') as HTMLInputElement
+  inactivateSearchMode: () => {
+    const input = document.getElementById('search-bar') as HTMLInputElement
     input.value = ''
     input.blur()
+    searchStatusStore.cancelSearch()
+
   },
   typeForText: () => {
     const inputElement = document.getElementById('search-bar') as HTMLInputElement
@@ -137,8 +132,7 @@ const methods = {
   },
   sendKeyboardEvent: (e: KeyboardEvent) => {
     if (e.code == Key.ESC) {
-      methods.inactivateSearchMode(null)
-      searchStatusStore.cancelSearch()
+      methods.inactivateSearchMode()
     }
     else if (e.code == Key.ENTER) {
       $emitter.emit('moveToSelectedPost')
@@ -173,122 +167,152 @@ const methods = {
 
 <style lang="scss">
 @import "@/styles";
-.header-wrapper {
-  flex-shrink: 0;
-  height: $pc-header-height;
-  width: 90%;
-  border-bottom: 1px solid $linear-color;
-  box-shadow: 0 3px 12px 2px rgba(0, 0, 0, 0.6);
-  position: absolute;
-  z-index: 10;
-  margin-top: 10px;
-  background-color: $main-light-color;
-  left: 50%;
-  top: 40px;
-  transform: translate3d(-50%, -50%, 0);
-  border-radius: 15px;
-  display: flex;
-
-
-  * {
-    -webkit-tap-highlight-color:transparent;
-    user-select: none;
-
-  }
-  &.fold {
-    margin-top: -50px;
-  }
-
-  .blog-ci-area {
-    margin: 0 20px;
-    display: table;
-    height: 100%;
+  .header-wrapper {
     flex-shrink: 0;
-    width: 180px;
-    text-align: center;
-
-
-    .ci-logo-panel {
-      position: absolute;
-      top: $pc-header-interval + 10;
-      display: table-cell;
-      font-weight: bold;
-      font-size: 1.19rem;
-      color: black;
-      vertical-align: middle;
-    }
-  }
-  .search-box-wrapper {
+    height: $pc-header-height;
+    max-width: 1024px;
+    border-bottom: 1px solid $linear-color;
+    box-shadow: 0 3px 12px 2px rgba(0, 0, 0, 0.6);
+    position: absolute;
+    z-index: 10;
+    margin-top: 10px;
+    background-color: $main-light-color;
+    left: 50%;
+    top: 40px;
+    transform: translate3d(-50%, -50%, 0);
+    border-radius: 15px;
     display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    width: 300px;
 
-    .search-box {
+
+    * {
+      -webkit-tap-highlight-color:transparent;
+      user-select: none;
+
+    }
+    &.fold {
+      margin-top: -50px;
+    }
+
+    .blog-ci-area {
+      margin: 0 20px;
+      height: 100%;
+      flex-shrink: 0;
+      width: 100px;
+      text-align: center;
       display: flex;
-      background-color: $linear-color;
-      color: black;
-      border-radius: 10px;
-      border: 1.42px solid $linear-color;
-      cursor: pointer;
-      transition: .4s;
-      width: 90px;
-      vertical-align: middle;
-      justify-content: center;
-      padding: 0 5px;
-      height: 30px;
       align-items: center;
-      flex-direction: row;
+      justify-content: center;
 
-      .menu-icon-wrapper {
-        display: flex;
-        flex-shrink: 0;
-        width: 30px;
-        justify-content: center;
+      .blog-logo-wrapper {
+        width: 50px;
+        height: 50px;
+        background: url("/assets/logo.svg");
+        display: inline-block;
+        cursor: pointer;
+        transition: .6s;
 
-        .menu-icon {
-          color: #757575;
-          display: block;
-          margin: 0 auto
+        &:hover {
+          transform: translate(20px,-5px)rotate(45deg);
         }
       }
+    }
 
-      .menu-title {
-        flex-grow: 1;
+    .search-box-wrapper {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      width: 300px;
 
 
-        input {
+      .cancel-search {
+        width: 0px;
+        opacity: 0;
+        transition: .6s;
+
+        .cancel-button {
+          cursor: default;
           outline: none;
           border: none;
-          line-height: 2;
-          width: 95%;
-          background-color: transparent;
+          background: transparent;
+          color: #0a66c2;
         }
       }
 
-      &:hover {
-        transition: .4s;
-      }
-    }
-
-    .cancel-search {
-    }
-
-    &.search-mode {
-
       .search-box {
-        width: 280px;
+        display: flex;
+        background-color: $linear-color;
+        color: black;
+        border-radius: 10px;
+        border: 1.42px solid $linear-color;
+        cursor: pointer;
+        transition: .4s;
+        width: 90px;
+        vertical-align: middle;
+        justify-content: center;
+        padding: 0 5px;
+        height: 30px;
+        align-items: center;
+        flex-direction: row;
+
+        .menu-icon-wrapper {
+          display: flex;
+          flex-shrink: 0;
+          width: 30px;
+          justify-content: center;
+
+          .menu-icon {
+            color: #757575;
+            display: block;
+            margin: 0 auto
+          }
+        }
+
+        .menu-title {
+          flex-grow: 1;
+
+
+          input {
+            outline: none;
+            border: none;
+            line-height: 2;
+            width: 95%;
+            background-color: transparent;
+          }
+        }
+
+        &:hover {
+          transition: .4s;
+        }
+      }
+
+      .cancel-search {
+      }
+
+      &.search-mode {
+        .search-box {
+          flex-shrink: 0;
+          width: 190px;
+        }
+
+        .cancel-search {
+          width: 40px;
+          margin: 0 5px;
+          opacity: 1;
+
+          .cancel-button {
+            cursor: pointer;
+          }
+        }
       }
     }
-  }
 
-  .top-menu-area {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    width: 100%;
+    .top-menu-area {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      width: 200px;
 
-    .top-level-menu {
+      .top-level-menu {
       width: 100%;
 
       .top-menu-list {
@@ -347,139 +371,103 @@ const methods = {
     top: 0;
     //box-shadow: 0px 1px 30px 0 rgb(32 33 36 / 34%);
 
-    .menu-info {
-      display: flex;
-      flex-direction: column;
+  .menu-info {
+    display: flex;
+    flex-direction: column;
 
-      .menu-item {
-        width: 100%;
-        padding: 4px 0;
+    .menu-item {
+      width: 100%;
+      padding: 4px 0;
 
-        .spread-items {
-          list-style: none;
-          display: flex;
-          justify-content: space-between;
-          width: 60%;
-          margin: 0 auto;
+      .spread-items {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        width: 60%;
+        margin: 0 auto;
 
-          li {
-            display: inline-block;
-            color: #717171;
-            font-size: 1.14rem;
-            cursor: pointer;
-            text-align: center;
+        li {
+          display: inline-block;
+          color: #717171;
+          font-size: 1.14rem;
+          cursor: pointer;
+          text-align: center;
 
-            a {
-              color:white;
-              vertical-align: middle;
-            }
+          a {
+            color:white;
+            vertical-align: middle;
+          }
 
-            & .search-layer {
-              flex: 1;
+          & .search-layer {
+            flex: 1;
 
-              & .search-box {
-                width: 120px;
-                height: 100%;
-                padding: 2px;
-                border-radius: 15px;
-                justify-content: center;
+            & .search-box {
+              width: 120px;
+              height: 100%;
+              padding: 2px;
+              border-radius: 15px;
+              justify-content: center;
+              background-color: #fcfcfc;
+              overflow: hidden;
+
+              & input {
+                border: 0px;
+                width: 100%;
+                padding: 3px 5px;
+                margin: 3px 0;
                 background-color: #fcfcfc;
-                overflow: hidden;
+                font-size: 0.92em;
 
-                & input {
-                  border: 0px;
-                  width: 100%;
-                  padding: 3px 5px;
-                  margin: 3px 0;
-                  background-color: #fcfcfc;
-                  font-size: 0.92em;
-
-                  &:focus {
-                    outline: none;
-                    background-color: white;
-                  }
-                }
-
-                &.focus {
-                  border-color: #2c3e50;
+                &:focus {
+                  outline: none;
                   background-color: white;
-                  width: 250px;
                 }
+              }
+
+              &.focus {
+                border-color: #2c3e50;
+                background-color: white;
+                width: 250px;
               }
             }
           }
         }
       }
     }
+  }
 
-    & .search-list-area {
-      width: 100%;
-      top: 44px;
-      position: fixed;
+  & .search-list-area {
+    width: 100%;
+    top: 44px;
+    position: fixed;
 
-      .search-list {
-      }
-
-      &.focus {
-        height: 100%;
-        background: rgb(0 0 0 / 40%);
-        backdrop-filter: blur(5px);
-      }
+    .search-list {
     }
+
+    &.focus {
+      height: 100%;
+      background: rgb(0 0 0 / 40%);
+      backdrop-filter: blur(5px);
+    }
+  }
   }
 }
 
 @include tablet {
   .header-wrapper {
-    .search-box-wrapper {
-      display: flex;
-      width: 250px;
-
-      .search-box {
-        width: 100%;
-      }
-
-      .cancel-search {
-        width: 0px;
-        opacity: 0;
-        transition: .6s;
-
-        .cancel-button {
-          cursor: default;
-          outline: none;
-          border: none;
-          background: transparent;
-          color: #0a66c2;
-        }
-      }
-
-      &.search-mode {
-        .search-box {
-          flex-shrink: 0;
-          width: 190px;
-        }
-
-        .cancel-search {
-          width: 40px;
-          margin: 0 5px;
-          opacity: 1;
-
-          .cancel-button {
-            cursor: pointer;
-          }
-        }
-      }
-    }
   }
 }
 @include mobile {
 
   .header-wrapper {
+    width: 90%;
+
     .blog-ci-area {
-      width: 100px;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: left;
+      width: 50px;
+      flex-shrink: 0;
 
       .ci-logo-panel {
         position: inherit;
@@ -497,45 +485,18 @@ const methods = {
     }
 
     .search-box-wrapper {
-      display: flex;
-      width: 250px;
-
-      .search-box {
-        width: 100%;
-      }
-
-      .cancel-search {
-        width: 0px;
-        opacity: 0;
-        transition: .6s;
-
-        .cancel-button {
-          cursor: default;
-          outline: none;
-          border: none;
-          background: transparent;
-          color: #0a66c2;
-        }
-      }
+      flex-grow: 1;
 
       &.search-mode {
         .search-box {
-          flex-shrink: 0;
-          width: 190px;
-        }
-
-        .cancel-search {
-          width: 40px;
-          margin: 0 5px;
-          opacity: 1;
-
-          .cancel-button {
-            cursor: pointer;
-          }
+          width: 55%;
         }
       }
     }
 
+    .top-menu-area {
+      display: none;
+    }
 
     .progress-area {
       top: 0px;
@@ -551,7 +512,7 @@ const methods = {
   border-bottom: 1px solid $linear-dark-color;
 
   .mobile-header {
-    background-color: rgba(103, 102, 102, 0.89);
+  background-color: rgba(103, 102, 102, 0.89);
   }
 }
 </style>

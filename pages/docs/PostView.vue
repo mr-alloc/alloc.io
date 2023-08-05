@@ -42,8 +42,9 @@ import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
 import {onBeforeMount, onMounted} from "vue";
-import {PageMeta} from "nuxt/app";
+import {PageMeta, useSeoMeta} from "nuxt/app";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
+import {definePageMeta} from "#imports";
 const data = {
   post: {
     title: '',
@@ -101,6 +102,7 @@ const zoomOut = () => {
     }
   }
 }
+
 </script>
 
 <style lang="scss">
