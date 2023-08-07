@@ -13,7 +13,6 @@
         <div class="menu-title">
           <input type="text" placeholder="찾기" id="search-bar"
                  v-on:input="methods.typeForText()"
-                 v-on:focusout="methods.inactivateSearchMode()"
                  v-on:keyup="methods.sendKeyboardEvent($event)"
           >
         </div>
@@ -486,10 +485,22 @@ const methods = {
 
     .search-box-wrapper {
       flex-grow: 1;
+      width: unset;
+
+      .search-box {
+        width: 90%;
+      }
+
+      .cancel-search {
+        transform: translateY(10px);
+      }
 
       &.search-mode {
         .search-box {
-          width: 55%;
+          width: 55% -30px;
+        }
+        .cancel-search {
+          transform: unset;
         }
       }
     }
