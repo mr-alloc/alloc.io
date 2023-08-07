@@ -1,5 +1,8 @@
 <template>
   <div class="post-container" :class="{prepare : prepareStore.isPrepare}">
+    <Head>
+      <Meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    </Head>
     <div class="not-found" v-show="data.post === null">
       <NotFound />
     </div>
@@ -27,7 +30,6 @@
     <div class="zoom-image-aria" :class="{zoom : data.zoom_in.isActive}"></div>
   </div>
 </template>
-
 <script lang="ts" setup>
 import {
   setPageTitle
@@ -42,9 +44,9 @@ import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
 import {onBeforeMount, onMounted} from "vue";
-import {PageMeta, useSeoMeta} from "nuxt/app";
+import {PageMeta, useHead} from "nuxt/app";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
-import {definePageMeta} from "#imports";
+
 const data = {
   post: {
     title: '',
@@ -53,6 +55,7 @@ const data = {
     tags: [] as string[]
   } ,
   meta: {
+    description: '',
     header: {
       hide: true
     } as PageMeta
@@ -102,9 +105,12 @@ const zoomOut = () => {
     }
   }
 }
-
+useHead({
+  meta: [
+    { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' }
+  ]
+})
 </script>
-
 <style lang="scss">
 @import '@/styles';
 @import '@/styles/languages.scss';

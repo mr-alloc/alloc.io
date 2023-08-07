@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     generate: {
         dir: 'dist',
         fallback: true,
-        routes: [...Keys]
+        routes: [...Keys],
     },
     router: {
         base: '/special-posted-in/',
