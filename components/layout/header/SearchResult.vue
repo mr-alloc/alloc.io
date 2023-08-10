@@ -120,12 +120,12 @@ const props = defineProps({
         }
         //최로 로드(연출상 비활성화)
         &.appear {
-          //opacity: 0;
-          //position: fixed;
+          opacity: 0;
         }
         //준비 (출현 연출)
         &.ready {
-
+          animation-name: ready;
+          animation-duration: .8s;
         }
         //유지 - 기존 결과
         &.carry-on {
@@ -133,14 +133,39 @@ const props = defineProps({
         }
         //삭제대상 (제거 연출)
         &.finalize {
-
+          opacity: 0;
+          height: 0;
+          animation-name: finalize;
+          animation-duration: .8s;
         }
         //실제 제거
         &.disappear {
-
+          opacity: 0;
         }
       }
     }
+  }
+}
+
+@keyframes ready {
+  from {
+    opacity: 0;
+    height: 0;
+  }
+  to {
+    opacity: 1;
+    height: unset;
+  }
+}
+
+@keyframes finalize {
+  from {
+    opacity: 1;
+    height: unset;
+  }
+  to {
+    opacity: 0;
+    height: 0;
   }
 }
 </style>

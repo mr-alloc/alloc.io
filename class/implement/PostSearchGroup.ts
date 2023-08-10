@@ -25,7 +25,7 @@ export class PostSearchGroup {
             //기존 검색 결과 같은(Carry-on을 READY로 변경)
             if (this._searchResults.has(key)) {
                 const existed = this._searchResults.get(key)
-                if (existed?.is(SearchStatus.CARRY_ON)) {
+                if (existed?.is(SearchStatus.CARRY_ON) || existed?.is(SearchStatus.FINALIZE)) {
                     existed?.change(SearchStatus.READY)
                     //꺼내와서도 값이 변경되는 지 확인
                     return
@@ -47,7 +47,7 @@ export class PostSearchGroup {
             if (element.is(SearchStatus.CARRY_ON)) {
                 //Finalize 된 대상들은 이미 스타일이 제거 되었으므로, 실제로 데이터를 제거
                 element.change(SearchStatus.FINALIZE)
-                this._searchResults.delete(element.content.path)
+                // this._searchResults.delete(element.content.path)
             }
         })
 
@@ -60,5 +60,12 @@ export class PostSearchGroup {
                 element.change(SearchStatus.READY)
             }
         })
+    }
+
+    finalizeAllChild() {
+        this.results.forEach(result => {
+            result.change(SearchStatus.FINALIZE)
+        })
+
     }
 }
