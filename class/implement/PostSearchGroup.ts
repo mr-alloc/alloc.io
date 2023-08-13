@@ -46,8 +46,8 @@ export class PostSearchGroup {
 
             if (element.is(SearchStatus.CARRY_ON)) {
                 //Finalize 된 대상들은 이미 스타일이 제거 되었으므로, 실제로 데이터를 제거
-                element.change(SearchStatus.FINALIZE)
-                // this._searchResults.delete(element.content.path)
+                // element.change(SearchStatus.FINALIZE)
+                this._searchResults.delete(element.content.path)
             }
         })
 

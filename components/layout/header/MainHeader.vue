@@ -174,6 +174,7 @@ const methods = {
     box-shadow: 0 3px 12px 2px rgba(0, 0, 0, 0.6);
     position: absolute;
     z-index: 10;
+    overflow: hidden;
     margin-top: 10px;
     background-color: $main-light-color;
     left: 50%;

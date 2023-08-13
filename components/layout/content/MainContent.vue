@@ -78,10 +78,10 @@ onMounted(() => {
       }
       // 기존 그룹에있지만, 신규 결과에서 그룹이 없는 경우
       else {
-        console.log('old key delete:', key)
-        const beFinalize = groups.value.get(key)
-        beFinalize?.finalizeAllChild()
-        // groups.value.delete(key)
+        // console.log('old key delete:', key)
+        // const beFinalize = groups.value.get(key)
+        // beFinalize?.finalizeAllChild()
+        groups.value.delete(key)
       }
     })
 
