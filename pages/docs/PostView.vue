@@ -1,33 +1,26 @@
 <template>
   <div class="post-container" :class="{prepare : prepareStore.isPrepare}">
     <Head>
-      <Meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+      <Meta name="viewport" content="width=device-width, initial-scale=1, max-scale=1"/>
+      <Meta property="og:title" v-bind:content="state.post.title.replace('\n', '')" />
+      <Meta property="og:description" v-bind:content="state.meta.description" />
+      <Meta property="og:image" v-bind:content="state.meta.header.thumbnail" />
     </Head>
-    <div class="not-found" v-show="data.post === null">
-      <NotFound />
-    </div>
-    <div class="post-area" v-show="data.post !== null">
+    <div class="post-area">
       <div class="post-title-area">
-        <span class="title" id="post-title">{{ data.post.title }}</span>
+        <span class="title" id="post-title">{{ state.post.title }}</span>
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-            <span class="date-text" id="post-date-text">{{ data.post.date }}</span>
+            <span class="date-text" id="post-date-text">{{ state.post.date }}</span>
           </div>
         </div>
       </div>
       <div class="post-content-wrapper" id="document-content">
-        <div class="post-content" :class="{ hide: data.meta.header.hide }" id="post-content-frame" v-html="data.post.content">
-        </div>
-        <TagArea :tags="data.post.tags" />
-        <div class="zoom-in-image-wrapper" @click="zoomOut()" v-show="data.zoom_in.isActive">
-          <div class="image-resizer">
-            <img :src="data.zoom_in.imageLink">
-          </div>
-        </div>
+        <div class="post-content" :class="{ hide: state.meta.header }" id="post-content-frame" v-html="state.post.content"></div>
+        <TagArea :tags="state.post.tags" />
       </div>
     </div>
-    <div class="zoom-image-aria" :class="{zoom : data.zoom_in.isActive}"></div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -35,81 +28,44 @@ import {
   setPageTitle
 } from "~/utils/settingUtils";
 import {
-  fileListStore,
   postMapStore
 } from "~/store";
-import NotFound from "~/components/layout/content/NotFound.vue";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
-import {onBeforeMount, onMounted} from "vue";
-import {PageMeta, useHead} from "nuxt/app";
+import {computed, onBeforeMount, reactive, Ref, ref} from "vue";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
-
-const data = {
-  post: {
-    title: '',
-    date: '',
-    content: '',
-    tags: [] as string[]
-  } ,
-  meta: {
-    description: '',
-    header: {
-      hide: true
-    } as PageMeta
-  },
-  is_code_popup: false,
-  image_map: new Map(),
-  code_map: new Map(),
-  zoom_in: {
-    isActive: false,
-    imageLink: ''
-  },
-  fileListStore,
-  postMapStore
-}
-const prepareStore = usePagePrepareStore();
-
-onBeforeMount(() => {
-  const route = useRoute();
-  const path = route.fullPath.replace(/(\/docs\/.+)\/$/g, '$1')
-  const postMeta: PostContent = postMapStore.map.get(path)
-  const pagePost: PagePost | null = PagePost.of(postMeta)
-  if (pagePost) {
-    data.post = pagePost
-    data.meta = postMeta
-    setPageTitle(pagePost.title)
-  }
-  prepareStore.prepare()
-  setTimeout(() => {
-    prepareStore.done()
-  }, 150)
-})
 
 
 const components = {
-  NotFound,
   TagArea
 }
 
-const zoomOut = () => {
-  if(data.zoom_in.isActive) {
-    data.zoom_in.isActive = false
 
-    const popup = document.querySelector('.popup')
+const prepareStore = usePagePrepareStore();
 
-    if(popup) {
-      popup.classList.remove('popup')
-    }
-  }
-}
-useHead({
-  meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' }
-  ]
+prepareStore.prepare()
+const state = reactive({
+  meta: computed<PostContent>(() => {
+    const route = useRoute();
+    const path = route.fullPath.replace(/(\/docs\/.+)\/$/g, '$1')
+    return postMapStore.map.get(path)
+  }),
+  post: computed<PagePost | null>(() => {
+    const post: PagePost | null = PagePost.of(state.meta)
+
+    setTimeout(() => {
+      prepareStore.done()
+    }, 150)
+
+    return post
+  })
 })
+onBeforeMount(() => {
+})
+
+
 </script>
 <style lang="scss">
 @import '@/styles';
