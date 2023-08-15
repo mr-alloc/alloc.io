@@ -26,38 +26,6 @@ const components = {
   MainHeader
 }
 
-useHead({
-  meta: [
-    {
-      name: 'viewport',
-      content: 'width=device-width, initial-scale=1, maximum-scale=1'
-    },
-    {
-      name: 'theme-color',
-      content: store.isDarkMode ? '#010409': '#fcfcfc'
-    },
-    {
-      property: 'og:type',
-      content: 'website'
-    },
-    {
-      property: 'og:url',
-      content: blogInfo.domain
-    },
-    {
-      property: 'og:title',
-      content: blogInfo.title
-    },
-    {
-      property: 'og:description',
-      content: blogInfo.description
-    },
-    {
-      property: 'og:image',
-      content: blogInfo.defaultProfile
-    }
-  ]
-})
 
 onMounted(() => {
 
