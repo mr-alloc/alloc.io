@@ -179,7 +179,7 @@ onMounted(() => {
 
     .search-result-area {
       position: relative;
-      top: 100px;
+      top: 90px;
       width: 100%;
       height: 70%;
 
@@ -235,7 +235,13 @@ onMounted(() => {
       justify-content: center;
 
       .search-result-area {
-        width: 95%;
+        width: 100%;
+        top: 60px;
+        height: calc(100% - 60px);
+
+        .search-result-panel {
+          border-radius: 0px;
+        }
       }
     }
   }

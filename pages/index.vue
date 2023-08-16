@@ -76,7 +76,7 @@ onMounted(() => {
   display: flex;
   max-width: 786px;
   min-height: 800px;
-  margin: 0px 50px 20px;
+  margin: 30px auto;
 
 
   .main-container {
@@ -90,6 +90,7 @@ onMounted(() => {
       background-color: $main-light-color;
       border-radius: 15px;
       border: 1.29px solid #e0dfdc;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
     }
   }
