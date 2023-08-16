@@ -17,7 +17,7 @@
         <h2 class="booked-tag-name">{{ data.bookedTag }}</h2>
       </div>
       <div class="card-list-wrapper">
-        <nuxt-link :to="post" v-for="(post, index) in data.displayed" :key="index">
+        <a :href="post" v-for="(post, index) in data.displayed" :key="index">
           <div class="connected-post-card">
             <div class="post-image">
               <img :src="post.header.thumbnail" />
@@ -26,14 +26,14 @@
               <span>{{ post.header.title }}</span>
             </div>
           </div>
-        </nuxt-link>
+        </a>
       </div>
       <div class="paginated-area">
         <div class="paging-button-group">
           <nav aria-label="태그 검색 페이지 공간">
             <ul class="page-index">
               <li class="page-item" :class="{ disabled: !data.pagingResult.has_previous_page}">
-                <nuxt-link :to="{ path: methods.getPage(data.currentPath, data.pagingResult.previous_page) }" class="page-link">이전</nuxt-link>
+                <a :href="{ path: methods.getPage(data.currentPath, data.pagingResult.previous_page) }" class="page-link">이전</a>
               </li>
               <li v-for="index in methods.rangeArray(data.pagingResult.first_page, data.pagingResult.last_page)"
                   :key="index" class="page-item"

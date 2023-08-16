@@ -11,6 +11,7 @@
             :class="[`${result.status}`, { select: result.isSelected}]"
             v-for="result in props.row.results"
             :key="result.content.path"
+            v-on:click="goTo(result.content.path)"
         >
           <div class="result-string">
             <span>{{ result.content.header.title }}</span>
@@ -29,11 +30,19 @@
 <script lang="ts" setup>
 import {PostSearchGroup} from "~/class/implement/PostSearchGroup";
 import {onMounted, onUnmounted} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {useSearchStatusStore} from "~/store/SearchStatusStore";
 
+const router = useRouter()
+const searchStatus = useSearchStatusStore()
 const props = defineProps({
   row: PostSearchGroup
 })
 
+const goTo = (path: string) => {
+  router.push(path)
+  searchStatus.cancelSearch()
+}
 
 </script>
 
