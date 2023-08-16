@@ -15,12 +15,12 @@ export default <RouterConfig> {
         {
             name: 'tag',
             path: '/tags/:tag/:page(\\d+)',
-            component: () => import('~/pages/tags/TagList.vue')
+            component: () => import('~/components/layout/content/TagList.vue')
         },
         {
             name: 'tags',
             path: '/tags',
-            component: () => import('~/pages/tags/TagList.vue')
+            component: () => import('~/components/layout/content/TagList.vue')
         }
     ],
     scrollBehavior: () => {
