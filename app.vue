@@ -15,6 +15,7 @@ import Runner from '@/service/DefaultStarterService'
 import {blogInfo} from "~/store/site";
 import MobileExpander from "~/components/layout/header/MobileExpander.vue";
 import {onMounted} from "vue";
+import {useHead} from "@vueuse/head";
 
 
 Runner.init()
@@ -32,6 +33,12 @@ onMounted(() => {
   document.addEventListener('keydown', (e) => {
 
   })
+})
+
+useHead({
+  meta: [
+    { name: 'viewport', content: 'width=device-width=, initial-scale=1.0, maximum-scale=1.0' }
+  ]
 })
 </script>
 

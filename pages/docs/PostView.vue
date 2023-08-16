@@ -1,7 +1,6 @@
 <template>
   <div class="post-container" :class="{prepare : prepareStore.isPrepare}">
     <Head>
-      <Meta name="viewport" content="width=device-width, initial-scale=1, max-scale=1"/>
       <Meta property="og:title" v-bind:content="state.post.title.replace('\n', '')" />
       <Meta property="og:description" v-bind:content="state.meta.description" />
       <Meta property="og:image" v-bind:content="state.meta.header.thumbnail" />
