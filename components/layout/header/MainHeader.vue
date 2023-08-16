@@ -463,6 +463,7 @@ const methods = {
   .header-wrapper {
     transition: .4s;
     width: 90%;
+    position: fixed;
 
     .blog-ci-area {
       display: flex;
@@ -504,7 +505,6 @@ const methods = {
       width: 100%;
       top: 0;
       border-radius: 0px;
-      position: fixed;
       transform: translate3d(-50%, 0, 0);
       margin: 0px;
 

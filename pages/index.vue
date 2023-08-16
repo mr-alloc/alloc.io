@@ -84,6 +84,7 @@ onMounted(() => {
     margin-top: 100px;
 
     .post-card-wrapper {
+      transition: .4s;
       width: 70%;
       margin: 10px auto;
       min-height: 600px;
@@ -118,7 +119,6 @@ onMounted(() => {
 
       & .post-card-wrapper {
         width: 100%;
-        border-radius: 0px;
         border-left: 0px;
         border-right: 0px;
 
