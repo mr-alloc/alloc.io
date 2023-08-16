@@ -25,7 +25,7 @@
       <div class="top-level-menu">
         <ul class="top-menu-list">
           <li class="menu-item">
-            <nuxt-link to="/tags">
+            <a href="/tags">
               <div class="menu-icon-wrapper">
                 <span class="menu-icon">
                   <font-awesome-icon :icon="['fa', 'tags']"/>
@@ -34,7 +34,7 @@
               <div class="menu-title">
                 <span>태그</span>
               </div>
-            </nuxt-link>
+            </a>
           </li>
         </ul>
       </div>
@@ -464,6 +464,7 @@ const methods = {
     transition: .4s;
     width: 90%;
     position: fixed;
+    top: 25px;
 
     .blog-ci-area {
       display: flex;
