@@ -3,7 +3,7 @@
     <MainHeader />
     <RouteWrapper />
     <LoadingBar />
-    <MobileExpander/>
+<!--    <MobileExpander/>-->
   </div>
 </template>
 <script lang="ts" setup>

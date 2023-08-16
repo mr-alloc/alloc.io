@@ -1,9 +1,9 @@
 <template>
-  <div class="header-wrapper">
+  <div class="header-wrapper" :class="{ 'search-mode' : searchStatusStore.isSearchMode }">
     <div class="blog-ci-area">
       <span class="blog-logo-wrapper" v-on:click="router.push('/')"></span>
     </div>
-    <div class="search-box-wrapper" :class="{ 'search-mode' : searchStatusStore.isSearchMode }">
+    <div class="search-box-wrapper">
       <div class="search-box" v-on:click="methods.activateSearchMode()">
         <div class="menu-icon-wrapper">
           <span class="menu-icon">
@@ -288,20 +288,21 @@ const methods = {
       .cancel-search {
       }
 
-      &.search-mode {
-        .search-box {
-          flex-shrink: 0;
-          width: 190px;
-        }
 
-        .cancel-search {
-          width: 40px;
-          margin: 0 5px;
-          opacity: 1;
+    }
+    &.search-mode {
+      .search-box {
+        flex-shrink: 0;
+        width: 190px;
+      }
 
-          .cancel-button {
-            cursor: pointer;
-          }
+      .cancel-search {
+        width: 40px;
+        margin: 0 5px;
+        opacity: 1;
+
+        .cancel-button {
+          cursor: pointer;
         }
       }
     }
@@ -460,6 +461,7 @@ const methods = {
 @include mobile {
 
   .header-wrapper {
+    transition: .4s;
     width: 90%;
 
     .blog-ci-area {
@@ -496,16 +498,27 @@ const methods = {
         transform: translateY(10px);
       }
 
-      &.search-mode {
+    }
+
+    &.search-mode {
+      width: 100%;
+      top: 0;
+      border-radius: 0px;
+      position: fixed;
+      transform: translate3d(-50%, 0, 0);
+      margin: 0px;
+
+      .search-box-wrapper {
+
         .search-box {
-          width: 55% -30px;
+          width: calc(90% - 40px);
         }
         .cancel-search {
           transform: unset;
         }
       }
-    }
 
+    }
     .top-menu-area {
       display: none;
     }

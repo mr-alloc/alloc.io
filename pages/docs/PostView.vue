@@ -103,9 +103,10 @@ onBeforeMount(() => {
     max-width: 768px;
     background-color: $main-light-color;
     border: 1.29px solid #d3d1d1;
-    margin: 100px;
+    margin: 100px auto;
     border-radius: 15px;
     color: #344063;
+    box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
 
     .post-title-area {
       background: url("/assets/images/title_background.jpg") center;
@@ -414,11 +415,7 @@ onBeforeMount(() => {
       margin: 100px auto;
 
       .post-title-area {
-        border-radius: 0px;
 
-        &:before {
-          border-radius: 0;
-        }
       }
 
       .post-content-wrapper {
@@ -461,6 +458,7 @@ onBeforeMount(() => {
       margin: 0;
       width: 100%;
       border-radius: 0px;
+      border: none;
 
       .post-title-area {
         border-radius: 0px;

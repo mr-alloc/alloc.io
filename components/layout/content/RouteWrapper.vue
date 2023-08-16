@@ -1,6 +1,6 @@
 <template>
   <div class="global-router-wrapper">
-    <ResourceNavigator class="global-navigator" />
+<!--    <ResourceNavigator class="global-navigator" />-->
     <MainContent />
   </div>
 </template>
