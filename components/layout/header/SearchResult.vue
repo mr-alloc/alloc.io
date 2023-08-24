@@ -11,8 +11,7 @@
             :class="[`${result.status}`, { select: result.isSelected}]"
             v-for="result in props.row.results"
             :key="result.content.path"
-            v-on:click="goTo(result.content.path)"
-        >
+            v-on:click="goTo(result.content.path)">
           <div class="result-string">
             <span>{{ result.content.header.title }}</span>
           </div>

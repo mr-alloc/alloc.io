@@ -121,7 +121,7 @@ const methods = {
 @include mobile() {
 
   .post-preview-header {
-    padding: 5px 15px;
+    padding: 15px 15px;
 
     .author-info {
 

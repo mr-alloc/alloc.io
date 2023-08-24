@@ -43,29 +43,8 @@ const data = {
 }
 
 onMounted(() => {
-  const wrapper = document.getElementById('main-content-wrapper')!
   setPageTitle('')
 
-  const handleForScroll = () => {
-
-    /* 현재 스크롤 위치 */
-    const currentScroll = wrapper.scrollTop
-    /* 엘리먼트 높이 */
-    const winHeight = wrapper.clientHeight
-    /* 엘리먼트 스크롤 높이 */
-    const docHeight = wrapper.scrollHeight
-
-    const percent = (100.000 * currentScroll / (docHeight - winHeight)).toFixed(3)
-
-    const scrollPer = parseFloat(percent)
-
-    if(( ! postCallStore.is_calling) && scrollPer > 80) {
-      postCallStore.is_calling = true
-      callPostFeed()
-    }
-
-  }
-  wrapper.addEventListener('scroll', handleForScroll)
 })
 </script>
 
@@ -81,7 +60,6 @@ onMounted(() => {
 
   .main-container {
     width: 100%;
-    margin-top: 100px;
 
     .post-card-wrapper {
       transition: .4s;
@@ -137,7 +115,7 @@ onMounted(() => {
 
 @include mobile {
   .main-body {
-    margin-bottom: 0px;
+    margin: 0px;
 
     & .main-container {
 
