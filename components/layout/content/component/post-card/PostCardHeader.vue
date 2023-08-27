@@ -2,8 +2,8 @@
   <div class="post-preview-header">
     <div class="profile-image">
       <nuxt-img format="webp"
-                width="80"
-                height="80"
+                width="100"
+                height="100"
                 :src="`${methods.getProfileOrDefault(props.header.profile_image)}`"  />
     </div>
     <div class="author-info">

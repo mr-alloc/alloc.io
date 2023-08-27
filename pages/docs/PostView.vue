@@ -1,31 +1,35 @@
 <template>
   <div class="post-container" :class="{prepare : prepareStore.isPrepare}">
     <Head>
-      <Meta property="og:title" v-bind:content="state.post.title.replace('\n', '')" />
-      <Meta property="og:description" v-bind:content="state.meta.description" />
-      <Meta property="og:image" v-bind:content="state.meta.header.thumbnail" />
+      <Meta property="og:title" v-bind:content="state.post?.title.replace('\n', '')" />
+      <Meta property="og:description" v-bind:content="state.meta?.description" />
+      <Meta property="og:image" v-bind:content="state.meta?.header.thumbnail" />
     </Head>
     <div class="post-area">
       <div class="post-title-area">
-        <span class="title" id="post-title">{{ state.post.title }}</span>
+        <span class="title" id="post-title">{{ state.post?.title }}</span>
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-            <span class="date-text" id="post-date-text">{{ state.post.date }}</span>
+            <span class="date-text" id="post-date-text">{{ state.post?.date }}</span>
           </div>
         </div>
       </div>
       <div class="post-content-wrapper" id="document-content">
-        <div class="post-content" :class="{ hide: state.meta.header }" id="post-content-frame" v-html="state.post.content"></div>
-        <TagArea :tags="state.post.tags" />
+        <div class="post-content" :class="{ hide: state.meta?.header }" id="post-content-frame" v-html="state.post?.content"></div>
+        <TagArea :tags="state.post?.tags" />
       </div>
     </div>
+    <vue-utterances repo="devisitem/special-posted-in"
+                    label="Comment"
+                    theme="github-light"
+                    issue-term="pathname"
+                    async/>
   </div>
 </template>
 <script lang="ts" setup>
-import {
-  setPageTitle
-} from "~/utils/settingUtils";
+
+import VueUtterances from 'vue-utterances';
 import {
   postMapStore
 } from "~/store";
@@ -60,8 +64,6 @@ const state = reactive({
 
     return post
   })
-})
-onBeforeMount(() => {
 })
 
 

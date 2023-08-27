@@ -92,6 +92,7 @@ onMounted(() => {
 @include tablet {
   .main-body {
     margin-bottom: 0px;
+    max-width: 486px;
 
     & .main-container {
 

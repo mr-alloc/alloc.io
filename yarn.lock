@@ -7000,6 +7000,11 @@ vue-router@^4.1.6:
   dependencies:
     "@vue/devtools-api" "^6.4.5"
 
+vue-utterances@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/vue-utterances/-/vue-utterances-0.3.4.tgz#c7d1405a2738b7475cf490993b4b5356ceceab78"
+  integrity sha512-905JBbKQFTx8TCjIHtirDvOXpwNyrKIGgy/vVmQDXTkodFhpvzbQPC5tMfJeIeIeWBfV9uJZT6RsM4WGMxzjwg==
+
 vue@^3.2.47:
   version "3.2.47"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.47.tgz#3eb736cbc606fc87038dbba6a154707c8a34cff0"
