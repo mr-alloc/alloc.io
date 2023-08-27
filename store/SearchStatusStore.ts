@@ -5,10 +5,12 @@ export const useSearchStatusStore = defineStore('searchStatus', () => {
 
     function searching() {
         isSearchMode.value = true;
+        document.body.style.overflow = 'hidden'
     }
 
     function cancelSearch() {
         isSearchMode.value = false
+        document.body.style.overflow = 'unset'
     }
 
     return {

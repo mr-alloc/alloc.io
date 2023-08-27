@@ -1,6 +1,5 @@
 {
   "name": "special-posted-in",
-
   "fullname": "devisitem",
   "username": "devis",
   "domain": "https://devis.kr",
@@ -8,7 +7,6 @@
   "description": "불편해야 성장할 수 있어.",
   "homepage": "https://devisitem.github.io/special-posted-in/",
   "defaultProfile": "https://avatars.githubusercontent.com/u/65699391?v=4",
-
   "license": "MIT",
   "scripts": {
     "boot": "node core/script/boot.js",
@@ -25,6 +23,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/vue-fontawesome": "^3.0.3",
     "@nuxt/bridge": "^0.10.1",
+    "@nuxt/image": "^1.0.0-rc.1",
     "@pinia/nuxt": "^0.4.7",
     "@types/escape-html": "^1.0.2",
     "@types/prismjs": "^1.26.0",

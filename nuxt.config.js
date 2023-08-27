@@ -2,6 +2,7 @@
 import Keys from './static/keys.json'
 
 export default defineNuxtConfig({
+
     experimental: {
         payloadExtraction: false
     },
@@ -31,6 +32,7 @@ export default defineNuxtConfig({
         ]
     },
     modules: [
-        '@pinia/nuxt'
+        '@pinia/nuxt',
+        '@nuxt/image'
     ],
 })

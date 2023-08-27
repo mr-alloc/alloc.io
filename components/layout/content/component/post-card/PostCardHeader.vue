@@ -1,7 +1,10 @@
 \<template>
   <div class="post-preview-header">
     <div class="profile-image">
-      <img :src="`${methods.getProfileOrDefault(props.header.profile_image)}`" />
+      <nuxt-img format="webp"
+                width="80"
+                height="80"
+                :src="`${methods.getProfileOrDefault(props.header.profile_image)}`"  />
     </div>
     <div class="author-info">
       <a href="{{`https://github.com/${b}`}}" target="_blank">
