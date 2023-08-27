@@ -167,26 +167,19 @@ onMounted(() => {
     $emitter.emit('resetSearchBar')
   })
 
-
-
   const element = document.getElementById('application-container')!
-  console.log('element', element)
+
   const handleForScroll = (event: Event) => {
-    event.preventDefault()
-    console.log('scroll event')
     /* 현재 스크롤 위치 */
-    const currentScroll = element.scrollTop
+    // const currentScroll = element.scrollTop
+    const currentScroll = window.scrollY
     /* 엘리먼트 높이 */
-    const winHeight = element.clientHeight
+    // const winHeight = element.clientHeight
+    const winHeight = window.innerHeight
     /* 엘리먼트 스크롤 높이 */
     const docHeight = element.scrollHeight
 
-    console.log('currentScroll:',currentScroll)
-    console.log('winHeight:',winHeight)
-    console.log('docHeight:',docHeight)
-
-    const percent = (100.000 * currentScroll / (docHeight - winHeight)).toFixed(3)
-    console.log('percent:',percent)
+    const percent = (100.000 * currentScroll / (docHeight - winHeight)).toFixed(0)
 
     const scrollPer = parseFloat(percent)
 
@@ -196,9 +189,7 @@ onMounted(() => {
     }
 
   }
-  element.addEventListener('scroll', handleForScroll)
-  document.body.addEventListener('scroll', () => console.log('scroll body'))
-  document.getElementById('__nuxt')?.addEventListener('scroll', () => console.log('scroll nuxt'))
+  window.addEventListener('scroll', handleForScroll)
 })
 
 
