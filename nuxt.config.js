@@ -2,7 +2,6 @@
 import Keys from './static/keys.json'
 
 export default defineNuxtConfig({
-
     experimental: {
         payloadExtraction: false
     },
