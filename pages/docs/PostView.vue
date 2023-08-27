@@ -229,7 +229,7 @@ const state = reactive({
           margin: 60px 0px 20px;
           padding: 10px 0px;
           border-bottom: 1.22px solid $point-light-color;
-          color: #0385d1;
+          color: #2d3235;
         }
 
         h4 {
