@@ -57,8 +57,9 @@ import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {PostSearchResult} from "~/class/implement/PostSearchResult";
 import {Key} from "~/class/implement/Key";
 import {callPostFeed} from "~/utils/postUtil";
+import {useRoute} from "vue-router";
 
-
+const route = useRoute()
 const router = useRouter()
 const { $emitter } = useNuxtApp()
 const searchStatusStore = useSearchStatusStore()
@@ -85,12 +86,12 @@ const data = {
     }
 }
 onMounted(() => {
-
-  const body = document.body
   $emitter.on('initScroll', () => {
-    if (body.scrollTop) {
-      body.scrollTop = 0
-    }
+    console.log('initScroll')
+    window.scrollTo({
+      top:0,
+      behavior: 'smooth'
+    })
   })
 
   $emitter.on('resetSearchBar', () => {
