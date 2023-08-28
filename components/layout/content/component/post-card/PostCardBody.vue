@@ -39,7 +39,7 @@ const props = defineProps({
 
     .default-image-wrapper {
       display: grid;
-      width: 100%;
+      max-width: 486px;
       min-height: 60px;
 
       img {

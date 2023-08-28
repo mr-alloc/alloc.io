@@ -203,6 +203,7 @@ useHead({
 <style lang="scss">
 @import '@/styles';
 .app-container {
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   background-color: $point-light-color;

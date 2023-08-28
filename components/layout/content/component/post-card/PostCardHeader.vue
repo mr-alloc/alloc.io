@@ -1,11 +1,10 @@
 \<template>
   <div class="post-preview-header">
     <div class="profile-image">
-      <img
-          :src="`${methods.getProfileOrDefault(props.header.profile_image)}`"  />
+      <img :src="`${methods.getProfileOrDefault(props.header.profile_image)}`"  />
     </div>
     <div class="author-info">
-      <a href="{{`https://github.com/${b}`}}" target="_blank">
+      <a :href="`https://github.com/${blogInfo.fullname}`" target="_blank">
         <span class="author-name">
             {{ blogInfo.fullname }}
         </span>

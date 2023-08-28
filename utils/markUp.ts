@@ -2,19 +2,16 @@ import lineNumbers from '~/utils/lineNumbers'
 import preWrapper from '~/utils/preWrapper'
 import highlightLines from '~/utils/highlightLines'
 
+import ruleSub from '~/utils/ruleSub'
 import escapeHtml from 'escape-html'
 import MarkdownIt from 'markdown-it'
 import Prism from 'prismjs'
 import * as PrismUtils from './prismUtils'
-import putInEachLines from "~/utils/putInEachLines";
-
-
 
 function wrap(code: string, lang: string) {
     if(lang === 'text') {
         code = escapeHtml(code)
     }
-
 
     return `<pre class="language-${lang} code-snippet"><code>${code}</code></pre>`
 }
@@ -61,13 +58,14 @@ export default (markdown: string) => {
         xhtmlOut: true,
 
         highlight: (code: string, lang: string) => {
-            putInEachLines(code)
             return highlight(code, lang)
         }
     })
+
+
     highlightLines(md)
     preWrapper(md)
     lineNumbers(md)
-
+    ruleSub(md)
     return md.render(markdown)
 }

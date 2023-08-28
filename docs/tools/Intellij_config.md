@@ -1,18 +1,33 @@
 ---
 layout: post
-title: -Intellij- General Configuration (인텔리제이 설정)
+title: Intellij 단축키 와 설정
 categories: [Development, Tools]
 tags: [Intellij, Shortcut, 인텔리제이, 단축키, 기본설정]
-date: 2021-02-23 21:58:00 +0900
-profile_image: /assets/blogging/profile/profile3.jpeg
-current_company: Cubic Inc
-current_position: Web Backend Developer
+date: 2023-08-28 19:42:00 +0900
+profile_image: /assets/blogging/profile/winkkom.png
+current_company: NEOWIZ
+current_position: Software Engineer
+thumbnail: /assets/blogging/tool/intellij_shortcut.png
 summary: 단축키와 기본설정
 excerpt_separator: <!--more-->
 hide: false
 ---
-Intellij 단축키 및 설정 사용법 for Mac
+Intellij에서 유용한 단축키 정리
 <!--more-->
+
+## 기본 단축키
+
+- ⌘ : command
+- ⇧ : Shift
+- ⌃ : control
+- ↩ : return
+- ⌥ : option
+
+| 단축기능       | mac        | win               | 설명 |
+|:-----------|:-----------|:------------------|:--|
+| 리턴타입 객체 생성 | `⌥` + `⌘` + `X`  | `Ctrl` + `Alt` + `X`    | 리턴타입이 있는 메소드 호출위에 커서를 두고 실행 |
+| 라인 북마크     | `⌃` + `⇧` + `숫자` | `Ctrl` + `Shift` + `숫자` | 북마크된 라인으로 이동은 `⌃`(win `Ctrl`) + `숫자` |
+
 
 ##  Live Template
 Setting > Live Template 검색  
@@ -24,19 +39,11 @@ Setting > Gradle 검색
 ![Gradle 빌드 설정](/assets/blogging/intellij/intellij2.png)
 
 위 `build` 설정은 testCase를 만들시 gradle에서 빌드하던것을 intellij 로 빌드 하도록 바꿔준 것이다.
-
 testCase 빌드 안될시 체크.
 
 ## Annotation Error
 ![AnnotationError](/assets/blogging/intellij/tableAnnotationError.png)
 
-## Intellij ShortCuts
-
-- ⌘ : command
-- ⇧ : Shift
-- ⌃ : control
-- ↩ : return
-- ⌥ : option
 
 ### 테스트 인스턴스를 Method로 생성(Extract Method)
 

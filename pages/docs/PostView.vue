@@ -195,6 +195,10 @@ const state = reactive({
           width: 100%;
           margin: 20px 0px;
 
+          tr {
+            height: 40px;
+          }
+
           thead {
             border-bottom: 1px solid #d0d7de;
           }
