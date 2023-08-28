@@ -30,6 +30,7 @@
     "date-format-parse": "^0.2.7",
     "jekyll-markdown-parser": "^4.0.0",
     "markdown-it": "^13.0.1",
+    "markdown-it-sub": "^1.0.0",
     "mitt": "^3.0.0",
     "paginator": "^1.0.0",
     "pinia": "^2.0.33",

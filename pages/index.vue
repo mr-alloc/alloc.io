@@ -53,7 +53,7 @@ onMounted(() => {
 
 .main-body {
   display: flex;
-  max-width: 786px;
+  max-width: 768px;
   min-height: 800px;
   margin: 30px auto;
 
@@ -63,9 +63,7 @@ onMounted(() => {
 
     .post-card-wrapper {
       transition: .4s;
-      width: 70%;
       margin: 10px auto;
-      min-height: 600px;
       background-color: $main-light-color;
       border-radius: 15px;
       border: 1.29px solid #e0dfdc;
@@ -122,7 +120,7 @@ onMounted(() => {
 
       & .post-card-wrapper {
         width: 100%;
-        min-height: 400px;
+        min-height: 300px;
         border-radius: 0px;
         border-left: 0px;
         border-right: 0px;
