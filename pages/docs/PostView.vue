@@ -37,7 +37,7 @@ import TagArea from "~/components/layout/content/component/post-card/TagArea.vue
 import { useRoute } from "vue-router";
 import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
-import {computed, onBeforeMount, reactive, Ref, ref} from "vue";
+import {computed, onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
 
 
@@ -66,6 +66,17 @@ const state = reactive({
   })
 })
 
+onMounted(() => {
+  const tables = [...document.querySelectorAll('table').values()]
+  tables.forEach(table => {
+    const div = document.createElement('div')
+    div.innerHTML = table.outerHTML
+    div.className = 'content-table'
+
+    table.parentNode?.insertBefore(div, table)
+    table.remove()
+  })
+})
 
 </script>
 <style lang="scss">
@@ -197,6 +208,12 @@ const state = reactive({
 
           tr {
             height: 40px;
+            border: 5px;
+            transition: .3s;
+
+            &:hover {
+              background: rgb(0, 0, 0, 0.1);
+            }
           }
 
           thead {
@@ -204,12 +221,40 @@ const state = reactive({
           }
 
           th {
-
+            span {
+              &.selected {
+                position: relative;
+                animation-name: flying;
+                animation-duration: 1s;
+                animation-iteration-count: infinite;
+                animation-timing-function: linear;
+              }
+            }
           }
 
           th, td {
             box-sizing: border-box;
             padding: 3px 5px;
+
+            span {
+              padding: 3px 5px;
+              display: inline-block;
+
+              &.key-mac {
+                code {
+                  color: #393d43;
+                  background: linear-gradient(-225deg,#d5dbe4,#f8f8f8);
+                  box-shadow: inset 0 -2px 0 0 #cdcde6,inset 0 0 1px 1px #fff,0 1px 2px 1px rgba(30,35,90,.4);
+                }
+              }
+              &.key-win {
+                code {
+                  border-radius: unset;
+                  background: linear-gradient(-225deg,#d5dbe4,#f8f8f8);
+                  box-shadow: inset 0 -2px 0 0 #cdcde6,inset 0 0 1px 1px #fff,0 1px 2px 1px rgba(30,35,90,.4);
+                }
+              }
+            }
           }
         }
 

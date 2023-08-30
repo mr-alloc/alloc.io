@@ -23,11 +23,12 @@ Intellij에서 유용한 단축키 정리
 - ↩ : return
 - ⌥ : option
 
-| 단축기능       | mac        | win               | 설명 |
-|:-----------|:-----------|:------------------|:--|
-| 리턴타입 객체 생성 | `⌥` + `⌘` + `X`  | `Ctrl` + `Alt` + `X`    | 리턴타입이 있는 메소드 호출위에 커서를 두고 실행 |
-| 라인 북마크     | `⌃` + `⇧` + `숫자` | `Ctrl` + `Shift` + `숫자` | 북마크된 라인으로 이동은 `⌃`(win `Ctrl`) + `숫자` |
+| 단축키 <span class="key-mac selected">`MAC`</span> <span class="key-win">`Win`</span>     | 설명 |
+|:-----------|:--|
+| <span class="key-mac">`⌥` + `⌘` + `X`</span><br/><span class="key-win">`Ctrl` + `Alt` + `X`</span>   | 리턴타입이 있는 메소드 호출위에 커서를 두고 실행 |
+| <span class="key-mac">`⌃` + `⇧` + `숫자`</span><br/><span class="key-win">`Ctrl` + `Shift` + `숫자`</span> | 북마크된 라인으로 이동은 `⌃`(win `Ctrl`) + `숫자` |
 
+10log~2~
 
 ##  Live Template
 Setting > Live Template 검색  
