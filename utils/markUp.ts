@@ -62,7 +62,6 @@ export default (markdown: string) => {
         }
     })
 
-
     highlightLines(md)
     preWrapper(md)
     lineNumbers(md)

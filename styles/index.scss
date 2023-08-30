@@ -84,3 +84,17 @@ $tablet-folded-left: -320px;
     left: $tablet-folded-left;
   }
 }
+
+@keyframes flying {
+  0% {
+    top: 0;
+  }
+
+  50% {
+    top: -5px;
+  }
+
+  100% {
+    top: 0;
+  }
+}
