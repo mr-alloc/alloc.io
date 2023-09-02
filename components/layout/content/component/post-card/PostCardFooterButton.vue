@@ -1,7 +1,7 @@
 <template>
   <div class="footer-button-group">
     <div class="footer-button button-recommend">
-            <font-awesome-icon icon="heart" />
+      <font-awesome-icon icon="heart" />
       <span>추천</span>
       <div class="tooltip-bubble">
         <div class="tooltip-content"><span>준비중 입니다.</span></div>
@@ -14,6 +14,8 @@
     </div>
   </div>
 </template>
+<script lang="ts" setup>
+</script>
 
 <style lang="scss">
 .footer-button-group {

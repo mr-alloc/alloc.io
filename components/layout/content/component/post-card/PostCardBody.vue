@@ -3,7 +3,7 @@
     <div class="post-contents">
       <span class="content-text">{{ props.description }}</span>
     </div>
-    <nuxt-link v-bind:to="props.path">
+    <nuxt-link v-bind:to="props.path" v-if="props.header.layout === 'post'">
       <div class="post-default-image">
         <div class="default-image-wrapper">
           <img :src="props.header.thumbnail" />
