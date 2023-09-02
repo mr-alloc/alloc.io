@@ -53,7 +53,7 @@ onMounted(() => {
 
 .main-body {
   display: flex;
-  max-width: 768px;
+  max-width: 568px;
   min-height: 800px;
   margin: 30px auto;
 
