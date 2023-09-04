@@ -76,6 +76,8 @@ onMounted(() => {
     table.parentNode?.insertBefore(div, table)
     table.remove()
   })
+
+  // 단축키 정보 확인
 })
 
 </script>
