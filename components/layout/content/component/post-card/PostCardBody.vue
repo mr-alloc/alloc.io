@@ -1,7 +1,7 @@
 <template>
   <div class="post-preview-body">
     <div class="post-contents">
-      <span class="content-text">{{ props.description }}</span>
+      <span class="content-text" v-html="markUp(props.description)"></span>
     </div>
     <nuxt-link v-bind:to="props.path" v-if="props.header.layout === 'post'">
       <div class="post-default-image">
@@ -18,13 +18,16 @@
 </template>
 
 <script lang="ts" setup>
-import {Header} from "~/class/implement/Header";
+import {Header} from "@/class/implement/Header";
+import markUp from "@/utils/markUp";
 
 const props = defineProps({
   header: Header,
   description: String,
   path: String
 })
+
+
 </script>
 
 <style lang="scss">
@@ -81,6 +84,10 @@ const props = defineProps({
       font-family: inherit;
       white-space: break-spaces;
       word-break: break-all;
+
+      img {
+        width: 300px;
+      }
     }
 
   }

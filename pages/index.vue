@@ -53,7 +53,7 @@ onMounted(() => {
 
 .main-body {
   display: flex;
-  max-width: 568px;
+  max-width: 486px;
   min-height: 800px;
   margin: 30px auto;
 
@@ -115,6 +115,7 @@ onMounted(() => {
 @include mobile {
   .main-body {
     margin: 0px;
+    max-width: unset;
 
     & .main-container {
 
