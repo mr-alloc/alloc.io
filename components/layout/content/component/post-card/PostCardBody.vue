@@ -71,7 +71,7 @@ const props = defineProps({
 
   .post-contents {
     margin: 0 15px;
-    max-height: 11rem;
+    //max-height: 6.6rem;
     overflow: hidden;
     font-size: .92rem;
     padding: 15px;
@@ -90,6 +90,19 @@ const props = defineProps({
       }
     }
 
+    .show-button {
+      display: none;
+    }
+
+    &.show-more-text {
+
+      .show-button {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-left: 10px;
+      }
+    }
   }
 }
 
