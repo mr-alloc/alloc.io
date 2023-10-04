@@ -2,8 +2,11 @@
   <div class="post-container" :class="{prepare : prepareStore.isPrepare}">
     <Head>
       <Meta property="og:title" v-bind:content="state.post?.title.replace('\n', '')" />
-      <Meta property="og:description" v-bind:content="state.meta?.description" />
+      <Meta property="og:description" v-bind:content="state.meta?.description.replace('\n', '')" />
       <Meta property="og:image" v-bind:content="state.meta?.header.thumbnail" />
+      <Meta property="og:url" v-bind:content="blogInfo.domain + route.fullPath" />
+      <Meta name="description" :content="state.meta?.description.replace('\n', '')"/>
+      <Title>{{ state.meta?.header.summary }}</Title>
     </Head>
     <div class="post-area">
       <div class="post-title-area">
@@ -39,7 +42,7 @@ import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
 import {computed, onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
-
+import {blogInfo} from "~/store/site";
 
 const components = {
   TagArea
@@ -47,11 +50,11 @@ const components = {
 
 
 const prepareStore = usePagePrepareStore();
+const route = useRoute()
 
 prepareStore.prepare()
 const state = reactive({
   meta: computed<PostContent>(() => {
-    const route = useRoute();
     const path = route.fullPath.replace(/(\/docs\/.+)\/$/g, '$1')
     return postMapStore.map.get(path)
   }),
@@ -305,7 +308,7 @@ onMounted(() => {
           border-radius: 6px;
           padding: 0.082em 0.5em;
           word-break: break-word;
-          color: #0385d1;
+          color: #0A5C0D;
           position: relative;
           top: -1px;
           font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
