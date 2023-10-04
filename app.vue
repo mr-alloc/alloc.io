@@ -194,8 +194,11 @@ onMounted(() => {
 
 
 useHead({
+  htmlAttrs: {
+    lang: 'ko-kr'
+  },
   meta: [
-    { name: 'viewport', content: 'width=device-width=, initial-scale=1.0, maximum-scale=1.0' }
+    { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' }
   ]
 })
 </script>
