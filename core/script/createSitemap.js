@@ -7,7 +7,8 @@ const packageJson = require('../../package.json')
 module.exports = () => {
     const links = keys.map(key => {
         const link = {
-            url: key
+            //리디렉션
+            url: key + '/'
         }
         return link
     })
