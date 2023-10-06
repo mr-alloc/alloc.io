@@ -30,7 +30,7 @@ function toFilePost (wholePath, file) {
         .slice(1, pathArray.length -1)
         .map(name => fileNames[name] ?? name)
     breadcrumbs.push(nickname)
-    PostStore.push(post)
+    post.header['layout'] === 'post' && PostStore.push(post)
     post.header.breadcrumbs = breadcrumbs
     const group = pathArray[1] ?? 'etc'
 
