@@ -310,6 +310,7 @@ onMounted(() => {
           word-break: break-word;
           color: #0A5C0D;
           position: relative;
+          display: inline-block;
           top: -1px;
           font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
         }
