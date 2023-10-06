@@ -2,7 +2,8 @@
   <div class="header-wrapper" :class="{ 'search-mode' : searchStatusStore.isSearchMode }">
       <div class="header-center">
       <div class="blog-ci-area">
-        <span class="blog-logo-wrapper" v-on:click="router.push('/')"></span>
+<!--        <span class="blog-logo-wrapper" v-on:click="router.push('/')"></span>-->
+        <img src="@/assets/dev_is_record.png" style="height: 100%;"/>
       </div>
       <div class="search-box-wrapper">
         <div class="search-box" v-on:click="methods.activateSearchMode()">
