@@ -487,7 +487,7 @@ const methods = {
         display: flex;
         align-items: center;
         justify-content: left;
-        width: 50px;
+        width: 75px;
         flex-shrink: 0;
 
         .ci-logo-panel {
