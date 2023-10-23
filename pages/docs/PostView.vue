@@ -14,12 +14,14 @@
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-            <span class="date-text" id="post-date-text">{{ state.post?.date }}</span>
+            <span class="date-text" id="post-date-text">{{ methods.toDateFormat(state.meta.header.date) }}</span>
           </div>
         </div>
       </div>
       <div class="post-content-wrapper" id="document-content">
         <div class="post-content" :class="{ hide: state.meta?.header }" id="post-content-frame" v-html="state.post?.content"></div>
+        <div class="posting-date">
+        </div>
         <TagArea :tags="state.post?.tags" />
       </div>
     </div>
@@ -48,6 +50,17 @@ const components = {
   TagArea
 }
 
+const methods = {
+  toDateFormat(data: Date) {
+    const date = new Date(data)
+    const year = date.getFullYear()
+    const computedMonth = date.getMonth() + 1
+    const month = computedMonth < 10 ? `0${computedMonth}` : computedMonth
+    const day = date.getDate()
+
+    return `${year}-${month}-${day}`
+  }
+}
 
 const prepareStore = usePagePrepareStore();
 const route = useRoute()
@@ -306,10 +319,15 @@ onMounted(() => {
           word-break: break-word;
           color: #0A5C0D;
           position: relative;
-          display: inline-block;
-          line-height: 1.2;
           top: -1px;
           font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
+        }
+
+        :not(pre) > code {
+          display: inline-block;
+          line-height: 1.2;
+          border: 1px solid #a5c0a6;
+          margin: 0 2px;
         }
         hr {
           margin: 30px 0;
@@ -450,6 +468,7 @@ onMounted(() => {
       }
 
     }
+
   }
 }
 

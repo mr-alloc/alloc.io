@@ -2,7 +2,7 @@
   <div class="post-preview-footer">
     <TagArea :tags="props.header.tags" />
     <div v-bind:class="[`post-comment-list`,{ 'hide' : mobileNaviStore.isActive }]" class="message-box" ></div>
-    <PostCardFooterButton v-if="props.header.layout === 'post'"/>
+<!--    <PostCardFooterButton v-if="props.header.layout === 'post'"/>-->
   </div>
 </template>
 
