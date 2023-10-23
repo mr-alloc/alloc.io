@@ -8,7 +8,6 @@ const __DOCS__ = '/docs'
 const __FILE_NODE__ = `${__ROOT__}/static/file-node.json`
 const __POSTS__ = `${__ROOT__}/static/posts.json`
 const __KEYS__ = `${__ROOT__}/static/keys.json`
-const __KEYWORD__ = `${__ROOT__}/static/keyword.json`
 const __SITEMAP__ = './public/sitemap.xml'
 
 /* explore with recursive */

@@ -1,5 +1,5 @@
 <template>
-  <div class="post-container" :class="{prepare : prepareStore.isPrepare}">
+  <div class="post-container">
     <Head>
       <Meta property="og:title" v-bind:content="state.post?.title.replace('\n', '')" />
       <Meta property="og:description" v-bind:content="state.meta?.description.replace('\n', '')" />
@@ -60,10 +60,6 @@ const state = reactive({
   }),
   post: computed<PagePost | null>(() => {
     const post: PagePost | null = PagePost.of(state.meta)
-
-    setTimeout(() => {
-      prepareStore.done()
-    }, 150)
 
     return post
   })
@@ -311,6 +307,7 @@ onMounted(() => {
           color: #0A5C0D;
           position: relative;
           display: inline-block;
+          line-height: 1.2;
           top: -1px;
           font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
         }

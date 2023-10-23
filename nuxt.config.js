@@ -10,6 +10,7 @@ export default defineNuxtConfig({
         dir: 'dist',
         fallback: true,
         routes: [...Keys],
+        exclude: [/^\/tags/]
     },
     router: {
         base: '/special-posted-in/',

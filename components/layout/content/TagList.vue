@@ -38,20 +38,12 @@
               <li v-for="index in methods.rangeArray(data.pagingResult.first_page, data.pagingResult.last_page)"
                   :key="index" class="page-item"
                   :class="{ disabled: data.pagingResult.current_page === index}">
-                <NuxtLink :to="{
-
-                  path: methods.getPage(data.currentPath, index),
-
-                }" class="page-link">
+                <a :href="methods.getPage(data.currentPath, index)" class="page-link">
                   <span>{{ index }}</span>
-                </NuxtLink>
+                </a>
               </li>
               <li class="page-item" :class="{ disabled: !data.pagingResult.has_next_page}">
-                <NuxtLink :to="{
-
-                  path: methods.getPage(data.currentPath, data.pagingResult.next_page)
-
-                }" class="page-link">다음</NuxtLink>
+                <a :href="methods.getPage(data.currentPath, data.pagingResult.next_page)" class="page-link">다음</a>
               </li>
             </ul>
           </nav>
@@ -119,7 +111,7 @@ const methods = {
 $card-width: 200px;
 
 .tag-page-container {
-  width: 90%;
+  width: 600px;
   margin: 0 auto;
   min-height: 600px;
 
@@ -142,7 +134,7 @@ $card-width: 200px;
     .card-list-wrapper {
       display: flex;
       flex-direction: row;
-      justify-content: space-evenly;
+      justify-content: space-between;
       flex-wrap: wrap;
       max-width: calc($card-width * 3);
       margin: 20px auto;
