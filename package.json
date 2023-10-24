@@ -10,6 +10,7 @@
   "license": "MIT",
   "scripts": {
     "boot": "node core/script/boot.js",
+    "test-ts": "tsc core/script/tsTest.ts && node core/script/tsTest.js",
     "build": "yarn boot && nuxt build",
     "dev": "yarn boot && nuxt dev",
     "generate": "yarn boot && nuxt generate",

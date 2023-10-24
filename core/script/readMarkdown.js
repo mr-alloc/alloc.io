@@ -13,7 +13,9 @@ module.exports = (filePath) => {
     const contentRegex = /(?:((.|\n)*)(<!--\s*more\s*-->)((.|\n)*))/g
 
     const header = md.parsedYaml
-    header.date = header.date ? Date.parse(header.date) : 1999999999999
+    if (header !== undefined) {
+        header.date = header.date ? Date.parse(header.date) : 1999999999999
+    }
     const body = contentRegex.exec(md.markdown)
 
     return new PostData(

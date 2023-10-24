@@ -2,6 +2,7 @@ const explore = require('./explore')
 const postStore = require('./postStore')
 const refresh = require('./refresh')
 const createSitemap = require('./createSitemap')
+const extractImages = require('./extractImages')
 
 const __ROOT__ = process.env.PWD
 const __DOCS__ = '/docs'
@@ -16,7 +17,10 @@ const routePaths = new Array()
 /* Sort and indexing */
 const posts = postStore.sort((a, b) => b.header.date - a.header.date)
     .map((post) => {
-        routePaths.push(post._path)
+        routePaths.push(post.path)
+        if (post.path === '/docs/algorithm/image-test') {
+            extractImages(post.path, post.content)
+        }
         return post
     });
 
