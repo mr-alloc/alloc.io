@@ -44,7 +44,7 @@ class FileNode {
 }
 
 
-
+//core 에서 읽는 포스트 정보
 class PostData {
     _path
     _header
@@ -57,7 +57,9 @@ class PostData {
         this._description = description
         this._content = content
     }
-
+    get path() {
+        return this._path
+    }
     get header() {
         return this._header
     }
