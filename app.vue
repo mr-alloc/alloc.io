@@ -20,8 +20,8 @@ import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import SearchResult from "@/components/layout/header/SearchResult.vue"
 import { useDarkModeStore } from "@/store/DarkModeStore";
 import Runner from '@/service/DefaultStarterService'
-import {blogInfo, fileNodeMap} from "~/store/site";
-import {onBeforeMount, onMounted} from "vue";
+import {appCache} from "~/store/appCache";
+import {onMounted} from "vue";
 import {useHead} from "@vueuse/head";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import MainFooter from "~/components/layout/content/MainFooter.vue";
@@ -74,7 +74,7 @@ onMounted(() => {
   //검색 결과
   $emitter.on('searchText', (result: PostSearchResult[]) => {
     const map: Map<string, PostSearchResult[]> = groupingBy<string, PostSearchResult>(result, (result)=> {
-      const node = fileNodeMap.store.get(result.content.path)
+      const node = appCache.fileNodeMap.store.get(result.content.path)
       return node.group
     })
 

@@ -52,7 +52,7 @@ import {searchInputStore, mobileNaviStore, postCallStore} from "@/store";
 import { calPostDate } from "@/utils/settingUtils";
 import {useNuxtApp, useRouter} from "#app";
 import {onMounted} from "vue";
-import {blogInfo, contentsForSearch} from "~/store/site";
+import {appCache} from "~/store/appCache";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {PostSearchResult} from "~/class/implement/PostSearchResult";
 import {Key} from "~/class/implement/Key";
@@ -64,7 +64,6 @@ const router = useRouter()
 const { $emitter } = useNuxtApp()
 const searchStatusStore = useSearchStatusStore()
 const data = {
-    blogInfo,
     calPostDate,
     is_hide: false,
     searchInputStore,
@@ -142,11 +141,10 @@ const methods = {
 
     if (titleRE.test(text)) {
       const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i')
-      const result: PostSearchResult [] = contentsForSearch
+      const result: PostSearchResult [] = appCache.contentsForSearch
           .filter(content => {
             const title = content.header.title;
-            const isMatch = RE.test(title)
-            return isMatch
+            return RE.test(title)
           })
           .map(content => new PostSearchResult(content))
       // console.debug(`-----검색어: "${text}"-----------`)

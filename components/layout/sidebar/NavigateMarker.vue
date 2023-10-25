@@ -8,14 +8,14 @@
 
 <script lang="ts" setup>
 import {explorerHeaderStore} from '@/store'
-import {naviStack} from '@/store/site'
+import {appCache} from '~/store/appCache'
 import {useNuxtApp} from "#app";
 import {onMounted} from "vue";
 const {
    $emitter
 } = useNuxtApp()
 const name: string = 'NavigateMarker'
-const root = naviStack[0]?.name
+const root = appCache.naviStack[0]?.name
 const data = {
   isCallable: true,
   navigator: {
@@ -44,7 +44,7 @@ onMounted(() => {
       const carry = new Promise((resolve: Function) => {
 
         const newSource = document.createElement('span')
-        newSource.innerText = naviStack[index].name
+        newSource.innerText = appCache.naviStack[index].name
         newSource.classList.add('source')
         document.getElementById(data.titleId)?.append(newSource)
 
@@ -78,7 +78,7 @@ onMounted(() => {
 
     } else {
 
-      methods.getSource().innerText = naviStack[index].name
+      methods.getSource().innerText = appCache.naviStack[index].name
 
     }
   })
@@ -104,12 +104,13 @@ const methods = {
             selected(lastIndex -1)?.classList.remove('meet-up')
 
             //== 마지막 페이지 ==//
-            if(naviStack.length == 2) {
+            const stackLength = appCache.naviStack.length
+            if(stackLength == 2) {
               document.getElementById('navigator-title-ele')?.classList.remove('back')
               methods.getSource().classList.remove('active')
             }
             //== 현재 페이지가 2개이상 ==//
-            if(naviStack.length > 2) {
+            if(stackLength > 2) {
 
               oldSource.classList.remove('active')
               oldDist.classList.add('source', 'active')
@@ -117,7 +118,7 @@ const methods = {
 
 
               const newSource = document.createElement('span')
-              newSource.innerText = naviStack[naviStack.length -3].name
+              newSource.innerText = appCache.naviStack[stackLength -3].name
               newSource.classList.add('after-passed')
               newSource.addEventListener('click', methods.moveBack)
               document.getElementById(data.titleId)?.insertBefore(newSource, document.querySelector(`#${data.titleId} .source`))
@@ -139,12 +140,7 @@ const methods = {
 
         changeStyle.then(() => {
           setTimeout(() => {
-
-            if(naviStack.length > 1) {
-
-              naviStack.pop()
-            }
-
+            appCache.naviStack.length > 1 && appCache.naviStack.pop()
           }, 600)
         }).catch((error) => {
           console.log('Error occurred with: ', error)

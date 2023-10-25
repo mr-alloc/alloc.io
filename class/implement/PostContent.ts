@@ -26,7 +26,7 @@ export class PostContent implements IPostContent {
         return this._description
     }
 
-    get header() {
+    get header(): Header {
         return this._header
     }
 

@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="tag-list-wrapper">
-      <TagArea :tags="Array.from(tagMap.store.keys())"/>
+      <TagArea :tags="Array.from(appCache.tagMap.store.keys())"/>
     </div>
     <div class="connected-post" v-show="data.bookedTag">
       <div class="current-booked-tag">
@@ -54,9 +54,9 @@
 </template>
 
 <script setup>
-import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
-import { tagMap } from "@/store/site";
-import {postMapStore} from "@/store";
+import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
+import { appCache } from "~/store/appCache";
+import {postMapStore} from "~/store";
 import {useRoute} from "#app";
 import Paginator from 'paginator'
 
@@ -66,12 +66,12 @@ const params = route.params
 const path = route.fullPath
 const booked = params.tag ? params.tag : ''
 const page = params.page ? params.page : 0
-const bookedList = tagMap.store.get(booked)
+const bookedList = appCache.tagMap.store.get(booked)
 
 const decoded = decodeURI(booked)
-const isNotUndefined = typeof bookedList != undefined
+const isNotUndefined = typeof bookedList !== undefined
 const postList = decoded && isNotUndefined
-    ? tagMap.store.get(decoded).map((path) => postMapStore.map.get(path))
+    ? appCache.tagMap.store.get(decoded).map((path) => postMapStore.map.get(path))
     : []
 
 const paginated = new Paginator(6, 4)
@@ -80,7 +80,7 @@ const paginated = new Paginator(6, 4)
 const displayedPosts = postList.slice(paginated.first_result, paginated.last_result +1)
 
 const data = {
-  tagMap,
+  tagMap: appCache.tagMap,
   currentPath: path,
   bookedTag: booked,
   posts: postList,

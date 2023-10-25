@@ -30,16 +30,15 @@
 <script lang="ts" setup>
 import { FileNodeWrapper } from "@/class/implement/FileNodeWrapper";
 import {mobileNaviStore} from "@/store";
-import {naviStack} from "@/store/site";
 import {useNuxtApp, useRouter} from "#app";
 import {FileNode} from "~/class/implement/FileNode";
 import {IFileNode} from "~/class/IFileNode";
 import {onBeforeMount, onMounted} from "vue";
+import {appCache} from "~/store/appCache";
 const { $emitter } = useNuxtApp();
 const router = useRouter()
 
 const data = {
-  naviStack,
   mobileNaviStore,
   isCallable: true
 }
@@ -52,8 +51,9 @@ const props = defineProps({
 onBeforeMount(() => {
   $emitter.on('release_selected', () => {
 
-    if(naviStack.length <= 3) {
-      const children = methods.getStack(naviStack.length - 2)?.children
+    const stackLength = appCache.naviStack.length;
+    if(stackLength <= 3) {
+      const children = methods.getStack(stackLength - 2)?.children
 
       for(let child of children!) {
         child.classList.remove('selected')
@@ -80,7 +80,7 @@ const methods = {
       clicked.classList.add('selected')
 
       let sortedFiles: IFileNode[] = file.files?.sort((a, b) => `${a._type}`.localeCompare(`${b._type}`))!
-      naviStack.push(new FileNodeWrapper(file._summary, sortedFiles))
+      appCache.naviStack.push(new FileNodeWrapper(file._summary, sortedFiles))
       const panel = document.getElementById('explored-panel')
       if(panel) {
 

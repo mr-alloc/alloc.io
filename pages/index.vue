@@ -14,13 +14,13 @@
 import { postListStore, postCallStore, fileListStore, mobileNaviStore } from "@/store";
 import {calPostDate, setPageTitle} from "@/utils/settingUtils";
 import { callPostFeed } from "@/utils/postUtil";
-import { feeds } from '@/store/site'
+import {appCache} from '~/store/appCache'
 import PostCard from '@/components/layout/content/component/post-card/PostCard.vue'
 import { onMounted } from "vue";
 
 callPostFeed()
 const data = {
-  feeds: feeds,
+  feeds: appCache.feeds,
   postListStore,
   fileListStore,
   postCallStore,

@@ -4,16 +4,16 @@
       <img :src="`${methods.getProfileOrDefault(props.header.profile_image)}`"  />
     </div>
     <div class="author-info">
-      <a :href="`https://github.com/${blogInfo.fullname}`" target="_blank">
+      <a :href="`https://github.com/${appCache.blogInfo.fullname}`" target="_blank">
         <span class="author-name">
-            {{ blogInfo.fullname }}
+            {{ appCache.blogInfo.fullname }}
         </span>
       </a>
       <span class="author-work-at">{{ props.header.current_position }}, {{ props.header.current_company }}</span>
       <span class="posting-date">
-              <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-              {{ calPostDate(props.header.date) }}
-            </span>
+        <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
+        {{ calPostDate(props.header.date) }}
+      </span>
     </div>
   </div>
 </template>
@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 
-import {blogInfo} from "~/store/site";
+import {appCache} from "~/store/appCache";
 import {calPostDate} from "~/utils/settingUtils";
 import {Header} from "~/class/implement/Header";
 
@@ -35,18 +35,7 @@ const props = defineProps({
 
 const methods = {
   getProfileOrDefault(path: string) {
-    const defaultPath = '/assets/blogging/profile/default.jpeg'
-
-    const returnPath = path == undefined
-        ? defaultPath
-        : path
-
-    return returnPath
-  },
-  getCompanyLogoPath(company: string) {
-    if (company) {
-      return `/assets/company/${company.toLowerCase().replace(' ', '')}.png`
-    }
+    return path == undefined ? '/assets/blogging/profile/default.jpeg' : path
   }
 }
 </script>
@@ -73,7 +62,7 @@ const methods = {
   }
 
   .author-info {
-    padding: 0px 10px;
+    padding: 0 10px;
     width: 80%;
 
     img {

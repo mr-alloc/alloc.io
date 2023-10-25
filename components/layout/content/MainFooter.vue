@@ -1,21 +1,13 @@
 <template>
   <div class="main-footer">
     <div class="footer-text">
-      <span>© 2022 <a :href="`https://github.com/${blogInfo.fullname}`">{{ blogInfo.username }}.</a> All rights reserved.</span>
+      <span>© 2022 <a :href="`https://github.com/${appCache.blogInfo.fullname}`">{{ appCache.blogInfo.username }}.</a> All rights reserved.</span>
     </div>
   </div>
 </template>
 
-<script>
-import { blogInfo } from "~/store/site";
-export default {
-  data() {
-    return {
-      blogInfo
-    }
-  }
-
-}
+<script lang="ts" setup>
+import { appCache } from "~/store/appCache";
 </script>
 
 <style lang="scss">
@@ -26,15 +18,15 @@ export default {
   height: 40px;
   padding-top: 20px;
 
-  & .footer-text {
+  .footer-text {
     margin: 0 auto;
     width: 80%;
     text-align: center;
 
-    & span {
+    span {
       color: #2c3e50;
 
-      & a {
+      a {
         text-decoration: underline;
       }
     }

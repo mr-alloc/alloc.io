@@ -1,6 +1,6 @@
 import StarterService from "@/service/StarterService";
 import { FileNode } from "@/class/implement/FileNode";
-import {contentsForSearch, fileNodeMap, naviStack, postContents, tagMap} from "@/store/site";
+import { appCache } from "~/store/appCache";
 import {FileNodeWrapper} from "@/class/implement/FileNodeWrapper";
 import {PostContent} from "@/class/implement/PostContent";
 import {postMapStore} from "~/store";
@@ -32,13 +32,13 @@ class DefaultStarterService implements StarterService {
 
     private settingFileNodes(): void {
         const nodes: IFileNode [] = FileNode.toFileTrees(fileNode)
-        naviStack.push(new FileNodeWrapper('탐색', nodes))
+        appCache.naviStack.push(new FileNodeWrapper('탐색', nodes))
         this.cacheFileNodeMap(nodes)
     }
 
     private cacheFileNodeMap(fileNodes: IFileNode[]): void {
         for (let node of fileNodes) {
-            fileNodeMap.store.set(node._path, node)
+            appCache.fileNodeMap.store.set(node._path, node)
 
             if (node._files) {
                 this.cacheFileNodeMap(node._files)
@@ -51,13 +51,13 @@ class DefaultStarterService implements StarterService {
             .sort((a, b) => b.header.date.getTime() - a.header.date.getTime())
             .forEach(post => {
                 //피드용
-                postContents.push(post)
+                appCache.postContents.push(post)
                 // 새로고침시 피드용만 초기화
                 if (this.isInitialized) return
 
                 postMapStore.map.set(post._path, post)
                 //검색용
-                contentsForSearch.push(post)
+                appCache.contentsForSearch.push(post)
                 if(post.header) {
                     this.setTags(post.header, post._path)
                 }
@@ -75,15 +75,15 @@ class DefaultStarterService implements StarterService {
 
     private setTags(header: Header, path: string): void {
         header.tags.forEach(tag => {
-            const linkList: Array<String> = tagMap.store.get(tag)
+            const linkList: Array<String> = appCache.tagMap.store.get(tag)
             if(linkList) {
                 if( ! linkList.includes(path)) {
                     linkList.push(path)
-                    tagMap.store.set(tag, linkList)
+                    appCache.tagMap.store.set(tag, linkList)
                 }
             } else {
 
-                tagMap.store.set(tag, [path])
+                appCache.tagMap.store.set(tag, [path])
             }
         })
     }

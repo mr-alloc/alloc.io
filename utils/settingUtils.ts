@@ -1,6 +1,4 @@
-import {blogInfo} from "~/store/site";
-import {PostContent} from "~/class/implement/PostContent";
-import {PostSearchGroup} from "~/class/implement/PostSearchGroup";
+import {appCache} from "~/store/appCache";
 import {FileNode} from "~/class/implement/FileNode";
 
 export const calPostDate = (date: string): string => {
@@ -30,7 +28,7 @@ export const calPostDate = (date: string): string => {
 }
 
 export const setPageTitle = (title: string) => {
-    const blogName = blogInfo.title
+    const blogName = appCache.blogInfo.title
     document.title = title ? `${title} | ${blogName}` : blogName;
 }
 
@@ -41,7 +39,7 @@ export function groupingBy<T, E>(contents: E[], keyMapper: (content: E) => T): M
         const key: T = keyMapper(content)
         const array = map.has(key)
             ? map.get(key)
-            : new Array()
+            : []
 
         if (array) {
             array.push(content)

@@ -1,15 +1,15 @@
 
-import {feeds, postContents} from "~/store/site";
+import { appCache } from "~/store/appCache";
 import {postCallStore} from "~/store";
 
 
 const DEFAULT_FEED_SIZE = 4
 export const callPostFeed = (): void => {
     /* 최대 feed 사이즈 만큼 호출*/
-    for(let i = 0;(i < DEFAULT_FEED_SIZE && postContents.length != 0);i++){
-        const post = postContents.shift()
+    for(let i = 0;(i < DEFAULT_FEED_SIZE && appCache.postContents.length != 0);i++){
+        const post = appCache.postContents.shift()
         if(post !== undefined) {
-            feeds.push(post)
+            appCache.feeds.push(post)
         }
     }
 
