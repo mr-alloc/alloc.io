@@ -4,7 +4,7 @@
       <Meta property="og:title" v-bind:content="state.post?.title.replace('\n', '')" />
       <Meta property="og:description" v-bind:content="state.meta?.description.replace('\n', '')" />
       <Meta property="og:image" v-bind:content="state.meta?.header.thumbnail" />
-      <Meta property="og:url" v-bind:content="blogInfo.domain + route.fullPath" />
+      <Meta property="og:url" v-bind:content="appCache.blogInfo.domain + route.fullPath" />
       <Meta name="description" :content="state.meta?.description.replace('\n', '')"/>
       <Title>{{ state.meta?.header.summary }}</Title>
     </Head>
@@ -44,7 +44,7 @@ import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
 import {computed, onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
-import {blogInfo} from "~/store/site";
+import {appCache} from "~/store/appCache";
 
 const components = {
   TagArea
