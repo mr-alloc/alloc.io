@@ -1,6 +1,6 @@
 import StarterService from "@/service/StarterService";
 import { FileNode } from "@/class/implement/FileNode";
-import { appCache } from "~/store/appCache";
+import appCache from "~/store/appCache";
 import {FileNodeWrapper} from "@/class/implement/FileNodeWrapper";
 import {PostContent} from "@/class/implement/PostContent";
 import {postMapStore} from "~/store";

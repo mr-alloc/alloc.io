@@ -1,50 +1,55 @@
 <template>
-  <div class="header-wrapper" :class="{ 'search-mode' : searchStatusStore.isSearchMode }">
-      <div class="header-center">
-      <div class="blog-ci-area" @click="router.push('/')">
-        <img src="/assets/dev_is_record.png" style="height: 100%; cursor: pointer" />
-      </div>
-      <div class="search-box-wrapper">
-        <div class="search-box" v-on:click="methods.activateSearchMode()">
-          <div class="menu-icon-wrapper">
-          <span class="menu-icon">
-            <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
-          </span>
+  <header>
+    <div id="main-header" class="header-wrapper" :class="{
+      'search-mode' : searchStatusStore.isSearchMode,
+      'going-down': appCache.scrollStatus.isDown
+    }">
+        <div class="header-center">
+        <div class="blog-ci-area" @click="router.push('/')">
+          <img src="/assets/dev_is_record.png" style="height: 100%; cursor: pointer" />
+        </div>
+        <div class="search-box-wrapper">
+          <div class="search-box" v-on:click="methods.activateSearchMode()">
+            <div class="menu-icon-wrapper">
+            <span class="menu-icon">
+              <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+            </span>
+            </div>
+            <div class="menu-title">
+              <input type="text" placeholder="찾기" id="search-bar"
+                     v-on:input="methods.typeForText()"
+                     v-on:keyup="methods.sendKeyboardEvent($event)"
+              >
+            </div>
           </div>
-          <div class="menu-title">
-            <input type="text" placeholder="찾기" id="search-bar"
-                   v-on:input="methods.typeForText()"
-                   v-on:keyup="methods.sendKeyboardEvent($event)"
-            >
+          <div class="cancel-search">
+            <button type="button" class="cancel-button" v-on:click="methods.inactivateSearchMode()">Cancel</button>
           </div>
         </div>
-        <div class="cancel-search">
-          <button type="button" class="cancel-button" v-on:click="methods.inactivateSearchMode()">Cancel</button>
+        <div class="top-menu-area">
+          <div class="top-level-menu">
+            <ul class="top-menu-list">
+              <li class="menu-item">
+                <a href="/tags">
+                  <div class="menu-icon-wrapper">
+                  <span class="menu-icon">
+                    <font-awesome-icon :icon="['fa', 'tags']"/>
+                  </span>
+                  </div>
+                  <div class="menu-title">
+                    <span>태그</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="top-menu-area">
-        <div class="top-level-menu">
-          <ul class="top-menu-list">
-            <li class="menu-item">
-              <a href="/tags">
-                <div class="menu-icon-wrapper">
-                <span class="menu-icon">
-                  <font-awesome-icon :icon="['fa', 'tags']"/>
-                </span>
-                </div>
-                <div class="menu-title">
-                  <span>태그</span>
-                </div>
-              </a>
-            </li>
-          </ul>
+        <div class="progress-area" v-if="false" :class="{ hide : mobileNaviStore.isActive }">
+          <span class="progress-bar"></span>
         </div>
-      </div>
-      <div class="progress-area" v-if="false" :class="{ hide : mobileNaviStore.isActive }">
-        <span class="progress-bar"></span>
       </div>
     </div>
-  </div>
+  </header>
 </template>
 
 <script lang="ts" setup>
@@ -52,11 +57,10 @@ import {searchInputStore, mobileNaviStore, postCallStore} from "@/store";
 import { calPostDate } from "@/utils/settingUtils";
 import {useNuxtApp, useRouter} from "#app";
 import {onMounted} from "vue";
-import {appCache} from "~/store/appCache";
+import appCache from "~/store/appCache";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {PostSearchResult} from "~/class/implement/PostSearchResult";
 import {Key} from "~/class/implement/Key";
-import {callPostFeed} from "~/utils/postUtil";
 import {useRoute} from "vue-router";
 
 const route = useRoute()
@@ -162,7 +166,14 @@ const methods = {
     background-color: $main-light-color;
     display: flex;
     width: 100%;
+    position: fixed;
+    top: 0;
+    transition: top 0.2s ease-in-out;
+    z-index: 5;
 
+    &.going-down {
+      top: -$pc-header-height;
+    }
     &.search-mode {
       position: fixed;
       z-index: 100;

@@ -44,7 +44,7 @@ import { PostContent } from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
 import {computed, onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
-import {appCache} from "~/store/appCache";
+import appCache from "~/store/appCache";
 
 const components = {
   TagArea

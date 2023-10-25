@@ -44,7 +44,7 @@ import {explorerHeaderStore, menuClickableStore, mobileNaviStore, tabletNaviStor
 import PackageExplorer from "@/components/layout/sidebar/PackageExplorer.vue";
 import NavigateMarker from "@/components/layout/sidebar/NavigateMarker.vue";
 import DefaultSettings from "@/components/layout/sidebar/DefaultSettings.vue";
-import {appCache} from "~/store/appCache";
+import appCache from "~/store/appCache";
 import {useNuxtApp} from "#app";
 import {onMounted} from "vue";
 
