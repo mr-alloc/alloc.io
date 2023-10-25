@@ -4,7 +4,7 @@
       <NavigateMarker />
       <client-only>
         <div class="explored-control-panel" id="explored-panel">
-          <PackageExplorer v-bind:key="idx" v-for="(parent, idx) in naviStack" :index="idx" :parent="parent" />
+          <PackageExplorer v-bind:key="idx" v-for="(parent, idx) in appCache.naviStack" :index="idx" :parent="parent" />
         </div>
       </client-only>
     </div>
@@ -18,7 +18,7 @@
         <div class="profile-info-area">
           <div class="author-text-area">
             <div class="profile-author-name">
-              <span>{{ blogInfo.fullname }}</span>
+              <span>{{ appCache.blogInfo.fullname }}</span>
             </div>
             <span class="intro">누군지 궁금하세요?</span>
           </div>
@@ -44,10 +44,9 @@ import {explorerHeaderStore, menuClickableStore, mobileNaviStore, tabletNaviStor
 import PackageExplorer from "@/components/layout/sidebar/PackageExplorer.vue";
 import NavigateMarker from "@/components/layout/sidebar/NavigateMarker.vue";
 import DefaultSettings from "@/components/layout/sidebar/DefaultSettings.vue";
-import {naviStack} from "@/store/site";
+import {appCache} from "~/store/appCache";
 import {useNuxtApp} from "#app";
 import {onMounted} from "vue";
-import { blogInfo } from "@/store/site";
 
 const { $emitter } = useNuxtApp()
 

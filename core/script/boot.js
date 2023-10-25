@@ -18,9 +18,7 @@ const routePaths = new Array()
 const posts = postStore.sort((a, b) => b.header.date - a.header.date)
     .map((post) => {
         routePaths.push(post.path)
-        if (post.path === '/docs/algorithm/image-test') {
-            extractImages(post.path, post.content)
-        }
+        post.header['images'] = extractImages(post.content)
         return post
     });
 

@@ -4,6 +4,7 @@ export class Header {
     categories: string[]
     tags: string[]
     date: Date
+    images: string []
     thumbnail: string
     current_company: string
     current_position: string
@@ -19,6 +20,7 @@ export class Header {
         this.categories = header.categories
         this.tags = header.tags
         this.date = new Date(header.date)
+        this.images = header.images
         this.thumbnail = this.getOrDefaultThumbnail(header.thumbnail)
         this.current_company = header.current_company
         this.current_position = header.current_position

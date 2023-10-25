@@ -1,22 +1,12 @@
 const Parser = require("jekyll-markdown-parser")
 
-const getIfMatched = (regex, str) => {
-    const executed =  regex.exec(str)
-    const hasPath = executed && executed.length >= 2
-    console.log('str: ', str)
-    console.log('executed: ', hasPath && executed[1])
-    console.log('real executed: ', executed)
-    return hasPath ? executed[1] : null
-}
+const srcRE = /"(.*?)"/
+const imgRE = /<img[^>]+src="([^"]+)"/g
 
-module.exports = (name, content) => {
-    console.log('content: ', content)
+//html string을 가져와 img  tag의 src를 출출하여 배열로 리턴
+module.exports = (content) => {
     const md = Parser.parse(content)
-    const html = md.html
 
-    //extract img tags in html string
-    const imgRegex = /<img[^>]+src="([^"]+)"/g
-    const images = html.split('\n').map(line => getIfMatched(imgRegex, line)).filter(line => line && line !== '')
-
-    console.log(images)
+    const matches = md.html.match(imgRE)
+    return matches ? matches.map(match => srcRE.exec(match)[1]) : []
 }
