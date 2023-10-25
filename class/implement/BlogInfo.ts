@@ -1,6 +1,6 @@
 export class BlogInfo {
 
-    private readonly _fullname: string
+    private readonly _fullName: string
     private readonly _username: string
     private readonly _domain: string
     private readonly _title: string
@@ -8,14 +8,14 @@ export class BlogInfo {
     private readonly _defaultProfile: string
 
     constructor(
-        fullname: string,
+        fullName: string,
         username: string,
         domain: string,
         title: string,
         description: string,
         defaultProfile: string,
     ) {
-        this._fullname = fullname
+        this._fullName = fullName
         this._username = username
         this._domain = domain
         this._title = title
@@ -31,8 +31,8 @@ export class BlogInfo {
         return this._title
     }
 
-    get fullname(): string {
-        return this._fullname
+    get fullName(): string {
+        return this._fullName
     }
 
     get username(): string {
@@ -48,7 +48,7 @@ export class BlogInfo {
     }
 
     static create(
-        fullname: string,
+        fullName: string,
         username: string,
         domain: string,
         title: string,
@@ -56,7 +56,7 @@ export class BlogInfo {
         defaultProfile: string
     ): BlogInfo {
         return new BlogInfo(
-            fullname,
+            fullName,
             username,
             domain,
             title,

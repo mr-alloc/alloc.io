@@ -1,13 +1,13 @@
 import { reactive } from "vue"
-import { FileNodeWrapper } from "@/class/implement/FileNodeWrapper"
-import { PostContent } from "@/class/implement/PostContent";
-import packageJson from '@/package.json'
+import { FileNodeWrapper } from "~/class/implement/FileNodeWrapper"
+import { PostContent } from "~/class/implement/PostContent";
+import packageJson from '~/package.json'
 import {BlogInfo} from "~/class/implement/BlogInfo";
-import {Pair} from "~/class/implement/Pair";
+import {ScrollStatus} from "~/class/implement/ScrollStatus";
 
 
 
-export const appCache = {
+export default {
     /* (피드용) 포스팅 메타파일 읽고 저장 */
     postContents: reactive<PostContent[]>([]),
 
@@ -40,5 +40,8 @@ export const appCache = {
             packageJson.description,
             packageJson.defaultProfile
         )
-    )
+    ),
+
+    /* 스크롤 정보 */
+    scrollStatus: reactive<ScrollStatus>(ScrollStatus.ofDefault())
 }

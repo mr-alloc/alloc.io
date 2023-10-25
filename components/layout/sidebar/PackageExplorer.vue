@@ -34,7 +34,7 @@ import {useNuxtApp, useRouter} from "#app";
 import {FileNode} from "~/class/implement/FileNode";
 import {IFileNode} from "~/class/IFileNode";
 import {onBeforeMount, onMounted} from "vue";
-import {appCache} from "~/store/appCache";
+import appCache from "~/store/appCache";
 const { $emitter } = useNuxtApp();
 const router = useRouter()
 

@@ -10,6 +10,15 @@
           <SearchResult v-for="group in groups.values()" :key="group" :row="group" />
         </div>
       </div>
+      <div v-if="photoView.isPhotoView" class="photo-view-area">
+        <div class="photo-view-panel">
+          <img :src="photoView.current.src" :alt="photoView.current.alt"/>
+        </div>
+        <div class="photo-view-carousel">
+          <ol class="photo-view-list">
+          </ol>
+        </div>
+      </div>
     </div>
     <LoadingBar />
   </div>
@@ -20,7 +29,7 @@ import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import SearchResult from "@/components/layout/header/SearchResult.vue"
 import { useDarkModeStore } from "@/store/DarkModeStore";
 import Runner from '@/service/DefaultStarterService'
-import {appCache} from "~/store/appCache";
+import appCache from "~/store/appCache";
 import {onMounted} from "vue";
 import {useHead} from "@vueuse/head";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
@@ -33,6 +42,7 @@ import {PostSearchResult} from "~/class/implement/PostSearchResult";
 import {groupingBy} from "~/utils/settingUtils";
 import {useNuxtApp} from "#app/nuxt";
 import {callPostFeed} from "~/utils/postUtil";
+import {usePhotoViewStore} from "~/store/PhotoViewStore";
 
 
 Runner.init()
@@ -41,6 +51,7 @@ const route = useRoute()
 const router = useRouter()
 const { $emitter }= useNuxtApp()
 const searchStatus = useSearchStatusStore()
+const photoView = usePhotoViewStore()
 
 const components = {
   LoadingBar,
@@ -113,8 +124,8 @@ onMounted(() => {
     })
 
     const array = [...groups.value.values()]
-    const pairs = array.map(val => val.results.map((res, idx) => new Pair<string, number>(val.icon, idx))).flat()
-    searchLocationPair.value = pairs
+    searchLocationPair.value = array.map(val => val.results.map((res, idx) => new Pair<string, number>(val.icon, idx)))
+        .flat()
     currentLocationIndex.value = 0
 
     // const status = array.map(group => `\n(${group.results.length}) ${group.icon}\n${group.results.map((re, i) => `\t[${re.status}]${++i}. ${re.content.header.title}`).join('\n')}`).join('\n')
@@ -188,6 +199,10 @@ onMounted(() => {
       callPostFeed()
     }
 
+    appCache.scrollStatus.on()
+    appCache.scrollStatus.loadHeader()
+    appCache.scrollStatus.checkScroll()
+
   }
   window.addEventListener('scroll', handleForScroll)
 })
@@ -210,6 +225,10 @@ useHead({
   display: flex;
   flex-direction: column;
   background-color: $point-light-color;
+
+  .current-content {
+    padding-top: $pc-header-height;
+  }
 
   &.dark {
     background-color: $main-dark-color;

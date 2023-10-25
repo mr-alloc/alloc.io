@@ -1,4 +1,4 @@
-import {appCache} from "~/store/appCache";
+import appCache from "~/store/appCache";
 import {FileNode} from "~/class/implement/FileNode";
 
 export const calPostDate = (date: string): string => {
@@ -49,14 +49,30 @@ export function groupingBy<T, E>(contents: E[], keyMapper: (content: E) => T): M
     return map
 }
 
-export function toMap<T, E>(contents: E[], keyMapper: (content: E) => T): Map<T, E> {
+export function toKeyMap<T, E>(contents: E[], keyMapper: (content: E, index: number) => T): Map<T, E> {
     const map = new Map<T, E>()
-    for (let content of contents) {
-        const key: T = keyMapper(content)
+    for (let i = 0;i < contents.length;i++) {
+        const key: T = keyMapper(contents[i], i)
         if (map.has(key)) {
             throw Promise.reject(`Can\'t Mapped by duplicated key '${key}'. `)
         }
-        map.set(key, content)
+        map.set(key, contents[i])
+    }
+    return map
+}
+
+export function toValueMap<E, T, O>(
+    contents: E[],
+    keyMapper: (content: E) => T,
+    valueMapper: (content: E, index: number) => O
+): Map<T, O> {
+    const map = new Map<T, O>()
+    for (let i = 0;i < contents.length;i++) {
+        const key: T = keyMapper(contents[i])
+        if (map.has(key)) {
+            throw Promise.reject(`Can\'t Mapped by duplicated key '${key}'. `)
+        }
+        map.set(key, valueMapper(contents[i], i))
     }
     return map
 }
@@ -72,5 +88,6 @@ export function getFileIcon(node: FileNode) {
     }
     return iconName
 }
+
 
 
