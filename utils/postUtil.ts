@@ -1,5 +1,5 @@
 
-import { appCache } from "~/store/appCache";
+import appCache from "~/store/appCache";
 import {postCallStore} from "~/store";
 
 

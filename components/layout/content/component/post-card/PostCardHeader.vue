@@ -21,7 +21,7 @@
 
 <script lang="ts" setup>
 
-import {appCache} from "~/store/appCache";
+import appCache from "~/store/appCache";
 import {calPostDate} from "~/utils/settingUtils";
 import {Header} from "~/class/implement/Header";
 
