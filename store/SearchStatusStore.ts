@@ -3,7 +3,6 @@ import {defineStore} from "pinia";
 export const useSearchStatusStore = defineStore('searchStatus', () => {
     const isSearchMode = ref(false)
 
-
     function searching() {
         isSearchMode.value = true;
         const html = document.querySelector('html')!

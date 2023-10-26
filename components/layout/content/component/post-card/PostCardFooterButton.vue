@@ -32,15 +32,15 @@
 
 
     //== 둘다 해줘야 transition 적용 ==//
-    & svg {
+    svg {
       transition: none;
 
-      & path {
+      path {
         transition: none;
       }
     }
 
-    & span {
+    span {
       margin: 0px 7px;
       transition: none;
     }
@@ -51,7 +51,7 @@
 
     &.button-recommend {
 
-      & .tooltip-bubble {
+      .tooltip-bubble {
         opacity: 0;
         transition: .0s;
         position: relative;
@@ -60,7 +60,7 @@
         font-size: .82rem;
         width: 150px;
 
-        & .tooltip-content {
+        .tooltip-content {
           width: 60%;
           margin: 0 auto;
           background-color: black;
@@ -70,7 +70,7 @@
 
         }
 
-        & .arrow {
+        .arrow {
           height: 0px;
 
           &:before {
@@ -87,11 +87,11 @@
 
       &:active, &:hover {
 
-        & path {
+        path {
           color: #f85f5b;
         }
 
-        & .tooltip-bubble {
+        .tooltip-bubble {
           opacity: 1;
           top: -55px;
         }
