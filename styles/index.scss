@@ -98,3 +98,15 @@ $tablet-folded-left: -320px;
     top: 0;
   }
 }
+
+@keyframes spread_60px {
+  from {
+    width: 0;
+    height: 0;
+  }
+
+  to {
+    width: 60px;
+    height: 60px;
+  }
+}

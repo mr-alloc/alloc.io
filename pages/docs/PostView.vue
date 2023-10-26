@@ -45,7 +45,8 @@ import {PagePost} from "~/class/implement/PagePost";
 import {computed, onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
 import appCache from "~/store/appCache";
-
+import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
+const photoViewStore = usePhotoViewStatusStore()
 const components = {
   TagArea
 }
@@ -62,7 +63,7 @@ const methods = {
   }
 }
 
-const prepareStore = usePagePrepareStore();
+const prepareStore = usePagePrepareStore()
 const route = useRoute()
 
 prepareStore.prepare()
@@ -89,7 +90,14 @@ onMounted(() => {
     table.remove()
   })
 
-  // 단축키 정보 확인
+  const imageTags = document.querySelectorAll('#post-content-frame img')
+  imageTags.forEach((imgTag, index) => {
+    imgTag.addEventListener('click', (e) => {
+      photoViewStore.open(index +1)
+    })
+  })
+
+  photoViewStore.load(state.meta.header.images)
 })
 
 </script>

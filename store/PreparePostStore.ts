@@ -1,6 +1,5 @@
 import {defineStore} from "pinia"
 
-
 export const usePagePrepareStore = defineStore('preparePostStatus', () => {
     const preparePost = ref(true)
 

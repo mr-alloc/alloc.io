@@ -12,6 +12,7 @@ export class Header {
     current_position: string
     profile_image: string
     summary: string
+    expose_images: boolean
     excerpt_separator: string
     hide: boolean
     breadcrumbs: string[]
@@ -28,6 +29,7 @@ export class Header {
         this.current_position = header.current_position
         this.profile_image = header.profile_image
         this.summary = header.summary
+        this.expose_images = header.expose_images
         this.excerpt_separator = header.excerpt_separator
         this.hide = header.hide
         this.breadcrumbs = header.breadcrumbs

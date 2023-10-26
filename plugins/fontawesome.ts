@@ -10,6 +10,7 @@ import {
     faClock,
     faMoon,
     faChevronRight,
+    faChevronLeft,
     faPlus, faMagnifyingGlass
 } from '@fortawesome/free-solid-svg-icons'
 import {
@@ -19,7 +20,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 import mitt from "mitt";
 
-library.add(faUserSecret, faBars, faHeart, faMessage, faGlobe, faHelmetSafety, faTags, faClock, faMoon, faChevronRight, faPlus, faFolder, faFileLines, faMagnifyingGlass)
+library.add(faUserSecret, faBars, faHeart, faMessage, faGlobe, faHelmetSafety, faTags, faClock, faMoon, faChevronRight, faChevronLeft, faPlus, faFolder, faFileLines, faMagnifyingGlass)
 
 
 // This is important, we are going to let Nuxt worry about the CSS

@@ -1,5 +1,6 @@
 import {PostSearchResult} from "~/class/implement/PostSearchResult";
 import {SearchStatus} from "~/class/implement/SearchStatus";
+import {toKeyMap} from "~/utils/settingUtils";
 
 export class PostSearchGroup {
     readonly _icon: string
@@ -7,7 +8,7 @@ export class PostSearchGroup {
 
     constructor(icon: string, result: PostSearchResult []) {
         this._icon = icon
-        this._searchResults = toMap<String, PostSearchResult>(result, (e) => e.content.path)
+        this._searchResults = toKeyMap<String, PostSearchResult>(result, (e) => e.content.path)
     }
 
     get icon(): string {

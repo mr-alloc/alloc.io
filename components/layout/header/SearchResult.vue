@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import {PostSearchGroup} from "~/class/implement/PostSearchGroup";
 import {onMounted, onUnmounted} from "vue";
-import {useRoute, useRouter} from "vue-router";
+import {useRouter} from "vue-router";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 
 const router = useRouter()

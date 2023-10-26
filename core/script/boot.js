@@ -19,7 +19,6 @@ const posts = postStore.sort((a, b) => b.header.date - a.header.date)
     .map((post) => {
         routePaths.push(post.path)
         post.header['images'] = extractImages(post.content)
-        console.log('images:', post.header['images'])
         return post
     });
 

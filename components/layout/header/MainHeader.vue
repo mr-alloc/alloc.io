@@ -2,7 +2,7 @@
   <header>
     <div id="main-header" class="header-wrapper" :class="{
       'search-mode' : searchStatusStore.isSearchMode,
-      'going-down': appCache.scrollStatus.isDown
+      'going-down': appCache.scrollStatus.isDown || photoViewStatus.isPhotoView
     }">
         <div class="header-center">
         <div class="blog-ci-area" @click="router.push('/')">
@@ -62,11 +62,13 @@ import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {PostSearchResult} from "~/class/implement/PostSearchResult";
 import {Key} from "~/class/implement/Key";
 import {useRoute} from "vue-router";
+import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
 
 const route = useRoute()
 const router = useRouter()
 const { $emitter } = useNuxtApp()
 const searchStatusStore = useSearchStatusStore()
+const photoViewStatus = usePhotoViewStatusStore()
 const data = {
     calPostDate,
     is_hide: false,

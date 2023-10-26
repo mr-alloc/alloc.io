@@ -1,14 +1,14 @@
 <template>
   <div class="search-result-wrapper">
     <div class="search-card-layer" v-bind:key="index" v-for="(post, index) in searchInputStore.result_list">
-      <NuxtLink v-bind:to="`/docs/${post.file_path}`" v-on:click="mobileNaviStore.isActive = false">
+      <a :href="`/docs/${post.file_path}`" v-on:click="mobileNaviStore.isActive = false">
         <div class="search-card-date">
           <span>{{ calPostDate(post.create_time) }}</span>
         </div>
         <div class="search-card-title">
           <span>{{ post.file_title }}</span>
         </div>
-      </NuxtLink>
+      </a>
     </div>
   </div>
 </template>
