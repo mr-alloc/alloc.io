@@ -2,14 +2,13 @@
   <div class="post-tag-area">
     <font-awesome-icon class="tag-icon" :icon="['fa', 'tags']"/>
     <a :href="methods.getTagPath(tag)" v-for="tag in props.tags" v-bind:key="tag" >
-      <span :class="{ current: data.booked && data.booked == tag}">{{ tag }}</span>
+      <span :class="{ current: data.booked && data.booked === tag}">{{ tag }}</span>
     </a>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { useRoute } from "#app";
-import da from "date-format-parse/src/locale/da";
+import {useRoute} from "#app";
 
 const route = useRoute()
 

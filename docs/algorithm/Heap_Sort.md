@@ -114,7 +114,7 @@ hide: false
 힙트리에서 값을 추가 할때는 마지막 노드로 붙여주고 위에서 했던것과 동일하게 힙을 만들어 줍니다.
 만약 새로운 값 17이 힙에 들어온다면 순서는 아래와 같이 바뀝니다.
 
-![만약 위의 힙에서 17이라는 값이 추가 된다면](/assets/blogging/algorithm/heap/add_new_17.svg)
+![만약 다음의 힙에서 17이라는 값이 추가 된다면](/assets/blogging/algorithm/heap/add_new_17.svg)
 ![이런식으로 부모노드와 바꿔가며, 다시 힙을 유지할 수 있어요.](/assets/blogging/algorithm/heap/add_new_17_2.svg)
 
 
