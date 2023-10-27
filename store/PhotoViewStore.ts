@@ -1,7 +1,6 @@
 import {defineStore} from "pinia";
 import {toKeyMap} from '~/utils/settingUtils'
 import {Image} from "~/class/implement/Image";
-import {initialize} from "esbuild";
 
 export const usePhotoViewStatusStore = defineStore('photoViewStatus', () => {
     const isPhotoView = ref<boolean>(false)
@@ -87,8 +86,13 @@ export const usePhotoViewStatusStore = defineStore('photoViewStatus', () => {
         isFullScreen.value = false
     }
 
+    function imageCount() {
+        return images.value.size
+    }
 
-    return { isPhotoView, isFullScreen, currentIndex, zoom, imageList, load, open,
+    return {
+        isPhotoView, isFullScreen, currentIndex, zoom, imageList, load, open,
+        imageCount,
         close,
         zoomIn,
         zoomOut,

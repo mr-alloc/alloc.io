@@ -14,7 +14,7 @@
         <div class="post-intro">
           <div class="reported-date">
             <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
-            <span class="date-text" id="post-date-text">{{ methods.toDateFormat(state.meta.header.date) }}</span>
+            <span class="date-text" id="post-date-text">{{ methods.toDateFormat(state.meta?.header.date) }}</span>
           </div>
         </div>
       </div>
@@ -35,17 +35,16 @@
 <script lang="ts" setup>
 
 import VueUtterances from 'vue-utterances';
-import {
-  postMapStore
-} from "~/store";
+import {postMapStore} from "~/store";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
-import { useRoute } from "vue-router";
-import { PostContent } from "~/class/implement/PostContent";
+import {useRoute} from "vue-router";
+import {PostContent} from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
 import {computed, onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
 import appCache from "~/store/appCache";
 import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
+
 const photoViewStore = usePhotoViewStatusStore()
 const components = {
   TagArea
