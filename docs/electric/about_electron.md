@@ -9,7 +9,7 @@ current_company: NEOWIZ
 current_position: Software Engineer
 summary: 전자란?
 excerpt_separator: <!--more-->
-hide: false
+hide: true
 ---
 # 전기에너지를 만드는 전자
 

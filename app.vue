@@ -16,16 +16,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Runner from '@/service/DefaultStarterService'
+import Runner from '~/service/DefaultStarterService'
 import appCache from "~/store/appCache";
-import MainHeader from "@/components/layout/header/MainHeader.vue";
-import LoadingBar from "@/components/layout/header/LoadingBar.vue";
-import SearchResult from "@/components/layout/header/SearchResult.vue"
+import MainHeader from "~/components/layout/header/MainHeader.vue";
+import LoadingBar from "~/components/layout/header/LoadingBar.vue";
+import SearchResult from "~/components/layout/header/SearchResult.vue"
 import MainFooter from "~/components/layout/content/MainFooter.vue";
 import PhotoView from "~/components/layout/global/PhotoView.vue";
-import { useDarkModeStore } from "@/store/DarkModeStore";
-import {onMounted} from "vue";
-import {useHead} from "@vueuse/head";
+import { useDarkModeStore } from "~/store/DarkModeStore";
+import {useHead} from "unhead";
 import {mobileNaviStore, postCallStore} from "~/store";
 import {PostSearchGroup} from "~/class/implement/PostSearchGroup";
 import {Pair} from "~/class/implement/Pair";

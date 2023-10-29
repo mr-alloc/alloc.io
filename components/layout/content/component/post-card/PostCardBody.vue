@@ -14,18 +14,36 @@
         </div>
       </div>
     </nuxt-link>
+    <div class="bundled-images-wrapper" v-if="props.header.layout === 'tweet' && props.header.images.length !== 0">
+      <ul class="image-bundles" :class="[`for-${Math.min(props.header.images.length, 5)}-images`,{ 'over-5-images': props.header.images.length > 5}]">
+        <li v-for="(image, index) in props.header.images" @click="methods.openImages(props.header.images, index +1)">
+          <img :src="image.src" :alt="image.alt"/>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {Header} from "@/class/implement/Header";
-import markUp from "@/utils/markUp";
+import {Header} from "~/class/implement/Header";
+import markUp from "~/utils/markUp";
+import {Image} from "~/class/implement/Image";
+import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
+
+const photoViewStatus = usePhotoViewStatusStore()
 
 const props = defineProps({
   header: Header,
   description: String,
   path: String
 })
+
+const methods = {
+  openImages(images: Image[], index: number) {
+    photoViewStatus.load(images)
+    photoViewStatus.open(index)
+  }
+}
 
 
 </script>
@@ -102,6 +120,98 @@ const props = defineProps({
         right: 0;
         margin-left: 10px;
       }
+    }
+  }
+
+  .bundled-images-wrapper {
+    height: 538px;
+
+    .image-bundles {
+      display: flex;
+      list-style: none;
+      width: 100%;
+      height: 100%;
+      align-items: center;
+      flex-wrap: wrap;
+      position: relative;
+
+      li {
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        box-sizing: border-box;
+        border: 1px solid transparent;
+        position: relative;
+        cursor: pointer;
+
+        img {
+          width: 100%;
+          height: 100%;
+          background-position: 50%;
+          background-size: cover;
+          object-position: center;
+          object-fit: cover;
+        }
+      }
+
+      &.for-2-images {
+
+        li {
+          width: 50.00%;
+          overflow: hidden;
+        }
+      }
+
+      &.for-3-images {
+
+        li:first-child {
+          width: 100.00%;
+          height: 50.00%;
+        }
+        li:not(:first-child) {
+          width: 50.00%;
+          height: 50.00%;
+        }
+      }
+
+      &.for-4-images {
+
+        li {
+          width: 50.00%;
+          height: 50.00%;
+        }
+      }
+
+      &.for-5-images {
+
+        li:nth-child(1), li:nth-child(2) {
+          width: 50.00%;
+          height: 60.00%;
+        }
+
+        li:nth-child(3), li:nth-child(4), li:nth-child(5) {
+          width: 33.33%;
+          height: 40.00%;
+        }
+
+        &.over-5-images {
+
+          li:last-child {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            span {
+              color: white;
+            }
+          }
+        }
+      }
+
     }
   }
 }
