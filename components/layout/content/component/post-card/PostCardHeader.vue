@@ -4,9 +4,9 @@
       <img :src="`${methods.getProfileOrDefault(props.header.profile_image)}`"  />
     </div>
     <div class="author-info">
-      <a :href="`https://github.com/${appCache.blogInfo.fullname}`" target="_blank">
+      <a :href="`https://github.com/${appCache.blogInfo.fullName}`" target="_blank">
         <span class="author-name">
-            {{ appCache.blogInfo.fullname }}
+            {{ appCache.blogInfo.fullName }}
         </span>
       </a>
       <span class="author-work-at">{{ props.header.current_position }}, {{ props.header.current_company }}</span>
