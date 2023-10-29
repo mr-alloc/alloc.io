@@ -7,9 +7,9 @@
 </template>
 
 <script lang="ts" setup>
-import {mobileNaviStore} from "@/store";
-import PostCardFooterButton from "@/components/layout/content/component/post-card/PostCardFooterButton.vue";
-import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
+import {mobileNaviStore} from "~/store";
+import PostCardFooterButton from "~/components/layout/content/component/post-card/PostCardFooterButton.vue";
+import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
 import {Header} from "~/class/implement/Header";
 
 const data = {
