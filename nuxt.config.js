@@ -9,11 +9,10 @@ export default defineNuxtConfig({
     generate: {
         dir: 'dist',
         fallback: true,
-        routes: [...Keys],
-        exclude: [/^\/tags/]
+        routes: [...Keys]
     },
     router: {
-        base: '/special-posted-in/',
+        base: '/special-posted-in/'
     },
     target: 'static',
     typescript: {

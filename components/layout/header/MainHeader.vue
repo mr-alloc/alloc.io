@@ -30,16 +30,18 @@
           <div class="top-level-menu">
             <ul class="top-menu-list">
               <li class="menu-item">
-                <a href="/tags">
-                  <div class="menu-icon-wrapper">
-                  <span class="menu-icon">
-                    <font-awesome-icon :icon="['fa', 'tags']"/>
-                  </span>
-                  </div>
-                  <div class="menu-title">
-                    <span>태그</span>
-                  </div>
-                </a>
+                <client-only>
+                  <a href="/tags">
+                    <div class="menu-icon-wrapper">
+                    <span class="menu-icon">
+                      <font-awesome-icon :icon="['fa', 'tags']"/>
+                    </span>
+                    </div>
+                    <div class="menu-title">
+                      <span>태그</span>
+                    </div>
+                  </a>
+                </client-only>
               </li>
             </ul>
           </div>
