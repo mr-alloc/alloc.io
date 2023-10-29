@@ -1,9 +1,11 @@
 <template>
   <div class="post-tag-area">
     <font-awesome-icon class="tag-icon" :icon="['fa', 'tags']"/>
-    <a :href="methods.getTagPath(tag)" v-for="tag in props.tags" v-bind:key="tag" >
-      <span :class="{ current: data.booked && data.booked === tag}">{{ tag }}</span>
-    </a>
+    <client-only>
+      <a :href="methods.getTagPath(tag)" v-for="tag in props.tags" v-bind:key="tag" >
+        <span :class="{ current: data.booked && data.booked === tag}">{{ tag }}</span>
+      </a>
+    </client-only>
   </div>
 </template>
 
