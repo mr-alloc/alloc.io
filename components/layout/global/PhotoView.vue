@@ -164,7 +164,9 @@ $tool-item-width: 60px;
       z-index: 7;
 
       @media (hover: hover) and (pointer: fine) {
-        background-color: rgb(0, 0, 0, 0.1);
+        &:hover {
+          background-color: rgb(0, 0, 0, 0.1);
+        }
       }
     }
 
@@ -216,14 +218,16 @@ $tool-item-width: 60px;
           }
 
           @media (hover: hover) and (pointer: fine) {
-            cursor: pointer;
+            &:hover {
+              cursor: pointer;
 
-            &:before {
-              width: $tool-item-width;
-              height: $tool-item-width;
-              animation-name: spread_60px;
-              animation-duration: .3s;
-              animation-iteration-count: 1;
+              &:before {
+                width: $tool-item-width;
+                height: $tool-item-width;
+                animation-name: spread_60px;
+                animation-duration: .3s;
+                animation-iteration-count: 1;
+              }
             }
           }
         }
