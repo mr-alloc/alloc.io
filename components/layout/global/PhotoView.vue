@@ -110,7 +110,7 @@ $tool-item-width: 60px;
   flex-direction: column;
 
   .photo-view-panel {
-    height: $photo-view-height + $pc-header-height;
+    height: 80%;
     flex-shrink: 0;
     background-color: #1E1C1CFF;
     display: flex;
@@ -163,7 +163,7 @@ $tool-item-width: 60px;
       cursor: pointer;
       z-index: 7;
 
-      &:hover {
+      @media (hover: hover) and (pointer: fine) {
         background-color: rgb(0, 0, 0, 0.1);
       }
     }
@@ -180,7 +180,7 @@ $tool-item-width: 60px;
       border-bottom-left-radius: 30px;
       position: fixed;
       right: 0;
-      bottom: calc(100vh - ($photo-view-height + $pc-header-height - 10px));
+      bottom: calc(20% + 10px);
       height: $tool-item-width;
       background: rgb(0, 0, 0, 0.3);
       transition: .3s ease-in-out;
@@ -214,7 +214,8 @@ $tool-item-width: 60px;
             font-size: 1.4rem;
             fill: $point-light-color;
           }
-          &:hover {
+
+          @media (hover: hover) and (pointer: fine) {
             cursor: pointer;
 
             &:before {
@@ -230,7 +231,7 @@ $tool-item-width: 60px;
         .image-tool:nth-child(1), .image-tool:nth-child(2) {
           cursor: default;
 
-          &:hover {
+          &:hover, &:active {
             &:before {
               display: none;
             }
@@ -262,6 +263,7 @@ $tool-item-width: 60px;
     align-items: center;
     overflow-x: scroll;
     transition: .3s ease-in-out;
+    user-select: none;
 
     .photo-view-list {
       display: flex;
