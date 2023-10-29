@@ -32,8 +32,3 @@ hide: false
 전자는 외부로부터 에너지를 가하면, 가장자리부터 떨어져 나가며, 모든 전자가 떨어져 나가, 원자핵만 남은 경우 플라즈마라고 한다.
 <!--more-->
 
-
-![힙 정렬 3](/assets/blogging/algorithm/heap/heap_sort_1_3.svg)
-![힙 정렬 4](/assets/blogging/algorithm/heap/heap_sort_1_4.svg)
-![힙 정렬 5](/assets/blogging/algorithm/heap/heap_sort_1_5.svg)
-
