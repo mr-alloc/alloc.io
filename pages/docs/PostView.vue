@@ -33,7 +33,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-
 import VueUtterances from 'vue-utterances';
 import {postMapStore} from "~/store";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
@@ -98,7 +97,6 @@ onMounted(() => {
 
   photoViewStore.load(state.meta.header.images)
 })
-
 </script>
 <style lang="scss">
 @import '@/styles';

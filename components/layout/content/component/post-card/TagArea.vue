@@ -1,6 +1,7 @@
 <template>
   <div class="post-tag-area">
     <font-awesome-icon class="tag-icon" :icon="['fa', 'tags']"/>
+    <!--  Nuxt에서는 연결경로는 모두 prerender항목으로 포함시키므로 client rendering으로 해줘야 SSG처리를 하지 않는다.  -->
     <client-only>
       <a :href="methods.getTagPath(tag)" v-for="tag in props.tags" v-bind:key="tag" >
         <span :class="{ current: data.booked && data.booked === tag}">{{ tag }}</span>

@@ -33,9 +33,9 @@
                 <client-only>
                   <a href="/tags">
                     <div class="menu-icon-wrapper">
-                    <span class="menu-icon">
-                      <font-awesome-icon :icon="['fa', 'tags']"/>
-                    </span>
+                      <span class="menu-icon">
+                        <font-awesome-icon :icon="['fa', 'tags']"/>
+                      </span>
                     </div>
                     <div class="menu-title">
                       <span>태그</span>
