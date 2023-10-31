@@ -32,6 +32,8 @@ const defaults = {
 
 function findHeadlineElements(levels: number [], tokens: string [], options: Options) {
     const headings = []
+    let currentHeading = null
+
 }
 
 
