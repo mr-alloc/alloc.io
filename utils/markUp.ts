@@ -6,7 +6,7 @@ import ruleSub from '~/utils/ruleSub'
 import escapeHtml from 'escape-html'
 import MarkdownIt from 'markdown-it'
 import Prism from 'prismjs'
-import tableOfContents from '~/utils/tableOfContents'
+import { tableOfContents, defaults } from '~/utils/tableOfContents'
 import * as PrismUtils from './prismUtils'
 
 function wrap(code: string, lang: string) {
@@ -67,7 +67,7 @@ export default (markdown: string) => {
     preWrapper(md)
     lineNumbers(md)
     ruleSub(md)
-    tableOfContents(md)
+    tableOfContents(md, defaults)
 
     return md.render(markdown)
 }
