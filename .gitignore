@@ -9,3 +9,6 @@ dist
 .DS_Store
 yarn.lock
 package-lock.json
+.idea
+/static/*
+!/static/file-name.json
