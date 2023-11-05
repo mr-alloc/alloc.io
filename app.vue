@@ -327,6 +327,55 @@ useHead({
   src: url('/assets/fonts/JetBrains_Mono/JetBrainsMono-Italic.ttf');
 }
 
+html {
+  
+
+    .dark {
+      ::-webkit-scrollbar-track {
+        --tw-bg-opacity: 1;
+        background-color: rgb(var(--color-gray-800)/1);
+        background-color: rgb(var(--color-gray-800)/var(--tw-bg-opacity))
+      }
+
+      ::-webkit-scrollbar-thumb {
+        --tw-bg-opacity: 1;
+        background-color: rgb(var(--color-gray-700)/1);
+        background-color: rgb(var(--color-gray-700)/var(--tw-bg-opacity))
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        --tw-bg-opacity: 1;
+        background-color: rgb(var(--color-gray-600)/1);
+        background-color: rgb(var(--color-gray-600)/var(--tw-bg-opacity))
+      }
+    }
+
+    
+  ::-webkit-scrollbar {
+    background-color: transparent;
+    height: .6em;
+    width: .6em
+  }
+
+  ::-webkit-scrollbar-track {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-gray-100)/1);
+    background-color: rgb(var(--color-gray-100)/var(--tw-bg-opacity))
+  }
+
+  ::-webkit-scrollbar-thumb {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-gray-300)/1);
+    background-color: rgb(var(--color-gray-300)/var(--tw-bg-opacity));
+    border-radius: .6em
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-gray-400)/1);
+    background-color: rgb(var(--color-gray-400)/var(--tw-bg-opacity))
+  }
+}
 
 
 #__nuxt {
@@ -335,6 +384,7 @@ useHead({
   .dark {
     background-color: $point-dark-color;
   }
+
 }
 
 * {
@@ -362,6 +412,17 @@ useHead({
   --back-to-top-color-hover: #71cda3;
   --nprogress-color: #29d;
   --nprogress-z-index: 1031;
+
+  --color-gray-100: 241 245 249;
+  --color-gray-200: 226 232 240;
+  --color-gray-300: 203 213 225;
+  --color-gray-400: 148 163 184;
+  --color-gray-500: 100 116 139;
+  --color-gray-600: 71 85 105;
+  --color-gray-700: 51 65 85;
+  --color-gray-800: 30 41 59;
+  --color-gray-900: 15 23 42;
+  --color-gray-950: 2 4 32;
   transition: all .6s ease-out;
 }
 
