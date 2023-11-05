@@ -25,7 +25,7 @@ export const defaults = {
     includeLevel: [1, 2],
     containerClass: 'table-of-contents',
     slugify: slugify,
-    markerPattern: /^\[\[toc\]\]/im, //[[toc]]
+    markerPattern: /^#{1,6} (.+)$/gm, //### Some title
     listType: 'ul',
     format: (content: string, md: MarkdownIt) => md.renderInline(content),
     forceFullToc: false,
@@ -171,7 +171,8 @@ export const tableOfContents = (markdown: MarkdownIt, options: Options) => {
         if (state.src.charCodeAt(state.pos) != 0x5B/* [ */) {
             return false
         }
-        console.log('silent')
+        console.log('state:', state)
+        return false
         if (silent) return false
 
         const match = tocRegexp.exec(state.src.substring(state.pos))

@@ -12,3 +12,4 @@ package-lock.json
 .idea
 /static/*
 !/static/file-name.json
+!/static/keys.json
