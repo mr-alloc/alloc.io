@@ -1,6 +1,6 @@
 <template>
   <div class="photo-view-area" :class="{ 'full-screen': photoViewStore.isFullScreen }">
-    <div class="photo-view-panel" :class="photoViewStore.zoom !== 1 && `x${photoViewStore.zoom}`">
+    <div class="photo-view-panel" :class="[`photoViewStore.zoom !== 1 && ${`x${photoViewStore.zoom}`}`, { zoom: photoViewStore.zoom !== 1}]">
       <!-- 이전 버튼 -->
       <button class="before-button" type="button" v-if="photoViewStore.hasBefore()"
               v-on:click="photoViewStore.beforeImage()">
@@ -116,8 +116,6 @@ $tool-item-width: 60px;
     display: flex;
     overflow: hidden;
     transition: .3s ease-in-out;
-    overflow-y: scroll;
-    overflow-x: scroll;
 
     img {
       width: 100%;
@@ -125,6 +123,11 @@ $tool-item-width: 60px;
       margin: 0 auto;
       object-fit: contain;
       transform-origin: left top;
+    }
+
+    &.zoom {
+      overflow-y: scroll;
+      overflow-x: scroll;
     }
 
     &.x2 {

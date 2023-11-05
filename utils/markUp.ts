@@ -67,7 +67,7 @@ export default (markdown: string) => {
     preWrapper(md)
     lineNumbers(md)
     ruleSub(md)
-    tableOfContents(md, defaults)
+    // tableOfContents(md, defaults)
 
     return md.render(markdown)
 }

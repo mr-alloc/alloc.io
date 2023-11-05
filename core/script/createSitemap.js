@@ -1,9 +1,7 @@
 const { SitemapStream, streamToPromise } = require('sitemap')
 const { Readable } = require('stream')
-const keys = require('../../static/keys.json')
 const packageJson = require('../../package.json')
-
-
+const keys = require('../../static/keys.json')
 module.exports = () => {
     const links = keys.map(key => {
         const link = {
@@ -17,3 +15,4 @@ module.exports = () => {
     })
     return streamToPromise(Readable.from(links).pipe(stream))
 }
+
