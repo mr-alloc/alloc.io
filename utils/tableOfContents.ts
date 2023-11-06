@@ -2,8 +2,9 @@ import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
 import {Headline} from "~/class/implement/Headline";
 import {TocItem} from "~/class/implement/TocItem";
-import StateCore from "markdown-it/lib/rules_core/state_core";
 import StateInline from "markdown-it/lib/rules_inline/state_inline";
+import StateBlock from "markdown-it/lib/rules_block/state_block";
+import {TocNode} from "~/class/implement/TocNode";
 
 type Options = {
     includeLevel?: number []
@@ -20,9 +21,8 @@ type Options = {
 
 // [\r\n\t\f\v ] to dash
 const slugify = (str: string) => encodeURIComponent(String(str).trim().toLowerCase().replace(/\s+/g, '-'))
-
 export const defaults = {
-    includeLevel: [1, 2],
+    includeLevel: [1, 2, 3, 4, 5],
     containerClass: 'table-of-contents',
     slugify: slugify,
     markerPattern: /^#{1,6} (.+)$/gm, //### Some title
@@ -33,7 +33,7 @@ export const defaults = {
     containerFooterHtml: undefined,
     transformLink: undefined
 } as Options
-
+const tocRegexp: RegExp = defaults.markerPattern!
 
 /**
  * 토큰에 존재하는 id 속성을 찾는다.
@@ -159,72 +159,88 @@ function tocItemToHtml(toc: TocItem, options: Options, md: MarkdownIt): string {
     }).join('') + '</' + options.listType + '>'
 }
 
+//
+// markdown.renderer.rules['toc_open'] = (tokens: Array<Token>, index: number) => {
+//     let tocOpenHtml = '<div class="' + plugInOptions.containerClass + '">'
+//
+//     plugInOptions.containerHeaderHtml && (tocOpenHtml += plugInOptions.containerHeaderHtml)
+//
+//     return tocOpenHtml
+// }
+//
+// markdown.renderer.rules['toc_close'] = (tokens: Array<Token>, index: number) => {
+//     let tocFooterHtml = ''
+//
+//     plugInOptions.containerFooterHtml && (tocFooterHtml += plugInOptions.containerFooterHtml)
+//
+//     return tocFooterHtml + '</div>'
+// }
+//
+// markdown.renderer.rules['toc_body'] = (tokens: Array<Token>, index: number) => {
+//     if (plugInOptions.forceFullToc) {
+//         throw ("forceFullToc was removed in version 0.5.0. For more information, see https://github.com/Oktavilla/markdown-it-table-of-contents/pull/41")
+//     } else {
+//         let headline = findHeadlineElements(plugInOptions.includeLevel!, gstate?.tokens, options);
+//         const toc = flatHeadlineItemsToNestedTree(headline)
+//         return tocItemToHtml(toc, plugInOptions, markdown)
+//     }
+// }
 
-export const tableOfContents = (markdown: MarkdownIt, options: Options) => {
-    //Table of Contents for Markdown
-    const plugInOptions: Options = Object.assign({} as Options, defaults, options)
-    const tocRegexp: RegExp = plugInOptions.markerPattern!
-    let gstate: StateCore
 
-    function toc(state: StateInline, silent: boolean) {
-        console.log('toc function')
-        if (state.src.charCodeAt(state.pos) != 0x5B/* [ */) {
-            return false
-        }
-        console.log('state:', state)
+// markdown.core.ruler.push('grab_state', (state: StateCore) => {
+//     gstate = state
+// })
+
+function toc(state: StateInline, silent: boolean) {
+
+    console.log('be state block:', state)
+    return false
+    if (state.src.charCodeAt(state.pos) != 0x5B/* [ */) {
         return false
-        if (silent) return false
-
-        const match = tocRegexp.exec(state.src.substring(state.pos))
-            ?.filter((m: string) => m) ?? []
-        console.log('match:', match)
-        if (match.length < 1) return false
-
-        let token = state.push('toc_open', 'toc', 1)
-        console.log('token:', token)
-        token.markup = '[[toc]]'
-        token = state.push('toc_body', '', 0)
-        token = state.push('toc_close', 'toc', -1)
-
-        const newline = state.src.indexOf('\n', state.pos)
-
-        state.pos = newline !== -1
-            ? newline
-            : state.pos + state.posMax +1
-
-        return true
     }
+    console.log('state:', state)
+    return false
+    if (silent) return false
 
-    markdown.renderer.rules['toc_open'] = (tokens: Array<Token>, index: number) => {
-        let tocOpenHtml = '<div class="' + plugInOptions.containerClass + '">'
+    const match = tocRegexp.exec(state.src.substring(state.pos))
+        ?.filter((m: string) => m) ?? []
+    console.log('match:', match)
+    if (match.length < 1) return false
 
-        plugInOptions.containerHeaderHtml && (tocOpenHtml += plugInOptions.containerHeaderHtml)
+    let token = state.push('toc_open', 'toc', 1)
+    console.log('token:', token)
+    token.markup = '[[toc]]'
+    token = state.push('toc_body', '', 0)
+    token = state.push('toc_close', 'toc', -1)
 
-        return tocOpenHtml
-    }
+    const newline = state.src.indexOf('\n', state.pos)
 
-    markdown.renderer.rules['toc_close'] = (tokens: Array<Token>, index: number) => {
-        let tocFooterHtml = ''
+    state.pos = newline !== -1
+        ? newline
+        : state.pos + state.posMax +1
 
-        plugInOptions.containerFooterHtml && (tocFooterHtml += plugInOptions.containerFooterHtml)
-
-        return tocFooterHtml + '</div>'
-    }
-
-    markdown.renderer.rules['toc_body'] = (tokens: Array<Token>, index: number) => {
-        if (plugInOptions.forceFullToc) {
-            throw ("forceFullToc was removed in version 0.5.0. For more information, see https://github.com/Oktavilla/markdown-it-table-of-contents/pull/41")
-        } else {
-            let headline = findHeadlineElements(plugInOptions.includeLevel!, gstate?.tokens, options);
-            const toc = flatHeadlineItemsToNestedTree(headline)
-            return tocItemToHtml(toc, plugInOptions, markdown)
-        }
-    }
-
-    markdown.core.ruler.push('grab_state', (state: StateCore) => {
-        gstate = state
-    })
-
-    markdown.inline.ruler.after('emphasis', 'toc', toc)
+    return true
 }
 
+const blockToc = (state: StateBlock, startLine: number, endLine: number, silent: boolean): boolean => {
+    console.log('be state block:', state)
+    return true
+}
+
+export const tableOfContents = (markdown: MarkdownIt)  => {
+
+    markdown.renderer.rules['heading_open'] = (tokens: Array<Token>, index: number): string => {
+        const token = tokens[index]
+        const contentToken = tokens[index + 1]
+
+        let tag = token.tag
+        let grade = parseInt(tag.replace('h', ''), 10)
+        let tocNode = new TocNode(grade, contentToken.content);
+        return `<div class="sub-title"><${tag} id="${tocNode.fragmentId}">`
+    }
+
+    markdown.renderer.rules['heading_close'] = (tokens: Array<Token>, index: number): string => {
+        const token = tokens[index]
+        return `</${token.tag}></div>`
+    }
+}

@@ -43,6 +43,7 @@ import {computed, onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
 import appCache from "~/store/appCache";
 import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
+import {useTocStatusStore} from "~/store/tocStatusStore";
 
 const photoViewStore = usePhotoViewStatusStore()
 const components = {
@@ -62,6 +63,8 @@ const methods = {
 }
 
 const prepareStore = usePagePrepareStore()
+const tocStatusStore = useTocStatusStore()
+tocStatusStore.refresh()
 const route = useRoute()
 
 prepareStore.prepare()
