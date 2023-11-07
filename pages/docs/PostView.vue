@@ -43,7 +43,6 @@ import {computed, onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
 import appCache from "~/store/appCache";
 import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
-import {useTocStatusStore} from "~/store/tocStatusStore";
 
 const photoViewStore = usePhotoViewStatusStore()
 const components = {
@@ -63,8 +62,6 @@ const methods = {
 }
 
 const prepareStore = usePagePrepareStore()
-const tocStatusStore = useTocStatusStore()
-tocStatusStore.refresh()
 const route = useRoute()
 
 prepareStore.prepare()
@@ -98,6 +95,10 @@ onMounted(() => {
     })
   })
 
+  const headlines = document.querySelectorAll('#post-content-frame div.headline-wrapper')
+  headlines.forEach(headline => {
+    console.log(headline)
+  })
   photoViewStore.load(state.meta.header.images)
 })
 </script>
