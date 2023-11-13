@@ -6,10 +6,10 @@ export class TocNode {
     isSelected: boolean
 
     constructor(node: any) {
-        this.grade = node._grade
-        this.title = node._title
-        this.fragmentId = node._fragmentId
-        this.children = node._children
+        this.grade = node.grade
+        this.title = node.title
+        this.fragmentId = node.fragmentId
+        this.children = node.children
         this.isSelected = false
     }
 

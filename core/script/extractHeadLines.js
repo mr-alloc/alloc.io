@@ -4,24 +4,25 @@ const slugify = function (s) {
 }
 
 class TocNode {
-    _grade
-    _title
-    _fragmentId
-    _children
+    grade
+    title
+    fragmentId
+    children
+    isSelected = false
 
     constructor(grade, title) {
-        this._grade = grade
-        this._title = title
-        this._fragmentId = slugify(title)
-        this._children = []
+        this.grade = grade
+        this.title = title
+        this.fragmentId = slugify(title)
+        this.children = []
     }
 
     addChild (child) {
-        this._children.push(child)
+        this.children.push(child)
     }
 
     hasChild() {
-        return this._children.length > 0
+        return this.children.length > 0
     }
 }
 
@@ -35,12 +36,12 @@ module.exports = (content) =>  {
     }
 
     function initRecursive(parent, node) {
-        if (parent._grade < node._grade) {
-            if (parent.hasChild() && parent._children[parent._children.length - 1]._grade < node._grade) {
-                initRecursive(parent._children[parent._children.length - 1], node)
+        if (parent.grade < node.grade) {
+            if (parent.hasChild() && parent.children[parent.children.length - 1].grade < node.grade) {
+                initRecursive(parent.children[parent.children.length - 1], node)
                 return
             }
-            parent._grade < node._grade && parent.addChild(node)
+            parent.grade < node.grade && parent.addChild(node)
         }
     }
 
