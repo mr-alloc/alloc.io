@@ -24,7 +24,7 @@ Intellij에서 유용한 단축키 정리
 | <span class="key-mac">`⌥` `⌥` 누른 상태로 `↓` or `↑` </span><br/><span class="key-win">`Shift` `Shift` 누른 상태로 `↓` or `↑`</span> | 멀티라인 선택 |
 | <span class="key-mac">`⌥` `⌘` `←` or `→` </span><br/><span class="key-win">`Shift` `Shift` `←` or `→`</span> | 커서 스택내 이동 |
 
-##  Live Template  
+## Live Template  
 
 Setting > Live Template 검색  
 custom 으로 등록  
