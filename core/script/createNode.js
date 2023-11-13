@@ -43,9 +43,9 @@ function toFileFolder(wholePath, file) {
         : file.name
     const hasIcon = fs.existsSync(`${__ROOT__}/public/assets/icon/${file.name}.png`)
 
-    const splitedPath = wholePath.split('/').filter(name => name !== '')
-    const breadcrumbs = splitedPath.map(name => fileNames[name])
-    const group = splitedPath[0] ?? 'etc'
+    const splitPath = wholePath.split('/').filter(name => name !== '')
+    const breadcrumbs = splitPath.map(name => fileNames[name])
+    const group = splitPath[0] ?? 'etc'
     return new FileNode(wholePath, file.name, '', nickname, breadcrumbs, FileType.DIR, hasIcon, group)
 }
 
