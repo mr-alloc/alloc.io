@@ -3,6 +3,7 @@ const postStore = require('./postStore')
 const refresh = require('./refresh')
 const createSitemap = require('./createSitemap')
 const extractImages = require('./extractImages')
+const extractHeadLines = require('./extractHeadLines')
 
 const __ROOT__ = process.env.PWD
 const __DOCS__ = '/docs'
@@ -19,6 +20,7 @@ const posts = postStore.sort((a, b) => b.header.date - a.header.date)
     .map((post) => {
         routePaths.push(post.path)
         post.header['images'] = extractImages(post.content)
+        post.header['headlines'] = extractHeadLines(post.content)
         return post
     });
 

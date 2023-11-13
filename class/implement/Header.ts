@@ -1,4 +1,5 @@
 import {Image} from "~/class/implement/Image";
+import {TocNode} from "~/class/implement/TocNode";
 
 export class Header {
     layout: string
@@ -16,6 +17,7 @@ export class Header {
     excerpt_separator: string
     hide: boolean
     breadcrumbs: string[]
+    rootHeadLine: TocNode
 
     constructor(header: any) {
         this.layout = header.layout
@@ -33,6 +35,7 @@ export class Header {
         this.excerpt_separator = header.excerpt_separator
         this.hide = header.hide
         this.breadcrumbs = header.breadcrumbs
+        this.rootHeadLine = new TocNode(header.headlines)
 
     }
 

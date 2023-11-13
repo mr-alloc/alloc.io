@@ -24,6 +24,11 @@
         </div>
         <TagArea :tags="state.post?.tags" />
       </div>
+      <div class="toc-wrapper">
+        <ul>
+          <TableOfContents :headlines="state.meta?.header.rootHeadLine" />
+        </ul>
+      </div>
     </div>
     <vue-utterances repo="devisitem/special-posted-in"
                     label="Comment"
@@ -36,6 +41,7 @@
 import VueUtterances from 'vue-utterances';
 import {postMapStore} from "~/store";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
+import TableOfContents from '~/components/layout/content/component/TableOfContents.vue';
 import {useRoute} from "vue-router";
 import {PostContent} from "~/class/implement/PostContent";
 import {PagePost} from "~/class/implement/PagePost";
@@ -46,7 +52,8 @@ import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
 
 const photoViewStore = usePhotoViewStatusStore()
 const components = {
-  TagArea
+  TagArea,
+  TableOfContents
 }
 
 const methods = {
@@ -95,11 +102,8 @@ onMounted(() => {
     })
   })
 
-  const headlines = document.querySelectorAll('#post-content-frame div.headline-wrapper')
-  headlines.forEach(headline => {
-    console.log(headline)
-  })
   photoViewStore.load(state.meta.header.images)
+  console.log('headlines:', state.meta.header.rootHeadLine)
 })
 </script>
 <style lang="scss">
