@@ -25,9 +25,9 @@
         <TagArea :tags="state.post?.tags" />
       </div>
       <div class="toc-wrapper">
-        <ul>
-          <TableOfContents :headlines="state.meta?.header.rootHeadLine" />
-        </ul>
+        <nav>
+          <TableOfContents :headline="state.meta?.header.rootHeadLine" />
+        </nav>
       </div>
     </div>
     <vue-utterances repo="devisitem/special-posted-in"
