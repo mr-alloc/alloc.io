@@ -17,4 +17,11 @@ export class TocNode {
         this.isSelected = true
     }
 
+    static createRecursive(node: any): TocNode {
+        const tocNode = new TocNode(node)
+        tocNode.children = node.children.map((child: any) => TocNode.createRecursive(child))
+        return tocNode
+    }
+
 }
+

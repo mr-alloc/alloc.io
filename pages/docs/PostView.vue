@@ -15,7 +15,7 @@
       <div class="post-area-wrapper">
         <div class="toc-wrapper">
           <div class="toc-container">
-            <TableOfContents :headline="state.meta?.header.rootHeadLine" />
+            <TableOfContents :headline="state.meta?.header?.rootHeadLine" />
           </div>
         </div>
         <div class="post-area">
@@ -110,7 +110,6 @@ onMounted(() => {
   })
 
   photoViewStore.load(state.meta.header.images)
-  console.log('headlines:', state.meta.header.rootHeadLine)
 })
 </script>
 <style lang="scss">
@@ -503,6 +502,7 @@ onMounted(() => {
         width: 320px;
         order: 2;
         padding-left: 96px;
+        flex-shrink: 0;
 
 
         .toc-container {
