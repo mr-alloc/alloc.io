@@ -1,10 +1,10 @@
 <template>
+  <ul>
     <li v-for="child in props?.headline.children" :key="child.fragmentId">
-      <span :class="`headline-${child.grade}`">{{ child.title }}</span>
-      <ul v-if="child.children">
-        <TableOfContents :headline="child" />
-      </ul>
+      <a :href="'#' + child.fragmentId"> {{ child.title }}</a>
+      <TableOfContents  v-if="child.children" :headline="child" />
     </li>
+  </ul>
 </template>
 
 <script lang="ts" setup>
