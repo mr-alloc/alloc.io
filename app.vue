@@ -2,7 +2,6 @@
   <div id="application-container" class="app-container" :class="{ dark: store.isDarkMode }">
     <MainHeader />
     <nuxt-page class="current-content" id="current-content-element" :page-key="route.fullPath" />
-    <MainFooter />
     <div class="background" :class="{ active : data.mobileNaviStore.isActive || photoViewStatus.isPhotoView || searchStatus.isSearchMode }"
          v-on:click="methods.clickBackground($event)">
       <div v-if="searchStatus.isSearchMode" class="search-result-area">
@@ -328,7 +327,7 @@ useHead({
 }
 
 html {
-  
+
 
     .dark {
       ::-webkit-scrollbar-track {
@@ -350,7 +349,7 @@ html {
       }
     }
 
-    
+
   ::-webkit-scrollbar {
     background-color: transparent;
     height: .6em;
