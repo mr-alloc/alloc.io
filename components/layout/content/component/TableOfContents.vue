@@ -1,8 +1,8 @@
 <template>
   <ul>
-    <li v-for="child in props?.headline.children" :key="child.fragmentId">
+    <li v-for="child in props.headline.children" :key="child.fragmentId">
       <a :href="'#' + child.fragmentId"> {{ child.title }}</a>
-      <TableOfContents  v-if="child.children" :headline="child" />
+      <TableOfContents  v-if="child.children.length > 0" :headline="child" />
     </li>
   </ul>
 </template>
@@ -16,9 +16,6 @@ const components = {
 }
 const props = defineProps({
   headline: TocNode
-})
-onMounted(() => {
-  console.log('head line: ', props?.headline)
 })
 </script>
 

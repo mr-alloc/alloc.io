@@ -212,7 +212,6 @@ useHead({
 <style lang="scss">
 @import '@/styles';
 .app-container {
-  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   background-color: $point-light-color;
@@ -389,6 +388,7 @@ html {
 * {
   padding: 0px;
   margin: 0px;
+  box-sizing: border-box;
 
   &:before {
     transition: .6s;
