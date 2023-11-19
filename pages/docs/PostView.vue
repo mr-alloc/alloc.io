@@ -9,10 +9,10 @@
       <Title>{{ state.meta?.header.summary }}</Title>
     </Head>
     <div class="post-view-separator">
-      <div class="left-nav-menu">
-
-      </div>
-      <div class="post-area-wrapper">
+      <aside class="left-nav-menu">
+        <nav></nav>
+      </aside>
+      <div class="post-area-wrapper" id="post-sub-container">
         <div class="toc-wrapper">
           <div class="toc-container">
             <TableOfContents :headline="state.meta?.header?.rootHeadLine" />
@@ -69,7 +69,7 @@ const methods = {
     const year = date.getFullYear()
     const computedMonth = date.getMonth() + 1
     const month = computedMonth < 10 ? `0${computedMonth}` : computedMonth
-    const day = date.getDate()
+    const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
 
     return `${year}-${month}-${day}`
   }
@@ -81,8 +81,7 @@ const route = useRoute()
 prepareStore.prepare()
 const state = reactive({
   meta: computed<PostContent>(() => {
-    const path = route.fullPath.replace(/(\/docs\/.+)\/$/g, '$1')
-    return postMapStore.map.get(path)
+    return postMapStore.map.get(route.path)
   }),
   post: computed<PagePost | null>(() => {
     const post: PagePost | null = PagePost.of(state.meta)
@@ -110,6 +109,17 @@ onMounted(() => {
   })
 
   photoViewStore.load(state.meta.header.images)
+
+  //#scroll move for hash
+  const hash = route.hash
+  console.log('hash', hash)
+  let endcodedhash = encodeURIComponent(String(route.hash).trim().toLowerCase().replace(/\s+/g, '-'));
+  if (hash) {
+    const target = document.querySelector(hash)
+    if (target) {
+      target.scrollIntoView()
+    }
+  }
 })
 </script>
 <style lang="scss">
@@ -149,12 +159,12 @@ onMounted(() => {
 
     .post-area-wrapper {
       display: flex;
+      padding: 64px 0 96px 96px;
 
       .post-area {
         max-width: 768px;
         background-color: $main-light-color;
         border: 1.29px solid #d3d1d1;
-        margin: 100px auto;
         border-radius: 15px;
         color: #344063;
         box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
@@ -392,7 +402,6 @@ onMounted(() => {
             }
 
             blockquote {
-              display: inline-block;
               padding: 0px 10px;
               margin: 20px 0px 50px;
               color: #004085;
@@ -508,14 +517,17 @@ onMounted(() => {
         .toc-container {
           position: sticky;
           width: 224px;
-          top: 24px;
+          top: calc(24px + $pc-header-height);
           bottom:0;
+
         }
       }
     }
     .left-nav-menu {
-      flex-grow: 1;
       height: 100vh;
+      padding: 0 32px 96px calc((100% - 1376px) / 2);
+      width: calc((100% - 1376px) / 2 + 272px);
+      top: $pc-header-height;
     }
   }
 }
