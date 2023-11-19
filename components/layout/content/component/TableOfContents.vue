@@ -1,7 +1,7 @@
 <template>
   <ul>
     <li v-for="child in props.headline.children" :key="child.fragmentId">
-      <a :href="'#' + child.fragmentId"> {{ child.title }}</a>
+      <a class="outline-link" :href="'#' + child.fragmentId"> {{ child.title }}</a>
       <TableOfContents  v-if="child.children.length > 0" :headline="child" />
     </li>
   </ul>
@@ -22,6 +22,14 @@ const props = defineProps({
 <style lang="scss">
 @import "@/styles";
 
+.outline-link {
+  color: #3c3c3cb3;
+  transition: color .25s;
+
+  &:hover, :active {
+    color: #213547;
+  }
+}
 $levels : (1, 2, 3, 4, 5);
 ul {
   list-style: none;
