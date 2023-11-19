@@ -1,6 +1,5 @@
 import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
-import {TocNode} from "~/class/implement/TocNode";
 
 export const tableOfContents = (markdown: MarkdownIt)  => {
 
@@ -10,10 +9,11 @@ export const tableOfContents = (markdown: MarkdownIt)  => {
 
         let tag = token.tag
         let grade = parseInt(tag.replace('h', ''), 10)
-        let tocNode = new TocNode(grade, contentToken.content)
+        console.log('tag', tag, 'grade', grade)
+        console.log('contentToken', contentToken)
         const level = tag.replace('h', '')
         return `<div class="headline-wrapper" data-title="${contentToken.content}" data-level="${grade}">
-                    <${tag} id="${tocNode.fragmentId}">`
+                    <${tag} id="">`
     }
 
     markdown.renderer.rules['heading_close'] = (tokens: Array<Token>, index: number): string => {
