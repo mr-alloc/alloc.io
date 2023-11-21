@@ -8,6 +8,7 @@ import MarkdownIt from 'markdown-it'
 import Prism from 'prismjs'
 import { tableOfContents } from '~/utils/tableOfContents'
 import * as PrismUtils from './prismUtils'
+import {PostContent} from "~/class/implement/PostContent";
 
 function wrap(code: string, lang: string) {
     if(lang === 'text') {
@@ -53,7 +54,7 @@ function highlight (code: string, lang: string) {
     return wrap(code, 'text')
 }
 
-export default (markdown: string) => {
+export default (markdown: string, postMeta: PostContent) => {
     const md = new MarkdownIt({
         html: true,
         xhtmlOut: true,
@@ -67,7 +68,7 @@ export default (markdown: string) => {
     preWrapper(md)
     lineNumbers(md)
     ruleSub(md)
-    tableOfContents(md)
+    tableOfContents(md, postMeta)
 
     return md.render(markdown)
 }
