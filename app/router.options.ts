@@ -23,11 +23,16 @@ export default <RouterConfig> {
             component: () => import('~/components/layout/content/TagList.vue')
         }
     ],
-    scrollBehavior: () => {
+    scrollBehavior: (to, from, savedPosition) => {
+        if (to.hash && to.path.match(/\/docs.+?/)) {
+            const el: HTMLElement = document.querySelector(to.hash)!
+            return {
+                top: el.offsetTop - 100,
+                left: 0,
+                behavior: 'smooth'
 
-        const body = document.getElementById('main-content-wrapper')
-        /* 현재 페이지의 스크롤이 아닌 내부 컨텐츠 컴포넌트 스크롤을 초기화.*/
-
+            }
+        }
         return {
             behavior: 'smooth',
             top: 0,

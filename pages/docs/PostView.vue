@@ -109,17 +109,6 @@ onMounted(() => {
   })
 
   photoViewStore.load(state.meta.header.images)
-
-  //#scroll move for hash
-  const hash = route.hash
-  console.log('hash', hash)
-  let endcodedhash = encodeURIComponent(String(route.hash).trim().toLowerCase().replace(/\s+/g, '-'));
-  if (hash) {
-    const target = document.querySelector(hash)
-    if (target) {
-      target.scrollIntoView()
-    }
-  }
 })
 </script>
 <style lang="scss">
@@ -241,11 +230,28 @@ onMounted(() => {
             -webkit-text-size-adjust: 100%;
             -webkit-font-smoothing: antialiased;
             color: #2c3e50;
-            //
-            //&.hide {
-            //  height: 400px;
-            //  overflow: hidden;
-            //}
+
+            .headline-wrapper {
+              margin: 60px 0px 20px;
+              padding: 10px 0px;
+              border-bottom: 1.22px solid $point-light-color;
+              color: #2d3235;
+
+              &:before {
+                transition: .6s;
+                content: '#';
+                position: absolute;
+                opacity: 1;
+                font-size: 2rem;
+              }
+
+              &:hover {
+
+                &:before {
+                  opacity: 1;
+                }
+              }
+            }
 
             a {
               color: #2997ff;
@@ -325,10 +331,6 @@ onMounted(() => {
             }
 
             h1, h2, h3, h4 {
-              margin: 60px 0px 20px;
-              padding: 10px 0px;
-              border-bottom: 1.22px solid $point-light-color;
-              color: #2d3235;
             }
 
             h4 {
