@@ -14,6 +14,9 @@ export const tableOfContents = (markdown: MarkdownIt, postMeta: PostContent)  =>
         const slug = slugify(contentToken.content, false)
         return `<${tag} id="${slug}">
                     <a href="${postMeta.path}#${slug}" aria-current="page">
+                        <div class="">
+                            <span class="i-ph-hash-duotone"></span>
+                        </div>
                         <div class="headline-wrapper" data-title="${contentToken.content}" data-level="${grade}">`
     }
 

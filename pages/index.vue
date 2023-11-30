@@ -11,11 +11,11 @@
 </template>
 
 <script lang="ts" setup>
-import { postListStore, postCallStore, fileListStore, mobileNaviStore } from "@/store";
-import {calPostDate, setPageTitle} from "@/utils/settingUtils";
-import { callPostFeed } from "@/utils/postUtil";
+import { postListStore, postCallStore, fileListStore, mobileNaviStore } from "~/store";
+import {calPostDate, setPageTitle} from "~/utils/settingUtils";
+import { callPostFeed } from "~/utils/postUtil";
 import appCache from '~/store/appCache'
-import PostCard from '@/components/layout/content/component/post-card/PostCard.vue'
+import PostCard from '~/components/layout/content/component/post-card/PostCard.vue'
 import { onMounted } from "vue";
 
 callPostFeed()
@@ -49,7 +49,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import "@/styles";
+@import "./styles";
 
 .main-body {
   display: flex;
