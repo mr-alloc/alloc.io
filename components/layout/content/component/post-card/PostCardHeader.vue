@@ -9,7 +9,7 @@
             {{ appCache.blogInfo.fullName }}
         </span>
       </a>
-      <span class="author-work-at">{{ props.header.current_position }}, {{ props.header.current_company }}</span>
+      <span class="author-work-at">{{ props.header.currentPosition }}, {{ props.header.currentCompany }}</span>
       <span class="posting-date">
         <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
         {{ calPostDate(props.header.date) }}
@@ -24,6 +24,7 @@
 import appCache from "~/store/appCache";
 import {calPostDate} from "~/utils/settingUtils";
 import {Header} from "~/class/implement/Header";
+import {onMounted} from "vue";
 
 const data = {
   calPostDate
@@ -38,6 +39,10 @@ const methods = {
     return path == undefined ? '/assets/blogging/profile/default.jpeg' : path
   }
 }
+
+onMounted(() => {
+  console.log('header',props.header)
+})
 </script>
 
 <style lang="scss">

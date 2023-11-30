@@ -26,11 +26,13 @@ export default <RouterConfig> {
     scrollBehavior: (to, from, savedPosition) => {
         if (to.hash && to.path.match(/\/docs.+?/)) {
             const el: HTMLElement = document.querySelector(to.hash)!
+            /* header height: 60, offset: 100 */
+            const toBeTop = el.offsetTop - 160
+
             return {
-                top: el.offsetTop - 100,
+                top: toBeTop,
                 left: 0,
                 behavior: 'smooth'
-
             }
         }
         return {
