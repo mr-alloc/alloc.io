@@ -3,6 +3,7 @@ import Token from "markdown-it/lib/token";
 import {slugify} from "./settingUtils";
 import {PostContent} from "~/class/implement/PostContent";
 
+const specialCharacterRE = /[.*+?^${}()|[\]\\]/g
 export const tableOfContents = (markdown: MarkdownIt, postMeta: PostContent)  => {
 
     markdown.renderer.rules['heading_open'] = (tokens: Array<Token>, index: number): string => {
@@ -12,6 +13,7 @@ export const tableOfContents = (markdown: MarkdownIt, postMeta: PostContent)  =>
         let tag = token.tag
         let grade = parseInt(tag.replace('h', ''), 10)
         const slug = slugify(contentToken.content, false)
+            .replace(specialCharacterRE, '\\$&')
         return `<${tag} id="${slug}">
                     <a href="${postMeta.path}#${slug}" aria-current="page">
                         <div class="">

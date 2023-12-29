@@ -42,6 +42,10 @@ export class ScrollStatus {
         this._didScroll = true
     }
 
+    off(): void {
+        this._didScroll = false
+    }
+
     hasScrolled(): void {
         const scrollTop = window.scrollY
 
