@@ -23,7 +23,7 @@
             <span class="title" id="post-title">{{ state.post?.title }}</span>
             <div class="post-intro">
               <div class="reported-date">
-                <font-awesome-icon class="clock-icon" :icon="['fa', 'clock']"/>
+                <FontAwesomeIcon class="clock-icon" :icon="['fa', 'clock']"/>
                 <span class="date-text" id="post-date-text">{{ methods.toDateFormat(state.meta?.header.date) }}</span>
               </div>
             </div>
@@ -56,6 +56,7 @@ import {computed, onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "~/store/PreparePostStore";
 import appCache from "~/store/appCache";
 import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const photoViewStore = usePhotoViewStatusStore()
 const components = {

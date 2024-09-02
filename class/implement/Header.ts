@@ -36,7 +36,6 @@ export class Header {
         this._hide = header.hide
         this._breadcrumbs = header.breadcrumbs
         this._rootHeadLine = TocNode.createRecursive(header.headlines)
-
     }
     get layout(): string {
         return this._layout

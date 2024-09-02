@@ -5,9 +5,15 @@ import {postCallStore} from "~/store";
 
 const DEFAULT_FEED_SIZE = 4
 export const callPostFeed = (): void => {
+    //피드만 노출
+    const contents = appCache.postContents
+        .filter(content => {
+            console.log('layout', content.header.layout);
+            return content.header.layout === 'post'
+        });
     /* 최대 feed 사이즈 만큼 호출*/
-    for(let i = 0;(i < DEFAULT_FEED_SIZE && appCache.postContents.length != 0);i++){
-        const post = appCache.postContents.shift()
+    for(let i = 0; (i < DEFAULT_FEED_SIZE && contents.length != 0); i++){
+        const post = contents.shift()
         if(post !== undefined) {
             appCache.feeds.push(post)
         }

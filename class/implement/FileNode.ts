@@ -1,5 +1,5 @@
-import { IFileNode } from "@/class/IFileNode";
 import { FileType } from "@/class/constant/BlogConstant";
+import type {IFileNode} from "~/class/IFileNode";
 
 export class FileNode implements IFileNode {
     readonly _path: string
@@ -8,18 +8,18 @@ export class FileNode implements IFileNode {
     readonly _summary: string
     readonly _ext: string
     readonly _hasIcon: boolean
-    readonly _files?: IFileNode []
+    readonly _files?: IFileNode [] | undefined
     readonly _group: string
 
     constructor(value: IFileNode) {
-        this._path = value._path
-        this._name = value._name
-        this._type = value._type
-        this._summary = value._summary
-        this._ext = value._ext
-        this._hasIcon = value._hasIcon
-        this._files = value._files !== undefined ? FileNode.toFileTrees(value._files) : undefined
-        this._group = value._group
+        this._path = value.path
+        this._name = value.name
+        this._type = value.type
+        this._summary = value.summary
+        this._ext = value.ext
+        this._hasIcon = value.hasIcon
+        this._files = value.files !== undefined ? FileNode.toFileTrees(value.files) : undefined
+        this._group = value.group
     }
 
     get type(): string {
@@ -41,6 +41,9 @@ export class FileNode implements IFileNode {
     get summary(): string {
         return this._summary
     }
+    get ext(): string {
+        return this._ext;
+    }
 
     get group(): string {
         return this._group
@@ -49,7 +52,7 @@ export class FileNode implements IFileNode {
         return this._type == FileType.DIR
     }
 
-    hasIcon(): boolean {
+    get hasIcon(): boolean {
         return this._hasIcon
     }
 

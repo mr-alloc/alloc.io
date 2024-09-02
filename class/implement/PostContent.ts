@@ -1,28 +1,28 @@
 import {Header} from "@/class/implement/Header";
-import {IPostContent} from "@/class/IPostContent";
+import type {IPostContent} from "~/class/IPostContent";
 
 export class PostContent implements IPostContent {
-    _path: string
-    _header: Header
-    _description: string
-    _content: string
+    private readonly _path: string
+    private readonly _header: Header
+    private readonly _description: string
+    private readonly _content: string
 
     constructor(postContent: IPostContent) {
-        this._path = postContent._path
-        this._header = new Header(postContent._header)
-        this._description = postContent._description
-        this._content = postContent._content
+        this._path = postContent.path
+        this._header = new Header(postContent.header)
+        this._description = postContent.description
+        this._content = postContent.content
     }
 
-    get path() {
+    get path(): string {
         return this._path
     }
 
-    get content() {
+    get content(): string {
         return this._content
     }
 
-    get description() {
+    get description(): string {
         return this._description
     }
 
@@ -35,6 +35,6 @@ export class PostContent implements IPostContent {
     }
 
     static toPosts (posts: IPostContent[]): PostContent[] {
-        return posts.map(post => PostContent.toPostContent(post))
+        return posts.map(PostContent.toPostContent)
     }
 }

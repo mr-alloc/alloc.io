@@ -1,14 +1,13 @@
 export interface IFileNode {
-    readonly _path: string
-    readonly _name: string
-    readonly _type: string
-    readonly _summary: string
-    readonly _ext: string
-    readonly _hasIcon: boolean
-    readonly _files?: IFileNode []
-    readonly _group: string
+
+    get path(): string;
+    get name(): string;
+    get type(): string;
+    get summary(): string;
+    get ext(): string;
+    get hasIcon(): boolean;
+    get files(): IFileNode[] | undefined;
+    get group(): string;
 
     isDirectory(): boolean
-
-    get type(): string
 }

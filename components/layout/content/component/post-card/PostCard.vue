@@ -12,9 +12,9 @@ import PostCardHeader from '~/components/layout/content/component/post-card/Post
 import PostCardBody from '~/components/layout/content/component/post-card/PostCardBody.vue';
 import PostCardFooter from "~/components/layout/content/component/post-card/PostCardFooter.vue";
 
-const props = defineProps({
+const props = defineProps<{
   feed: PostContent
-})
+}>()
 </script>
 
 <style scoped>

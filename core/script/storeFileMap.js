@@ -71,6 +71,16 @@ class PostData {
     get content() {
         return this._content
     }
+
+    toJSON() {
+        return {
+            path: this._path,
+            header: this._header,
+            description: this._description,
+            content: this._content
+
+        }
+    }
 }
 
 module.exports = {

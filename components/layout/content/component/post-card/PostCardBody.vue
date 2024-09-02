@@ -35,11 +35,11 @@ import markUp from "~/utils/markUp";
 
 const photoViewStatus = usePhotoViewStatusStore()
 
-const props = defineProps({
+const props = defineProps<{
   header: Header,
-  description: String,
-  path: String
-})
+  description: string,
+  path: string
+}>()
 
 const methods = {
   openImages(images: Image[], index: number) {

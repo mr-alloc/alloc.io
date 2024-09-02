@@ -1,4 +1,4 @@
-import {library, config, IconDefinition} from '@fortawesome/fontawesome-svg-core'
+import {library, config} from '@fortawesome/fontawesome-svg-core'
 import {
     faUserSecret,
     faBars,

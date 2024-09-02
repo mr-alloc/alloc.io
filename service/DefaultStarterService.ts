@@ -1,14 +1,13 @@
-import StarterService from "@/service/StarterService";
 import { FileNode } from "@/class/implement/FileNode";
 import appCache from "~/store/appCache";
 import {FileNodeWrapper} from "@/class/implement/FileNodeWrapper";
 import {PostContent} from "@/class/implement/PostContent";
 import {postMapStore} from "~/store";
 import {Header} from "~/class/implement/Header";
-import fileNodeJson from '@/static/file-node.json'
-import postJson from '@/static/posts.json'
-import {IFileNode} from "@/class/IFileNode";
-import {IPostContent} from "@/class/IPostContent";
+import fileNodeJson from '@/static/file-node.json';
+import postJson from '@/static/posts.json';
+import type {IFileNode} from "~/class/IFileNode";
+import type StarterService from "~/service/StarterService";
 
 // @ts-ignore
 const fileNode: IFileNode[] = fileNodeJson
@@ -38,10 +37,10 @@ class DefaultStarterService implements StarterService {
 
     private cacheFileNodeMap(fileNodes: IFileNode[]): void {
         for (let node of fileNodes) {
-            appCache.fileNodeMap.store.set(node._path, node)
+            appCache.fileNodeMap.store.set(node.path, node)
 
-            if (node._files) {
-                this.cacheFileNodeMap(node._files)
+            if (node.files) {
+                this.cacheFileNodeMap(node.files)
             }
         }
     }
@@ -55,11 +54,11 @@ class DefaultStarterService implements StarterService {
                 // 새로고침시 피드용만 초기화
                 if (this.isInitialized) return
 
-                postMapStore.map.set(post._path, post)
+                postMapStore.map.set(post.path, post)
                 //검색용
                 appCache.contentsForSearch.push(post)
                 if(post.header) {
-                    this.setTags(post.header, post._path)
+                    this.setTags(post.header, post.path)
                 }
             })
 
