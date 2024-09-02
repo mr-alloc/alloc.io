@@ -18,7 +18,6 @@ import appCache from '~/store/appCache'
 import PostCard from '~/components/layout/content/component/post-card/PostCard.vue'
 import { onMounted } from "vue";
 
-callPostFeed()
 const data = {
   feeds: appCache.feeds,
   postListStore,
@@ -43,8 +42,9 @@ const data = {
 }
 
 onMounted(() => {
-  setPageTitle('')
-
+  setPageTitle('');
+  //포스트 호출
+  callPostFeed();
 })
 </script>
 
