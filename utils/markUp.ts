@@ -54,7 +54,7 @@ function highlight (code: string, lang: string) {
     return wrap(code, 'text')
 }
 
-export default (markdown: string, postMeta: PostContent) => {
+export default (markdown: string, postMeta?: PostContent) => {
     const md = new MarkdownIt({
         html: true,
         xhtmlOut: true,

@@ -1,5 +1,5 @@
 ---
-layout: tweet
+layout: wiki
 title: 만물을 이루는 원자
 categories: [Development, Electric]
 tags: [원자, 전자, 원자핵, 양성자, 중성자, 반도체]

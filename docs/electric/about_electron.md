@@ -1,5 +1,5 @@
 ---
-layout: tweet
+layout: wiki
 title: 전기에너지를 만드는 전자
 categories: [Development, Electric]
 tags: [원자, 전자, 원자핵, 렙톤]

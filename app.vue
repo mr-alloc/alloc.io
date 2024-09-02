@@ -1,5 +1,5 @@
 <template>
-  <div id="application-container" class="app-container" :class="{ dark: store.isDarkMode }">
+  <div id="application-container" class="app-container">
     <MainHeader />
     <nuxt-page class="current-content" id="current-content-element" :page-key="route.fullPath" />
     <div class="background" :class="{ active : data.mobileNaviStore.isActive || photoViewStatus.isPhotoView || searchStatus.isSearchMode }"
@@ -22,7 +22,6 @@ import LoadingBar from "~/components/layout/header/LoadingBar.vue";
 import SearchResult from "~/components/layout/header/SearchResult.vue"
 import MainFooter from "~/components/layout/content/MainFooter.vue";
 import PhotoView from "~/components/layout/global/PhotoView.vue";
-import { useDarkModeStore } from "~/store/DarkModeStore";
 import {useHead} from "unhead";
 import {mobileNaviStore, postCallStore} from "~/store";
 import {PostSearchGroup} from "~/class/implement/PostSearchGroup";
@@ -34,15 +33,16 @@ import {useNuxtApp} from "#app/nuxt";
 import {callPostFeed} from "~/utils/postUtil";
 import {useSearchStatusStore} from "~/store/SearchStatusStore";
 import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
+import {onMounted} from "vue";
 
 
 Runner.init()
-const store = useDarkModeStore()
-const route = useRoute()
-const router = useRouter()
-const { $emitter }= useNuxtApp()
-const searchStatus = useSearchStatusStore()
-const photoViewStatus = usePhotoViewStatusStore()
+const route = useRoute();
+const router = useRouter();
+const { $emitter }= useNuxtApp();
+
+const searchStatus = useSearchStatusStore();
+const photoViewStatus = usePhotoViewStatusStore();
 
 const components = {
   LoadingBar,
@@ -69,7 +69,6 @@ const methods = {
     }
   }
 }
-
 
 onMounted(() => {
 
