@@ -5,10 +5,10 @@ categories: [Development, Algorithm]
 tags: [Java, Algorithm, Sort, Insertion Sort]
 date: 2022-04-21 23:25:00 +0900
 thumbnail: "/assets/blogging/algorithm/insertion_sort_intro.png"
-current_company: Herit Corporation
-current_position: Backend Server Developer
+current-company: Herit Corporation
+current-position: Backend Server Developer
 summary: 삽입 정렬 알아보기
-excerpt_separator: <!--more-->
+excerpt-separator: <!--more-->
 hide: false
 ---
 이번 포스팅 순서는, 

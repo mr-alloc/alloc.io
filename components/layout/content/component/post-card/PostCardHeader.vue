@@ -23,7 +23,7 @@
 
 import appCache from "~/store/appCache";
 import {calPostDate} from "~/utils/settingUtils";
-import {Header} from "~/class/implement/Header";
+import Header from "~/class/implement/Header";
 import {onMounted} from "vue";
 
 const data = {
@@ -41,7 +41,6 @@ const methods = {
 }
 
 onMounted(() => {
-  console.log('header',props.header)
 })
 </script>
 

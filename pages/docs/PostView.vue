@@ -10,7 +10,7 @@
     </Head>
     <div class="post-view-separator">
       <aside class="left-nav-menu">
-        <nav></nav>
+        <ResourceNavigator />
       </aside>
       <div class="post-area-wrapper" id="post-sub-container">
         <div class="toc-wrapper">
@@ -36,16 +36,15 @@
           </div>
         </div>
       </div>
-      <vue-utterances repo="devisitem/special-posted-in"
-                      label="Comment"
-                      theme="github-light"
-                      issue-term="pathname"
-                      async/>
+<!--      <vue-utterances repo="devisitem/special-posted-in"-->
+<!--                      label="Comment"-->
+<!--                      theme="github-light"-->
+<!--                      issue-term="pathname"-->
+<!--                      async/>-->
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import VueUtterances from 'vue-utterances';
 import {postMapStore} from "~/store";
 import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
 import TableOfContents from '~/components/layout/content/component/TableOfContents.vue';
@@ -57,6 +56,7 @@ import {usePagePrepareStore} from "~/store/PreparePostStore";
 import appCache from "~/store/appCache";
 import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import ResourceNavigator from "~/components/layout/sidebar/ResourceNavigator.vue";
 
 const photoViewStore = usePhotoViewStatusStore()
 const components = {
@@ -149,12 +149,14 @@ onMounted(() => {
 
     .post-area-wrapper {
       display: flex;
-      padding: 64px 0 96px 96px;
+      padding: 64px 0;
+      width: 100%;
 
       .post-area {
         max-width: 768px;
         background-color: $main-light-color;
         border: 1.29px solid #d3d1d1;
+        flex-shrink: 0;
         border-radius: 15px;
         color: #344063;
         box-shadow: rgba(50, 50, 105, 0.15) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
@@ -514,15 +516,12 @@ onMounted(() => {
 
       .toc-wrapper {
         position: relative;
-        width: 320px;
         order: 2;
-        padding-left: 96px;
-        flex-shrink: 0;
+        flex-grow: 1;
 
 
         .toc-container {
           position: sticky;
-          width: 224px;
           top: calc(24px + $pc-header-height);
           bottom:0;
 
@@ -531,7 +530,7 @@ onMounted(() => {
     }
     .left-nav-menu {
       height: 100vh;
-      padding: 0 32px 96px calc((100% - 1376px) / 2);
+      padding: 0 20px 96px calc((100% - 1376px) / 2);
       width: calc((100% - 1376px) / 2 + 272px);
       top: $pc-header-height;
     }

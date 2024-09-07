@@ -79,8 +79,8 @@ export function toValueMap<E, T, O>(
 
 export function getFileIcon(node: FileNode) {
     let iconName;
-    if(node.hasIcon()) {
-        iconName = node._name
+    if(node.hasIcon) {
+        iconName = node.name
     } else if(node.isDirectory()) {
         iconName = 'folder_default'
     } else {

@@ -1,6 +1,6 @@
-import {Header} from "@/class/implement/Header";
+import Header from "@/class/implement/Header";
 
-export interface IPostContent {
+export default interface IPostContent {
 
     get path(): string;
 

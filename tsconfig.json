@@ -3,6 +3,12 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "typeRoots": ["./node_modules/@types"],
-    "types": ["paginator"]
+    "types": ["paginator"],
+  },
+  "ts-node": {
+    "esm": true,
+    "compilerOptions": {
+      "typeRoots": ["./node_modules/@types"],
+    }
   }
 }

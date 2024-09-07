@@ -2,14 +2,14 @@ import { FileType } from "@/class/constant/BlogConstant";
 import type {IFileNode} from "~/class/IFileNode";
 
 export class FileNode implements IFileNode {
-    readonly _path: string
-    readonly _name: string
-    readonly _type: string
-    readonly _summary: string
-    readonly _ext: string
-    readonly _hasIcon: boolean
-    readonly _files?: IFileNode [] | undefined
-    readonly _group: string
+    private readonly _path: string
+    private readonly _name: string
+    private readonly _type: string
+    private readonly _summary: string
+    private readonly _ext: string
+    private readonly _hasIcon: boolean
+    private readonly _files?: IFileNode [] | undefined
+    private readonly _group: string
 
     constructor(value: IFileNode) {
         this._path = value.path
@@ -56,7 +56,7 @@ export class FileNode implements IFileNode {
         return this._hasIcon
     }
 
-    static toFileTrees (values: IFileNode[]): FileNode[] {
+    static toFileTrees (values: IFileNode[] = []): FileNode[] {
         return values.map(tree => new FileNode(tree))
     }
 }

@@ -4,12 +4,12 @@ title: Intellij 단축키 와 설정
 categories: [Development, Tools]
 tags: [Intellij, Shortcut, 인텔리제이, 단축키, 기본설정]
 date: 2023-08-28 19:42:00 +0900
-profile_image: /assets/blogging/profile/winkkom.png
-current_company: NEOWIZ
-current_position: Software Engineer
+profile-image: /assets/blogging/profile/winkkom.png
+current-company: NEOWIZ
+current-position: Software Engineer
 thumbnail: /assets/blogging/tool/intellij_shortcut.png
 summary: 단축키와 기본설정
-excerpt_separator: <!--more-->
+excerpt-separator: <!--more-->
 hide: false
 ---
 Intellij에서 유용한 단축키 정리

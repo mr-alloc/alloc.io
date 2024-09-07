@@ -5,10 +5,10 @@ categories: [Development, Algorithm]
 tags: [Java, Algorithm, Sort, Selection Sort]
 date: 2022-04-04 23:34:00 +0900
 thumbnail: "/assets/blogging/algorithm/selection_sort_intro.png"
-current_company: Herit Corporation
-current_position: Backend Server Developer
+current-company: Herit Corporation
+current-position: Backend Server Developer
 summary: 선택 정렬
-excerpt_separator: <!--more-->
+excerpt-separator: <!--more-->
 hide: false
 ---
 기본 정렬 알고리즘중 하나인 선택 정렬(Selection Sort)입니다.

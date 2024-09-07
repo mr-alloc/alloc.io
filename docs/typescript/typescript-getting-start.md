@@ -4,12 +4,12 @@ title: 타입스크립트 시작하기 1 (소개)
 categories: [Development, Typescript]
 tags: [Typescript, Javascript, Type]
 date: 2023-04-15 19:01:00 +0900
-current_company: NEOWIZ
-current_position: Software Engineer
-profile_image: /assets/blogging/profile/profile1.JPG
+current-company: NEOWIZ
+current-position: Software Engineer
+profile-image: /assets/blogging/profile/profile1.JPG
 thumbnail: "/assets/blogging/typescript/typescript_getting_start.png"
 summary: 타입스크립트 소개
-excerpt_separator: <!--more-->
+excerpt-separator: <!--more-->
 hide: true
 ---
 타입스크립트 시작하기.

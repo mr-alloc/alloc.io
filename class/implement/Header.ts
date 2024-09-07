@@ -1,7 +1,7 @@
-import {Image} from "~/class/implement/Image";
-import {TocNode} from "~/class/implement/TocNode";
+import Image from "~/class/implement/Image";
+import TocNode from "~/class/implement/TocNode";
 
-export class Header {
+export default class Header {
     private readonly _layout: string
     private readonly _title: string
     private readonly _categories: string[]
@@ -27,12 +27,12 @@ export class Header {
         this._date = new Date(header.date)
         this._images = header.images.map((img: any) => new Image(img.src, img.alt))
         this._thumbnail = this.getOrDefaultThumbnail(header.thumbnail)
-        this._currentCompany = header.current_company
-        this._currentPosition = header.current_position
-        this._profile_image = header.profile_image
+        this._currentCompany = header["current-company"]
+        this._currentPosition = header["current-position"]
+        this._profile_image = header["profile-image"]
         this._summary = header.summary
-        this._exposeImages = header.expose_images
-        this._excerptSeparator = header.excerpt_separator
+        this._exposeImages = header["expose-images"]
+        this._excerptSeparator = header["excerpt-separator"]
         this._hide = header.hide
         this._breadcrumbs = header.breadcrumbs
         this._rootHeadLine = TocNode.createRecursive(header.headlines)

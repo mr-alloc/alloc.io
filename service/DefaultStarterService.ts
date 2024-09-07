@@ -3,7 +3,7 @@ import appCache from "~/store/appCache";
 import {FileNodeWrapper} from "@/class/implement/FileNodeWrapper";
 import {PostContent} from "@/class/implement/PostContent";
 import {postMapStore} from "~/store";
-import {Header} from "~/class/implement/Header";
+import Header from "~/class/implement/Header";
 import fileNodeJson from '@/static/file-node.json';
 import postJson from '@/static/posts.json';
 import type {IFileNode} from "~/class/IFileNode";
@@ -50,7 +50,7 @@ class DefaultStarterService implements StarterService {
             .sort((a, b) => b.header.date.getTime() - a.header.date.getTime())
             .forEach(post => {
                 //피드용
-                appCache.postContents.push(post)
+                appCache.postContents.push(post);
                 // 새로고침시 피드용만 초기화
                 if (this.isInitialized) return
 

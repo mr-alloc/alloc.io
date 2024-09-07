@@ -1,12 +1,19 @@
-import { IFileNode } from "@/class/IFileNode";
-import {FileNode} from "@/class/implement/FileNode";
+import type {IFileNode} from "~/class/IFileNode";
 
 export class FileNodeWrapper {
-    name: string
-    nodes?: IFileNode [] | undefined = []
+    private readonly _name: string
+    private readonly _nodes: Array<IFileNode> = new Array<IFileNode>();
 
-    constructor(name: string, nodes: IFileNode [] | undefined) {
-        this.name = name
-        this.nodes = nodes
+    constructor(name: string, nodes: IFileNode [] | undefined = []) {
+        this._name = name
+        this._nodes = nodes
+    }
+
+    get name(): string {
+        return this._name;
+    }
+
+    get nodes(): Array<IFileNode> {
+        return this._nodes;
     }
 }

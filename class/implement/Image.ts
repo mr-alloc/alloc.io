@@ -1,4 +1,4 @@
-export class Image {
+export default class Image {
     private readonly _src: string
     private readonly _alt: string
 
