@@ -5,11 +5,11 @@ categories: [Development, Computer]
 tags: [HDD, Hard Drive Disk, 하드디스크, Hardware, 하드웨어, 저장장치, 컴퓨터]
 date: 2023-09-19 21:16:00 +0900
 thumbnail: /assets/blogging/computer/hdd.png
-profile_image: /assets/blogging/profile/winkkom.png
-current_company: NEOWIZ
-current_position: Software Engineer
+profile-image: /assets/blogging/profile/winkkom.png
+current-company: NEOWIZ
+current-position: Software Engineer
 summary: 하드디스크란 무엇이고, 어떻게 동작할까?
-excerpt_separator: <!--more-->
+excerpt-separator: <!--more-->
 hide: true
 ---
 대표적인 저장장치 하드디스크는 어떻게 동작할까?

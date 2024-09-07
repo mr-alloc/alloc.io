@@ -1,5 +1,5 @@
-import {Header} from "@/class/implement/Header";
-import type {IPostContent} from "~/class/IPostContent";
+import Header from "@/class/implement/Header";
+import type IPostContent from "~/class/IPostContent";
 
 export class PostContent implements IPostContent {
     private readonly _path: string

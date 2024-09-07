@@ -94,7 +94,6 @@ const data = {
 }
 onMounted(() => {
   $emitter.on('initScroll', () => {
-    console.log('initScroll')
     window.scrollTo({
       top:0,
       behavior: 'smooth'

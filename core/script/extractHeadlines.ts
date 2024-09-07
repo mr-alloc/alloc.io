@@ -1,41 +1,15 @@
-
-const slugify = function (s) {
-    return encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, '-'));
-}
-
-class TocNode {
-    grade
-    title
-    fragmentId
-    children
-    isSelected = false
-
-    constructor(grade, title) {
-        this.grade = grade
-        this.title = title
-        this.fragmentId = slugify(title)
-        this.children = []
-    }
-
-    addChild (child) {
-        this.children.push(child)
-    }
-
-    hasChild() {
-        return this.children.length > 0
-    }
-}
+import TocNode from "~/core/classes/TocNode";
 
 const headlineRE = /^(##{0,5})\s+([^\n]+)/gm
-module.exports = (content) =>  {
-    const lines = content.split('\n')
-    const rootNode = new TocNode(0, 'root')
+export default (content: string) =>  {
+    const lines = content.split('\n');
+    const rootNode = new TocNode(0, 'root');
 
-    function addHeadline(node) {
+    function addHeadline(node: TocNode) {
         initRecursive(rootNode, node)
     }
 
-    function initRecursive(parent, node) {
+    function initRecursive(parent: TocNode, node: TocNode) {
         if (parent.grade < node.grade) {
             if (parent.hasChild() && parent.children[parent.children.length - 1].grade < node.grade) {
                 initRecursive(parent.children[parent.children.length - 1], node)

@@ -2,7 +2,8 @@
   <div :id="`explored-stack-${props.index}`" class="package-explorer-wrapper">
     <div class="explored-directory-element">
       <ul class="element-box">
-          <li v-for="(child, index) in props.parent.nodes" v-bind:key="index" class="directory-element" @click="methods.selectFile(child, props.index, index)">
+          <li v-for="(child, index) in props.parent?.nodes ?? []" v-bind:key="index" class="directory-element"
+              @click="methods.selectFile(child, props.index, index)">
             <div class="element-icon-wrapper">
             <span class="element-icon" >
               <img class="custom-icon" :src="`/assets/icon/${methods.getFileIcon(child)}.png`" alt="file icon image" />
@@ -10,7 +11,7 @@
             </div>
             <div class="element-content">
               <div class="element-title-area">
-                <span class="title-text">{{ child._summary }}</span>
+                <span class="title-text">{{ child.summary }}</span>
               </div>
               <div class="feature-trailer">
                 <span class="trailer-arrow">
@@ -32,9 +33,9 @@ import { FileNodeWrapper } from "@/class/implement/FileNodeWrapper";
 import {mobileNaviStore} from "@/store";
 import {useNuxtApp, useRouter} from "#app";
 import {FileNode} from "~/class/implement/FileNode";
-import {IFileNode} from "~/class/IFileNode";
-import {onBeforeMount, onMounted} from "vue";
+import {onBeforeMount} from "vue";
 import appCache from "~/store/appCache";
+import type {IFileNode} from "~/class/IFileNode";
 const { $emitter } = useNuxtApp();
 const router = useRouter()
 
@@ -43,10 +44,10 @@ const data = {
   isCallable: true
 }
 
-const props = defineProps({
-  index: Number,
+const props = defineProps<{
+  index: number,
   parent: FileNodeWrapper
-})
+}>();
 
 onBeforeMount(() => {
   $emitter.on('release_selected', () => {
@@ -64,8 +65,6 @@ onBeforeMount(() => {
 
 const methods = {
   getFileType: (child: FileNode) => {
-    console.log('child: ', child)
-
     if(child._type == 'DIRECTORY')
       return 'folder'
 
@@ -79,7 +78,7 @@ const methods = {
       const clicked = this.getStack(nodeIndex)?.children.item(index)!
       clicked.classList.add('selected')
 
-      let sortedFiles: IFileNode[] = file.files?.sort((a, b) => `${a._type}`.localeCompare(`${b._type}`))!
+      let sortedFiles: IFileNode[] = file.files?.sort((a, b) => `${a.type}`.localeCompare(`${b.type}`))!
       appCache.naviStack.push(new FileNodeWrapper(file._summary, sortedFiles))
       const panel = document.getElementById('explored-panel')
       if(panel) {
@@ -113,7 +112,7 @@ const methods = {
   },
   getFileIcon(child: FileNode) {
     let iconName;
-    if(child.hasIcon()) {
+    if(child.hasIcon) {
       iconName = child._name
     } else if(child.isDirectory()) {
       iconName = 'folder_default'
@@ -404,10 +403,6 @@ const methods = {
             width: 60px;
 
             .element-icon {
-
-              &.folder {
-
-              }
               font-size: 20px;
               width: 28px;
             }
