@@ -15,7 +15,11 @@
       </div>
     </nuxt-link>
     <div class="bundled-images-wrapper" v-if="props.header.layout === 'tweet' && props.header.images.length !== 0">
-      <ul class="image-bundles" :class="[`for-${Math.min(props.header.images.length, 5)}-images`,{ 'over-5-images': props.header.images.length > 5}]">
+      <ul class="image-bundles"
+          :class="[
+              `for-${Math.min(props.header.images.length, 5)}-images`,
+              { 'over-5-images': props.header.images.length > 5 }
+              ]">
         <li v-for="(image, index) in props.header.images.slice(1, 6)" @click="methods.openImages(props.header.images, index +1)">
           <img :src="image.src" :alt="image.alt"/>
           <div class="image-count-overlay">
@@ -28,8 +32,8 @@
 </template>
 
 <script lang="ts" setup>
-import {Header} from "~/class/implement/Header";
-import {Image} from "~/class/implement/Image";
+import Header from "~/class/implement/Header";
+import Image from "~/class/implement/Image";
 import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
 import markUp from "~/utils/markUp";
 

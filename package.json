@@ -9,8 +9,9 @@
   "defaultProfile": "https://avatars.githubusercontent.com/u/65699391?v=4",
   "license": "MIT",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "boot": "node core/script/boot.js",
+    "boot": "tsx core/script/boot.ts",
     "test-ts": "tsc core/script/tsTest.ts && node core/script/tsTest.js",
     "build": "yarn boot && nuxt build",
     "dev": "yarn boot && nuxt dev",
@@ -43,12 +44,15 @@
   },
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",
+    "@types/node": "^22.5.4",
     "gh-pages": "^5.0.0",
     "nuxt": "^3.2.3",
     "path": "^0.12.7",
     "push-dir": "^0.4.1",
     "sass": "^1.49.9",
     "sass-loader": "^12.6.0",
-    "sitemap": "^7.1.1"
+    "sitemap": "^7.1.1",
+    "tslib": "^2.7.0",
+    "tsx": "^4.19.0"
   }
 }

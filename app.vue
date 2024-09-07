@@ -36,7 +36,7 @@ import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
 import {onMounted} from "vue";
 
 
-Runner.init()
+Runner.init();
 const route = useRoute();
 const router = useRouter();
 const { $emitter }= useNuxtApp();
@@ -91,7 +91,6 @@ onMounted(() => {
         oldResult?.update(newResult)
 
         if (oldResult?.results.length == 0) {
-          console.log('delete key:', key)
           groups.value.delete(key)
         }
         return
