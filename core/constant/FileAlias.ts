@@ -1,4 +1,4 @@
-import CollectionUtil from "~/utils/CollectionUtil";
+import CollectionUtil from "@/utils/CollectionUtil";
 
 export default class FileAlias {
     public static readonly DOCS = new FileAlias("docs", "문서");

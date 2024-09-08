@@ -1,7 +1,7 @@
 import { SitemapStream, streamToPromise } from 'sitemap'
 import { Readable } from 'stream'
 import packageJson from '~/package.json'
-import keys from '~/static/keys.json'
+import keys from '@/static/keys.json'
 
 export default () => {
     const links = keys.map(key => {
