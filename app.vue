@@ -1,8 +1,10 @@
 <template>
   <div id="application-container" class="app-container">
     <MainHeader />
-    <nuxt-page class="current-content" id="current-content-element" :page-key="route.fullPath" />
-    <div class="background" :class="{ active : data.mobileNaviStore.isActive || photoViewStatus.isPhotoView || searchStatus.isSearchMode }"
+    <main class="main-page-body">
+      <nuxt-page class="current-content" id="current-content-element" :page-key="route.fullPath" />
+    </main>
+    <div class="background" :class="{ active : mobileNaviStore.isActive || photoViewStatus.isPhotoView || searchStatus.isSearchMode }"
          v-on:click="methods.clickBackground($event)">
       <div v-if="searchStatus.isSearchMode" class="search-result-area">
         <div class="search-result-panel" v-on:click="$event.stopPropagation()">
@@ -15,60 +17,48 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Runner from '~/service/DefaultStarterService'
-import appCache from "~/store/appCache";
-import MainHeader from "~/components/layout/header/MainHeader.vue";
-import LoadingBar from "~/components/layout/header/LoadingBar.vue";
-import SearchResult from "~/components/layout/header/SearchResult.vue"
-import MainFooter from "~/components/layout/content/MainFooter.vue";
-import PhotoView from "~/components/layout/global/PhotoView.vue";
+import Runner from '@/service/DefaultStarterService'
+import appCache from "@/store/appCache";
+import MainHeader from "@/components/layout/header/MainHeader.vue";
+import LoadingBar from "@/components/layout/header/LoadingBar.vue";
+import SearchResult from "@/components/layout/header/SearchResult.vue";
+import PhotoView from "@/components/layout/global/PhotoView.vue";
 import {useHead} from "unhead";
-import {mobileNaviStore, postCallStore} from "~/store";
-import {PostSearchGroup} from "~/class/implement/PostSearchGroup";
-import {Pair} from "~/class/implement/Pair";
-import {useRoute, useRouter} from "vue-router";
-import {PostSearchResult} from "~/class/implement/PostSearchResult";
-import {groupingBy} from "~/utils/settingUtils";
-import {useNuxtApp} from "#app/nuxt";
-import {callPostFeed} from "~/utils/postUtil";
-import {useSearchStatusStore} from "~/store/SearchStatusStore";
-import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
+import {mobileNaviStore, postCallStore} from "@/store";
+import {PostSearchGroup} from "@/class/implement/PostSearchGroup";
+import {Pair} from "@/class/implement/Pair";
+import {PostSearchResult} from "@/class/implement/PostSearchResult";
+import {groupingBy} from "@/utils/settingUtils";
+import {callPostFeed} from "@/utils/postUtil";
+import {useSearchStatusStore} from "@/store/SearchStatusStore";
+import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import {onMounted} from "vue";
+import {useNuxtApp} from "nuxt/app";
 
 
 Runner.init();
 const route = useRoute();
 const router = useRouter();
-const { $emitter }= useNuxtApp();
-
+const { $emitter } = useNuxtApp();
 const searchStatus = useSearchStatusStore();
 const photoViewStatus = usePhotoViewStatusStore();
-
-const components = {
-  LoadingBar,
-  MainHeader,
-  MainFooter,
-  SearchResult
-}
-
-const data = {
-  mobileNaviStore,
-  route
-}
 
 const groups = ref(new Map<string, PostSearchGroup>())
 const searchLocationPair = ref<Pair<string, number>[]>([])
 const currentLocationIndex = ref(0)
 const methods = {
-  clickBackground: (e: PointerEvent) => {
+  clickBackground: (event: PointerEvent) => {
     if (searchStatus.isSearchMode) {
-      data.mobileNaviStore.isActive = false
+      mobileNaviStore.isActive = false
       searchStatus.cancelSearch()
     } else if (photoViewStatus.isPhotoView) {
       photoViewStatus.close()
     }
   }
 }
+const state = reactive({
+
+});
 
 onMounted(() => {
 
@@ -185,7 +175,7 @@ onMounted(() => {
 
     if(( ! postCallStore.is_calling) && scrollPer > 80) {
       postCallStore.is_calling = true
-      callPostFeed()
+      callPostFeed();
     }
 
     appCache.scrollStatus.on()
@@ -208,14 +198,12 @@ useHead({
 </script>
 
 <style lang="scss">
-@import './styles';
+@import '@styles';
 .app-container {
-  display: flex;
-  flex-direction: column;
   background-color: $point-light-color;
 
-  .current-content {
-    padding-top: $pc-header-height;
+  .main-page-body {
+    min-height: calc(100vh - $pc-header-height);
   }
 
   &.dark {

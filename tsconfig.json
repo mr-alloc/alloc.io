@@ -2,13 +2,13 @@
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "typeRoots": ["./node_modules/@types"],
     "types": ["paginator"],
-  },
-  "ts-node": {
-    "esm": true,
-    "compilerOptions": {
-      "typeRoots": ["./node_modules/@types"],
+    "paths": {
+      "@core/*": ["core/*"],
+      "@/*": ["src/*"],
+      "~/*": ["./*"]
     }
-  }
+  },
 }

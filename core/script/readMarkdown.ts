@@ -1,8 +1,7 @@
 import * as JekyllParser from 'jekyll-markdown-parser';
-import PostData from "~/core/classes/PostData";
-import type Path from "~/core/classes/Path";
-import {read} from "~/core/util/FileUtil";
-const __ROOT__ = process.env.PWD
+import PostData from "@core/classes/PostData";
+import type Path from "@core/classes/Path";
+import {read} from "@core/util/FileUtil";
 
 export default function (filePath: Path): PostData {
 

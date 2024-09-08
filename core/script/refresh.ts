@@ -1,4 +1,4 @@
-import {remove, write} from "~/core/util/FileUtil";
+import {remove, write} from "@core/util/FileUtil";
 
 export default (path: string, data: any, isString?: boolean) => {
     remove(path);

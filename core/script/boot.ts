@@ -1,23 +1,23 @@
 import { Dirent } from 'node:fs';
-import type PostData from "~/core/classes/PostData";
-import FileNode from "~/core/classes/FileNode";
-import Filename from "~/core/classes/Filename";
-import readMarkdown from "~/core/script/readMarkdown";
-import Path from "~/core/classes/Path";
-import {existsIcon, readDirectory} from "~/core/util/FileUtil";
-import exclude from "~/core/script/excludeFileName";
-import createSitemap from "~/core/script/createSitemap";
-import refresh from "~/core/script/refresh";
-import extractImages from "~/core/script/extractImages";
-import extractHeadlines from "~/core/script/extractHeadlines";
+import type PostData from "@core/classes/PostData";
+import FileNode from "@core/classes/FileNode";
+import Filename from "@core/classes/Filename";
+import readMarkdown from "@core/script/readMarkdown";
+import Path from "@core/classes/Path";
+import {existsIcon, readDirectory} from "@core/util/FileUtil";
+import exclude from "@core/script/excludeFileName";
+import createSitemap from "@core/script/createSitemap";
+import refresh from "@core/script/refresh";
+import extractImages from "@core/script/extractImages";
+import extractHeadlines from "@core/script/extractHeadlines";
 
 
 const postDataList = new Array<PostData>();
 
-const __DOCS__ = '/docs'
-const __FILE_NODE__ = "/static/file-node.json";
-const __POSTS__ = "/static/posts.json";
-const __KEYS__ = "/static/keys.json";
+const __DOCS__ = '/src/docs'
+const __FILE_NODE__ = "/src/static/file-node.json";
+const __POSTS__ = "/src/static/posts.json";
+const __KEYS__ = "/src/static/keys.json";
 const __SITEMAP__ = "/public/sitemap.xml";
 
 function explore(path: string ) {
@@ -42,7 +42,7 @@ function toFile (wholePath: Path, file: Dirent) {
     const filename = new Filename(file.name);
 
     const post = readMarkdown(wholePath)
-    if (post.header.hide(false)) postDataList.push(post);
+    if (!post.header.hide(true)) postDataList.push(post);
 
     return FileNode.forFile(wholePath, filename)
 }
