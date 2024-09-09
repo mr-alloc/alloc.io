@@ -1,6 +1,6 @@
-import {PostContent} from "~/class/implement/PostContent";
-import {calPostDate} from "~/utils/settingUtils";
-import markUp from "~/utils/markUp";
+import {PostContent} from "@/class/implement/PostContent";
+import {calPostDate} from "@/utils/settingUtils";
+import markUp from "@/utils/markUp";
 
 export class PagePost{
     private readonly _title: string

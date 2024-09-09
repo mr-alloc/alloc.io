@@ -61,6 +61,8 @@ const state = reactive({
 });
 
 onMounted(() => {
+  console.log("emitter");
+  console.log("nuxtApp", $emitter, useNuxtApp());
 
   //검색 결과
   $emitter.on('searchText', (result: PostSearchResult[]) => {

@@ -3,6 +3,10 @@ import { fileURLToPath} from "node:url";
 import Keys from './src/static/keys.json'
 
 export default defineNuxtConfig({
+    devtools: {
+        enabled: false
+    },
+    srcDir: "src/",
     alias: {
         "@": fileURLToPath(new URL('./src', import.meta.url)),
         "~": fileURLToPath(new URL('./', import.meta.url)),
