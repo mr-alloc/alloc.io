@@ -5,9 +5,7 @@
     </div>
     <div class="author-info">
       <a :href="`https://github.com/${appCache.blogInfo.fullName}`" target="_blank">
-        <span class="author-name">
-            {{ appCache.blogInfo.fullName }}
-        </span>
+        <span class="author-name">{{ appCache.blogInfo.fullName }}</span>
       </a>
       <span class="author-work-at">{{ props.header.currentPosition }}, {{ props.header.currentCompany }}</span>
       <span class="posting-date">
@@ -21,9 +19,9 @@
 
 <script lang="ts" setup>
 
-import appCache from "~/store/appCache";
-import {calPostDate} from "~/utils/settingUtils";
-import Header from "~/class/implement/Header";
+import appCache from "@/store/appCache";
+import {calPostDate} from "@/utils/settingUtils";
+import Header from "@/class/implement/Header";
 import {onMounted} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 

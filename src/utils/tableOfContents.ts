@@ -1,7 +1,7 @@
 import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
-import {slugify} from "./settingUtils";
-import {PostContent} from "~/class/implement/PostContent";
+import {slugify} from "@/utils/settingUtils";
+import {PostContent} from "@/class/implement/PostContent";
 
 const specialCharacterRE = /[.*+?^${}()|[\]\\]/g
 export const tableOfContents = (markdown: MarkdownIt, postMeta: PostContent)  => {

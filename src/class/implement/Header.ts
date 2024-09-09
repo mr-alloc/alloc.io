@@ -100,6 +100,7 @@ export default class Header {
     get rootHeadLine(): TocNode {
         return this._rootHeadLine
     }
+
     getOrDefaultThumbnail (path :string | undefined | null): string {
         const defaultImages = ['default1.JPG', 'default2.jpeg', 'default3.jpeg']//, 'default4.jpeg', 'default5.JPG']
         const r = Math.floor(Math.random() * defaultImages.length)

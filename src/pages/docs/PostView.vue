@@ -47,18 +47,17 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {postMapStore} from "~/store";
-import TagArea from "~/components/layout/content/component/post-card/TagArea.vue";
-import TableOfContents from '~/components/layout/content/component/TableOfContents.vue';
+import {postMapStore} from "@/store";
+import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
+import TableOfContents from '@/components/layout/content/component/TableOfContents.vue';
 import {useRoute} from "vue-router";
-import {PostContent} from "~/class/implement/PostContent";
-import {PagePost} from "~/class/implement/PagePost";
+import {PostContent} from "@/class/implement/PostContent";
+import {PagePost} from "@/class/implement/PagePost";
 import {computed, onMounted, reactive} from "vue";
-import {usePagePrepareStore} from "~/store/PreparePostStore";
-import appCache from "~/store/appCache";
-import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
+import {usePagePrepareStore} from "@/store/PreparePostStore";
+import appCache from "@/store/appCache";
+import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import ResourceNavigator from "~/components/layout/sidebar/ResourceNavigator.vue";
 
 const photoViewStore = usePhotoViewStatusStore()
 const components = {

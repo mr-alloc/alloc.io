@@ -8,8 +8,8 @@
 </template>
 
 <script lang="ts" setup>
-import TocNode from "~/class/implement/TocNode";
-import TableOfContents from "~/components/layout/content/component/TableOfContents.vue";
+import TocNode from "@/class/implement/TocNode";
+import TableOfContents from "@/components/layout/content/component/TableOfContents.vue";
 
 const components = {
   TableOfContents

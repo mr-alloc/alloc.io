@@ -32,10 +32,10 @@
 </template>
 
 <script lang="ts" setup>
-import Header from "~/class/implement/Header";
-import Image from "~/class/implement/Image";
-import {usePhotoViewStatusStore} from "~/store/PhotoViewStore";
-import markUp from "~/utils/markUp";
+import Header from "@/class/implement/Header";
+import Image from "@/class/implement/Image";
+import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
+import markUp from "@/utils/markUp";
 
 const photoViewStatus = usePhotoViewStatusStore()
 

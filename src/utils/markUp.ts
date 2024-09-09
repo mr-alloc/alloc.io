@@ -1,14 +1,14 @@
-import lineNumbers from '~/utils/lineNumbers'
-import preWrapper from '~/utils/preWrapper'
-import highlightLines from '~/utils/highlightLines'
+import lineNumbers from '@/utils/lineNumbers'
+import preWrapper from '@/utils/preWrapper'
+import highlightLines from '@/utils/highlightLines'
 
-import ruleSub from '~/utils/ruleSub'
+import ruleSub from '@/utils/ruleSub'
 import escapeHtml from 'escape-html'
 import MarkdownIt from 'markdown-it'
 import Prism from 'prismjs'
-import { tableOfContents } from '~/utils/tableOfContents'
-import * as PrismUtils from './prismUtils'
-import {PostContent} from "~/class/implement/PostContent";
+import { tableOfContents } from '@/utils/tableOfContents'
+import * as PrismUtils from '@/utils/prismUtils'
+import {PostContent} from "@/class/implement/PostContent";
 
 function wrap(code: string, lang: string) {
     if(lang === 'text') {
