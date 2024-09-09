@@ -67,9 +67,11 @@ import {Key} from "@/class/implement/Key";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {PostContent} from "@/class/implement/PostContent";
+import {useNuxtApp} from "nuxt/app";
 
 const router = useRouter();
 const { $emitter } = useNuxtApp();
+
 const searchStatusStore = useSearchStatusStore();
 const photoViewStatus = usePhotoViewStatusStore();
 const data = {
@@ -105,9 +107,9 @@ onMounted(() => {
     methods.inactivateSearchMode()
   })
 
-})
+});
 
-const titleRE = /([a-zA-Z가-힣0-9@\W\-\_])/
+const titleRE = /([a-zA-Z가-힣0-9@\W\-_])/
 const methods = {
 
   activateSearchMode: () => {

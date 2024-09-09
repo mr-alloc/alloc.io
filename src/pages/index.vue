@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { postListStore, postCallStore, fileListStore, mobileNaviStore } from "~/store";
+import { postListStore, postCallStore, fileListStore, mobileNaviStore } from "@/store";
 import {calPostDate, setPageTitle} from "@/utils/settingUtils";
 import { callPostFeed } from "@/utils/postUtil";
 import appCache from '@/store/appCache'
