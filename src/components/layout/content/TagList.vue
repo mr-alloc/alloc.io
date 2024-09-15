@@ -55,11 +55,12 @@
 <script setup>
 import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
 import appCache from "@/store/appCache";
-import {postMapStore} from "@/store";
 import {useRoute} from "#app";
 import Paginator from 'paginator'
+import {usePostContentStore} from "@/store/PostContentStore";
 
-const route = useRoute()
+const route = useRoute();
+const postContentStore = usePostContentStore();
 
 const params = route.params
 const path = route.fullPath
@@ -70,7 +71,7 @@ const bookedList = appCache.tagMap.store.get(booked)
 const decoded = decodeURI(booked)
 const isNotUndefined = typeof bookedList !== undefined
 const postList = decoded && isNotUndefined
-    ? appCache.tagMap.store.get(decoded).map((path) => postMapStore.map.get(path))
+    ? appCache.tagMap.store.get(decoded).map((path) => postContentStore.get(path))
     : []
 
 const paginated = new Paginator(6, 4)

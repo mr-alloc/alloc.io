@@ -1,11 +1,11 @@
 <template>
     <div class="main-body" id="main-content-body">
       <div class="main-container">
-        <client-only>
+        <ClientOnly fallback-tag="span" fallback="Loading Posts...">
           <div class="post-card-wrapper" v-for="(feed, index) in data.feeds" v-bind:key="index">
             <PostCard :feed="feed" />
           </div>
-        </client-only>
+        </ClientOnly>
       </div>
     </div>
 </template>
