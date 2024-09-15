@@ -1,6 +1,7 @@
 import type {RouterConfig} from "@nuxt/schema";
+
 // https://router.vuejs.org/api/interfaces/routeroptions.html
-export default <RouterConfig> {
+export default {
     routes: (_routes) => [
         {
             name: 'home',
@@ -41,4 +42,4 @@ export default <RouterConfig> {
             left: 0
         }
     }
-}
+} satisfies RouterConfig

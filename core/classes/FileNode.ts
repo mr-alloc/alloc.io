@@ -70,13 +70,14 @@ export default class FileNode {
 
     public static forFile(
         wholePath: Path,
-        name: Filename
+        name: Filename,
+        summary: string
     ) {
         return new FileNode(
             wholePath.slugify(),
             name.value,
             name.ext,
-            FileAlias.toNameIfAbsent(name.value),
+            summary,
             wholePath.array.map(node => FileAlias.toNameIfAbsent(node)),
             FileType.FILE,
             false,

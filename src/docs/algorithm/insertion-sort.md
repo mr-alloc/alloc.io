@@ -4,7 +4,7 @@ title: 삽입 정렬 알아보기(Java)
 categories: [Development, Algorithm]
 tags: [Java, Algorithm, Sort, Insertion Sort]
 date: 2022-04-21 23:25:00 +0900
-thumbnail: "/assets/blogging/algorithm/insertion_sort_intro.png"
+thumbnail: /blogging/algorithm/insertion_sort_intro.png
 current-company: Herit Corporation
 current-position: Backend Server Developer
 summary: 삽입 정렬 알아보기

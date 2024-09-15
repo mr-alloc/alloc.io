@@ -2,12 +2,12 @@ import { FileNode } from "@/class/implement/FileNode";
 import appCache from "@/store/appCache";
 import {FileNodeWrapper} from "@/class/implement/FileNodeWrapper";
 import {PostContent} from "@/class/implement/PostContent";
-import {postMapStore} from "@/store";
 import Header from "@/class/implement/Header";
 import fileNodeJson from '@/static/file-node.json';
 import postJson from '@/static/posts.json';
 import type {IFileNode} from "@/class/IFileNode";
 import type StarterService from "@/service/StarterService";
+import {usePostContentStore} from "@/store/PostContentStore";
 
 // @ts-ignore
 const fileNode: IFileNode[] = fileNodeJson
@@ -18,7 +18,7 @@ class DefaultStarterService implements StarterService {
     isInitialized: boolean
     private static instance: StarterService
     constructor(isInitialized: boolean) {
-        this.isInitialized = false
+        this.isInitialized = isInitialized
     }
 
     public static getInstance(): StarterService {
@@ -26,7 +26,7 @@ class DefaultStarterService implements StarterService {
             DefaultStarterService.instance = new DefaultStarterService(false)
         }
 
-        return DefaultStarterService.instance
+        return DefaultStarterService.instance;
     }
 
     private settingFileNodes(): void {
@@ -46,17 +46,18 @@ class DefaultStarterService implements StarterService {
     }
 
     private settingPostMap(): void {
+        const postContentStore = usePostContentStore();
         PostContent.toPosts(posts)
             .sort((a, b) => b.header.date.getTime() - a.header.date.getTime())
             .forEach(post => {
                 //피드용
                 appCache.postContents.push(post);
+
                 // 새로고침시 피드용만 초기화
                 if (this.isInitialized) return
 
-                postMapStore.map.set(post.path, post)
-                //검색용
-                appCache.contentsForSearch.push(post)
+                postContentStore.add(post)
+
                 if(post.header) {
                     this.setTags(post.header, post.path)
                 }

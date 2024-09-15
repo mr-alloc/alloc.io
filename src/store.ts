@@ -31,8 +31,4 @@ export const menuClickableStore = reactive({
 
 export const explorerHeaderStore = reactive({
     isActive: false
-})
-
-export const postMapStore = reactive({
-    map: new Map()
-})
+});
