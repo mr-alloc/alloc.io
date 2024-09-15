@@ -18,7 +18,7 @@ const __DOCS__ = '/src/docs'
 const __FILE_NODE__ = "/src/static/file-node.json";
 const __POSTS__ = "/src/static/posts.json";
 const __KEYS__ = "/src/static/keys.json";
-const __SITEMAP__ = "/public/sitemap.xml";
+const __SITEMAP__ = "/src/public/sitemap.xml";
 
 function explore(path: string ) {
     const childFiles = createNode(path);
@@ -40,11 +40,11 @@ function explore(path: string ) {
  */
 function toFile (wholePath: Path, file: Dirent) {
     const filename = new Filename(file.name);
-
     const post = readMarkdown(wholePath)
-    if (!post.header.hide(true)) postDataList.push(post);
+    if ( ! post.header.hide(true)) postDataList.push(post);
+    const summary = post.header.summary(post.header.get("title"));
 
-    return FileNode.forFile(wholePath, filename)
+    return FileNode.forFile(wholePath, filename, summary)
 }
 
 function toDirectory(wholePath: Path, file: Dirent) {
@@ -71,7 +71,7 @@ const routePaths = new Array<string>();
 const posts = postDataList
     .sort((a, b) => b.header.date() - a.header.date())
     .map((post) => {
-        routePaths.push(post.path)
+        routePaths.push(post.path.replace('/src', ''));
         post.header.images = extractImages(post.content);
         post.header.headlines = extractHeadlines(post.content);
         return post

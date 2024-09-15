@@ -31,15 +31,16 @@ export class PagePost{
         return this._tags
     }
 
-    public static of(postMeta: PostContent): PagePost | null {
+    public static of(postMeta: PostContent): PagePost {
+        if (!postMeta) {
+            throw new Error("Cannot find post metadata");
+        }
 
-        return postMeta
-            ? new PagePost(
-                postMeta.header.title,
-                calPostDate(postMeta.header.date.toString()),
-                markUp(postMeta.content, postMeta),
-                postMeta.header.tags
-            )
-            : null
+        return new PagePost(
+            postMeta.header.title,
+            calPostDate(postMeta.header.date.toString()),
+            markUp(postMeta.content, postMeta),
+            postMeta.header.tags
+        );
     }
 }

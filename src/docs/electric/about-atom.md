@@ -4,7 +4,7 @@ title: 만물을 이루는 원자
 categories: [Development, Electric]
 tags: [원자, 전자, 원자핵, 양성자, 중성자, 반도체]
 date: 2023-08-31 21:57:00 +0900
-profile-image: /assets/blogging/profile/winkkom.png
+profile-image: /blogging/profile/winkkom.png
 current-company: NEOWIZ
 current-position: Software Engineer
 summary: 원자란?

@@ -35,7 +35,7 @@ const props = defineProps({
 
 const methods = {
   getProfileOrDefault(path: string|undefined) {
-    return path == undefined ? '/assets/blogging/profile/default.jpeg' : path
+    return path == undefined ? '/blogging/profile/default.jpeg' : path
   }
 }
 

@@ -4,7 +4,7 @@ title: -Algorithm- Selection Sort (선택정렬 알고리즘) feat.java
 categories: [Development, Algorithm]
 tags: [Java, Algorithm, Sort, Selection Sort]
 date: 2022-04-04 23:34:00 +0900
-thumbnail: "/assets/blogging/algorithm/selection_sort_intro.png"
+thumbnail: /blogging/algorithm/selection_sort_intro.png
 current-company: Herit Corporation
 current-position: Backend Server Developer
 summary: 선택 정렬

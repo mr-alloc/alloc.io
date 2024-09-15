@@ -1,12 +1,12 @@
 <template>
   <div class="post-view-container">
     <Head>
-      <Meta property="og:title" v-bind:content="state.post?.title.replace('\n', '')" />
-      <Meta property="og:description" v-bind:content="state.meta?.description.replace('\n', '')" />
-      <Meta property="og:image" v-bind:content="state.meta?.header.thumbnail" />
+      <Meta property="og:title" v-bind:content="state.post.title.replace('\n', '')" />
+      <Meta property="og:description" v-bind:content="state.postContent.description.replace('\n', '')" />
+      <Meta property="og:image" v-bind:content="state.postContent.header.thumbnail" />
       <Meta property="og:url" v-bind:content="appCache.blogInfo.domain + route.fullPath" />
-      <Meta name="description" :content="state.meta?.description.replace('\n', '')"/>
-      <Title>{{ state.meta?.header.summary }}</Title>
+      <Meta name="description" :content="state.postContent?.description.replace('\n', '')"/>
+      <Title>{{ state.postContent.header.summary }}</Title>
     </Head>
     <div class="post-view-separator">
       <div class="left-side-navigator">
@@ -17,7 +17,7 @@
       <div class="post-area-wrapper" id="post-sub-container">
         <div class="toc-wrapper">
           <div class="toc-container">
-            <TableOfContents :headline="state.meta?.header?.rootHeadLine" />
+            <TableOfContents :headline="state.postContent.header.rootHeadLine" />
           </div>
         </div>
         <div class="post-area">
@@ -26,12 +26,12 @@
             <div class="post-intro">
               <div class="reported-date">
                 <FontAwesomeIcon class="clock-icon" :icon="['fa', 'clock']"/>
-                <span class="date-text" id="post-date-text">{{ methods.toDateFormat(state.meta?.header.date) }}</span>
+                <span class="date-text" id="post-date-text">{{ dateToStr(state.postContent.header.date) }}</span>
               </div>
             </div>
           </div>
           <div class="post-content-wrapper" id="document-content">
-            <div class="post-content" :class="{ hide: state.meta?.header }" id="post-content-frame" v-html="state.post?.content"></div>
+            <div class="post-content" :class="{ hide: state.postContent.header }" id="post-content-frame" v-html="state.post.content"></div>
             <div class="posting-date">
             </div>
             <TagArea :tags="state.post?.tags" />
@@ -47,52 +47,32 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {postMapStore} from "@/store";
-import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
-import TableOfContents from '@/components/layout/content/component/TableOfContents.vue';
 import {useRoute} from "vue-router";
-import {PostContent} from "@/class/implement/PostContent";
 import {PagePost} from "@/class/implement/PagePost";
-import {computed, onMounted, reactive} from "vue";
+import {onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "@/store/PreparePostStore";
 import appCache from "@/store/appCache";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import TableOfContents from "@/components/layout/content/component/TableOfContents.vue";
+import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
+import {dateToStr} from "@/utils/DateUtil";
+import {usePostContentStore} from "@/store/PostContentStore";
 
-const photoViewStore = usePhotoViewStatusStore()
-const components = {
-  TagArea,
-  TableOfContents
-}
+const photoViewStore = usePhotoViewStatusStore();
+const prepareStore = usePagePrepareStore();
+const postContentStore = usePostContentStore();
+const route = useRoute();
 
-const methods = {
-  toDateFormat(data: Date) {
-    const date = new Date(data)
-    const year = date.getFullYear()
-    const computedMonth = date.getMonth() + 1
-    const month = computedMonth < 10 ? `0${computedMonth}` : computedMonth
-    const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
-
-    return `${year}-${month}-${day}`
-  }
-}
-
-const prepareStore = usePagePrepareStore()
-const route = useRoute()
-
-prepareStore.prepare()
+const postContent = postContentStore.get(route.path);
 const state = reactive({
-  meta: computed<PostContent>(() => {
-    return postMapStore.map.get(route.path)
-  }),
-  post: computed<PagePost | null>(() => {
-    const post: PagePost | null = PagePost.of(state.meta)
-
-    return post
-  })
-})
+  postContent: postContent,
+  post: PagePost.of(postContent)
+});
 
 onMounted(() => {
+  prepareStore.prepare();
+
   const tables = [...document.querySelectorAll('table').values()]
   tables.forEach(table => {
     const div = document.createElement('div')
@@ -100,22 +80,22 @@ onMounted(() => {
     div.className = 'content-table'
 
     table.parentNode?.insertBefore(div, table)
-    table.remove()
-  })
+    table.remove();
+  });
 
   const imageTags = document.querySelectorAll('#post-content-frame img')
   imageTags.forEach((imgTag, index) => {
     imgTag.addEventListener('click', (e) => {
       photoViewStore.open(index +1)
-    })
-  })
+    });
+  });
 
-  photoViewStore.load(state.meta.header.images)
+  photoViewStore.load(postContent.header.images);
 })
 </script>
 <style lang="scss">
-@import '@styles';
-@import '@styles/languages.scss';
+@import '@styles/index';
+@import '@styles/languages';
 
 .post-view-container {
   transition: $duration;
@@ -141,7 +121,7 @@ onMounted(() => {
 
       &:nth-child(n+2):before {
         content: '>';
-        margin: 0px 30px;
+        margin: 0 30px;
       }
     }
   }
@@ -180,7 +160,7 @@ onMounted(() => {
         order: 1;
 
         .post-title-area {
-          background: url("/assets/images/title_background.jpg") center;
+          background: url("/images/title_background.jpg") center;
           background-size: cover;
           height: 200px;
           display: table;
@@ -617,7 +597,7 @@ onMounted(() => {
 
 @include mobile {
   .post-view-container {
-    padding: 0px;
+    padding: 0;
 
     .left-side-navigator {
       .navigate-features {
@@ -639,14 +619,14 @@ onMounted(() => {
       .post-area {
         margin: 0;
         width: 100%;
-        border-radius: 0px;
+        border-radius: 0;
         border: none;
 
         .post-title-area {
-          border-radius: 0px;
+          border-radius: 0;
 
           .title {
-            padding: 0px 10px;
+            padding: 0 10px;
           }
 
 
@@ -656,7 +636,7 @@ onMounted(() => {
         }
 
         .post-content-wrapper {
-          padding: 0px 15px;
+          padding: 0 15px;
 
 
           .post-intro {
@@ -784,8 +764,6 @@ code[class*=language-], pre[class*=language-] {
   word-spacing: normal;
   word-break: normal;
   word-wrap: normal;
-  -moz-tab-size: 4;
-  -o-tab-size: 4;
   tab-size: 4;
   -webkit-hyphens: none;
   -ms-hyphens: none;
@@ -797,9 +775,6 @@ code[class*=language-], pre[class*=language-] {
   background-color: transparent;
   border-radius: 0;
   overflow-wrap: unset !important;
-  -webkit-font-smoothing: auto;
-  -moz-osx-font-smoothing: auto;
-
 
   .comment {
     color: #a8a8a8;

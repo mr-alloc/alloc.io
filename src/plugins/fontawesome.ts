@@ -11,8 +11,8 @@ library.add(fas, far);
 config.autoAddCss = false
 
 export default defineNuxtPlugin((nuxtApp) => {
-    nuxtApp.vueApp.component('FontAwesomeIcon', FontAwesomeIcon)
-    const emitter = mitt()
+    nuxtApp.vueApp.component('FontAwesomeIcon', FontAwesomeIcon);
+    const emitter = mitt();
     nuxtApp.provide('emitter', emitter);
 })
 

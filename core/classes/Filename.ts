@@ -2,7 +2,7 @@ export default class Filename {
 
     private static readonly RE = new RegExp('([^.]+)(?:(\.)([^.]+))?', 'g');
     private readonly _value: string;
-    private readonly _ext?: string;
+    private readonly _ext: string;
 
     public constructor(name: string) {
         const executed = Filename.RE.exec(name);
@@ -20,7 +20,7 @@ export default class Filename {
     }
 
     get ext(): string {
-        return this._value;
+        return this._ext;
     }
 
 }

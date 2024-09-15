@@ -6,11 +6,14 @@ export default defineNuxtConfig({
     devtools: {
         enabled: false
     },
+    vite: {
+
+    },
     srcDir: "src/",
     alias: {
         "@": fileURLToPath(new URL('./src', import.meta.url)),
         "~": fileURLToPath(new URL('./', import.meta.url)),
-        "@styles": fileURLToPath(new URL('./public/styles', import.meta.url))
+        "@styles": fileURLToPath(new URL('./assets/styles', import.meta.url))
     },
     experimental: {
         payloadExtraction: false
@@ -45,7 +48,8 @@ export default defineNuxtConfig({
         '@nuxt/image'
     ],
     pinia: {
-        storesDirs: ['./store/**']
+        storesDirs: ['@/store/**']
     },
+
     compatibilityDate: '2024-07-09'
 })

@@ -13,10 +13,8 @@
   "imports": {
     "@core/*": "./core/*"
   },
-
   "scripts": {
     "boot": "tsx core/script/boot.ts",
-    "test-ts": "tsc core/script/tsTest.ts && node core/script/tsTest.js",
     "build": "yarn boot && nuxt build",
     "dev": "yarn boot && nuxt dev",
     "generate": "yarn boot && nuxt generate",
@@ -50,7 +48,7 @@
     "@types/markdown-it": "^12.2.3",
     "@types/node": "^22.5.4",
     "gh-pages": "^5.0.0",
-    "nuxt": "^3.2.3",
+    "nuxt": "^3.13.0",
     "path": "^0.12.7",
     "push-dir": "^0.4.1",
     "sass": "^1.49.9",

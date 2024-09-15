@@ -4,12 +4,16 @@ export default class Path {
     private readonly _array: Array<string>;
 
     private constructor(path: string) {
-        this._value = path;
-        this._array = path.split("/").filter(node => node !== '') ?? [];
+        this._value = path.replace("/src", "");
+        this._array = this._value.split("/").filter(node => node !== '') ?? [];
     }
 
 
     get value(): string {
+        return "/src".concat(this._value);
+    }
+
+    get realValue(): string {
         return this._value;
     }
 

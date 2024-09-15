@@ -5,20 +5,18 @@
     "ext": "",
     "summary": "알고리즘",
     "breadcrumbs": [
-      "src",
       "문서",
       "알고리즘"
     ],
     "type": "directory",
-    "hasIcon": true,
+    "hasIcon": false,
     "files": [
       {
-        "path": "/src/docs/algorithm/heap-sort",
+        "path": "/docs/algorithm/heap-sort",
         "name": "heap-sort",
-        "ext": "heap-sort",
-        "summary": "heap-sort",
+        "ext": "md",
+        "summary": "힙과 힙정렬",
         "breadcrumbs": [
-          "src",
           "문서",
           "알고리즘",
           "heap-sort.md"
@@ -26,15 +24,14 @@
         "type": "file",
         "hasIcon": false,
         "files": [],
-        "group": "docs"
+        "group": "algorithm"
       },
       {
-        "path": "/src/docs/algorithm/insertion-sort",
+        "path": "/docs/algorithm/insertion-sort",
         "name": "insertion-sort",
-        "ext": "insertion-sort",
-        "summary": "insertion-sort",
+        "ext": "md",
+        "summary": "삽입 정렬 알아보기",
         "breadcrumbs": [
-          "src",
           "문서",
           "알고리즘",
           "insertion-sort.md"
@@ -42,15 +39,14 @@
         "type": "file",
         "hasIcon": false,
         "files": [],
-        "group": "docs"
+        "group": "algorithm"
       },
       {
-        "path": "/src/docs/algorithm/mathematical-induction",
+        "path": "/docs/algorithm/mathematical-induction",
         "name": "mathematical-Induction",
-        "ext": "mathematical-Induction",
-        "summary": "mathematical-Induction",
+        "ext": "md",
+        "summary": "수학적 귀납법",
         "breadcrumbs": [
-          "src",
           "문서",
           "알고리즘",
           "mathematical-Induction.md"
@@ -58,15 +54,14 @@
         "type": "file",
         "hasIcon": false,
         "files": [],
-        "group": "docs"
+        "group": "algorithm"
       },
       {
-        "path": "/src/docs/algorithm/selection-sort",
+        "path": "/docs/algorithm/selection-sort",
         "name": "selection-sort",
-        "ext": "selection-sort",
-        "summary": "selection-sort",
+        "ext": "md",
+        "summary": "선택 정렬",
         "breadcrumbs": [
-          "src",
           "문서",
           "알고리즘",
           "selection-sort.md"
@@ -74,10 +69,10 @@
         "type": "file",
         "hasIcon": false,
         "files": [],
-        "group": "docs"
+        "group": "algorithm"
       }
     ],
-    "group": "docs"
+    "group": "algorithm"
   },
   {
     "path": "",
@@ -85,7 +80,6 @@
     "ext": "",
     "summary": "computer",
     "breadcrumbs": [
-      "src",
       "문서",
       "computer"
     ],
@@ -93,12 +87,11 @@
     "hasIcon": false,
     "files": [
       {
-        "path": "/src/docs/computer/hard-disk-1",
+        "path": "/docs/computer/hard-disk-1",
         "name": "hard-disk-1",
-        "ext": "hard-disk-1",
-        "summary": "hard-disk-1",
+        "ext": "md",
+        "summary": "하드디스크란 무엇이고, 어떻게 동작할까?",
         "breadcrumbs": [
-          "src",
           "문서",
           "computer",
           "hard-disk-1.md"
@@ -106,10 +99,10 @@
         "type": "file",
         "hasIcon": false,
         "files": [],
-        "group": "docs"
+        "group": "computer"
       }
     ],
-    "group": "docs"
+    "group": "computer"
   },
   {
     "path": "",
@@ -117,7 +110,6 @@
     "ext": "",
     "summary": "electric",
     "breadcrumbs": [
-      "src",
       "문서",
       "electric"
     ],
@@ -125,12 +117,11 @@
     "hasIcon": false,
     "files": [
       {
-        "path": "/src/docs/electric/about-atom",
+        "path": "/docs/electric/about-atom",
         "name": "about-atom",
-        "ext": "about-atom",
-        "summary": "about-atom",
+        "ext": "md",
+        "summary": "원자란?",
         "breadcrumbs": [
-          "src",
           "문서",
           "electric",
           "about-atom.md"
@@ -138,15 +129,14 @@
         "type": "file",
         "hasIcon": false,
         "files": [],
-        "group": "docs"
+        "group": "electric"
       },
       {
-        "path": "/src/docs/electric/about-electron",
+        "path": "/docs/electric/about-electron",
         "name": "about-electron",
-        "ext": "about-electron",
-        "summary": "about-electron",
+        "ext": "md",
+        "summary": "전자란?",
         "breadcrumbs": [
-          "src",
           "문서",
           "electric",
           "about-electron.md"
@@ -154,10 +144,10 @@
         "type": "file",
         "hasIcon": false,
         "files": [],
-        "group": "docs"
+        "group": "electric"
       }
     ],
-    "group": "docs"
+    "group": "electric"
   },
   {
     "path": "",
@@ -165,14 +155,13 @@
     "ext": "",
     "summary": "life",
     "breadcrumbs": [
-      "src",
       "문서",
       "life"
     ],
     "type": "directory",
     "hasIcon": false,
     "files": [],
-    "group": "docs"
+    "group": "life"
   },
   {
     "path": "",
@@ -180,31 +169,29 @@
     "ext": "",
     "summary": "도구",
     "breadcrumbs": [
-      "src",
       "문서",
       "도구"
     ],
     "type": "directory",
-    "hasIcon": true,
+    "hasIcon": false,
     "files": [
       {
-        "path": "/src/docs/tools/intellij-config",
-        "name": "Intellij-config",
-        "ext": "Intellij-config",
-        "summary": "Intellij-config",
+        "path": "/docs/tools/intellij-config",
+        "name": "intellij-config",
+        "ext": "md",
+        "summary": "단축키와 기본설정",
         "breadcrumbs": [
-          "src",
           "문서",
           "도구",
-          "Intellij-config.md"
+          "intellij-config.md"
         ],
         "type": "file",
         "hasIcon": false,
         "files": [],
-        "group": "docs"
+        "group": "tools"
       }
     ],
-    "group": "docs"
+    "group": "tools"
   },
   {
     "path": "",
@@ -212,20 +199,18 @@
     "ext": "",
     "summary": "타입스크립트",
     "breadcrumbs": [
-      "src",
       "문서",
       "타입스크립트"
     ],
     "type": "directory",
-    "hasIcon": true,
+    "hasIcon": false,
     "files": [
       {
-        "path": "/src/docs/typescript/typescript-getting-start",
+        "path": "/docs/typescript/typescript-getting-start",
         "name": "typescript-getting-start",
-        "ext": "typescript-getting-start",
-        "summary": "typescript-getting-start",
+        "ext": "md",
+        "summary": "타입스크립트 소개",
         "breadcrumbs": [
-          "src",
           "문서",
           "타입스크립트",
           "typescript-getting-start.md"
@@ -233,9 +218,9 @@
         "type": "file",
         "hasIcon": false,
         "files": [],
-        "group": "docs"
+        "group": "typescript"
       }
     ],
-    "group": "docs"
+    "group": "typescript"
   }
 ]

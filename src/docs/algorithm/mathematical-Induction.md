@@ -4,7 +4,7 @@ title: -Algorithm- Mathematical Induction (수학적 귀납법) feat.java
 categories: [Development, Algorithm]
 tags: [Java, Algorithm, Mathematical Induction]
 date: 2022-04-11 21:54:00 +0900
-thumbnail: "/assets/blogging/algorithm/Mathematical_Induction.png"
+thumbnail: "/blogging/algorithm/Mathematical_Induction.png"
 current-company: Herit Corporation
 current-position: Backend Server Developer
 summary: 수학적 귀납법

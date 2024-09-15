@@ -6,8 +6,8 @@ tags: [Typescript, Javascript, Type]
 date: 2023-04-15 19:01:00 +0900
 current-company: NEOWIZ
 current-position: Software Engineer
-profile-image: /assets/blogging/profile/profile1.JPG
-thumbnail: "/assets/blogging/typescript/typescript_getting_start.png"
+profile-image: /blogging/profile/profile1.JPG
+thumbnail: /blogging/typescript/typescript_getting_start.png
 summary: 타입스크립트 소개
 excerpt-separator: <!--more-->
 hide: false

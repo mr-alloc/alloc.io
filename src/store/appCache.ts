@@ -11,9 +11,6 @@ export default {
     /* (피드용) 포스팅 메타파일 읽고 저장 */
     postContents: reactive<PostContent[]>([]),
 
-    /* (검색용) 포스팅 메타 정보 */
-    contentsForSearch: reactive<PostContent[]>([]),
-
     /* 사이트 네비게이터 스택 */
     naviStack: reactive<FileNodeWrapper[]>([]),
 

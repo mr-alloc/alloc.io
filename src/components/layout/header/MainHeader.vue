@@ -59,7 +59,7 @@
 <script lang="ts" setup>
 import { searchInputStore, mobileNaviStore } from "@/store";
 import { calPostDate } from "@/utils/settingUtils";
-import {onMounted} from "vue";
+import {onBeforeMount, onMounted} from "vue";
 import appCache from "@/store/appCache";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
 import {PostSearchResult} from "@/class/implement/PostSearchResult";
@@ -108,7 +108,6 @@ onMounted(() => {
   })
 
 });
-
 const titleRE = /([a-zA-Z가-힣0-9@\W\-_])/
 const methods = {
 

@@ -17,7 +17,7 @@ export default function (filePath: Path): PostData {
     const body: Array<string> = contentRegex.exec(md.markdown) ?? [];
 
     return new PostData(
-        filePath.value.replace('.md', '').toLowerCase(),
+        filePath.realValue.replace('.md', '').toLowerCase(),
         (header != null ? header : {}),
         ((body?.length >= 1) ? body[1] : ''),
         ((body?.length) >= 2 ? body[2] : ''))

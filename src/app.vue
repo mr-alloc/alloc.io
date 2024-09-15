@@ -2,7 +2,7 @@
   <div id="application-container" class="app-container">
     <MainHeader />
     <main class="main-page-body">
-      <nuxt-page class="current-content" id="current-content-element" :page-key="route.fullPath" />
+      <NuxtPage class="current-content" id="current-content-element" :page-key="route.fullPath" />
     </main>
     <div class="background" :class="{ active : mobileNaviStore.isActive || photoViewStatus.isPhotoView || searchStatus.isSearchMode }"
          v-on:click="methods.clickBackground($event)">
@@ -35,7 +35,6 @@ import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import {onMounted} from "vue";
 import {useNuxtApp} from "nuxt/app";
 
-
 Runner.init();
 const route = useRoute();
 const router = useRouter();
@@ -56,13 +55,8 @@ const methods = {
     }
   }
 }
-const state = reactive({
-
-});
 
 onMounted(() => {
-  console.log("emitter");
-  console.log("nuxtApp", $emitter, useNuxtApp());
 
   //검색 결과
   $emitter.on('searchText', (result: PostSearchResult[]) => {
@@ -194,7 +188,7 @@ useHead({
     lang: 'ko-kr'
   },
   meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' }
+    { name: 'viewport', postContent: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' }
   ]
 })
 </script>
