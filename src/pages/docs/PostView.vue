@@ -22,16 +22,16 @@
                 <nav aria-label="Breadcrumb" class="relative min-w-0">
                   <ol class="flex items-center gap-x-1.5">
                     <li class="flex items-center gap-x-1.5 text-gray-500 dark:text-gray-400 text-sm leading-6 min-w-0"
-                        v-for="(snippet, index) in state.postContent.header.breadcrumbs">
+                        v-for="(snippet, index) in state.postContent.header.breadcrumbs.slice(0, state.postContent.header.breadcrumbs.length-1)">
                       <a class="flex items-center gap-x-1.5 group font-semibold min-w-0 hover:text-gray-700 dark:hover:text-gray-200"
-                         :class="index === state.postContent.header.breadcrumbs.length -1
+                         :class="index === state.postContent.header.breadcrumbs.length -2
                          ? ['text-primary-500', 'dark:text-primary-400']
                          : ['hover:text-gray-700', 'dark:hover:text-gray-200']"
                       >
                         <span class="block truncate">{{ snippet }}</span>
                       </a>
                       <span class="iconify i-ph:caret-right flex-shrink-0 rtl:rotate-180 w-4 h-4"
-                            v-if="index !== state.postContent.header.breadcrumbs.length -1"
+                            v-if="index !== state.postContent.header.breadcrumbs.length -2"
                             aria-hidden="true" role="presentation"></span>
                     </li>
                   </ol>
