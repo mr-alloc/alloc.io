@@ -2,7 +2,7 @@
   <div class="search-result-row">
     <div class="category-icon-area">
       <span class="category-icon">
-        <img :src="`/assets/icon/${props.row.icon}.png`" alt="Category Image"/>
+        <img :src="`/icon/${props.row.icon}.png`" alt="Category Image"/>
       </span>
     </div>
     <div class="detected-content-area">

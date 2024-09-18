@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import {PostContent} from "@/class/implement/PostContent";
+import {ref} from "@vue/reactivity";
 
 export const usePostContentStore = defineStore("PostMap", () => {
 
@@ -18,9 +19,16 @@ export const usePostContentStore = defineStore("PostMap", () => {
         throw new Error("Not found post with path: "+ path);
     }
 
+    function values(): Array<PostContent> {
+        const values = postContents.value.values();
+        const contents = Array.from(values) as Array<PostContent>;
+        console.log('value in PostContentStore', values);
+        return contents;
+    }
+
     return {
-        postContentList: [...postContents.value.values()],
         add,
-        get
+        get,
+        values
     }
 });

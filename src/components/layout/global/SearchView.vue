@@ -29,13 +29,16 @@ import {useNuxtApp} from "nuxt/app";
 import {usePostContentStore} from "@/store/PostContentStore";
 import {PostSearchGroup} from "@/class/implement/PostSearchGroup";
 import {Pair} from "@/class/implement/Pair";
+import {groupingBy} from "@/utils/settingUtils";
+import appCache from "@/store/appCache";
 
 const searchInput = ref<HTMLInputElement | null>(null);
 const postContentStore = usePostContentStore();
 const searchStatusStore = useSearchStatusStore();
 const nuxtApp = useNuxtApp();
-const emitter: any = nuxtApp.$emiiter;
+const emitter: any = nuxtApp.$emitter;
 
+const currentLocationIndex = ref(0);
 const groups = ref(new Map<string, PostSearchGroup>());
 const searchLocationPair = ref<Pair<string, number>[]>([]);
 
@@ -74,20 +77,69 @@ const methods = {
   },
   searchText: (text: string) => {
     if (text === '') {
-      emitter.emit('searchText', [])
+      methods.deployResult([]);
+      return;
     }
 
     if (/([a-zA-Z가-힣0-9@\W\-_])/.test(text)) {
       const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i');
-      const contentsForSearch = postContentStore.postContentList as Array<PostContent>;
-      const result: PostSearchResult [] = contentsForSearch
+      const contentsForSearch = postContentStore.values() as Array<PostContent>;
+      const results: PostSearchResult [] = contentsForSearch
           .filter(content => {
             const title = content.header.title;
             return RE.test(title)
           })
           .map(content => new PostSearchResult(content));
-      emitter.emit('searchText', result)
+      console.log('results', results);
+      methods.deployResult(results);
     }
+  },
+  deployResult(results: Array<PostSearchResult>) {
+    const map: Map<string, PostSearchResult[]> = groupingBy<string, PostSearchResult>(results, (result)=> {
+      const node = appCache.fileNodeMap.store.get(result.content.path)
+      return node.group
+    })
+
+    const keys = [...groups.value.keys()];
+    // clonedArray: Map<string, PostSearchGroup> = 기존 검색 결과
+    // map: Map<string, PostSearchResult[]> = 신규 검색 결과
+    keys.forEach(key => {
+      // 기존 검색결과 와 같은 그룹이라면 업데이트
+      if (map.has(key)) {
+        const newResult = map.get(key) ?? []
+        map.delete(key)
+        const oldResult = groups.value.get(key)
+        oldResult?.update(newResult)
+
+        if (oldResult?.results.length == 0) {
+          groups.value.delete(key)
+        }
+        return
+      }
+      // 기존 그룹에있지만, 신규 결과에서 그룹이 없는 경우
+      else {
+        // console.log('old key delete:', key)
+        // const beFinalize = groups.value.get(key)
+        // beFinalize?.finalizeAllChild()
+        groups.value.delete(key)
+      }
+    })
+
+    //기존에 그룹에는 없고, 신규 결과에서 그룹이 있는경우
+    const newKeys = [...map.entries()]
+    newKeys.forEach(([key, value]) => {
+      const group = new PostSearchGroup(key, value)
+      groups.value.set(key, group)
+      group.updateNewer()
+    })
+
+    const array = [...groups.value.values()]
+    searchLocationPair.value = array.map(val => val.results.map((res, idx) => new Pair<string, number>(val.icon, idx)))
+        .flat()
+    currentLocationIndex.value = 0
+
+    // const status = array.map(group => `\n(${group.results.length}) ${group.icon}\n${group.results.map((re, i) => `\t[${re.status}]${++i}. ${re.content.header.title}`).join('\n')}`).join('\n')
+    // console.debug(status)
   }
 }
 </script>
