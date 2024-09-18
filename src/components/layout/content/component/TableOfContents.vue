@@ -1,8 +1,11 @@
 <template>
-  <ul>
-    <li v-for="child in props.headline?.children" :key="child.fragmentId">
-      <a class="outline-link" :href="'#' + child.fragmentId"> {{ child.title }}</a>
-      <TableOfContents  v-if="child.children.length > 0" :headline="child" />
+  <ul class="space-y-1 hidden lg:block">
+    <li v-for="child in props.headline?.children" :key="child.fragmentId" class="space-y-1 hidden lg:block" :class="{
+       'ml-3': props.isInner
+    }">
+      <a class="block text-sm/6 truncate text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+         :href="'#' + child.fragmentId"> {{ child.title }}</a>
+      <TableOfContents  v-if="child.children.length > 0" :headline="child" :is-inner="true" />
     </li>
   </ul>
 </template>
@@ -11,16 +14,14 @@
 import TocNode from "@/class/implement/TocNode";
 import TableOfContents from "@/components/layout/content/component/TableOfContents.vue";
 
-const components = {
-  TableOfContents
-}
-const props = defineProps({
-  headline: TocNode
-})
+const props = defineProps<{
+  headline: TocNode,
+  isInner: boolean,
+}>();
 </script>
 
-<style lang="scss">
-@import "@styles";
+<style lang="scss" scoped>
+@import "@styles/index";
 
 .outline-link {
   color: #3c3c3cb3;

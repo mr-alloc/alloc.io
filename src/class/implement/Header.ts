@@ -1,5 +1,6 @@
 import Image from "@/class/implement/Image";
 import TocNode from "@/class/implement/TocNode";
+import FileAlias from "@core/constant/FileAlias";
 
 export default class Header {
     private readonly _layout: string
@@ -94,7 +95,7 @@ export default class Header {
     }
 
     get breadcrumbs(): string[] {
-        return this._breadcrumbs
+        return this._breadcrumbs;
     }
 
     get rootHeadLine(): TocNode {

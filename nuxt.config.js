@@ -6,8 +6,11 @@ export default defineNuxtConfig({
     devtools: {
         enabled: false
     },
-    vite: {
-
+    postcss: {
+        plugins: {
+            tailwindcss: {},
+            autoprefixer: {}
+        }
     },
     srcDir: "src/",
     alias: {
@@ -32,7 +35,9 @@ export default defineNuxtConfig({
         strict: true
     },
     css: [
-        '@fortawesome/fontawesome-svg-core/styles.css'
+        '@fortawesome/fontawesome-svg-core/styles.css',
+        '~/assets/styles/main.css',
+        '~/assets/styles/icons.css'
     ],
     build: {
         transpile: [
@@ -40,16 +45,11 @@ export default defineNuxtConfig({
             '@fortawesome/free-brands-svg-icons',
             '@fortawesome/free-regular-svg-icons',
             '@fortawesome/free-solid-svg-icons',
-            '@fortawesome/vue-fontawesome'
         ]
     },
-    modules: [
-        '@pinia/nuxt',
-        '@nuxt/image'
-    ],
+    modules: ['@pinia/nuxt', '@nuxt/image', '@nuxtjs/tailwindcss'],
     pinia: {
         storesDirs: ['@/store/**']
     },
-
-    compatibilityDate: '2024-07-09'
+    compatibilityDate: '2024-07-09',
 })

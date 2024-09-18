@@ -78,17 +78,6 @@ export function toValueMap<E, T, O>(
     return map
 }
 
-export function getFileIcon(node: FileNode) {
-    let iconName;
-    if(node.hasIcon) {
-        iconName = node.name
-    } else if(node.isDirectory()) {
-        iconName = 'folder_default'
-    } else {
-        iconName = 'post_default'
-    }
-    return iconName
-}
 
 export function slugify(target: string, forUrlEncode: boolean): string {
     const slug = target.trim().toLowerCase().replace(/\s+/g, '-')

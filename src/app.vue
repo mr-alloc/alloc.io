@@ -1,16 +1,15 @@
 <template>
   <div id="application-container" class="app-container">
     <MainHeader />
-    <main class="main-page-body">
+    <main class="min-h-[calc(100vh-var(--header-height))]">
       <NuxtPage class="current-content" id="current-content-element" :page-key="route.fullPath" />
     </main>
-    <div class="background" :class="{ active : mobileNaviStore.isActive || photoViewStatus.isPhotoView || searchStatus.isSearchMode }"
+    <div class="background" :class="[
+        mobileNaviStore.isActive || photoViewStatus.isPhotoView || searchStatus.isSearchMode
+        ? ['fixed', 'inset-0', 'transition-opacity', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : []
+        ]"
          v-on:click="methods.clickBackground($event)">
-      <div v-if="searchStatus.isSearchMode" class="search-result-area">
-        <div class="search-result-panel" v-on:click="$event.stopPropagation()">
-          <SearchResult v-for="group in groups.values()" :key="group" :row="group" />
-        </div>
-      </div>
+      <SearchView v-if="searchStatus.isSearchMode" />
       <PhotoView v-if="photoViewStatus.isPhotoView" v-on:click="$event.stopPropagation()" />
     </div>
     <LoadingBar />
@@ -21,7 +20,6 @@ import Runner from '@/service/DefaultStarterService'
 import appCache from "@/store/appCache";
 import MainHeader from "@/components/layout/header/MainHeader.vue";
 import LoadingBar from "@/components/layout/header/LoadingBar.vue";
-import SearchResult from "@/components/layout/header/SearchResult.vue";
 import PhotoView from "@/components/layout/global/PhotoView.vue";
 import {useHead} from "unhead";
 import {mobileNaviStore, postCallStore} from "@/store";
@@ -34,6 +32,7 @@ import {useSearchStatusStore} from "@/store/SearchStatusStore";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import {onMounted} from "vue";
 import {useNuxtApp} from "nuxt/app";
+import SearchView from "@/components/layout/global/SearchView.vue";
 
 Runner.init();
 const route = useRoute();
@@ -41,9 +40,6 @@ const router = useRouter();
 const { $emitter } = useNuxtApp();
 const searchStatus = useSearchStatusStore();
 const photoViewStatus = usePhotoViewStatusStore();
-
-const groups = ref(new Map<string, PostSearchGroup>())
-const searchLocationPair = ref<Pair<string, number>[]>([])
 const currentLocationIndex = ref(0)
 const methods = {
   clickBackground: (event: PointerEvent) => {
@@ -53,7 +49,7 @@ const methods = {
     } else if (photoViewStatus.isPhotoView) {
       photoViewStatus.close()
     }
-  }
+  },
 }
 
 onMounted(() => {
@@ -188,57 +184,15 @@ useHead({
     lang: 'ko-kr'
   },
   meta: [
-    { name: 'viewport', postContent: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' }
+    { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' }
   ]
 })
 </script>
 
 <style lang="scss">
-@import '@styles';
-.app-container {
-  background-color: $point-light-color;
-
-  .main-page-body {
-    min-height: calc(100vh - $pc-header-height);
-  }
-
-  &.dark {
-    background-color: $main-dark-color;
-  }
+@import '@styles/index';
 
 
-  .background {
-    position: fixed;
-    top:0;
-    left: 0;
-    width: 100%;
-    transition: height 0s, background-color .6s;
-
-    &.active {
-      z-index: 1;
-      background: rgb(0 0 0 / 40%);
-      height: 100%;
-
-    }
-
-    .search-result-area {
-      position: relative;
-      top: 90px;
-      width: 100%;
-      height: 70%;
-
-      .search-result-panel {
-        background-color: white;
-        max-width: 768px;
-        height: 100%;
-        margin: 0 auto;
-        overflow-y: scroll;
-        border-radius: 8px;
-
-      }
-    }
-  }
-}
 
 @include tablet {
   .app-container {
@@ -307,55 +261,6 @@ useHead({
   src: url('/assets/fonts/JetBrains_Mono/JetBrainsMono-Italic.ttf');
 }
 
-html {
-
-
-    .dark {
-      //::-webkit-scrollbar-track {
-      //  --tw-bg-opacity: 1;
-      //  background-color: rgb(var(--color-gray-800)/1);
-      //  background-color: rgb(var(--color-gray-800)/var(--tw-bg-opacity))
-      //}
-      //
-      //::-webkit-scrollbar-thumb {
-      //  --tw-bg-opacity: 1;
-      //  background-color: rgb(var(--color-gray-700)/1);
-      //  background-color: rgb(var(--color-gray-700)/var(--tw-bg-opacity))
-      //}
-      //
-      //::-webkit-scrollbar-thumb:hover {
-      //  --tw-bg-opacity: 1;
-      //  background-color: rgb(var(--color-gray-600)/1);
-      //  background-color: rgb(var(--color-gray-600)/var(--tw-bg-opacity))
-      //}
-    }
-
-
-  //::-webkit-scrollbar {
-  //  background-color: transparent;
-  //  height: .6em;
-  //  width: .6em
-  //}
-  //
-  //::-webkit-scrollbar-track {
-  //  --tw-bg-opacity: 1;
-  //  background-color: rgb(var(--color-gray-100)/1);
-  //  background-color: rgb(var(--color-gray-100)/var(--tw-bg-opacity))
-  //}
-  //
-  //::-webkit-scrollbar-thumb {
-  //  --tw-bg-opacity: 1;
-  //  background-color: rgb(var(--color-gray-300)/1);
-  //  background-color: rgb(var(--color-gray-300)/var(--tw-bg-opacity));
-  //  border-radius: .6em
-  //}
-  //
-  //::-webkit-scrollbar-thumb:hover {
-  //  --tw-bg-opacity: 1;
-  //  background-color: rgb(var(--color-gray-400)/1);
-  //  background-color: rgb(var(--color-gray-400)/var(--tw-bg-opacity))
-  //}
-}
 
 
 #__nuxt {
@@ -368,8 +273,8 @@ html {
 }
 
 * {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
 
   &:before {
@@ -382,67 +287,6 @@ html {
   .only-mobile {
     display: none;
   }
-}
-
-:root {
-  --medium-zoom-z-index: 100;
-  --medium-zoom-bg-color: #ffffff;
-  --medium-zoom-opacity: 1;
-  --back-to-top-z-index: 5;
-  --back-to-top-color: #3eaf7c;
-  --back-to-top-color-hover: #71cda3;
-  --nprogress-color: #29d;
-  --nprogress-z-index: 1031;
-
-  --color-gray-100: 241 245 249;
-  --color-gray-200: 226 232 240;
-  --color-gray-300: 203 213 225;
-  --color-gray-400: 148 163 184;
-  --color-gray-500: 100 116 139;
-  --color-gray-600: 71 85 105;
-  --color-gray-700: 51 65 85;
-  --color-gray-800: 30 41 59;
-  --color-gray-900: 15 23 42;
-  --color-gray-950: 2 4 32;
-  transition: all .6s ease-out;
-}
-
-
-a {
-  text-decoration: none;
-  color: #2c3e50;
-  -webkit-tap-highlight-color:transparent;
-}
-
-.window-controller {
-  display: block;
-  border-radius: 15px 15px 0px 0px;
-
-  &:before {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    display: inline-block;
-    margin: 5px 4px;
-    background-color: #FF605C;
-    border: 1.12px solid #f35854;
-  }
-
- .window-close {
-  background-color: #FF605C;
-  border: 1.12px solid #f35854;
-  }
-
- .window-minimize {
-  background-color: #FFBD44;
-  border: 1.12px solid #f6b73b;
-  }
-
-   .window-maximize {
-    background-color: #00CA4E;
-    border: 1.12px solid #02be4a;
-  }
-
 }
 
 

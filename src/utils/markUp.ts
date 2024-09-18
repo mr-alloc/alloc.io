@@ -64,11 +64,11 @@ export default (markdown: string, postMeta?: PostContent) => {
         }
     })
 
-    highlightLines(md)
-    preWrapper(md)
-    lineNumbers(md)
-    ruleSub(md)
-    postMeta && tableOfContents(md, postMeta)
+    highlightLines(md);
+    preWrapper(md);
+    lineNumbers(md);
+    ruleSub(md);
+    postMeta && tableOfContents(md, postMeta);
 
     return md.render(markdown)
 }

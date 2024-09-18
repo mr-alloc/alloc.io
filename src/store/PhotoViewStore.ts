@@ -5,7 +5,7 @@ import Image from "@/class/implement/Image";
 export const usePhotoViewStatusStore = defineStore('photoViewStatus', () => {
     const isPhotoView = ref<boolean>(false)
     const isFullScreen = ref<boolean>(false)
-    const images = ref<Map<number, Image>>(new Map())
+    const images = ref<Map<number, Image>>(new Map<number, Image>())
     const zoom = ref(1)
     const currentIndex = ref(0)
 

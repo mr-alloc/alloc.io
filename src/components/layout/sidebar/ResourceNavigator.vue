@@ -12,13 +12,13 @@
       <div class="profile-element-wrapper">
         <div class="profile-image-area">
           <div class="round-image-frame">
-            <img src="/assets/blogging/profile/default.jpeg" alt="프로필 이미지"/>
+            <img src="/blogging/profile/default.jpeg" alt="프로필 이미지"/>
           </div>
         </div>
         <div class="profile-info-area">
           <div class="author-text-area">
             <div class="profile-author-name">
-              <span>{{ appCache.blogInfo.fullName }}</span>
+              <span>devisitem</span>
             </div>
             <span class="intro">누군지 궁금하세요?</span>
           </div>
@@ -44,8 +44,7 @@ import {explorerHeaderStore, menuClickableStore, mobileNaviStore, tabletNaviStor
 import PackageExplorer from "@/components/layout/sidebar/PackageExplorer.vue";
 import NavigateMarker from "@/components/layout/sidebar/NavigateMarker.vue";
 import DefaultSettings from "@/components/layout/sidebar/DefaultSettings.vue";
-import appCache from "~/store/appCache";
-import {useNuxtApp} from "#app";
+import appCache from "@/store/appCache";
 import {onMounted} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
@@ -112,7 +111,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import '@styles';
+@import '@styles/index';
 
 .post-resource-navigator {
   background-color: $point-light-color;

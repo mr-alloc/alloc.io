@@ -56,7 +56,7 @@ const methods = {
 </script>
 
 <style lang="scss">
-@import '@styles';
+@import '@styles/index';
 
 .post-preview-body {
   display: flex;
@@ -101,7 +101,6 @@ const methods = {
     font-size: .92rem;
     padding: 15px;
     line-height: 1.6;
-    border-top: 1px $linear-color solid;
 
     .content-text {
 
