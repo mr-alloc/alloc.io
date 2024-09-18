@@ -3,8 +3,8 @@ import {SearchStatus} from "@/class/implement/SearchStatus";
 import {toKeyMap} from "@/utils/settingUtils";
 
 export class PostSearchGroup {
-    readonly _icon: string
-    readonly _searchResults: Map<String, PostSearchResult>
+    private readonly _icon: string
+    private readonly _searchResults: Map<String, PostSearchResult>
 
     constructor(icon: string, result: PostSearchResult []) {
         this._icon = icon
@@ -12,7 +12,7 @@ export class PostSearchGroup {
     }
 
     get icon(): string {
-        return this._icon
+        return this._icon;
     }
 
     get results(): PostSearchResult [] {
@@ -20,7 +20,7 @@ export class PostSearchGroup {
     }
 
     //같은 그룹 내에서 넣는 포스트
-    update(newResults: PostSearchResult []) {
+    public update(newResults: PostSearchResult []): void {
         newResults.forEach(result => {
             const key = result.content.path
             //기존 검색 결과 같은(Carry-on을 READY로 변경)
@@ -55,18 +55,17 @@ export class PostSearchGroup {
         //Finalize 된 대상들은 이미 스타일이 제거 되었으므로, 실제로 데이터를 제거
     }
 
-    updateNewer() {
+    public updateNewer(): void {
         this.results.forEach(element => {
             if(element.is(SearchStatus.APPEAR)) {
                 element.change(SearchStatus.READY)
             }
-        })
+        });
     }
 
-    finalizeAllChild() {
+    public finalizeAllChild(): void {
         this.results.forEach(result => {
             result.change(SearchStatus.FINALIZE)
-        })
-
+        });
     }
 }

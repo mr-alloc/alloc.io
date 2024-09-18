@@ -6,7 +6,7 @@
               @click="methods.selectFile(child, props.index, index)">
             <div class="element-icon-wrapper">
             <span class="element-icon" >
-              <img class="custom-icon" :src="`/assets/icon/${methods.getFileIcon(child)}.png`" alt="file icon image" />
+              <img class="custom-icon" :src="`/icon/${methods.getFileIcon(child)}.png`" alt="file icon image" />
             </span>
             </div>
             <div class="element-content">
@@ -31,11 +31,10 @@
 <script lang="ts" setup>
 import { FileNodeWrapper } from "@/class/implement/FileNodeWrapper";
 import {mobileNaviStore} from "@/store";
-import {useNuxtApp, useRouter} from "#app";
-import {FileNode} from "~/class/implement/FileNode";
+import {FileNode} from "@/class/implement/FileNode";
 import {onBeforeMount} from "vue";
-import appCache from "~/store/appCache";
-import type {IFileNode} from "~/class/IFileNode";
+import appCache from "@/store/appCache";
+import type {IFileNode} from "@/class/IFileNode";
 const { $emitter } = useNuxtApp();
 const router = useRouter()
 

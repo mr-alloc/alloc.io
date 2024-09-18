@@ -1,5 +1,5 @@
 <template>
-  <div class="post-card-wrapper" v-show="true">
+  <div class="@vesp/nuxt-fontawesome" v-show="true">
     <svg viewBox="0 0 400 480" preserveAspectRatio="xMidYMid meet" >
       <rect clip-path="url(#content-loader-clip)" x="0" y="0" width="100%" height="100%" style="fill: url('#content-loader-gradient');"></rect>
       <defs>

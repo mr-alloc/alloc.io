@@ -2,7 +2,7 @@
   <div class="search-result-row">
     <div class="category-icon-area">
       <span class="category-icon">
-        <img :src="`/assets/icon/${props.row.icon}.png`"/>
+        <img :src="`/assets/icon/${props.row.icon}.png`" alt="Category Image"/>
       </span>
     </div>
     <div class="detected-content-area">
@@ -28,15 +28,14 @@
 
 <script lang="ts" setup>
 import {PostSearchGroup} from "@/class/implement/PostSearchGroup";
-import {onMounted, onUnmounted} from "vue";
 import {useRouter} from "vue-router";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
 
 const router = useRouter()
 const searchStatus = useSearchStatusStore()
-const props = defineProps({
+const props = defineProps<{
   row: PostSearchGroup
-})
+}>();
 
 const goTo = (path: string) => {
   router.push(path)
@@ -46,7 +45,7 @@ const goTo = (path: string) => {
 </script>
 
 <style lang="scss" scoped>
-@import '@styles';
+@import '@styles/index';
 
 .search-result-row {
   //margin-top: 3px;

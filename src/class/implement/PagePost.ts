@@ -2,21 +2,21 @@ import {PostContent} from "@/class/implement/PostContent";
 import {calPostDate} from "@/utils/settingUtils";
 import markUp from "@/utils/markUp";
 
-export class PagePost{
+export default class PagePost{
     private readonly _title: string
     private readonly _date: string
     private readonly _content: string
     private readonly _tags: string []
 
     constructor(title: string, date: string, content: string, tags: string[]) {
-        this._title = title
-        this._date = date
-        this._content = content
-        this._tags = tags
+        this._title = title;
+        this._date = date;
+        this._content = content;
+        this._tags = tags;
     }
 
     get title(): string {
-        return this._title
+        return this._title;
     }
 
     get date(): string {
@@ -24,7 +24,7 @@ export class PagePost{
     }
 
     get content(): string {
-        return this._content
+        return this._content;
     }
 
     get tags(): string [] {

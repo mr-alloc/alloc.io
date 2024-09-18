@@ -14,7 +14,7 @@
             </div>
             <div class="feature-trailer">
               <span class="trailer-arrow">
-                <font-awesome-icon :icon="['fas', 'chevron-right']"/>
+                <FontAwesomeIcon :icon="['fas', 'chevron-right']"/>
               </span>
             </div>
           </div>
@@ -61,8 +61,8 @@
 <script lang="ts" setup>
 import SwitchButton from "@/components/layout/sidebar/SwitchButton.vue";
 import {mobileNaviStore} from "@/store";
-import {useDarkModeStore} from "~/store/DarkModeStore";
-import {useNuxtApp, useRouter} from "#app";
+import {useDarkModeStore} from "@/store/DarkModeStore";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const { $emitter } = useNuxtApp()
 const router = useRouter()
