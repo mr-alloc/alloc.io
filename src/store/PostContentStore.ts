@@ -19,7 +19,7 @@ export const usePostContentStore = defineStore("PostMap", () => {
     }
 
     return {
-        postContentList: postContents.value.values(),
+        postContentList: [...postContents.value.values()],
         add,
         get
     }

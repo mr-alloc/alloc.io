@@ -5,9 +5,9 @@ export const useSearchStatusStore = defineStore('searchStatus', () => {
 
     function searching() {
         isSearchMode.value = true;
-        const html = document.querySelector('html')!
-        html.style.overflow = 'hidden'
-        document.body.style.overflow = 'hidden'
+        const html = document.querySelector('html')!;
+        html.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
     }
 
     function cancelSearch() {

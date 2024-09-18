@@ -1,5 +1,3 @@
-import type {RouterConfig} from "@nuxt/schema";
-
 // https://router.vuejs.org/api/interfaces/routeroptions.html
 export default {
     routes: (_routes) => [
@@ -26,9 +24,10 @@ export default {
     ],
     scrollBehavior: (to, from, savedPosition) => {
         if (to.hash && to.path.match(/\/docs.+?/)) {
-            const el: HTMLElement = document.querySelector(to.hash)!
+            const id = to.hash.replace('#', '');
+            const element = document.getElementById(id);
             /* header height: 60, offset: 100 */
-            const toBeTop = el.offsetTop - 160
+            const toBeTop = element.offsetTop - 160
 
             return {
                 top: toBeTop,
@@ -42,4 +41,4 @@ export default {
             left: 0
         }
     }
-} satisfies RouterConfig
+}

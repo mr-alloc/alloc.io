@@ -23,6 +23,11 @@
       "summary": "원자란?",
       "excerpt-separator": "<!--more-->",
       "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "electric",
+        "about-atom.md"
+      ],
       "images": [],
       "headlines": {
         "grade": 0,
@@ -59,6 +64,11 @@
       "summary": "단축키와 기본설정",
       "excerpt-separator": "<!--more-->",
       "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "도구",
+        "intellij-config.md"
+      ],
       "images": [
         {
           "src": "/blogging/intellij/intellij1.png",
@@ -113,6 +123,11 @@
       "summary": "타입스크립트 소개",
       "excerpt-separator": "<!--more-->",
       "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "타입스크립트",
+        "typescript-getting-start.md"
+      ],
       "images": [],
       "headlines": {
         "grade": 0,
@@ -194,6 +209,11 @@
       "expose-images": true,
       "excerpt-separator": "<!--more-->",
       "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "알고리즘",
+        "heap-sort.md"
+      ],
       "images": [
         {
           "src": "/blogging/algorithm/heap/tree_images.svg",
@@ -352,6 +372,11 @@
       "summary": "삽입 정렬 알아보기",
       "excerpt-separator": "<!--more-->",
       "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "알고리즘",
+        "insertion-sort.md"
+      ],
       "images": [],
       "headlines": {
         "grade": 0,
@@ -408,6 +433,11 @@
       "summary": "수학적 귀납법",
       "excerpt-separator": "<!--more-->",
       "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "알고리즘",
+        "mathematical-Induction.md"
+      ],
       "images": [],
       "headlines": {
         "grade": 0,
@@ -457,6 +487,11 @@
       "summary": "선택 정렬",
       "excerpt-separator": "<!--more-->",
       "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "알고리즘",
+        "selection-sort.md"
+      ],
       "images": [],
       "headlines": {
         "grade": 0,

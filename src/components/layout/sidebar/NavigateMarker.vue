@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts" setup>
-import {explorerHeaderStore} from '~/store'
-import appCache from '~/store/appCache'
+import {explorerHeaderStore} from '@/store'
+import appCache from '@/store/appCache'
 import {useNuxtApp} from "nuxt/app";
 import {onMounted} from "vue"
 const {

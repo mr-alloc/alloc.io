@@ -1,50 +1,41 @@
 \<template>
   <div class="post-preview-header">
     <div class="profile-image">
-      <img :src="`${methods.getProfileOrDefault(props.header?.profileImage)}`"  />
+      <img :src="props.header?.profileImage ?? '/blogging/profile/default.jpeg'" alt="Profile Image" />
     </div>
     <div class="author-info">
-      <a :href="`https://github.com/${appCache.blogInfo.fullName}`" target="_blank">
-        <span class="author-name">{{ appCache.blogInfo.fullName }}</span>
-      </a>
-      <span class="author-work-at">{{ props.header.currentPosition }}, {{ props.header.currentCompany }}</span>
-      <span class="posting-date">
-        <FontAwesomeIcon class="clock-icon" :icon="['fa', 'clock']"/>
-        {{ calPostDate(props.header.date.toString()) }}
-      </span>
+      <div class="">
+        <a :href="`https://github.com/${appCache.blogInfo.fullName}`" target="_blank">
+          <span class="inline-block font-bold text-emerald-500 dark:text-emerald-50">{{ appCache.blogInfo.fullName }}</span>
+        </a>
+      </div>
+      <div class="font-small-medium">{{ props.header.currentPosition }}, {{ props.header.currentCompany }}</div>
+      <div class="font-small-medium flex justify-start items-center">
+        <span class="px-1.5">
+          <FontAwesomeIcon class="clock-icon" :icon="['fa', 'clock']"/>
+        </span>
+        <span class="inline-block">
+          {{ calPostDate(props.header.date.toString()) }}
+        </span>
+      </div>
     </div>
   </div>
 </template>
 
 
 <script lang="ts" setup>
-
 import appCache from "@/store/appCache";
 import {calPostDate} from "@/utils/settingUtils";
 import Header from "@/class/implement/Header";
-import {onMounted} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
-const data = {
-  calPostDate
-}
-
-const props = defineProps({
+const props = defineProps<{
   header: Header,
-})
-
-const methods = {
-  getProfileOrDefault(path: string|undefined) {
-    return path == undefined ? '/blogging/profile/default.jpeg' : path
-  }
-}
-
-onMounted(() => {
-})
+}>();
 </script>
 
-<style lang="scss">
-@import '@styles';
+<style lang="scss" scoped>
+@import '@styles/index';
 
 .post-preview-header {
   padding: 20px 30px;
@@ -71,27 +62,6 @@ onMounted(() => {
     img {
       width: 15px;
       height: 15px;
-    }
-    span {
-      display: block;
-      color: #6b6b6b;
-      line-height: 18px;
-
-      &.author-name {
-        display: inline-block;
-        color: black;
-        font-weight: bold;
-        transition: color 0s;
-
-        &:hover {
-          color: #2997ff;
-          text-decoration: underline;
-        }
-      }
-
-      &.posting-date {
-        font-size: .81rem;
-      }
     }
   }
 }

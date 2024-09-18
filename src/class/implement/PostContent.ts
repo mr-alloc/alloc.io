@@ -10,8 +10,8 @@ export class PostContent implements IPostContent {
     constructor(postContent: IPostContent) {
         this._path = postContent.path
         this._header = new Header(postContent.header)
-        this._description = postContent.description
-        this._content = postContent.content
+        this._description = postContent.description;
+        this._content = postContent.content;
     }
 
     get path(): string {

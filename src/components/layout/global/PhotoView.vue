@@ -61,7 +61,7 @@
     <div class="photo-view-wrapper">
       <ol class="photo-view-list" id="image-preview-wrapper">
         <li :class="{ selected: photoViewStore.currentIndex === index +1 }"
-            v-for="(image, index) in photoViewStore.imageList()"
+            v-for="(image, index) in photoViewStore.imageList() as Array<Image>"
             :key="index"
             v-on:click="photoViewStore.open(index +1)">
           <img class="image-preview" :src="image.src" :alt="image.alt"/>
@@ -73,10 +73,9 @@
 
 <script lang="ts" setup>
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
-import {useNuxtApp} from "#app";
+import type Image from "@/class/implement/Image";
 
 const photoViewStore = usePhotoViewStatusStore();
-const {$emitter} = useNuxtApp();
 
 const methods = {
   zoonIn() {

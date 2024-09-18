@@ -1,8 +1,8 @@
 <template>
     <div class="main-body" id="main-content-body">
-      <div class="main-container">
+      <div class="grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 gap-8">
         <ClientOnly fallback-tag="span" fallback="Loading Posts...">
-          <div class="post-card-wrapper" v-for="(feed, index) in data.feeds" v-bind:key="index">
+          <div class="rounded-xl divide-y divide-gray-200 dark:divide-gray-800 ring-1 ring-gray-200 dark:ring-gray-800 shadow bg-white dark:bg-gray-900 relative group flex flex-col overflow-hidden group" v-for="(feed, index) in data.feeds" v-bind:key="index">
             <PostCard :feed="feed" />
           </div>
         </ClientOnly>
@@ -49,7 +49,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import "@styles";
+@import "@styles/index";
 
 .main-body {
   display: flex;
@@ -64,11 +64,9 @@ onMounted(() => {
     .post-card-wrapper {
       transition: .4s;
       margin: 10px auto;
-      background-color: $main-light-color;
       border-radius: 15px;
       border: 1.29px solid #e0dfdc;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
     }
   }
 
