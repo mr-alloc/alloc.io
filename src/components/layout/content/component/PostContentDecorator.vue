@@ -1,15 +1,80 @@
 <template>
-  <div v-html="props.content"></div>
+  <div v-html="html"></div>
 </template>
 <script setup lang="ts">
+import type {PostMetadata} from "@/classes/implement/PostMetadata";
+import MarkdownIt from "markdown-it";
+import Token from "markdown-it/lib/token";
+import Renderer from "markdown-it/lib/renderer";
+import {countNewline, countPerNewline} from "@/utils/MarkdownUtils";
 
 const props = defineProps<{
-  content: string
+  metadata: PostMetadata
 }>();
+const html = ref('<p>작성된 내용이 없습니다.</p>');
+onMounted(() => {
+  const markdown = props.metadata.content;
+  const md = new MarkdownIt();
+  const proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);
+  const defaultBlockquoteOpen = md.renderer.rules.blockquote_open || proxy;
+  md.renderer.rules.blockquote_open = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer): string => {
+    try {
+      const blockquoteOpen = tokens[index];
+      blockquoteOpen.attrJoin('class', `p-2 my-5 rounded-xl ring-1 ring-gray-200 dark:ring-gray-800 bg-white dark:bg-gray-900`);
+
+      const templateRE = /^([\s\S]*?)\s*:\s*(\{[\s\S]*\})\s*$/mg;
+      const inlineIndex = index +2;
+
+      if (inlineIndex >= tokens.length) throw new Error(`Index out of range from tokens: ${inlineIndex}`);
+      const inline = tokens[inlineIndex];
+      const content = inline.content;
+      const noneMatch = !templateRE.test(content);
+      templateRE.lastIndex = 0;
+      if (!inline.map || noneMatch) {
+        return defaultBlockquoteOpen(tokens, index, options, env, self);
+      }
+      /*
+      * 준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다. 두번째 줄이지! - executed[1]
+      * :{ "type": "warning" } - executed[2]
+      */
+      const executed = templateRE.exec(content);
+      const text = executed?.[1] ?? '';
+      const attributesStr = executed?.[2];
+      const attributes = JSON.parse(attributesStr ?? '{}');
+      //type = "warning"
+      const type = attributes['type'];
+
+
+      const lfCount = countNewline(text);
+      const lineCount = lfCount +1;
+      inline.children = inline.children?.slice(0, lfCount + lineCount) ?? inline.children;
+      inline.content = text ?? inline.content;
+
+      if (type) {
+        blockquoteOpen.attrJoin('class', type);
+      }
+
+      return defaultBlockquoteOpen(tokens, index, options, env, self);
+    } catch (e: Error) {
+      console.error(`Error occurred at parsing token: "${e.message}"`);
+      return '';
+    }
+  }
+
+  html.value = md.render(markdown);
+});
 </script>
 
 <style scoped lang="scss">
 @import "@styles/index";
+
+blockquote.warning {
+  background-color: rgb(86, 28, 8, 0.8);
+
+  &::before {
+    content: "";
+  }
+}
 
 #post-content-frame {
 

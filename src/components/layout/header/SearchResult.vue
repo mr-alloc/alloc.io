@@ -7,17 +7,22 @@
     </div>
     <div class="detected-content-area">
       <ul class="detected-list">
-        <li class="each-detected-content"
+        <li class="each-detected-content my-1"
             :class="[`${result.status}`, { select: result.isSelected}]"
             v-for="result in props.row.results"
             :key="result.content.path"
             v-on:click="goTo(result.content.path)">
           <div class="result-string">
-            <span>{{ result.content.header.title }}</span>
+            <span class="text-gray-600 dark:text-gray-50">{{ result.content.header.title }}</span>
           </div>
           <div class="result-breadcrumb">
-            <ul>
-              <li v-for="crumb in result.content.header.breadcrumbs">{{ crumb }}</li>
+            <ul class="flex">
+              <li class="flex items-center" v-for="(crumb, index) in result.content.header.breadcrumbs">
+                <span>{{ crumb }}</span>
+                <span class="iconify i-ph:caret-right flex-shrink-0 rtl:rotate-180 w-4 h-4"
+                      v-if="index < result.content.header.breadcrumbs.length -1"
+                      aria-hidden="true" role="presentation"></span>
+              </li>
             </ul>
           </div>
         </li>
@@ -27,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import {PostSearchGroup} from "@/class/implement/PostSearchGroup";
+import {PostSearchGroup} from "@/classes/implement/PostSearchGroup";
 import {useRouter} from "vue-router";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
 
@@ -100,18 +105,6 @@ const goTo = (path: string) => {
         .result-breadcrumb {
           font-size: 0.71rem;
           color: #818080;
-
-          ul {
-            list-style: none;
-            li {
-              display: inline-block;
-
-              &:not(:last-child):after {
-                padding: 0 5px;
-                content: '→';
-              }
-            }
-          }
         }
 
         &:not(:last-child) {

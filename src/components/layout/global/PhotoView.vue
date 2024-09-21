@@ -73,7 +73,7 @@
 
 <script lang="ts" setup>
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
-import type Image from "@/class/implement/Image";
+import type Image from "@/classes/implement/Image";
 
 const photoViewStore = usePhotoViewStatusStore();
 

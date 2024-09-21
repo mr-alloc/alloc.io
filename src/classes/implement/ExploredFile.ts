@@ -1,4 +1,4 @@
-import {FileType} from "@/class/constant/BlogConstant";
+import {FileType} from "@/classes/constant/BlogConstant";
 
 export class ExploredFile {
 

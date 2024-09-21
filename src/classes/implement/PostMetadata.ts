@@ -1,13 +1,13 @@
-import Header from "@/class/implement/Header";
-import type IPostContent from "@/class/IPostContent";
+import Header from "@/classes/implement/Header";
+import type IPostMetadata from "@/classes/IPostContent";
 
-export class PostContent implements IPostContent {
+export class PostMetadata implements IPostMetadata {
     private readonly _path: string
     private readonly _header: Header
     private readonly _description: string
     private readonly _content: string
 
-    constructor(postContent: IPostContent) {
+    constructor(postContent: IPostMetadata) {
         this._path = postContent.path
         this._header = new Header(postContent.header)
         this._description = postContent.description;
@@ -30,11 +30,11 @@ export class PostContent implements IPostContent {
         return this._header
     }
 
-    static toPostContent (value: IPostContent): PostContent {
-        return new PostContent(value)
+    static toPostContent (value: IPostMetadata): PostMetadata {
+        return new PostMetadata(value)
     }
 
-    static toPosts (posts: IPostContent[]): PostContent[] {
-        return posts.map(PostContent.toPostContent)
+    static toPosts (posts: IPostMetadata[]): PostMetadata[] {
+        return posts.map(PostMetadata.toPostContent)
     }
 }

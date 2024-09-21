@@ -23,9 +23,9 @@ import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import PhotoView from "@/components/layout/global/PhotoView.vue";
 import {useHead} from "unhead";
 import {mobileNaviStore, postCallStore} from "@/store";
-import {PostSearchGroup} from "@/class/implement/PostSearchGroup";
-import {Pair} from "@/class/implement/Pair";
-import {PostSearchResult} from "@/class/implement/PostSearchResult";
+import {PostSearchGroup} from "@/classes/implement/PostSearchGroup";
+import {Pair} from "@/classes/implement/Pair";
+import {PostSearchResult} from "@/classes/implement/PostSearchResult";
 import {groupingBy} from "@/utils/settingUtils";
 import {callPostFeed} from "@/utils/postUtil";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
@@ -52,51 +52,6 @@ const methods = {
 }
 
 onMounted(() => {
-
-  $emitter.on('selectResult', (select: number) => {
-    const length = searchLocationPair.value.length
-    //검색 결과가 없다면,
-    if (length === 0) {
-      currentLocationIndex.value = 0
-      return
-    }
-    const cIndex = currentLocationIndex.value
-    const pair = searchLocationPair.value[cIndex]
-    //DOWN
-    const currentTarget = groups.value.get(pair.left)?.results[pair.right]
-
-    // 검색 결과 중 첫번째 요소가 아직 선택되지 않았다면 선택 처리
-    if (cIndex === 0 && ! currentTarget?.isSelected){
-      currentTarget?.selected(true)
-      return
-    }
-    //0: Arrow down, 1: arrow up
-    const nextIndex = (select == 0)
-        ? cIndex +1 > length-1 ? length-1 : cIndex +1
-        : cIndex -1 < 0 ? 0 : cIndex -1
-
-    const nextPair = searchLocationPair.value[nextIndex]
-    currentTarget?.selected(false)
-
-    const nextTarget = groups.value.get(nextPair.left)?.results[nextPair.right]
-    nextTarget?.selected(true)
-    currentLocationIndex.value = nextIndex
-  })
-
-  $emitter.on('moveToSelectedPost', () => {
-    const cIndex = currentLocationIndex.value
-    const pair = searchLocationPair.value[cIndex]
-    //DOWN
-    const currentTarget = groups.value.get(pair.left)?.results[pair.right]
-    if (currentLocationIndex.value === 0 && ! currentTarget?.isSelected) {
-      return
-    }
-
-    router.push(currentTarget?.content.path ?? '')
-    searchStatus.cancelSearch()
-    currentLocationIndex.value = 0
-    $emitter.emit('resetSearchBar')
-  })
 
   const element = document.getElementById('application-container')!
 

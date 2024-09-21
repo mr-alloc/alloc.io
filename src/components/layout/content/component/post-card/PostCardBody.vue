@@ -32,8 +32,8 @@
 </template>
 
 <script lang="ts" setup>
-import Header from "@/class/implement/Header";
-import Image from "@/class/implement/Image";
+import Header from "@/classes/implement/Header";
+import Image from "@/classes/implement/Image";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import markUp from "@/utils/markUp";
 

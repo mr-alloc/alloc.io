@@ -26,7 +26,7 @@
 <script lang="ts" setup>
 import appCache from "@/store/appCache";
 import {calPostDate} from "@/utils/settingUtils";
-import Header from "@/class/implement/Header";
+import Header from "@/classes/implement/Header";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const props = defineProps<{

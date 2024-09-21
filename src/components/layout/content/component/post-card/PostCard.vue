@@ -7,13 +7,13 @@
 </template>
 
 <script lang="ts" setup>
-import { PostContent } from "@/class/implement/PostContent";
+import { PostMetadata } from "@/classes/implement/PostMetadata";
 import PostCardHeader from '@/components/layout/content/component/post-card/PostCardHeader.vue';
 import PostCardBody from '@/components/layout/content/component/post-card/PostCardBody.vue';
 import PostCardFooter from "@/components/layout/content/component/post-card/PostCardFooter.vue";
 
 const props = defineProps<{
-  feed: PostContent
+  feed: PostMetadata
 }>()
 </script>
 

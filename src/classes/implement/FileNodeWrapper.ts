@@ -1,4 +1,4 @@
-import type {IFileNode} from "~/class/IFileNode";
+import type {IFileNode} from "~/classes/IFileNode";
 
 export class FileNodeWrapper {
     private readonly _name: string
