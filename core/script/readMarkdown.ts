@@ -14,7 +14,8 @@ export default function (filePath: Path): PostData {
     const header = md.parsedYaml
     if (header !== undefined) {
         header.date = header.date ? Date.parse(header.date) : 1999999999999;
-        header.breadcrumbs = filePath.array.map(node => FileAlias.toNameIfAbsent(node));
+        header.breadcrumbs = filePath.array.slice(0, filePath.array.length -1)
+            .map(node => FileAlias.toNameIfAbsent(node));
     }
     const body: Array<string> = contentRegex.exec(md.markdown) ?? [];
 

@@ -1,4 +1,4 @@
-import {DirectoryData} from "@/class/implement/DirectoryData";
+import {DirectoryData} from "@/classes/implement/DirectoryData";
 
 export class WrapperData {
 

@@ -1,4 +1,4 @@
-import { ExploredDirectory } from "@/class/implement/ExploredDirectory";
+import { ExploredDirectory } from "@/classes/implement/ExploredDirectory";
 
 export class ExploredDirectoryWrapper {
     directories: ExploredDirectory [] = []

@@ -22,16 +22,16 @@
                 <nav aria-label="Breadcrumb" class="relative min-w-0">
                   <ol class="flex items-center gap-x-1.5">
                     <li class="flex items-center gap-x-1.5 text-gray-500 dark:text-gray-400 text-sm leading-6 min-w-0"
-                        v-for="(snippet, index) in state.postContent.header.breadcrumbs.slice(0, state.postContent.header.breadcrumbs.length-1)">
-                      <a class="flex items-center gap-x-1.5 group font-semibold min-w-0 hover:text-gray-700 dark:hover:text-gray-200"
-                         :class="index === state.postContent.header.breadcrumbs.length -2
+                        v-for="(snippet, index) in state.postContent.header.breadcrumbs.slice(0, state.postContent.header.breadcrumbs.length)">
+                      <a class="flex items-center gap-x-1.5 group cursor-pointer font-semibold min-w-0"
+                         :class="index === state.postContent.header.breadcrumbs.length -1
                          ? ['text-primary-500', 'dark:text-primary-400']
                          : ['hover:text-gray-700', 'dark:hover:text-gray-200']"
                       >
                         <span class="block truncate">{{ snippet }}</span>
                       </a>
                       <span class="iconify i-ph:caret-right flex-shrink-0 rtl:rotate-180 w-4 h-4"
-                            v-if="index !== state.postContent.header.breadcrumbs.length -2"
+                            v-if="index !== state.postContent.header.breadcrumbs.length -1"
                             aria-hidden="true" role="presentation"></span>
                     </li>
                   </ol>
@@ -48,10 +48,10 @@
               </div>
             </div>
             <div class="mt-8 pb-24 dark:text-gray-300 dark:prose-pre:!bg-gray-800/60 prose prose-primary dark:prose-invert max-w-none" id="document-content">
-              <div class="post-content">
-                <PostContentDecorator :content="state.post.content" />
-              </div>
               <TagArea :tags="state.post?.tags" />
+              <div class="post-content">
+                <PostContentDecorator :metadata="state.post.metadata" />
+              </div>
             </div>
           </div>
           <div class="lg:col-span-2 order-first lg:order-last sticky top-[--header-height] bg-background/75 backdrop-blur group -mx-4 sm:-mx-6 px-4 sm:px-6 lg:px-4 lg:-mx-4 overflow-y-auto max-h-[calc(100vh-var(--header-height))] z-10">
@@ -72,7 +72,7 @@
 </template>
 <script lang="ts" setup>
 import {useRoute} from "vue-router";
-import PagePost from "@/class/implement/PagePost";
+import PagePost from "@/classes/implement/PagePost";
 import {onMounted, reactive} from "vue";
 import {usePagePrepareStore} from "@/store/PreparePostStore";
 import appCache from "@/store/appCache";

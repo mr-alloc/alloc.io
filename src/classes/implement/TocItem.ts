@@ -1,4 +1,4 @@
-import {Headline} from "~/class/implement/Headline";
+import {Headline} from "~/classes/implement/Headline";
 
 export class TocItem {
     private readonly _headline: Headline

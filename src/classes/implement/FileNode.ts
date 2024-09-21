@@ -1,4 +1,4 @@
-import type {IFileNode} from "~/class/IFileNode";
+import type {IFileNode} from "~/classes/IFileNode";
 
 export class FileNode implements IFileNode {
     private readonly _path: string

@@ -10,7 +10,7 @@
 import {mobileNaviStore} from "@/store";
 import PostCardFooterButton from "@/components/layout/content/component/post-card/PostCardFooterButton.vue";
 import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
-import Header from "@/class/implement/Header";
+import Header from "@/classes/implement/Header";
 
 const data = {
   mobileNaviStore

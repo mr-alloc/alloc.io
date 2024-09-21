@@ -86,7 +86,6 @@ const methods = {
     input.value = ''
     input.blur()
     searchStatusStore.cancelSearch()
-
   },
 }
 </script>

@@ -1,10 +1,10 @@
 import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
 import {slugify} from "@/utils/settingUtils";
-import {PostContent} from "@/class/implement/PostContent";
+import {PostMetadata} from "@/classes/implement/PostMetadata";
 
 const specialCharacterRE = /[.*+?^${}()|[\]\\]/g
-export const tableOfContents = (markdown: MarkdownIt, postMeta: PostContent)  => {
+export const tableOfContents = (markdown: MarkdownIt, metadata: PostMetadata)  => {
 
     markdown.renderer.rules['heading_open'] = (tokens: Array<Token>, index: number): string => {
         const token = tokens[index]
@@ -15,7 +15,7 @@ export const tableOfContents = (markdown: MarkdownIt, postMeta: PostContent)  =>
         const slug = slugify(contentToken.content, false)
             .replace(specialCharacterRE, '\\$&')
         return `<${tag} id="${slug}">
-                    <a href="${postMeta.path}#${slug}" aria-current="page">
+                    <a href="${metadata.path}#${slug}" aria-current="page">
                         <div class="">
                             <span class="i-ph-hash-duotone"></span>
                         </div>

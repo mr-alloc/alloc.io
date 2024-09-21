@@ -1,6 +1,6 @@
 import { reactive } from 'vue'
-import {FileListData} from "@/class/implement/FileListData";
-import PostListWrapper from "@/class/implement/PostListWrapper";
+import {FileListData} from "@/classes/implement/FileListData";
+import PostListWrapper from "@/classes/implement/PostListWrapper";
 
 export const fileListStore = reactive<FileListData>({
     file_list: []

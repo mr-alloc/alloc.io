@@ -8,7 +8,7 @@ import MarkdownIt from 'markdown-it'
 import Prism from 'prismjs'
 import { tableOfContents } from '@/utils/tableOfContents'
 import * as PrismUtils from '@/utils/prismUtils'
-import {PostContent} from "@/class/implement/PostContent";
+import {PostMetadata} from "@/classes/implement/PostMetadata";
 
 function wrap(code: string, lang: string) {
     if(lang === 'text') {
@@ -54,7 +54,7 @@ function highlight (code: string, lang: string) {
     return wrap(code, 'text')
 }
 
-export default (markdown: string, postMeta?: PostContent) => {
+export default (markdown: string, postMeta?: PostMetadata) => {
     const md = new MarkdownIt({
         html: true,
         xhtmlOut: true,

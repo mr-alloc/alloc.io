@@ -1,5 +1,5 @@
 import appCache from "@/store/appCache";
-import {FileNode} from "@/class/implement/FileNode";
+import {FileNode} from "@/classes/implement/FileNode";
 
 export const calPostDate = (date: string): string => {
     if (!date) return '';

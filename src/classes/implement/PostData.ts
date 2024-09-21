@@ -1,4 +1,4 @@
-import MarkDownPost from "@/class/implement/MarkDownPost";
+import MarkDownPost from "@/classes/implement/MarkDownPost";
 
 export default class PostData {
     private readonly _index: number

@@ -1,5 +1,5 @@
-import Image from "@/class/implement/Image";
-import TocNode from "@/class/implement/TocNode";
+import Image from "@/classes/implement/Image";
+import TocNode from "@/classes/implement/TocNode";
 import FileAlias from "@core/constant/FileAlias";
 
 export default class Header {
