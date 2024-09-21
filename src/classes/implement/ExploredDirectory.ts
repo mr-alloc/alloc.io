@@ -1,4 +1,4 @@
-import {ExploredFile} from "@/class/implement/ExploredFile";
+import {ExploredFile} from "@/classes/implement/ExploredFile";
 
 export class ExploredDirectory {
     _directory_title: string

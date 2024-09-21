@@ -1,29 +1,27 @@
 import {defineStore} from "pinia";
-import {PostContent} from "@/class/implement/PostContent";
+import {PostMetadata} from "@/classes/implement/PostMetadata";
 import {ref} from "@vue/reactivity";
 
 export const usePostContentStore = defineStore("PostMap", () => {
 
 
-    const postContents = ref<Map<string, PostContent>>(new Map<string, PostContent>());
+    const postContents = ref<Map<string, PostMetadata>>(new Map<string, PostMetadata>());
 
-    function add(post: PostContent) {
+    function add(post: PostMetadata) {
         postContents.value.set(post.path,  post);
     }
 
-    function get(path: string): PostContent {
+    function get(path: string): PostMetadata {
         if (postContents.value.has(path)) {
-            return postContents.value.get(path) as PostContent;
+            return postContents.value.get(path) as PostMetadata;
         }
 
         throw new Error("Not found post with path: "+ path);
     }
 
-    function values(): Array<PostContent> {
+    function values(): Array<PostMetadata> {
         const values = postContents.value.values();
-        const contents = Array.from(values) as Array<PostContent>;
-        console.log('value in PostContentStore', values);
-        return contents;
+        return Array.from(values) as Array<PostMetadata>;
     }
 
     return {

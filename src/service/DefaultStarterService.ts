@@ -1,11 +1,11 @@
-import { FileNode } from "@/class/implement/FileNode";
+import { FileNode } from "@/classes/implement/FileNode";
 import appCache from "@/store/appCache";
-import {FileNodeWrapper} from "@/class/implement/FileNodeWrapper";
-import {PostContent} from "@/class/implement/PostContent";
-import Header from "@/class/implement/Header";
+import {FileNodeWrapper} from "@/classes/implement/FileNodeWrapper";
+import {PostMetadata} from "@/classes/implement/PostMetadata";
+import Header from "@/classes/implement/Header";
 import fileNodeJson from '@/static/file-node.json';
 import postJson from '@/static/posts.json';
-import type {IFileNode} from "@/class/IFileNode";
+import type {IFileNode} from "@/classes/IFileNode";
 import type StarterService from "@/service/StarterService";
 import {usePostContentStore} from "@/store/PostContentStore";
 
@@ -47,7 +47,7 @@ class DefaultStarterService implements StarterService {
 
     private settingPostMap(): void {
         const postContentStore = usePostContentStore();
-        PostContent.toPosts(posts)
+        PostMetadata.toPosts(posts)
             .sort((a, b) => b.header.date.getTime() - a.header.date.getTime())
             .forEach(post => {
                 //피드용

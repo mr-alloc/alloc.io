@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {toKeyMap} from '@/utils/settingUtils'
-import Image from "@/class/implement/Image";
+import Image from "@/classes/implement/Image";
 
 export const usePhotoViewStatusStore = defineStore('photoViewStatus', () => {
     const isPhotoView = ref<boolean>(false)

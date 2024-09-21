@@ -1,5 +1,5 @@
-import {PostSearchResult} from "@/class/implement/PostSearchResult";
-import {SearchStatus} from "@/class/implement/SearchStatus";
+import {PostSearchResult} from "@/classes/implement/PostSearchResult";
+import {SearchStatus} from "@/classes/implement/SearchStatus";
 import {toKeyMap} from "@/utils/settingUtils";
 
 export class PostSearchGroup {

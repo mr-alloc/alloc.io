@@ -22,13 +22,13 @@
 <script setup lang="ts">
 import SearchResult from "@/components/layout/header/SearchResult.vue";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
-import {Key} from "@/class/implement/Key";
-import {PostContent} from "@/class/implement/PostContent";
-import {PostSearchResult} from "@/class/implement/PostSearchResult";
+import {Key} from "@/classes/implement/Key";
+import {PostMetadata} from "@/classes/implement/PostMetadata";
+import {PostSearchResult} from "@/classes/implement/PostSearchResult";
 import {useNuxtApp} from "nuxt/app";
 import {usePostContentStore} from "@/store/PostContentStore";
-import {PostSearchGroup} from "@/class/implement/PostSearchGroup";
-import {Pair} from "@/class/implement/Pair";
+import {PostSearchGroup} from "@/classes/implement/PostSearchGroup";
+import {Pair} from "@/classes/implement/Pair";
 import {groupingBy} from "@/utils/settingUtils";
 import appCache from "@/store/appCache";
 
@@ -36,6 +36,7 @@ const searchInput = ref<HTMLInputElement | null>(null);
 const postContentStore = usePostContentStore();
 const searchStatusStore = useSearchStatusStore();
 const nuxtApp = useNuxtApp();
+const router = useRouter();
 const emitter: any = nuxtApp.$emitter;
 
 const currentLocationIndex = ref(0);
@@ -45,11 +46,11 @@ const searchLocationPair = ref<Pair<string, number>[]>([]);
 const methods = {
   activateSearchMode: () => {
     searchStatusStore.searching();
-    const input = searchInput.value as HTMLInputElement
+    const input = searchInput.value as HTMLInputElement;
     input.focus();
   },
   inactivateSearchMode: () => {
-    const input = searchInput.value as HTMLInputElement
+    const input = searchInput.value as HTMLInputElement;
     input.value = ''
     input.blur()
     searchStatusStore.cancelSearch();
@@ -83,7 +84,7 @@ const methods = {
 
     if (/([a-zA-Z가-힣0-9@\W\-_])/.test(text)) {
       const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i');
-      const contentsForSearch = postContentStore.values() as Array<PostContent>;
+      const contentsForSearch = postContentStore.values() as Array<PostMetadata>;
       const results: PostSearchResult [] = contentsForSearch
           .filter(content => {
             const title = content.header.title;
@@ -140,6 +141,50 @@ const methods = {
 
     // const status = array.map(group => `\n(${group.results.length}) ${group.icon}\n${group.results.map((re, i) => `\t[${re.status}]${++i}. ${re.content.header.title}`).join('\n')}`).join('\n')
     // console.debug(status)
+  },
+  selectResult(index: number) {
+    const length = searchLocationPair.value.length
+    //검색 결과가 없다면,
+    if (length === 0) {
+      currentLocationIndex.value = 0
+      return
+    }
+    const cIndex = currentLocationIndex.value
+    const pair = searchLocationPair.value[cIndex]
+    //DOWN
+    const currentTarget = groups.value.get(pair.left)?.results[pair.right]
+
+    // 검색 결과 중 첫번째 요소가 아직 선택되지 않았다면 선택 처리
+    if (cIndex === 0 && ! currentTarget?.isSelected){
+      currentTarget?.selected(true)
+      return
+    }
+    //0: Arrow down, 1: arrow up
+    const nextIndex = (index == 0)
+        ? cIndex +1 > length-1 ? length-1 : cIndex +1
+        : cIndex -1 < 0 ? 0 : cIndex -1
+
+    const nextPair = searchLocationPair.value[nextIndex]
+    currentTarget?.selected(false)
+
+    const nextTarget = groups.value.get(nextPair.left)?.results[nextPair.right]
+    nextTarget?.selected(true)
+    currentLocationIndex.value = nextIndex
+  },
+  moveToSelectedPost() {
+    const cIndex = currentLocationIndex.value
+    const pair = searchLocationPair.value[cIndex]
+    //DOWN
+    const currentTarget = groups.value.get(pair.left)?.results[pair.right]
+    if (currentLocationIndex.value === 0 && ! currentTarget?.isSelected) {
+      return
+    }
+
+    router.push(currentTarget?.content.path ?? '')
+    currentLocationIndex.value = 0;
+    const input = searchInput.value as HTMLInputElement;
+    input.value = '';
+    searchStatusStore.cancelSearch();
   }
 }
 </script>

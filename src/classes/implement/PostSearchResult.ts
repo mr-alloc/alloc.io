@@ -1,19 +1,19 @@
-import {PostContent} from "@/class/implement/PostContent";
-import {SearchStatus} from "@/class/implement/SearchStatus";
+import {PostMetadata} from "@/classes/implement/PostMetadata";
+import {SearchStatus} from "@/classes/implement/SearchStatus";
 
 export class PostSearchResult {
 
     private  _status: SearchStatus
     private  _isSelected: boolean
-    private readonly _postContent: PostContent
+    private readonly _postContent: PostMetadata
 
-    constructor(content: PostContent) {
+    constructor(content: PostMetadata) {
         this._status = SearchStatus.APPEAR
         this._isSelected = false
         this._postContent = content
     }
 
-    get content(): PostContent {
+    get content(): PostMetadata {
         return this._postContent
     }
 

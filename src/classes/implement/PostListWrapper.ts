@@ -1,4 +1,4 @@
-import PostData from "@/class/implement/PostData";
+import PostData from "@/classes/implement/PostData";
 
 export default class PostListWrapper {
     private _latestIndex: number = 0

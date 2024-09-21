@@ -29,12 +29,12 @@
 </template>
 
 <script lang="ts" setup>
-import { FileNodeWrapper } from "@/class/implement/FileNodeWrapper";
+import { FileNodeWrapper } from "@/classes/implement/FileNodeWrapper";
 import {mobileNaviStore} from "@/store";
-import {FileNode} from "@/class/implement/FileNode";
+import {FileNode} from "@/classes/implement/FileNode";
 import {onBeforeMount} from "vue";
 import appCache from "@/store/appCache";
-import type {IFileNode} from "@/class/IFileNode";
+import type {IFileNode} from "@/classes/IFileNode";
 const { $emitter } = useNuxtApp();
 const router = useRouter()
 
