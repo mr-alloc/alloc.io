@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
-import {toKeyMap} from '@/utils/settingUtils'
 import Image from "@/classes/implement/Image";
+import {toMap} from "@/utils/CollectionUtil";
 
 export const usePhotoViewStatusStore = defineStore('photoViewStatus', () => {
     const isPhotoView = ref<boolean>(false)
@@ -14,7 +14,7 @@ export const usePhotoViewStatusStore = defineStore('photoViewStatus', () => {
 
     function load(toBeLoaded: Array<Image>) {
         clear()
-        images.value = toKeyMap<number, Image>(toBeLoaded, (e, i) => i + 1)
+        images.value = toMap<number, Image>(toBeLoaded, (e, i) => i + 1)
         images.value.size > 0 && (currentIndex.value = 1)
     }
 

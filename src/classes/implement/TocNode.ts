@@ -1,22 +1,16 @@
 export default class TocNode {
-    private readonly _grade: number
-    private readonly _title: string
-    private readonly _fragmentId: string
-    private _children: TocNode []
-    private _isSelected: boolean
+
+    private readonly _grade: number;
+    private readonly _title: string;
+    private readonly _fragmentId: string;
+    private readonly _children: Array<TocNode>;
 
     constructor(node: any) {
         this._grade = node.grade
         this._title = node.title
         this._fragmentId = node.fragmentId
-        this._children = node.children
-        this._isSelected = false
+        this._children = node.children.map(TocNode.createRecursive);
     }
-
-    select(): void {
-        this._isSelected = true
-    }
-
 
     get grade(): number {
         return this._grade;
@@ -34,14 +28,8 @@ export default class TocNode {
         return this._children;
     }
 
-    get isSelected(): boolean {
-        return this._isSelected;
-    }
-
     public static createRecursive(node: any): TocNode {
-        const tocNode = new TocNode(node)
-        tocNode._children = node.children.map((child: any) => TocNode.createRecursive(child))
-        return tocNode;
+        return new TocNode(node);
     }
 
 }

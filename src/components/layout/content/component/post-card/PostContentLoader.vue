@@ -28,12 +28,8 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import { postCallStore } from "@/store";
-</script>
-
 <style lang="scss">
-@import '@styles';
+@import '@styles/index';
 
 .content-loader {
 

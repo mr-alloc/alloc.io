@@ -25,7 +25,7 @@
 
 <script lang="ts" setup>
 import appCache from "@/store/appCache";
-import {calPostDate} from "@/utils/settingUtils";
+import {calPostDate} from "@/utils/DateUtils";
 import Header from "@/classes/implement/Header";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
