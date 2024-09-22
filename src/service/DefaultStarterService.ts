@@ -1,51 +1,32 @@
-import { FileNode } from "@/classes/implement/FileNode";
 import appCache from "@/store/appCache";
-import {FileNodeWrapper} from "@/classes/implement/FileNodeWrapper";
 import {PostMetadata} from "@/classes/implement/PostMetadata";
 import Header from "@/classes/implement/Header";
-import fileNodeJson from '@/static/file-node.json';
 import postJson from '@/static/posts.json';
-import type {IFileNode} from "@/classes/IFileNode";
 import type StarterService from "@/service/StarterService";
 import {usePostContentStore} from "@/store/PostContentStore";
 
-// @ts-ignore
-const fileNode: IFileNode[] = fileNodeJson
+
 // @ts-ignore
 const posts: IPostContent[] = postJson
 
 class DefaultStarterService implements StarterService {
-    isInitialized: boolean
-    private static instance: StarterService
+
+    private readonly isInitialized: boolean;
+    private static instance: StarterService;
+
     constructor(isInitialized: boolean) {
         this.isInitialized = isInitialized
     }
 
     public static getInstance(): StarterService {
         if(!DefaultStarterService.instance) {
-            DefaultStarterService.instance = new DefaultStarterService(false)
+            DefaultStarterService.instance = new DefaultStarterService(false);
         }
 
         return DefaultStarterService.instance;
     }
 
-    private settingFileNodes(): void {
-        const nodes: IFileNode [] = FileNode.toFileTrees(fileNode)
-        appCache.naviStack.push(new FileNodeWrapper('탐색', nodes))
-        this.cacheFileNodeMap(nodes)
-    }
-
-    private cacheFileNodeMap(fileNodes: IFileNode[]): void {
-        for (let node of fileNodes) {
-            appCache.fileNodeMap.store.set(node.path, node)
-
-            if (node.files) {
-                this.cacheFileNodeMap(node.files)
-            }
-        }
-    }
-
-    private settingPostMap(): void {
+    private settingPosts(): void {
         const postContentStore = usePostContentStore();
         PostMetadata.toPosts(posts)
             .sort((a, b) => b.header.date.getTime() - a.header.date.getTime())
@@ -66,11 +47,10 @@ class DefaultStarterService implements StarterService {
     }
 
     init(): void {
-        this.settingPostMap()
         if (this.isInitialized) {
-            return
+            return;
         }
-        this.settingFileNodes()
+        this.settingPosts();
     }
 
     private setTags(header: Header, path: string): void {

@@ -2,7 +2,6 @@
   <header class="bg-background/75 backdrop-blur border-b border-gray-200 dark:border-gray-800 -mb-px sticky top-0 z-50 lg:mb-0 lg:border-0">
     <div id="main-header" class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl flex items-center justify-between gap-3 h-[--header-height]" :class="{
       'search-mode' : searchStatusStore.isSearchMode,
-      'going-down': appCache.scrollStatus.isDown || photoViewStatus.isPhotoView
     }">
       <div class="lg:flex-1 flex items-center gap-1.5" @click="router.push('/')">
         <div class="relative inline-flex text-left rtl:text-right">
@@ -38,21 +37,17 @@
           </button>
         </div>
       </div>
-      <div class="progress-area" v-if="false" :class="{ hide : mobileNaviStore.isActive }">
-        <span class="progress-bar"></span>
-      </div>
     </div>
   </header>
 </template>
 <script lang="ts" setup>
-import {mobileNaviStore, searchInputStore} from "@/store";
-import {calPostDate} from "@/utils/settingUtils";
 import {onMounted} from "vue";
-import appCache from "@/store/appCache";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import {useNuxtApp} from "nuxt/app";
 import packageJson from "~/package.json"
+
+
 
 const router = useRouter();
 const nuxtApp = useNuxtApp();

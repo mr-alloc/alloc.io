@@ -59,5 +59,5 @@ function subscript(state: StateInline, silent: boolean) {
 }
 
 export default (md: MarkdownIt) => {
-    md.inline.ruler.after('emphasis', 'sub', subscript)
+    md.inline.ruler.after('emphasis', 'sub', subscript);
 }

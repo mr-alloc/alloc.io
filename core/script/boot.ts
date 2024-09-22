@@ -15,7 +15,6 @@ import extractHeadlines from "@core/script/extractHeadlines";
 const postDataList = new Array<PostData>();
 
 const __DOCS__ = '/src/docs'
-const __FILE_NODE__ = "/src/static/file-node.json";
 const __POSTS__ = "/src/static/posts.json";
 const __KEYS__ = "/src/static/keys.json";
 const __SITEMAP__ = "/src/public/sitemap.xml";
@@ -78,12 +77,9 @@ const posts = postDataList
     });
 
 createSitemap().then((data: any) => {
-    const file = data.toString().replace(/\\(.)/mg, '$1')
+    const file = data.toString().replace(/\\(.)/mg, '$1');
     refresh(__SITEMAP__, file, true)
-})
-
-/* explored data for navigate */
-refresh(__FILE_NODE__, fileNode)
+});
 
 /* posting list data */
 refresh(__POSTS__, posts)
