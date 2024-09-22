@@ -1,20 +1,13 @@
 <template>
   <div class="post-preview-footer">
     <TagArea :tags="props.header?.tags" />
-    <div v-bind:class="[`post-comment-list`,{ 'hide' : mobileNaviStore.isActive }]" class="message-box" ></div>
-<!--    <PostCardFooterButton v-if="props.header.layout === 'post'"/>-->
   </div>
 </template>
 
 <script lang="ts" setup>
-import {mobileNaviStore} from "@/store";
 import PostCardFooterButton from "@/components/layout/content/component/post-card/PostCardFooterButton.vue";
 import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
 import Header from "@/classes/implement/Header";
-
-const data = {
-  mobileNaviStore
-}
 
 const props = defineProps<{
   header: Header
@@ -27,7 +20,7 @@ const components = {
 </script>
 
 <style lang="scss">
-@import "@styles/";
+@import "@styles/index";
 
 .post-preview-footer {
   display: flex;

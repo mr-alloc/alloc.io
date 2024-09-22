@@ -5,7 +5,7 @@
       <NuxtPage class="current-content" id="current-content-element" :page-key="route.fullPath" />
     </main>
     <div class="background" :class="[
-        mobileNaviStore.isActive || photoViewStatus.isPhotoView || searchStatus.isSearchMode
+        photoViewStatus.isPhotoView || searchStatus.isSearchMode
         ? ['fixed', 'inset-0', 'transition-opacity', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : []
         ]"
          v-on:click="methods.clickBackground($event)">
@@ -17,22 +17,17 @@
 </template>
 <script lang="ts" setup>
 import Runner from '@/service/DefaultStarterService'
-import appCache from "@/store/appCache";
 import MainHeader from "@/components/layout/header/MainHeader.vue";
 import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import PhotoView from "@/components/layout/global/PhotoView.vue";
 import {useHead} from "unhead";
-import {mobileNaviStore, postCallStore} from "@/store";
-import {PostSearchGroup} from "@/classes/implement/PostSearchGroup";
-import {Pair} from "@/classes/implement/Pair";
-import {PostSearchResult} from "@/classes/implement/PostSearchResult";
-import {groupingBy} from "@/utils/settingUtils";
-import {callPostFeed} from "@/utils/postUtil";
+import {callPostFeed} from "@/utils/PostUtil";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import {onMounted} from "vue";
 import {useNuxtApp} from "nuxt/app";
 import SearchView from "@/components/layout/global/SearchView.vue";
+import {usePostCallStore} from "@/store/PostCallStore";
 
 Runner.init();
 const route = useRoute();
@@ -40,10 +35,11 @@ const router = useRouter();
 const { $emitter } = useNuxtApp();
 const searchStatus = useSearchStatusStore();
 const photoViewStatus = usePhotoViewStatusStore();
+const postCallStore = usePostCallStore();
+
 const methods = {
   clickBackground: (event: PointerEvent) => {
     if (searchStatus.isSearchMode) {
-      mobileNaviStore.isActive = false
       searchStatus.cancelSearch()
     } else if (photoViewStatus.isPhotoView) {
       photoViewStatus.close()
@@ -69,14 +65,10 @@ onMounted(() => {
 
     const scrollPer = parseFloat(percent)
 
-    if(( ! postCallStore.is_calling) && scrollPer > 80) {
-      postCallStore.is_calling = true
+    if(( ! postCallStore.isCall) && scrollPer > 80) {
+      postCallStore.call();
       callPostFeed();
     }
-
-    appCache.scrollStatus.on()
-    appCache.scrollStatus.loadHeader()
-    appCache.scrollStatus.checkScroll()
 
   }
   window.addEventListener('scroll', handleForScroll)

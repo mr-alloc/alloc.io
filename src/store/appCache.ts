@@ -1,18 +1,13 @@
 import { reactive } from "vue"
-import { FileNodeWrapper } from "@/classes/implement/FileNodeWrapper"
 import { PostMetadata } from "@/classes/implement/PostMetadata";
 import packageJson from '~/package.json'
 import {BlogInfo} from "@/classes/implement/BlogInfo";
-import {ScrollStatus} from "@/classes/implement/ScrollStatus";
 
 
 
 export default {
     /* (피드용) 포스팅 메타파일 읽고 저장 */
     postContents: reactive<PostMetadata[]>([]),
-
-    /* 사이트 네비게이터 스택 */
-    naviStack: reactive<FileNodeWrapper[]>([]),
 
     /* postContents 에서 Dequeue 후 저장 */
     feeds: reactive<PostMetadata[]>([]),
@@ -38,7 +33,4 @@ export default {
             packageJson.defaultProfile
         )
     ),
-
-    /* 스크롤 정보 */
-    scrollStatus: reactive<ScrollStatus>(ScrollStatus.ofDefault())
 }

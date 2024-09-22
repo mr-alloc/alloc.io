@@ -29,8 +29,8 @@ import {useNuxtApp} from "nuxt/app";
 import {usePostContentStore} from "@/store/PostContentStore";
 import {PostSearchGroup} from "@/classes/implement/PostSearchGroup";
 import {Pair} from "@/classes/implement/Pair";
-import {groupingBy} from "@/utils/settingUtils";
 import appCache from "@/store/appCache";
+import {grouping} from "@/utils/CollectionUtil";
 
 const searchInput = ref<HTMLInputElement | null>(null);
 const postContentStore = usePostContentStore();
@@ -96,7 +96,7 @@ const methods = {
     }
   },
   deployResult(results: Array<PostSearchResult>) {
-    const map: Map<string, PostSearchResult[]> = groupingBy<string, PostSearchResult>(results, (result)=> {
+    const map: Map<string, PostSearchResult[]> = grouping<string, PostSearchResult>(results, (result)=> {
       const node = appCache.fileNodeMap.store.get(result.content.path)
       return node.group
     })

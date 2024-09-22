@@ -4,284 +4,166 @@
 <script setup lang="ts">
 import type {PostMetadata} from "@/classes/implement/PostMetadata";
 import MarkdownIt from "markdown-it";
-import Token from "markdown-it/lib/token";
-import Renderer from "markdown-it/lib/renderer";
-import {countNewline, countPerNewline} from "@/utils/MarkdownUtils";
+import DecoratorProvider from "@/markup/decorator/DecoratorProvider";
+import RuleType from "@/markup/constant/RuleType";
 
 const props = defineProps<{
   metadata: PostMetadata
 }>();
-const html = ref('<p>작성된 내용이 없습니다.</p>');
+
+const html = ref('');
 onMounted(() => {
   const markdown = props.metadata.content;
-  const md = new MarkdownIt();
-  const proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);
-  const defaultBlockquoteOpen = md.renderer.rules.blockquote_open || proxy;
-  md.renderer.rules.blockquote_open = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer): string => {
-    try {
-      const blockquoteOpen = tokens[index];
-      blockquoteOpen.attrJoin('class', `p-2 my-5 rounded-xl ring-1 ring-gray-200 dark:ring-gray-800 bg-white dark:bg-gray-900`);
+  const markdownIt = new MarkdownIt();
 
-      const templateRE = /^([\s\S]*?)\s*:\s*(\{[\s\S]*\})\s*$/mg;
-      const inlineIndex = index +2;
+  const decorator = DecoratorProvider.provide(RuleType.BLOCK_QUOTE);
+  decorator.decorate(markdownIt);
 
-      if (inlineIndex >= tokens.length) throw new Error(`Index out of range from tokens: ${inlineIndex}`);
-      const inline = tokens[inlineIndex];
-      const content = inline.content;
-      const noneMatch = !templateRE.test(content);
-      templateRE.lastIndex = 0;
-      if (!inline.map || noneMatch) {
-        return defaultBlockquoteOpen(tokens, index, options, env, self);
-      }
-      /*
-      * 준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다. 두번째 줄이지! - executed[1]
-      * :{ "type": "warning" } - executed[2]
-      */
-      const executed = templateRE.exec(content);
-      const text = executed?.[1] ?? '';
-      const attributesStr = executed?.[2];
-      const attributes = JSON.parse(attributesStr ?? '{}');
-      //type = "warning"
-      const type = attributes['type'];
-
-
-      const lfCount = countNewline(text);
-      const lineCount = lfCount +1;
-      inline.children = inline.children?.slice(0, lfCount + lineCount) ?? inline.children;
-      inline.content = text ?? inline.content;
-
-      if (type) {
-        blockquoteOpen.attrJoin('class', type);
-      }
-
-      return defaultBlockquoteOpen(tokens, index, options, env, self);
-    } catch (e: Error) {
-      console.error(`Error occurred at parsing token: "${e.message}"`);
-      return '';
-    }
-  }
-
-  html.value = md.render(markdown);
+  html.value = markdownIt.render(markdown);
 });
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "@styles/index";
+@import "@styles/markup";
+@import '@styles/languages';
+@import '@styles/icons';
 
-blockquote.warning {
-  background-color: rgb(86, 28, 8, 0.8);
 
-  &::before {
-    content: "";
+.headline-wrapper {
+  margin: 60px 0 20px;
+  padding: 10px 0;
+  border-bottom: 1.22px solid $point-light-color;
+  color: #2d3235;
+
+  &:before {
+    transition: .6s;
+    position: absolute;
+    opacity: 1;
+    font-size: 2rem;
+  }
+
+  &:hover {
+
+    &:before {
+      opacity: 1;
+    }
   }
 }
 
-#post-content-frame {
 
-  .headline-wrapper {
-    margin: 60px 0 20px;
-    padding: 10px 0;
-    border-bottom: 1.22px solid $point-light-color;
-    color: #2d3235;
-
-    &:before {
-      transition: .6s;
-      position: absolute;
-      opacity: 1;
-      font-size: 2rem;
-    }
-
-    &:hover {
-
-      &:before {
-        opacity: 1;
-      }
-    }
+.key-mac {
+  code {
+    color: #393d43;
+    background: linear-gradient(-225deg,#d5dbe4,#f8f8f8);
+    box-shadow: inset 0 -2px 0 0 #cdcde6,inset 0 0 1px 1px #fff,0 1px 2px 1px rgba(30,35,90,.4);
   }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 20px 0px;
-
-    tr {
-      height: 40px;
-      border: 5px;
-      transition: .3s;
-
-      &:hover {
-        background: rgb(0, 0, 0, 0.1);
-      }
-    }
-
-    thead {
-      border-bottom: 1px solid #d0d7de;
-    }
-
-    th {
-      span {
-        &.selected {
-          position: relative;
-          animation-name: flying;
-          animation-duration: 1s;
-          animation-iteration-count: infinite;
-          animation-timing-function: linear;
-        }
-      }
-    }
-
-    th, td {
-      box-sizing: border-box;
-      padding: 3px 5px;
-
-      span {
-        padding: 3px 5px;
-        display: inline-block;
-
-        &.key-mac {
-          code {
-            color: #393d43;
-            background: linear-gradient(-225deg,#d5dbe4,#f8f8f8);
-            box-shadow: inset 0 -2px 0 0 #cdcde6,inset 0 0 1px 1px #fff,0 1px 2px 1px rgba(30,35,90,.4);
-          }
-        }
-        &.key-win {
-          code {
-            border-radius: unset;
-            background: linear-gradient(-225deg,#d5dbe4,#f8f8f8);
-            box-shadow: inset 0 -2px 0 0 #cdcde6,inset 0 0 1px 1px #fff,0 1px 2px 1px rgba(30,35,90,.4);
-          }
-        }
-      }
-    }
+}
+.key-win {
+  code {
+    border-radius: unset;
+    background: linear-gradient(-225deg,#d5dbe4,#f8f8f8);
+    box-shadow: inset 0 -2px 0 0 #cdcde6,inset 0 0 1px 1px #fff,0 1px 2px 1px rgba(30,35,90,.4);
   }
+}
 
-  p {
-    margin-bottom: 40px;
-    line-height: 30px;
-    width: 100%;
-  }
-
-  ul, ol {
-    padding: 0 20px;
-    margin-bottom: 20px;
-
-
-    li {
-      line-height: 25px;
-    }
-  }
-
-  h1, h2, h3, h4 {
-  }
-
-  h4 {
-    font-size: 1em;
-  }
-  pre {
-    overflow: auto;
-    border-radius: 15px;
-    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
-
-    code {
-      border: none;
-      color: #fff;
-      background-color: transparent;
-
-    }
-
-  }
+pre {
+  overflow: auto;
+  border-radius: 15px;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
 
   code {
-    background-color: rgba(175,184,193,0.2);
-    border-radius: 6px;
-    padding: 0.082em 0.5em;
-    word-break: break-word;
-    color: #0A5C0D;
-    position: relative;
-    top: -1px;
-    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
+    border: none;
+    color: #fff;
+    background-color: transparent;
+
   }
 
-  :not(pre) > code {
+}
+
+code {
+  position: relative;
+  top: -1px;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
+}
+
+:not(pre) > code {
+  display: inline-block;
+  line-height: 1.2;
+  border: 1px solid #a5c0a6;
+  margin: 0 2px;
+}
+hr {
+  margin: 30px 0;
+}
+.array {
+  margin: 20px 0;
+  text-align: center;
+
+  span {
+    width: 25px;
+    height: 25px;
+    color: #666;
     display: inline-block;
-    line-height: 1.2;
-    border: 1px solid #a5c0a6;
-    margin: 0 2px;
-  }
-  hr {
-    margin: 30px 0;
-  }
-  .array {
-    margin: 20px 0;
     text-align: center;
+    border: 1px solid #e6e6e6;
 
-    span {
-      width: 25px;
-      height: 25px;
-      color: #666;
-      display: inline-block;
-      text-align: center;
-      border: 1px solid #e6e6e6;
+    &.over {
+      background-color: lightgray;
+    }
 
-      &.over {
-        background-color: lightgray;
-      }
+    &.current {
+      background-color: pink;
+    }
 
-      &.current {
-        background-color: pink;
-      }
-
-      &.target {
-        background-color: green;
-        color: white;
-      }
+    &.target {
+      background-color: green;
+      color: white;
     }
   }
-  img {
-    max-width: 100%;
-    display: block;
-    margin: 0 auto;
-    cursor: zoom-in;
+}
+img {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+  cursor: zoom-in;
+}
+
+blockquote {
+  padding: 0px 10px;
+  margin: 20px 0px 50px;
+  color: #004085;
+  background-color: #cce5ff;
+  border: 1px #b8daff solid;
+  border-radius: 6px;
+
+  p {
+    margin: 0;
   }
+}
 
-  blockquote {
-    padding: 0px 10px;
-    margin: 20px 0px 50px;
-    color: #004085;
-    background-color: #cce5ff;
-    border: 1px #b8daff solid;
-    border-radius: 6px;
+table.case-table {
 
-    p {
-      margin: 0;
-    }
+  th, td {
+    border: none;
+    padding-bottom: 20px;
   }
+  th {
+    width: 100px;
+    vertical-align: top;
 
-  table.case-table {
-
-    th, td {
-      border: none;
-      padding-bottom: 20px;
-    }
-    th {
-      width: 100px;
-      vertical-align: top;
-
-      .case-head {
-        border: 2px solid #d0d7de;
-        border-radius: 10px;
-        padding: 2px 5px;
-      }
-    }
-    td {
-      padding-top: 0px;
-    }
-    tr {
-      border: none;
+    .case-head {
+      border: 2px solid #d0d7de;
+      border-radius: 10px;
+      padding: 2px 5px;
     }
   }
-
+  td {
+    padding-top: 0px;
+  }
+  tr {
+    border: none;
+  }
 }
 
 /* Code snippet*/

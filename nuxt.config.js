@@ -6,12 +6,6 @@ export default defineNuxtConfig({
     devtools: {
         enabled: false
     },
-    postcss: {
-        plugins: {
-            tailwindcss: {},
-            autoprefixer: {}
-        }
-    },
     srcDir: "src/",
     alias: {
         "@": fileURLToPath(new URL('./src', import.meta.url)),

@@ -1,6 +1,7 @@
-import CollectionUtil from "@/utils/CollectionUtil";
+import { toMap} from "@/utils/CollectionUtil";
 
 export default class FileAlias {
+
     public static readonly DOCS = new FileAlias("docs", "문서");
     public static readonly ALGORITHM = new FileAlias("algorithm", "알고리즘");
     public static readonly JAVA = new FileAlias("java", "자바");
@@ -9,7 +10,7 @@ export default class FileAlias {
     public static readonly SPRING = new FileAlias("spring", "스프링");
     public static readonly SWIFT = new FileAlias("swift", "스위프트");
     public static readonly TOOLS = new FileAlias("tools", "도구");
-    private static readonly CACHED = CollectionUtil.toMap(FileAlias.values(), (file) => file._value);
+    private static readonly CACHED = toMap(FileAlias.values(), (file) => file._value);
 
     private readonly _value: string;
     private readonly _name: string;
