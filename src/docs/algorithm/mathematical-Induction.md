@@ -18,7 +18,7 @@ hide: false
 
 <!--more-->
 
-
+[네이버](https://naver.com)
 ## 수학적 귀납법(Mathematical Induction)
 
 🌸 정의: 수학적 귀납법은 모든 자연수가 어떤 주어진 성질을 만족시킨다는 명제를 증명하는 방법의 하나.  
