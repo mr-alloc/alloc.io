@@ -1,6 +1,7 @@
 import type IMarkdownDecorator from "@/markup/decorator/IMarkdownDecorator";
 import RuleType from "@/markup/constant/RuleType";
 import BlockquoteDecorator from "@/markup/decorator/implementation/BlockquoteDecorator";
+import HeadlineDecorator from "@/markup/decorator/implementation/HeadlineDecorator";
 
 export default class DecoratorProvider {
 
@@ -9,7 +10,8 @@ export default class DecoratorProvider {
     private readonly _decorators: Map<RuleType, IMarkdownDecorator>;
     private constructor() {
         const entries: [RuleType, IMarkdownDecorator][] = [
-            [RuleType.BLOCK_QUOTE, new BlockquoteDecorator()]
+            [RuleType.BLOCK_QUOTE, new BlockquoteDecorator()],
+            [RuleType.HEADLINE, new HeadlineDecorator()]
         ]
 
         this._decorators = new Map<RuleType, IMarkdownDecorator>(entries);

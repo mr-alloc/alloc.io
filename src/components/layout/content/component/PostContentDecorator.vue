@@ -16,8 +16,8 @@ onMounted(() => {
   const markdown = props.metadata.content;
   const markdownIt = new MarkdownIt();
 
-  const decorator = DecoratorProvider.provide(RuleType.BLOCK_QUOTE);
-  decorator.decorate(markdownIt);
+  DecoratorProvider.provide(RuleType.BLOCK_QUOTE).decorate(markdownIt);
+  DecoratorProvider.provide(RuleType.HEADLINE).decorate(markdownIt);
 
   html.value = markdownIt.render(markdown);
 });
@@ -81,18 +81,6 @@ pre {
 
 }
 
-code {
-  position: relative;
-  top: -1px;
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
-}
-
-:not(pre) > code {
-  display: inline-block;
-  line-height: 1.2;
-  border: 1px solid #a5c0a6;
-  margin: 0 2px;
-}
 hr {
   margin: 30px 0;
 }

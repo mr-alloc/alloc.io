@@ -20,14 +20,14 @@ import Runner from '@/service/DefaultStarterService'
 import MainHeader from "@/components/layout/header/MainHeader.vue";
 import LoadingBar from "@/components/layout/header/LoadingBar.vue";
 import PhotoView from "@/components/layout/global/PhotoView.vue";
-import {useHead} from "unhead";
 import {callPostFeed} from "@/utils/PostUtil";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
-import {onMounted} from "vue";
+import {computed, onMounted} from "vue";
 import {useNuxtApp} from "nuxt/app";
 import SearchView from "@/components/layout/global/SearchView.vue";
 import {usePostCallStore} from "@/store/PostCallStore";
+import {useDarkModeStore} from "@/store/DarkModeStore";
 
 Runner.init();
 const route = useRoute();
@@ -35,7 +35,9 @@ const router = useRouter();
 const { $emitter } = useNuxtApp();
 const searchStatus = useSearchStatusStore();
 const photoViewStatus = usePhotoViewStatusStore();
+const darkModeStore = useDarkModeStore();
 const postCallStore = usePostCallStore();
+
 
 const methods = {
   clickBackground: (event: PointerEvent) => {
@@ -72,17 +74,28 @@ onMounted(() => {
 
   }
   window.addEventListener('scroll', handleForScroll)
+
+//initialize
+  const prefersColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+  darkModeStore.force(prefersColorScheme.matches);
+
+  //add event
+  prefersColorScheme.addEventListener('change', event => {
+    darkModeStore.force(event.matches);
+  });
 })
 
 
-useHead({
+
+useHead(() => ({
   htmlAttrs: {
-    lang: 'ko-kr'
+    lang: 'ko-kr',
+    class: computed(() => darkModeStore.isDarkMode ? 'dark' : 'light')
   },
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' }
   ]
-})
+}))
 </script>
 
 <style lang="scss">
