@@ -6,6 +6,9 @@ import type {PostMetadata} from "@/classes/implement/PostMetadata";
 import MarkdownIt from "markdown-it";
 import DecoratorProvider from "@/markup/decorator/DecoratorProvider";
 import RuleType from "@/markup/constant/RuleType";
+import Prism from "prismjs";
+import * as PrismUtils from "@/utils/prismUtils";
+import escapeHtml from "escape-html";
 
 const props = defineProps<{
   metadata: PostMetadata
@@ -13,11 +16,58 @@ const props = defineProps<{
 
 const html = ref('');
 onMounted(() => {
+  function wrap(code: string, lang: string) {
+    if(lang === 'text') {
+      code = escapeHtml(code)
+    }
+
+    return `<pre class="language-${lang} code-snippet"><code>${code}</code></pre>`
+  }
+
+  function getLangCodeFromExtension (extension: string): string {
+    const extensionMap = new Map<string, string>([
+      ['vue', 'markup'],
+      ['html', 'markup'],
+      ['md', 'markdown'],
+      ['rb', 'ruby'],
+      ['ts', 'typescript'],
+      ['py', 'python'],
+      ['sh', 'bash'],
+      ['yml', 'yaml'],
+      ['styl', 'stylus'],
+      ['kt', 'kotlin'],
+      ['rs', 'rust']
+    ])
+
+    return extensionMap.get(extension) || extension
+  }
   const markdown = props.metadata.content;
-  const markdownIt = new MarkdownIt();
+  const markdownIt = new MarkdownIt({
+    html: true,
+    xhtmlOut: true,
+
+    highlight: (code: string, lang: string) => {
+    if (!lang) {
+      return wrap(code, 'text')
+    }
+
+    lang = lang.toLowerCase()
+    const rawLang = lang
+    lang = getLangCodeFromExtension(lang)
+    if ( ! Prism.languages[lang]) {
+      PrismUtils.loadLanguage(lang)
+    }
+    if (Prism.languages[lang]) {
+      const coded = Prism.highlight(code, Prism.languages[lang], lang)
+      return wrap(coded, rawLang)
+    }
+    return wrap(code, 'text')
+  }
+  });
 
   DecoratorProvider.provide(RuleType.BLOCK_QUOTE).decorate(markdownIt);
   DecoratorProvider.provide(RuleType.HEADLINE).decorate(markdownIt);
+  DecoratorProvider.provide(RuleType.CODE_BLOCK).decorate(markdownIt);
 
   html.value = markdownIt.render(markdown);
 });
@@ -30,129 +80,6 @@ onMounted(() => {
 @import '@styles/icons';
 
 
-.headline-wrapper {
-  margin: 60px 0 20px;
-  padding: 10px 0;
-  border-bottom: 1.22px solid $point-light-color;
-  color: #2d3235;
-
-  &:before {
-    transition: .6s;
-    position: absolute;
-    opacity: 1;
-    font-size: 2rem;
-  }
-
-  &:hover {
-
-    &:before {
-      opacity: 1;
-    }
-  }
-}
-
-
-.key-mac {
-  code {
-    color: #393d43;
-    background: linear-gradient(-225deg,#d5dbe4,#f8f8f8);
-    box-shadow: inset 0 -2px 0 0 #cdcde6,inset 0 0 1px 1px #fff,0 1px 2px 1px rgba(30,35,90,.4);
-  }
-}
-.key-win {
-  code {
-    border-radius: unset;
-    background: linear-gradient(-225deg,#d5dbe4,#f8f8f8);
-    box-shadow: inset 0 -2px 0 0 #cdcde6,inset 0 0 1px 1px #fff,0 1px 2px 1px rgba(30,35,90,.4);
-  }
-}
-
-pre {
-  overflow: auto;
-  border-radius: 15px;
-  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,Liberation Mono, monospace !important;
-
-  code {
-    border: none;
-    color: #fff;
-    background-color: transparent;
-
-  }
-
-}
-
-hr {
-  margin: 30px 0;
-}
-.array {
-  margin: 20px 0;
-  text-align: center;
-
-  span {
-    width: 25px;
-    height: 25px;
-    color: #666;
-    display: inline-block;
-    text-align: center;
-    border: 1px solid #e6e6e6;
-
-    &.over {
-      background-color: lightgray;
-    }
-
-    &.current {
-      background-color: pink;
-    }
-
-    &.target {
-      background-color: green;
-      color: white;
-    }
-  }
-}
-img {
-  max-width: 100%;
-  display: block;
-  margin: 0 auto;
-  cursor: zoom-in;
-}
-
-blockquote {
-  padding: 0px 10px;
-  margin: 20px 0px 50px;
-  color: #004085;
-  background-color: #cce5ff;
-  border: 1px #b8daff solid;
-  border-radius: 6px;
-
-  p {
-    margin: 0;
-  }
-}
-
-table.case-table {
-
-  th, td {
-    border: none;
-    padding-bottom: 20px;
-  }
-  th {
-    width: 100px;
-    vertical-align: top;
-
-    .case-head {
-      border: 2px solid #d0d7de;
-      border-radius: 10px;
-      padding: 2px 5px;
-    }
-  }
-  td {
-    padding-top: 0px;
-  }
-  tr {
-    border: none;
-  }
-}
 
 /* Code snippet*/
 div[class*=language-] {
@@ -231,14 +158,6 @@ div[class*=language-] pre, div[class*=language-] pre[class*=language-] {
   background: transparent!important;
   position: relative;
   z-index: 1;
-}
-
-.post-content pre, .post-content pre[class*=language-] {
-  line-height: 1.4 !important;
-  padding: 1.3rem 1.5rem;
-  margin: 0.85rem 0;
-  border-radius: 6px;
-  overflow: auto;
 }
 
 pre[class*=language-] {

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: -Algorithm- Mathematical Induction (수학적 귀납법) feat.java
+title: Mathematical Induction (수학적 귀납법)
 categories: [Development, Algorithm]
 tags: [Java, Algorithm, Mathematical Induction]
 date: 2022-04-11 21:54:00 +0900
@@ -18,7 +18,6 @@ hide: false
 
 <!--more-->
 
-[네이버](https://naver.com)
 ## 수학적 귀납법(Mathematical Induction)
 
 🌸 정의: 수학적 귀납법은 모든 자연수가 어떤 주어진 성질을 만족시킨다는 명제를 증명하는 방법의 하나.  

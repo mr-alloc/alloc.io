@@ -1,6 +1,5 @@
 import {PostMetadata} from "@/classes/implement/PostMetadata";
 import {calPostDate} from "@/utils/DateUtils";
-import markUp from "@/utils/markUp";
 
 export default class PagePost {
     private readonly _title: string
