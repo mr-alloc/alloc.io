@@ -8,15 +8,14 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
     private readonly _number = /{([\d,-]+)}/
     private readonly _wrapper = /^<pre .*?><code>/
 
-    decorate(markdownIt: MarkdownIt): void {
+    public decorate(markdownIt: MarkdownIt): void {
         const proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);
         const defaultFence = markdownIt.renderer.rules.fence || proxy;
         // @ts-ignore
         this.decorateHighlighting(markdownIt, defaultFence);
-        this.decorateWrapping(markdownIt, defaultFence);
     }
 
-    decorateHighlighting(markdownIt: MarkdownIt, defaultFence: Renderer.RenderRule) {
+    private decorateHighlighting(markdownIt: MarkdownIt, defaultFence: Renderer.RenderRule) {
         markdownIt.renderer.rules.fence = (
             tokens: Array<Token>,
             index: number,
@@ -64,30 +63,37 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
                 }
                 return '<br>'
             }).join('')
-
+            const lang = token.info ? token.info.trim() : 'text';
             const highlightLinesWrapperCode
                 = `<div class="highlight-lines">${highlightLinesCode}</div>`
 
-            return code + highlightLinesWrapperCode
+            const finalCode = `<div class="language-${lang} extra-class">
+                        <!--afterbegin-->
+                        ${code + highlightLinesWrapperCode}
+                        <!--beforeend-->
+                    </div>`
+
+            return this.decorateLineNumbers(finalCode);
         }
     }
 
-    decorateWrapping(markdownIt: MarkdownIt, defaultFence: Renderer.RenderRule) {
-        markdownIt.renderer.rules.fence = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer): string => {
-            const token = tokens[index]
-            const rawCode = defaultFence(tokens, index, options, env, self);
+    private decorateLineNumbers(rawCode: string) {
+        const code = rawCode?.slice(
+            rawCode.indexOf('<code>'),
+            rawCode.indexOf('</code>')
+        )
 
-            const lang = token.info
-                ? token.info.trim()
-                : 'text'
+        const lines = code?.split('\n')!
+        const lineNumbersCode = [...Array(lines.length - 1)]
+            .map(() => `<div class="line-number"></div>`).join('')
 
+        const lineNumbersWrapperCode
+            = `<div class="line-numbers-wrapper" aria-hidden="true">${lineNumbersCode}</div>`
+        const finalCode = rawCode!
+            .replace('<!--beforeend-->', `${lineNumbersWrapperCode}<!--beforeend-->`)
+            .replace('extra-class', 'line-numbers-mode')
 
-            return `<div class="language-${lang} extra-class ">
-                    <!--afterbegin-->
-                        ${rawCode}
-                    <!--beforeend-->
-                </div>`
-        }
+        return finalCode
     }
 
     get numberRE(): RegExp {
