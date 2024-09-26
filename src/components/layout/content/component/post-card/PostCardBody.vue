@@ -1,7 +1,7 @@
 <template>
   <div class="post-preview-body">
     <div class="post-contents">
-      <span class="content-text" v-html="markUp(props.description)"></span>
+      <span class="content-text" v-html="html"></span>
     </div>
     <nuxt-link v-bind:to="props.path" v-if="props.header.layout === 'post'">
       <div class="post-default-image">
@@ -35,7 +35,10 @@
 import Header from "@/classes/implement/Header";
 import Image from "@/classes/implement/Image";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
-import markUp from "@/utils/markUp";
+import MarkdownIt from "markdown-it";
+import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/MarkdownUtils";
+import DecoratorProvider from "@/markup/decorator/DecoratorProvider";
+import RuleType from "@/markup/constant/RuleType";
 
 const photoViewStatus = usePhotoViewStatusStore()
 
@@ -52,6 +55,17 @@ const methods = {
   }
 }
 
+const html = ref('');
+onMounted(() => {
+
+  const markdownIt = new MarkdownIt(DEFAULT_MARKDOWN_IT_OPTIONS);
+
+  DecoratorProvider.provide(RuleType.BLOCK_QUOTE).decorate(markdownIt);
+  DecoratorProvider.provide(RuleType.HEADLINE).decorate(markdownIt);
+  DecoratorProvider.provide(RuleType.CODE_BLOCK).decorate(markdownIt);
+
+  html.value = markdownIt.render(props.description);
+});
 
 </script>
 
