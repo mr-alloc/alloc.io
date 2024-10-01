@@ -16,10 +16,10 @@ function wrap(code: string, lang: string) {
         code = escapeHtml(code)
     }
 
-    return `<pre class="language-${lang} code-snippet"><code>${code}</code></pre>`
+    return `<pre class="language-${lang} shiki shiki-themes material-theme-lighter material-theme-lighter material-theme-palenight"><code>${code}</code></pre>`
 }
 
-function getLangCodeFromExtension (extension: string): string {
+export function getLanguageCode (extension: string): string {
     const extensionMap = new Map<string, string>([
         ['vue', 'markup'],
         ['html', 'markup'],
@@ -31,10 +31,11 @@ function getLangCodeFromExtension (extension: string): string {
         ['yml', 'yaml'],
         ['styl', 'stylus'],
         ['kt', 'kotlin'],
-        ['rs', 'rust']
+        ['rs', 'rust'],
+        ['js', 'javascript']
     ])
 
-    return extensionMap.get(extension) || extension
+    return extensionMap.get(extension) || extension;
 }
 
 export function countNewline(src: string): number {
@@ -55,13 +56,13 @@ export function highlight(code: string, lang: string) {
 
     lang = lang.toLowerCase()
     const rawLang = lang
-    lang = getLangCodeFromExtension(lang)
+    lang = getLanguageCode(lang)
     if ( ! Prism.languages[lang]) {
         PrismUtils.loadLanguage(lang)
     }
     if (Prism.languages[lang]) {
-        const coded = Prism.highlight(code, Prism.languages[lang], lang)
-        return wrap(coded, rawLang)
+        const coded = Prism.highlight(code, Prism.languages[lang], lang);
+        return wrap(coded, rawLang);
     }
     return wrap(code, 'text')
 }
