@@ -33,6 +33,12 @@ console.log('plusDay:', plus1Day)
 //출력결과 -> plusDay: Sat Apr 15 2023 19:12:32 GMT+0900 (한국 표준시)1Day
 ```
 
+```test.js
+function greeing() {
+    return 'Hello world!';
+}
+```
+
 3번라인에서 보면 `getNow()` 함수는 `Date` 타입의 현재시간 값을 리턴한다. 근데, 7번라인에서 다시보면 `Date` 타입과 `string` 연산을 한다.
 하지만, 어떠한 에러도 발생되지 않는다. 결과적으로 연산된 `plus1Day` 변수의 타입은 `string`이다.
 `Date` 함수와 `string`의 덧셈에 결과타입이 `string`인 내용은, 타입스크립트를 알아보는 과정에서 별로 중요하지 않기에 넘어간다.

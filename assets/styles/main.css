@@ -1027,11 +1027,11 @@
     list-style-type: lower-alpha
 }
 
-.prose :where(ol[type=A s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+.prose :where(ol[type="A s"]):not(:where([class~=not-prose],[class~=not-prose] *)) {
     list-style-type: upper-alpha
 }
 
-.prose :where(ol[type=a s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+.prose :where(ol[type="a s"]):not(:where([class~=not-prose],[class~=not-prose] *)) {
     list-style-type: lower-alpha
 }
 
@@ -1043,11 +1043,11 @@
     list-style-type: lower-roman
 }
 
-.prose :where(ol[type=I s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+.prose :where(ol[type="I s"]):not(:where([class~=not-prose],[class~=not-prose] *)) {
     list-style-type: upper-roman
 }
 
-.prose :where(ol[type=i s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+.prose :where(ol[type="i s"]):not(:where([class~=not-prose],[class~=not-prose] *)) {
     list-style-type: lower-roman
 }
 
@@ -1813,6 +1813,555 @@
     --tw-prose-invert-pre-border: rgb(var(--color-gray-700));
     --tw-prose-invert-th-borders: rgb(var(--color-gray-700));
     --tw-prose-invert-td-borders: rgb(var(--color-gray-800))
+}
+
+.-bottom-1 {
+    bottom: -.25rem
+}
+
+.-bottom-4 {
+    bottom: -1rem
+}
+
+.-bottom-\[0\.5px\] {
+    bottom: -.5px
+}
+
+.-left-1 {
+    left: -.25rem
+}
+
+.-left-\[64px\] {
+    left: -64px
+}
+
+.-right-1 {
+    right: -.25rem
+}
+
+.-right-3\.5 {
+    right: -.875rem
+}
+
+.-right-\[5px\] {
+    right: -5px
+}
+
+.-top-1 {
+    top: -.25rem
+}
+
+.-top-10 {
+    top: -2.5rem
+}
+
+.-top-12 {
+    top: -3rem
+}
+
+.-top-8 {
+    top: -2rem
+}
+
+.-top-\[--header-height\] {
+    top: calc(var(--header-height)*-1)
+}
+
+.-top-\[5px\] {
+    top: -5px
+}
+
+.bottom-0 {
+    bottom: 0
+}
+
+.bottom-4 {
+    bottom: 1rem
+}
+
+.end-0 {
+    inset-inline-end: 0
+}
+
+.end-4 {
+    inset-inline-end: 1rem
+}
+
+.left-0 {
+    left: 0
+}
+
+.left-1\/2 {
+    left: 50%
+}
+
+.left-4 {
+    left: 1rem
+}
+
+.left-\[4px\] {
+    left: 4px
+}
+
+.right-0 {
+    right: 0
+}
+
+.right-2 {
+    right: .5rem
+}
+
+.right-2\.5 {
+    right: .625rem
+}
+
+.right-4 {
+    right: 1rem
+}
+
+.right-6 {
+    right: 1.5rem
+}
+
+.right-\[90px\] {
+    right: 90px
+}
+
+.start-0 {
+    inset-inline-start: 0
+}
+
+.start-4 {
+    inset-inline-start: 1rem
+}
+
+.top-0 {
+    top: 0
+}
+
+.top-0\.5 {
+    top: .125rem
+}
+
+.top-1 {
+    top: .25rem
+}
+
+.top-1\/2 {
+    top: 50%
+}
+
+.top-2 {
+    top: .5rem
+}
+
+.top-2\.5 {
+    top: .625rem
+}
+
+.top-6 {
+    top: 1.5rem
+}
+
+.top-\[--header-height\] {
+    top: var(--header-height)
+}
+
+.top-\[160px\] {
+    top: 160px
+}
+
+.top-\[1px\] {
+    top: 1px
+}
+
+.top-\[4px\] {
+    top: 4px
+}
+
+.top-\[68px\] {
+    top: 68px
+}
+
+.isolate {
+    isolation: isolate
+}
+
+.-z-10 {
+    z-index: -10
+}
+
+.z-0 {
+    z-index: 0
+}
+
+.z-10 {
+    z-index: 10
+}
+
+.z-20 {
+    z-index: 20
+}
+
+.z-30 {
+    z-index: 30
+}
+
+.z-50 {
+    z-index: 50
+}
+
+.z-\[-1\] {
+    z-index: -1
+}
+
+.z-\[1\] {
+    z-index: 1
+}
+
+.z-\[55\] {
+    z-index: 55
+}
+
+.order-first {
+    order: -9999
+}
+
+.order-last {
+    order: 9999
+}
+
+.col-start-1 {
+    grid-column-start: 1
+}
+
+.row-start-1 {
+    grid-row-start: 1
+}
+
+
+
+.scroll-smooth {
+    scroll-behavior: smooth
+}
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.truncate,.whitespace-nowrap {
+    white-space: nowrap
+}
+
+.break-all {
+    word-break: break-all
+}
+
+.rounded {
+    border-radius: .25rem
+}
+
+.rounded-2xl {
+    border-radius: 1rem
+}
+
+.rounded-3xl {
+    border-radius: 1.5rem
+}
+
+.rounded-full {
+    border-radius: 9999px
+}
+
+.rounded-lg {
+    border-radius: .5rem
+}
+
+.rounded-md {
+    border-radius: .375rem
+}
+
+.rounded-none {
+    border-radius: 0
+}
+
+.rounded-sm {
+    border-radius: .125rem
+}
+
+.rounded-xl {
+    border-radius: .75rem
+}
+
+.rounded-b {
+    border-bottom-left-radius: .25rem;
+    border-bottom-right-radius: .25rem
+}
+
+.rounded-b-2xl {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem
+}
+
+.rounded-b-3xl {
+    border-bottom-left-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem
+}
+
+.rounded-b-full {
+    border-bottom-left-radius: 9999px;
+    border-bottom-right-radius: 9999px
+}
+
+.rounded-b-lg {
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem
+}
+
+.rounded-b-md {
+    border-bottom-left-radius: .375rem;
+    border-bottom-right-radius: .375rem
+}
+
+.rounded-b-none {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0
+}
+
+.rounded-b-sm {
+    border-bottom-left-radius: .125rem;
+    border-bottom-right-radius: .125rem
+}
+
+.rounded-b-xl {
+    border-bottom-left-radius: .75rem;
+    border-bottom-right-radius: .75rem
+}
+
+.rounded-e {
+    border-end-end-radius: .25rem;
+    border-start-end-radius: .25rem
+}
+
+.rounded-e-2xl {
+    border-end-end-radius: 1rem;
+    border-start-end-radius: 1rem
+}
+
+.rounded-e-3xl {
+    border-end-end-radius: 1.5rem;
+    border-start-end-radius: 1.5rem
+}
+
+.rounded-e-full {
+    border-end-end-radius: 9999px;
+    border-start-end-radius: 9999px
+}
+
+.rounded-e-lg {
+    border-end-end-radius: .5rem;
+    border-start-end-radius: .5rem
+}
+
+.rounded-e-md {
+    border-end-end-radius: .375rem;
+    border-start-end-radius: .375rem
+}
+
+.rounded-e-none {
+    border-end-end-radius: 0;
+    border-start-end-radius: 0
+}
+
+.rounded-e-sm {
+    border-end-end-radius: .125rem;
+    border-start-end-radius: .125rem
+}
+
+.rounded-e-xl {
+    border-end-end-radius: .75rem;
+    border-start-end-radius: .75rem
+}
+
+.rounded-s {
+    border-end-start-radius: .25rem;
+    border-start-start-radius: .25rem
+}
+
+.rounded-s-2xl {
+    border-end-start-radius: 1rem;
+    border-start-start-radius: 1rem
+}
+
+.rounded-s-3xl {
+    border-end-start-radius: 1.5rem;
+    border-start-start-radius: 1.5rem
+}
+
+.rounded-s-full {
+    border-end-start-radius: 9999px;
+    border-start-start-radius: 9999px
+}
+
+.rounded-s-lg {
+    border-end-start-radius: .5rem;
+    border-start-start-radius: .5rem
+}
+
+.rounded-s-md {
+    border-end-start-radius: .375rem;
+    border-start-start-radius: .375rem
+}
+
+.rounded-s-none {
+    border-end-start-radius: 0;
+    border-start-start-radius: 0
+}
+
+.rounded-s-sm {
+    border-end-start-radius: .125rem;
+    border-start-start-radius: .125rem
+}
+
+.rounded-s-xl {
+    border-end-start-radius: .75rem;
+    border-start-start-radius: .75rem
+}
+
+.rounded-t {
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem
+}
+
+.rounded-t-2xl {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem
+}
+
+.rounded-t-3xl {
+    border-top-left-radius: 1.5rem;
+    border-top-right-radius: 1.5rem
+}
+
+.rounded-t-full {
+    border-top-left-radius: 9999px;
+    border-top-right-radius: 9999px
+}
+
+.rounded-t-lg {
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem
+}
+
+.rounded-t-md {
+    border-top-left-radius: .375rem;
+    border-top-right-radius: .375rem
+}
+
+.rounded-t-none {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0
+}
+
+.rounded-t-sm {
+    border-top-left-radius: .125rem;
+    border-top-right-radius: .125rem
+}
+
+.rounded-t-xl {
+    border-top-left-radius: .75rem;
+    border-top-right-radius: .75rem
+}
+
+.rounded-tl-none {
+    border-top-left-radius: 0
+}
+
+.rounded-tr-none {
+    border-top-right-radius: 0
+}
+
+.border {
+    border-width: 1px
+}
+
+.border-0 {
+    border-width: 0
+}
+
+.border-2 {
+    border-width: 2px
+}
+
+.border-b {
+    border-bottom-width: 1px
+}
+
+.border-b-0 {
+    border-bottom-width: 0
+}
+
+.border-l {
+    border-left-width: 1px
+}
+
+.border-s {
+    border-inline-start-width:1px}
+
+.border-s-\[2px\] {
+    border-inline-start-width:2px}
+
+.border-s-\[3px\] {
+    border-inline-start-width:3px}
+
+.border-s-\[4px\] {
+    border-inline-start-width:4px}
+
+.border-s-\[5px\] {
+    border-inline-start-width:5px}
+
+.border-s-\[6px\] {
+    border-inline-start-width:6px}
+
+.border-t {
+    border-top-width: 1px
+}
+
+.border-t-\[2px\] {
+    border-top-width: 2px
+}
+
+.border-t-\[3px\] {
+    border-top-width: 3px
+}
+
+.border-t-\[4px\] {
+    border-top-width: 4px
+}
+
+.border-t-\[5px\] {
+    border-top-width: 5px
+}
+
+.border-t-\[6px\] {
+    border-top-width: 6px
+}
+
+.border-solid {
+    border-style: solid
+}
+
+.border-dashed {
+    border-style: dashed
+}
+
+.border-dotted {
+    border-style: dotted
+}
+
+.border-none {
+    border-style: none
 }
 
 @media (prefers-color-scheme: dark) {

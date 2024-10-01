@@ -1,6 +1,6 @@
 export default class Filename {
 
-    private static readonly RE = new RegExp('([^.]+)(?:(\.)([^.]+))?', 'g');
+    private static readonly RE = new RegExp('([^.]+)(\\.)([^.]+)', 'g');
     private readonly _value: string;
     private readonly _ext: string;
 

@@ -1,178 +1,177 @@
-div[class^=language-] {
 
-    .error-clause {
-        display: inline-block;
-        height: 20px;
-        background: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%206%203'%20enable-background%3D'new%200%200%206%203'%20height%3D'3'%20width%3D'6'%3E%3Cg%20fill%3D'%23e51400'%3E%3Cpolygon%20points%3D'5.5%2C0%202.5%2C3%201.1%2C3%204.1%2C0'%2F%3E%3Cpolygon%20points%3D'4%2C0%206%2C2%206%2C0.6%205.4%2C0'%2F%3E%3Cpolygon%20points%3D'0%2C2%201%2C3%202.4%2C3%200%2C0.6'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") repeat-x bottom left;
+
+.error-clause {
+    display: inline-block;
+    height: 20px;
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%206%203'%20enable-background%3D'new%200%200%206%203'%20height%3D'3'%20width%3D'6'%3E%3Cg%20fill%3D'%23e51400'%3E%3Cpolygon%20points%3D'5.5%2C0%202.5%2C3%201.1%2C3%204.1%2C0'%2F%3E%3Cpolygon%20points%3D'4%2C0%206%2C2%206%2C0.6%205.4%2C0'%2F%3E%3Cpolygon%20points%3D'0%2C2%201%2C3%202.4%2C3%200%2C0.6'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") repeat-x bottom left;
+}
+
+/* Java */
+pre.language-java {
+
+    .operator {
+        color: #67cdcc;
     }
 
-    /* Java */
-    pre.language-java {
-
-        .operator {
-            color: #67cdcc;
-        }
-
-        .number {
-            color: #8181f3;
-        }
-
-        .annotation {
-            color: #cccc20;
-        }
-
-        .constant {
-            color: #9c6b9d;
-
-        }
-
-        .keyword {
-            color: #cc99cd;
-            font-weight: 500;
-        }
-
-        .string {
-            color: #4db46d;
-        }
-
-        .class-name:hover {
-            color: #5cbdfb;
-            text-decoration: underline #5cbdfb;
-            text-shadow: 0 0 3vw #8298e3;
-            transition: 0s;
-        }
+    .number {
+        color: #8181f3;
     }
 
-    /* Swift */
-    pre.language-swift {
-
-        .operator {
-            color: #67cdcc;
-        }
-
-        .keyword {
-            color: #cc99cd;
-            font-weight: 500;
-        }
-
-        .number {
-            color: #8181f3;
-        }
-
-        .string-literal {
-            color: #7ec699;
-        }
-
-        .interpolation {
-            color: white;
-        }
-
-        .interpolation-punctuation {
-            color: #f08d49;
-        }
-
-        .function {
-            color: #f08d49;
-        }
+    .annotation {
+        color: #cccc20;
     }
 
-    /* javascript */
-    pre.language-javascript {
+    .constant {
+        color: #9c6b9d;
 
-        .operator {
-            color: #67cdcc;
-        }
-
-        .keyword {
-            color: #cc99cd;
-            font-weight: 500;
-        }
-
-        .number {
-            color: #8181f3;
-        }
-
-        .string {
-            color: #7ec699;
-        }
-
-        .interpolation {
-            color: white;
-        }
-
-        .function {
-            color: #f08d49;
-        }
     }
 
-    /* typescript */
-    pre.language-typescript {
-        .class-name {
-            color: #61afef;
-        }
-
-        .operator {
-            color: #67cdcc;
-        }
-
-        .keyword {
-            color: #cc99cd;
-            font-weight: 500;
-        }
-
-        .number {
-            color: #8181f3;
-        }
-
-        .string {
-            color: #7ec699;
-        }
-
-        .interpolation {
-            color: white;
-        }
-
-        .function {
-            color: #f08d49;
-        }
-
-        .builtin {
-            color: #cc99cd;
-        }
+    .keyword {
+        color: #cc99cd;
+        font-weight: 500;
     }
 
-    &:before {
-        position: absolute;
-        z-index: 3;
-        top: 0.8em;
-        right: 1em;
-        font-size: .75rem;
-        color: hsla(0,0%,100%,.4);
+    .string {
+        color: #4db46d;
     }
 
-    &.language-java:before {
-        content: "java"
+    .class-name:hover {
+        color: #5cbdfb;
+        text-decoration: underline #5cbdfb;
+        text-shadow: 0 0 3vw #8298e3;
+        transition: 0s;
+    }
+}
+
+/* Swift */
+pre.language-swift {
+
+    .operator {
+        color: #67cdcc;
     }
 
-    &.language-swift:before {
-        content: "swift"
+    .keyword {
+        color: #cc99cd;
+        font-weight: 500;
     }
 
-
-
-    &.language-javascript:before {
-        content: "Javascript";
+    .number {
+        color: #8181f3;
     }
 
-    &.language-typescript:before {
-        content: "Typescript";
+    .string-literal {
+        color: #7ec699;
     }
 
-    &.language-swift:before {
-        content: "swift";
+    .interpolation {
+        color: white;
     }
 
-    &.language-java:before {
-        content: "java";
+    .interpolation-punctuation {
+        color: #f08d49;
     }
+
+    .function {
+        color: #f08d49;
+    }
+}
+
+/* javascript */
+pre.language-javascript {
+
+    .operator {
+        color: #67cdcc;
+    }
+
+    .keyword {
+        color: #cc99cd;
+        font-weight: 500;
+    }
+
+    .number {
+        color: #8181f3;
+    }
+
+    .string {
+        color: #7ec699;
+    }
+
+    .interpolation {
+        color: white;
+    }
+
+    .function {
+        color: #f08d49;
+    }
+}
+
+/* typescript */
+pre.language-typescript {
+    .class-name {
+        color: #61afef;
+    }
+
+    .operator {
+        color: #67cdcc;
+    }
+
+    .keyword {
+        color: #cc99cd;
+        font-weight: 500;
+    }
+
+    .number {
+        color: #8181f3;
+    }
+
+    .string {
+        color: #7ec699;
+    }
+
+    .interpolation {
+        color: white;
+    }
+
+    .function {
+        color: #f08d49;
+    }
+
+    .builtin {
+        color: #cc99cd;
+    }
+}
+
+div[class^=language-]:before {
+    position: absolute;
+    z-index: 3;
+    top: 0.8em;
+    right: 1em;
+    font-size: .75rem;
+    color: hsla(0,0%,100%,.4);
+}
+
+div[class^=language-].language-java:before {
+    content: "java"
+}
+
+div[class^=language-].language-swift:before {
+    content: "swift"
+}
+
+
+
+div[class^=language-].language-javascript:before {
+    content: "Javascript";
+}
+
+div[class^=language-].language-typescript:before {
+    content: "Typescript";
+}
+
+div[class^=language-].language-swift:before {
+    content: "swift";
+}
+
+div[class^=language-].language-java:before {
+    content: "java";
 }
