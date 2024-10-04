@@ -6,23 +6,28 @@ import type {PostMetadata} from "@/classes/implement/PostMetadata";
 import MarkdownIt from "markdown-it";
 import DecoratorProvider from "@/markup/decorator/DecoratorProvider";
 import RuleType from "@/markup/constant/RuleType";
-import Prism from "prismjs";
-import * as PrismUtils from "@/utils/prismUtils";
-import escapeHtml from "escape-html";
 import {DEFAULT_MARKDOWN_IT_OPTIONS, highlight} from "@/utils/MarkdownUtils";
+import Shiki from '@shikijs/markdown-it';
 
 const props = defineProps<{
   metadata: PostMetadata
 }>();
 
 const html = ref('');
-onMounted(() => {
+onMounted(async () => {
   const markdown = props.metadata.content;
   const markdownIt = new MarkdownIt(DEFAULT_MARKDOWN_IT_OPTIONS);
 
   DecoratorProvider.provide(RuleType.BLOCK_QUOTE).decorate(markdownIt);
   DecoratorProvider.provide(RuleType.HEADLINE).decorate(markdownIt);
   DecoratorProvider.provide(RuleType.CODE_BLOCK).decorate(markdownIt);
+
+  markdownIt.use(await Shiki({
+    themes: {
+      light: 'vitesse-light',
+      dark: 'vitesse-dark'
+    }
+  }));
 
   html.value = markdownIt.render(markdown);
 });
