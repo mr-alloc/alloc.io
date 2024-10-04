@@ -46,6 +46,7 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
+    "@shikijs/markdown-it": "^1.21.0",
     "@types/markdown-it": "^12.2.3",
     "@types/node": "^22.5.4",
     "gh-pages": "^5.0.0",
@@ -55,6 +56,7 @@
     "push-dir": "^0.4.1",
     "sass": "^1.49.9",
     "sass-loader": "^12.6.0",
+    "shiki": "^1.21.0",
     "sitemap": "^7.1.1",
     "tslib": "^2.7.0",
     "tsx": "^4.19.0"
