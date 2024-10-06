@@ -7,29 +7,20 @@ import MarkdownIt from "markdown-it";
 import DecoratorProvider from "@/markup/decorator/DecoratorProvider";
 import RuleType from "@/markup/constant/RuleType";
 import {DEFAULT_MARKDOWN_IT_OPTIONS, highlight} from "@/utils/MarkdownUtils";
-import Shiki from '@shikijs/markdown-it';
+import shiki from '@shikijs/markdown-it';
 
+const nuxtApp = useNuxtApp();
 const props = defineProps<{
   metadata: PostMetadata
 }>();
 
-const html = ref('');
-onMounted(async () => {
+const html = useState('content', () => '');
+onServerPrefetch(async () => {
   const markdown = props.metadata.content;
-  const markdownIt = new MarkdownIt(DEFAULT_MARKDOWN_IT_OPTIONS);
+  console.log('markdown', markdown);
+  const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
 
-  DecoratorProvider.provide(RuleType.BLOCK_QUOTE).decorate(markdownIt);
-  DecoratorProvider.provide(RuleType.HEADLINE).decorate(markdownIt);
-  DecoratorProvider.provide(RuleType.CODE_BLOCK).decorate(markdownIt);
-
-  markdownIt.use(await Shiki({
-    themes: {
-      light: 'vitesse-light',
-      dark: 'vitesse-dark'
-    }
-  }));
-
-  html.value = markdownIt.render(markdown);
+  html.value = md.render(markdown);
 });
 </script>
 
@@ -38,37 +29,6 @@ onMounted(async () => {
 @import "@styles/markup";
 @import '@styles/languages';
 @import '@styles/icons';
-
-
-
-/* Code snippet*/
-div[class*=language-] {
-  transition: .6s;
-  position: relative;
-  background-color: #2d2d2d;
-  border-radius: 7px;
-  box-shadow: 0 18px 22px rgba(0, 0, 0, 0.6);
-  margin: 40px 0px;
-
-  &.popup {
-    transform: translate(-50%, 0%);
-    position: fixed;
-    left: 50%;
-    top: 0%;
-    width: 95%;
-    max-width: 1092px;
-    max-height: 95vh;
-    overflow-y: scroll;
-    z-index: 115;
-    margin-top: 15px;
-
-    pre {
-      margin-top: 0px;
-      margin-bottom: 0px;
-    }
-  }
-
-}
 
 div[class*=language-].line-numbers-mode pre {
   margin-left: $code-ln-wrapper-width;
@@ -114,53 +74,6 @@ div[class*=language-].line-numbers-mode {
 }
 
 
-div[class*=language-] pre, div[class*=language-] pre[class*=language-] {
-  background: transparent!important;
-  position: relative;
-  z-index: 1;
-}
-
-pre[class*=language-] {
-  padding: 1em;
-  margin: 0.5em 0;
-  overflow: auto;
-}
-
-code[class*=language-], pre[class*=language-] {
-  color: #ccc;
-  background: none;
-  font-size: 1em;
-  text-align: left;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  tab-size: 4;
-  -webkit-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-}
-.post-content pre code, .post-content pre[class*=language-] code {
-  color: #fff;
-  padding: 0 !important;
-  background-color: transparent;
-  border-radius: 0;
-  overflow-wrap: unset !important;
-
-  .comment {
-    color: #a8a8a8;
-  }
-}
-
-code {
-  padding: 0.25rem 0.5rem;
-  margin: 0;
-  font-size: .85em !important;
-  border-radius: 3px;
-  overflow-wrap: break-word !important;
-  color: #3a3838;
-}
-
 div[class*=language-] .highlight-lines {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -182,116 +95,4 @@ div[class*=language-] .highlight-lines .highlighted {
   background-color: #5cbdfb59;
 }
 
-/* dark mode */
-.dark .post-view-container {
-
-  .post-area {
-    background-color: $main-dark-color;
-    border-color: $linear-dark-color;
-    color: #ffffff;
-
-
-
-  }
-
-  .post-content-wrapper {
-
-    .post-content {
-
-      h1, h2, h3, h4 {
-        color: #51c470;
-        border-bottom-color: $linear-dark-color !important;
-      }
-
-      div[class*=language-].line-numbers-mode:after {
-        border-color: $linear-dark-color;
-      }
-
-      pre {
-        border-color: $linear-dark-color;
-        background-color: $main-dark-color;
-
-        code {
-          color: #ededed;
-        }
-      }
-
-      img {
-        filter: brightness(70%);
-      }
-      p {
-        color: white;
-      }
-
-      code {
-        color: #f7c57d;
-      }
-
-      blockquote {
-        background-color: #272a3f;
-        border-color: $linear-dark-color;
-        color: white;
-      }
-
-      ol, ul {
-
-        color: white;
-      }
-
-      table {
-        color: white;
-        thead {
-          border-color: #797979;
-
-        }
-      }
-    }
-    .hide-box {
-      background: linear-gradient(to top, #21262d, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
-    }
-
-    .post-tag {
-      .tag {
-        background-color: #413f3f;
-      }
-    }
-
-    .zoom-in-image-wrapper {
-
-      .image-resizer {
-
-        img {
-          filter: brightness(70%);
-        }
-      }
-    }
-  }
-
-
-  /* Code Snippet */
-  div[class*=language-]{
-    background-color: #282c34 !important;
-
-    .title-wrapper {
-      background-color: #282c34 !important;
-      color: white;
-
-    }
-
-  }
-
-  .highlight-lines {
-
-    .highlighted {
-      background-color: #000000a8 !important;
-    }
-  }
-
-  pre[class^=language-] {
-
-    .keyword {
-      color: #8f5ea0 !important;
-    }
-  }
-}
 </style>

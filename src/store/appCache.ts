@@ -17,7 +17,7 @@ export default {
         store: new Map()
     }),
 
-    /* 경로별 파일노드 맵 */
+    /* 경로별 파일노드 맵(검색에서 사용됨) */
     fileNodeMap: reactive({
         store: new Map()
     }),

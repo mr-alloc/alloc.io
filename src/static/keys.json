@@ -1,9 +1,4 @@
 [
-  "/docs/electric/about-atom",
-  "/docs/tools/intellij-config",
   "/docs/typescript/typescript-getting-start",
-  "/docs/algorithm/heap-sort",
-  "/docs/algorithm/insertion-sort",
-  "/docs/algorithm/mathematical-induction",
-  "/docs/algorithm/selection-sort"
+  "/docs/algorithm/heap-sort"
 ]
