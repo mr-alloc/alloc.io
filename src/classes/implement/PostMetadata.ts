@@ -31,7 +31,7 @@ export class PostMetadata implements IPostMetadata {
     }
 
     static toPostContent (value: IPostMetadata): PostMetadata {
-        return new PostMetadata(value)
+        return new PostMetadata(value);
     }
 
     static toPosts (posts: IPostMetadata[]): PostMetadata[] {

@@ -70,7 +70,9 @@ const routePaths = new Array<string>();
 const posts = postDataList
     .sort((a, b) => b.header.date() - a.header.date())
     .map((post) => {
-        routePaths.push(post.path.replace('/src', ''));
+        if (!post.header.hide(true) && post.header.layout === 'post') {
+            routePaths.push(post.path.replace('/src', ''));
+        }
         post.header.images = extractImages(post.content);
         post.header.headlines = extractHeadlines(post.content);
         return post

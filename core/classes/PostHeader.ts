@@ -9,6 +9,7 @@ export default class PostHeader {
     private static readonly IMAGES = "images";
     private static readonly HEADLINES = "headlines";
     private static readonly DATE = "date";
+    private static readonly LAYOUT = "layout";
 
     private readonly _value: any;
 
@@ -32,6 +33,10 @@ export default class PostHeader {
         return this._value[PostHeader.DATE] ?? '';
     }
 
+    get layout(): string {
+        return this._value[PostHeader.LAYOUT] ?? '';
+    }
+
     set breadcrumbs(breadcrumbs: Array<string>) {
         this._value[PostHeader.BREADCRUMBS] = breadcrumbs;
     }
@@ -45,7 +50,7 @@ export default class PostHeader {
     }
 
 
-    hide(defaultValue: boolean): boolean {
+    public hide(defaultValue: boolean): boolean {
         return this._value[PostHeader.HIDE] ?? defaultValue;
     }
 
