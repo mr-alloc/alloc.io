@@ -1,6 +1,6 @@
 ---
 layout: post
-title: -Algorithm- Heap sort (힙 정렬) feat.java
+title: Heap sort (힙 정렬) feat.java
 categories: [Development, Algorithm]
 tags: [Java, Algorithm, Sort, Heap Sort, Heap]
 date: 2022-05-06 20:53:00 +0900
@@ -8,7 +8,7 @@ profile-image: /blogging/profile/profile4.jpeg
 thumbnail: /blogging/algorithm/heap/heap_sort_intro.png
 current-company: Herit Corporation
 current-position: Backend Server Developer
-summary: 힙과 힙정렬
+summary: 힙과 힙정렬 (우선순위 큐)
 expose-images: true
 excerpt-separator: <!--more-->
 hide: false
@@ -18,9 +18,6 @@ hide: false
 
 힙을통해 정렬하는 방법까지 공부합니다. 😁
 <!--more-->
-
-
-# 힙 정렬 (Heap Sort)
 
 ## 배울수 있는 내용
 

@@ -4,7 +4,7 @@
     <main class="min-h-[calc(100vh-var(--header-height))]">
       <NuxtPage class="current-content" id="current-content-element" :page-key="route.fullPath" />
     </main>
-    <div class="background" :class="[
+    <div class="background z-20" :class="[
         photoViewStatus.isPhotoView || searchStatus.isSearchMode
         ? ['fixed', 'inset-0', 'transition-opacity', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : []
         ]"
@@ -12,13 +12,12 @@
       <SearchView v-if="searchStatus.isSearchMode" />
       <PhotoView v-if="photoViewStatus.isPhotoView" v-on:click="$event.stopPropagation()" />
     </div>
-    <LoadingBar />
   </div>
 </template>
 <script lang="ts" setup>
 import Runner from '@/service/DefaultStarterService'
 import MainHeader from "@/components/layout/header/MainHeader.vue";
-import LoadingBar from "@/components/layout/header/LoadingBar.vue";
+import LoadingBar from "@/components/layout/header/ProgressBar.vue";
 import PhotoView from "@/components/layout/global/PhotoView.vue";
 import {callPostFeed} from "@/utils/PostUtil";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
@@ -28,6 +27,11 @@ import {useNuxtApp} from "nuxt/app";
 import SearchView from "@/components/layout/global/SearchView.vue";
 import {usePostCallStore} from "@/store/PostCallStore";
 import {useDarkModeStore} from "@/store/DarkModeStore";
+import MarkdownIt from "markdown-it";
+import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/MarkdownUtils";
+import DecoratorProvider from "@/markup/decorator/DecoratorProvider";
+import RuleType from "@/markup/constant/RuleType";
+import shiki from "@shikijs/markdown-it";
 
 Runner.init();
 const route = useRoute();
@@ -37,7 +41,6 @@ const searchStatus = useSearchStatusStore();
 const photoViewStatus = usePhotoViewStatusStore();
 const darkModeStore = useDarkModeStore();
 const postCallStore = usePostCallStore();
-
 
 const methods = {
   clickBackground: (event: PointerEvent) => {

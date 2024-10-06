@@ -16,7 +16,7 @@ function wrap(code: string, lang: string) {
         code = escapeHtml(code)
     }
 
-    return `<pre class="language-${lang} shiki shiki-themes material-theme-lighter material-theme-lighter material-theme-palenight"><code>${code}</code></pre>`
+    return `<pre class="language-${lang}"><code>${code}</code></pre>`
 }
 
 export function getLanguageCode (extension: string): string {
@@ -54,15 +54,6 @@ export function highlight(code: string, lang: string) {
         return wrap(code, 'text')
     }
 
-    lang = lang.toLowerCase()
-    const rawLang = lang
-    lang = getLanguageCode(lang)
-    if ( ! Prism.languages[lang]) {
-        PrismUtils.loadLanguage(lang)
-    }
-    if (Prism.languages[lang]) {
-        const coded = Prism.highlight(code, Prism.languages[lang], lang);
-        return wrap(coded, rawLang);
-    }
-    return wrap(code, 'text')
+    console.log('highlight lang:', lang);
+    return wrap(code, lang);
 }

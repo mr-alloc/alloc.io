@@ -45,7 +45,7 @@
         <div class="relative inline-flex">
           <button type="button" v-on:click="methods.activateSearchMode()" aria-label="Search"
                   class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-md text-sm gap-x-1.5 p-1.5 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center">
-            <span class="iconify i-ph:magnifying-glass-duotone flex-shrink-0 h-5 w-5"></span>
+            <span class="iconify i-ph:magnifying-glass flex-shrink-0 h-5 w-5"></span>
           </button>
         </div>
       </div>
@@ -58,9 +58,6 @@ import {useSearchStatusStore} from "@/store/SearchStatusStore";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import {useNuxtApp} from "nuxt/app";
 import packageJson from "~/package.json"
-
-
-
 const router = useRouter();
 const nuxtApp = useNuxtApp();
 const emitter: any = nuxtApp.$emitter;

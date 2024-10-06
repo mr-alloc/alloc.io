@@ -30,8 +30,8 @@ export default defineNuxtConfig({
     },
     css: [
         '@fortawesome/fontawesome-svg-core/styles.css',
-        '~/assets/styles/main.css',
-        '~/assets/styles/icons.css'
+        '@styles/main.css',
+        '@styles/icons.css'
     ],
     build: {
         transpile: [

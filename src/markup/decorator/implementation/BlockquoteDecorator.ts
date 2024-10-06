@@ -5,6 +5,7 @@ import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
 import {countNewline} from "@/utils/MarkdownUtils";
 import PromptIcon from "@/markup/constant/PromptIcon";
+import PromptType from "@/markup/constant/PromptType";
 
 export default class BlockquoteDecorator implements IMarkdownDecorator {
 
@@ -49,18 +50,17 @@ export default class BlockquoteDecorator implements IMarkdownDecorator {
         }
     }
 
-    changeTag(blockquoteOpen: Token, paragraphOpen: Token, paragraphClose: Token, blockquoteClose: Token) {
+    private changeTag(blockquoteOpen: Token, paragraphOpen: Token, paragraphClose: Token, blockquoteClose: Token) {
         blockquoteOpen.tag = 'div';
         paragraphOpen.tag = 'span';
         paragraphClose.tag = 'span';
         blockquoteClose.tag = 'div';
-
     }
 
-    decorateStyle(blockquoteOpen: Token, paragraphOpen: Token, template: TemplateAttributes) {
+    private decorateStyle(blockquoteOpen: Token, paragraphOpen: Token, template: TemplateAttributes) {
         //style for div
         blockquoteOpen.attrJoin('class', 'block pl-4 pr-6 py-3 rounded-md border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-300 text-sm/6 my-5 last:mb-0 group relative prose-code:bg-white dark:prose-code:bg-gray-900 font-medium');
-        if (template.hasType()) {
+        if (template.hasType() && PromptType.includes(template.type)) {
             blockquoteOpen.attrJoin('class', `_${template.type} dark\:${template.type}`);
         }
 
