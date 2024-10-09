@@ -53,7 +53,7 @@
   </div>
 </template>
 <script setup>
-import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
+import TagArea from "@/components/layout/content/post-card/TagArea.vue";
 import appCache from "@/store/appCache";
 import {useRoute} from "#app";
 import Paginator from 'paginator'
