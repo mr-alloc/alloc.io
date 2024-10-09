@@ -9,25 +9,29 @@ export class PostMetadata implements IPostMetadata {
 
     constructor(postContent: IPostMetadata) {
         this._path = postContent.path
-        this._header = new Header(postContent.header)
+        this._header = new Header(postContent.header);
         this._description = postContent.description;
         this._content = postContent.content;
     }
 
     get path(): string {
-        return this._path
+        return this._path;
     }
 
     get content(): string {
-        return this._content
+        return this._content;
     }
 
     get description(): string {
-        return this._description
+        return this._description;
     }
 
     get header(): Header {
-        return this._header
+        return this._header;
+    }
+
+    get group(): string {
+        return this._path.split('/').slice(2, 3)[0] ?? 'etc';
     }
 
     static toPostContent (value: IPostMetadata): PostMetadata {

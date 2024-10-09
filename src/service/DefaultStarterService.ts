@@ -33,6 +33,8 @@ class DefaultStarterService implements StarterService {
             .forEach(post => {
                 //피드용
                 appCache.postContents.push(post);
+                //검색용
+                appCache.fileNodeMap.store.set(post.path, post)
 
                 // 새로고침시 피드용만 초기화
                 if (this.isInitialized) return

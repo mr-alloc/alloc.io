@@ -115,6 +115,7 @@ $tool-item-width: 60px;
     display: flex;
     overflow: hidden;
     transition: .3s ease-in-out;
+    position: relative;
 
     img {
       width: 100%;
@@ -159,11 +160,14 @@ $tool-item-width: 60px;
       background-color: transparent;
       border: none;
       color: #808080FF;
-      width: 160px;
       position: fixed;
-      height: inherit;
       cursor: pointer;
       z-index: 7;
+      bottom: 50%;
+
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
 
       @media (hover: hover) and (pointer: fine) {
         &:hover {

@@ -3,20 +3,25 @@
     <li v-for="child in props.headline?.children" :key="child.fragmentId" class="space-y-1 hidden lg:block" :class="{
        'ml-3': props.isInner
     }">
-      <a class="block text-sm/6 truncate text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+      <a class="block text-sm/6 truncate" :class="[
+          props.activeIds.includes(decodeURI(child.fragmentId))
+            ? 'text-primary'
+            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
+          ]"
          :href="'#' + child.fragmentId"> {{ child.title }}</a>
-      <TableOfContents  v-if="child.children.length > 0" :headline="child" :is-inner="true" />
+      <TableOfContents  v-if="child.children.length > 0" :headline="child" :is-inner="true" :active-ids="props.activeIds" />
     </li>
   </ul>
 </template>
 
 <script lang="ts" setup>
 import TocNode from "@/classes/implement/TocNode";
-import TableOfContents from "@/components/layout/content/component/TableOfContents.vue";
-
+import TableOfContents from "@/components/layout/content/TableOfContents.vue";
+import {slugify} from "@/utils/StringUtils";
 const props = defineProps<{
   headline: TocNode,
   isInner: boolean,
+  activeIds: Array<string>
 }>();
 </script>
 

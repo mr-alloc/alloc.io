@@ -24,7 +24,6 @@ export default class BlockquoteDecorator implements IMarkdownDecorator {
             env: any,
             self: Renderer
         ): string => {
-
             const inline = tokens[index +2];
 
             const blockquoteOpen = tokens[index];

@@ -5,18 +5,12 @@
 </template>
 
 <script lang="ts" setup>
-import PostCardFooterButton from "@/components/layout/content/component/post-card/PostCardFooterButton.vue";
-import TagArea from "@/components/layout/content/component/post-card/TagArea.vue";
+import TagArea from "@/components/layout/content/post-card/TagArea.vue";
 import Header from "@/classes/implement/Header";
 
 const props = defineProps<{
   header: Header
-}>()
-
-const components = {
-  TagArea,
-  PostCardFooterButton,
-}
+}>();
 </script>
 
 <style lang="scss">
