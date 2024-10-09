@@ -1,15 +1,20 @@
 <template>
   <div id="application-container" class="app-container">
     <MainHeader />
-    <main class="min-h-[calc(100vh-var(--header-height))]">
-      <NuxtPage class="current-content" id="current-content-element" :page-key="route.fullPath" />
+    <main class="min-h-[calc(100vh-var(--header-height))] relative">
+      <ClientOnly>
+        <BackdropCurtain />
+      </ClientOnly>
+      <NuxtPage class="mx-auto current-content" id="current-content-element" :page-key="route.fullPath" :keepalive="false" />
     </main>
-    <div class="background z-20" :class="[
+    <div class="background" :class="[
         photoViewStatus.isPhotoView || searchStatus.isSearchMode
-        ? ['fixed', 'inset-0', 'transition-opacity', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : []
+        ? ['z-50', 'fixed', 'inset-0', 'overflow-y-auto', 'transition-opacity', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : []
         ]"
          v-on:click="methods.clickBackground($event)">
-      <SearchView v-if="searchStatus.isSearchMode" />
+      <div class="flex min-h-full items-end sm:items-center justify-center text-center p-0 sm:p-4">
+        <SearchView />
+      </div>
       <PhotoView v-if="photoViewStatus.isPhotoView" v-on:click="$event.stopPropagation()" />
     </div>
   </div>
@@ -17,7 +22,6 @@
 <script lang="ts" setup>
 import Runner from '@/service/DefaultStarterService'
 import MainHeader from "@/components/layout/header/MainHeader.vue";
-import LoadingBar from "@/components/layout/header/ProgressBar.vue";
 import PhotoView from "@/components/layout/global/PhotoView.vue";
 import {callPostFeed} from "@/utils/PostUtil";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
@@ -27,11 +31,7 @@ import {useNuxtApp} from "nuxt/app";
 import SearchView from "@/components/layout/global/SearchView.vue";
 import {usePostCallStore} from "@/store/PostCallStore";
 import {useDarkModeStore} from "@/store/DarkModeStore";
-import MarkdownIt from "markdown-it";
-import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/MarkdownUtils";
-import DecoratorProvider from "@/markup/decorator/DecoratorProvider";
-import RuleType from "@/markup/constant/RuleType";
-import shiki from "@shikijs/markdown-it";
+import BackdropCurtain from "@/components/layout/content/BackdropCurtain.vue";
 
 Runner.init();
 const route = useRoute();
@@ -104,42 +104,6 @@ useHead(() => ({
 <style lang="scss">
 @import '@styles/index';
 
-
-
-@include tablet {
-  .app-container {
-
-    .background {
-
-      .search-result-area {
-
-        .search-result-panel {
-          max-width: 496px;
-        }
-      }
-    }
-  }
-}
-
-@include mobile {
-  .app-container {
-
-    .background {
-      display: flex;
-      justify-content: center;
-
-      .search-result-area {
-        width: 100%;
-        top: 60px;
-        height: calc(100% - 60px);
-
-        .search-result-panel {
-          border-radius: 0px;
-        }
-      }
-    }
-  }
-}
 
 /* Global Styles */
 @font-face {

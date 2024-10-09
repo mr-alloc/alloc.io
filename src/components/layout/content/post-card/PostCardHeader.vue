@@ -1,15 +1,17 @@
 \<template>
-  <div class="post-preview-header">
+  <div class="post-preview-header flex pt-4 px-3 mb-2">
     <div class="profile-image">
-      <img :src="props.header?.profileImage ?? '/blogging/profile/default.jpeg'" alt="Profile Image" />
+      <img class="bg-contain bg-no-repeat w-full h-full object-cover" :src="props.header?.profileImage ?? '/blogging/profile/default.jpeg'" alt="Profile Image" />
     </div>
     <div class="author-info">
       <div class="">
         <a :href="`https://github.com/${appCache.blogInfo.fullName}`" target="_blank">
-          <span class="inline-block font-bold text-emerald-500 dark:text-emerald-50">{{ appCache.blogInfo.fullName }}</span>
+          <span class="inline-block font-medium text-emerald-500 dark:text-emerald-50 whitespace-nowrap font" aria-hidden="true">{{ appCache.blogInfo.fullName }}</span>
         </a>
       </div>
-      <div class="font-small-medium">{{ props.header.currentPosition }}, {{ props.header.currentCompany }}</div>
+      <div class="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap text-ellipsis overflow-hidden" >
+        <span aria-hidden="true">{{ props.header.currentPosition }} At <strong>{{ props.header.currentCompany }}</strong></span>
+        </div>
       <div class="font-small-medium flex justify-start items-center">
         <span class="px-1.5">
           <FontAwesomeIcon class="clock-icon" :icon="['fa', 'clock']"/>
@@ -38,7 +40,6 @@ const props = defineProps<{
 @import '@styles/index';
 
 .post-preview-header {
-  padding: 20px 30px;
   display: flex;
 
   .profile-image {
@@ -47,12 +48,6 @@ const props = defineProps<{
     height: 55px;
     border-radius: 50%;
     overflow: hidden;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
   }
 
   .author-info {

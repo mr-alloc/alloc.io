@@ -20,7 +20,7 @@ export default class Header {
     private readonly _breadcrumbs: string[]
     private readonly _rootHeadLine: TocNode
 
-    constructor(header: any) {
+    public constructor(header: any) {
         this._layout = header.layout;
         this._title = header.title;
         this._categories = header.categories;

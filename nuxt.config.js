@@ -3,6 +3,9 @@ import { fileURLToPath} from "node:url";
 import Keys from './src/static/keys.json'
 
 export default defineNuxtConfig({
+    app: {
+        pageTransition: { name: 'page', mode: 'out-in' }
+    },
     devtools: {
         enabled: false
     },

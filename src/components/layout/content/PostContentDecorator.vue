@@ -1,27 +1,57 @@
 <template>
-  <div v-html="html"></div>
+  <div class="rendered-markdown-wrapper" v-html="html"></div>
 </template>
 <script setup lang="ts">
 import type {PostMetadata} from "@/classes/implement/PostMetadata";
 import MarkdownIt from "markdown-it";
-import DecoratorProvider from "@/markup/decorator/DecoratorProvider";
-import RuleType from "@/markup/constant/RuleType";
-import {DEFAULT_MARKDOWN_IT_OPTIONS, highlight} from "@/utils/MarkdownUtils";
-import shiki from '@shikijs/markdown-it';
+import {usePagePrepareStore} from "@/store/PreparePostStore";
+import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 
+const photoViewStore = usePhotoViewStatusStore();
+const prepareStore = usePagePrepareStore();
 const nuxtApp = useNuxtApp();
 const props = defineProps<{
   metadata: PostMetadata
 }>();
 
-const html = useState('content', () => '');
-onServerPrefetch(async () => {
+const html = useState('content', () => {
   const markdown = props.metadata.content;
-  console.log('markdown', markdown);
   const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
 
-  html.value = md.render(markdown);
+  return md.render(markdown);
 });
+
+onMounted(() => {
+
+  prepareStore.prepare();
+
+  const tables = [...document.querySelectorAll('.rendered-markdown-wrapper table').values()]
+  tables.forEach(table => {
+    const div = document.createElement('div')
+    div.innerHTML = table.outerHTML
+    div.className = 'content-table'
+
+    table.parentNode?.insertBefore(div, table)
+    table.remove();
+  });
+
+  const imageTags = document.querySelectorAll('.rendered-markdown-wrapper img')
+  imageTags.forEach((imgTag, index) => {
+    imgTag.addEventListener('click', (e) => {
+      photoViewStore.open(index +1)
+    });
+  });
+
+  photoViewStore.load(props.metadata.header.images);
+
+
+  //콘솔로그를 찍기위해 CSR에서 테스트
+  // const markdown = props.metadata.content;
+  // const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
+  //
+  // md.render(markdown);
+});
+
 </script>
 
 <style lang="scss">

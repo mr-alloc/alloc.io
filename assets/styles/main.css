@@ -2434,6 +2434,81 @@
     background-color: rgb(var(--color-primary-DEFAULT) /.4);
 }
 
+.ring-primary {
+    --tw-ring-opacity: 1;
+    --tw-ring-color: rgb(var(--color-primary-DEFAULT)/var(--tw-ring-opacity))
+}
+
+.ring-primary-400 {
+    --tw-ring-opacity: 1;
+    --tw-ring-color: rgb(var(--color-primary-400)/var(--tw-ring-opacity))
+}
+
+.ring-primary-500 {
+    --tw-ring-opacity: 1;
+    --tw-ring-color: rgb(var(--color-primary-500)/var(--tw-ring-opacity))
+}
+
+.bg-primary {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-primary-DEFAULT)/var(--tw-bg-opacity))
+}
+
+.bg-primary-100 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-primary-100)/var(--tw-bg-opacity))
+}
+
+.bg-primary-400 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-primary-400)/var(--tw-bg-opacity))
+}
+
+.bg-primary-50 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-primary-50)/var(--tw-bg-opacity))
+}
+
+.bg-primary-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-primary-500)/var(--tw-bg-opacity))
+}
+
+.bg-primary-600 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-primary-600)/var(--tw-bg-opacity))
+}
+
+.bg-primary-900 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-primary-900)/var(--tw-bg-opacity))
+}
+
+.bg-primary-950 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-primary-950)/var(--tw-bg-opacity))
+}
+
+.z--1 {
+    z-index: -1;
+}
+
+.text-black-opacity6 {
+    color: rgb(0, 0, 0, .6);
+}
+
+
+.duration-75 {
+    transition-duration: 75ms
+}
+
+.duration-\[400ms\] {
+    transition-duration: .4s
+}
+
+
+
+
 @media (prefers-color-scheme: dark) {
 
     body {
@@ -2449,4 +2524,33 @@
         --ui-background: var(--color-gray-950);
         --ui-foreground: var(--color-gray-200);
     }
+}
+
+.fall-fade-enter-active {
+    animation: fall-fade-in .2s !important;
+}
+
+.fall-fade-leave-active {
+    animation: fall-fade-in .2s reverse !important;
+}
+
+@keyframes fall-fade-in {
+    0% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.page-enter-active,
+.page-leave-active {
+    transition: all 0.4s;
+}
+.page-enter-from,
+.page-leave-to {
+    opacity: 0;
+    filter: blur(1rem);
 }
