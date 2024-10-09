@@ -8,7 +8,7 @@
   "homepage": "https://devisitem.github.io/special-posted-in/",
   "defaultProfile": "https://avatars.githubusercontent.com/u/65699391?v=4",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "imports": {
     "@core/*": "./core/*"
