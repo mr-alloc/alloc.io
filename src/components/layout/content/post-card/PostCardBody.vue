@@ -8,7 +8,7 @@
         <div class="default-image-wrapper">
           <img :src="props.header.thumbnail" alt="profile thumbnail" />
         </div>
-        <div class="post-title-box">
+        <div class="post-title-box ring-prima">
           <span class="post-title">{{ props.header.summary }}</span>
           <span class="post-path">devis.kr</span>
         </div>

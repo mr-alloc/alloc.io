@@ -1,4 +1,6 @@
 // https://router.vuejs.org/api/interfaces/routeroptions.html
+import {useRouteStore} from "@/store/RouteStore";
+
 export default {
     routes: (_routes) => [
         {
@@ -23,6 +25,9 @@ export default {
         }
     ],
     scrollBehavior: (to, from, savedPosition) => {
+        const routeStore  = useRouteStore();
+        routeStore.route(to.path);
+
         if (to.hash && to.path.match(/\/docs.+?/)) {
             const id = to.hash.replace('#', '');
             const element = document.getElementById(id);

@@ -10,7 +10,7 @@ profile-image: /blogging/profile/profile1.JPG
 thumbnail: /blogging/typescript/typescript_getting_start.png
 summary: 타입스크립트 소개
 excerpt-separator: <!--more-->
-hide: false
+hide: true
 ---
 타입스크립트 시작하기.
 도대체 왜 사용하는거고, 뭐가 좋은걸까?
