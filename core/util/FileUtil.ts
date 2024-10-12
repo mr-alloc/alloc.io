@@ -18,13 +18,13 @@ export function read(path: string): string {
     });
 }
 
-export function write(path: string, content: string) {
+export async function write(path: string, content: string) {
     fs.writeFileSync(`${__ROOT__}${path}`, content, {
         encoding: 'utf-8'
     });
 }
 
-export function remove(path: string) {
+export async function remove(path: string) {
     fs.rmSync(`${__ROOT__}${path}`, {
         force: true
     });
