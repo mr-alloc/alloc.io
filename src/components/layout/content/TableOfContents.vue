@@ -3,13 +3,12 @@
     <li v-for="child in props.headline?.children" :key="child.fragmentId" class="space-y-1 hidden lg:block" :class="{
        'ml-3': props.isInner
     }">
-      <a class="block text-sm/6 truncate" :class="[
-          props.activeIds.includes(decodeURI(child.fragmentId))
-            ? 'text-primary'
-            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'
-          ]"
-         :href="'#' + child.fragmentId"> {{ child.title }}</a>
-      <TableOfContents  v-if="child.children.length > 0" :headline="child" :is-inner="true" :active-ids="props.activeIds" />
+      <a class="block text-sm/6 truncate"
+         :href="`#${child.fragmentId}`"
+         :class="activeHeadings.includes(decodeURI(child.fragmentId)) ? config.active : config.inactive"
+         @click.prevent="scrollToHeading(child.fragmentId)"
+      > {{ child.title }}</a>
+      <TableOfContents  v-if="child.children.length > 0" :headline="child" :is-inner="true" />
     </li>
   </ul>
 </template>
@@ -18,11 +17,37 @@
 import TocNode from "@/classes/implement/TocNode";
 import TableOfContents from "@/components/layout/content/TableOfContents.vue";
 import {slugify} from "@/utils/StringUtils";
+import {useScrollspy} from "@/store/ScrollSpy";
+
+const router = useRouter();
+const nuxtApp = useNuxtApp();
+
+const { activeHeadings, updateHeadings } = useScrollspy()
 const props = defineProps<{
   headline: TocNode,
   isInner: boolean,
-  activeIds: Array<string>
 }>();
+
+const config = {
+  wrapper: 'space-y-1',
+  base: 'block text-sm/6 truncate',
+  active: 'text-primary',
+  inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200',
+  depth: 'ml-3'
+}
+
+const emit = defineEmits(['move'])
+nuxtApp.hooks.hookOnce('page:finish', () => {
+  updateHeadings([
+    ...document.querySelectorAll('h2'),
+    ...document.querySelectorAll('h3')
+  ]);
+});
+
+const scrollToHeading = (id: string) => {
+  router.push(`#${id}`)
+  emit('move', id)
+};
 </script>
 
 <style lang="scss" scoped>

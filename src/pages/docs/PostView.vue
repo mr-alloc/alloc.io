@@ -16,7 +16,7 @@
       </div>
       <div class="lg:col-span-8 " id="post-sub-container">
         <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
-          <div class="lg:col-span-8">
+          <div class="lg:col-span-8" ref="postRoot">
             <div class="relative border-b border-gray-200 dark:border-gray-800 py-8">
               <div class="mb-3 text-sm/6 font-semibold text-primary flex items-center gap-1.5">
                 <nav aria-label="Breadcrumb" class="relative min-w-0">
@@ -49,7 +49,7 @@
             </div>
             <div class="mt-8 pb-24 dark:text-gray-300 dark:prose-pre:!bg-gray-800/60 prose prose-primary dark:prose-invert max-w-none" id="document-content">
               <TagArea :tags="state.post?.tags" />
-              <div class="post-content">
+              <div class="post-content" ref="postContentDiv">
                 <PostContentDecorator :metadata="state.post.metadata" />
               </div>
             </div>
@@ -61,7 +61,7 @@
                   <span class="font-semibold text-sm/6 truncate">Table of Contents</span>
                   <span class="iconify i-ph:caret-down lg:!hidden ms-auto transform transition-transform duration-200 flex-shrink-0 mr-1.5 w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 -rotate-90" aria-hidden="true"></span>
                 </button>
-                <TableOfContents :headline="state.postContent.header.rootHeadLine" :is-inner="false" :active-ids="activeHeadingIds"/>
+                <TableOfContents :headline="state.postContent.header.rootHeadLine" :is-inner="false" />
               </div>
             </nav>
           </div>
@@ -83,7 +83,7 @@ import {usePostContentStore} from "@/store/PostContentStore";
 import PostContentDecorator from "@/components/layout/content/PostContentDecorator.vue";
 
 const photoViewStore = usePhotoViewStatusStore();
-const prepareStore = usePagePrepareStore();
+const postRoot = ref<HTMLDivElement|null>(null);
 const postContentStore = usePostContentStore();
 const route = useRoute();
 
@@ -93,45 +93,6 @@ const state = reactive({
   post: PagePost.of(postContent)
 });
 
-const activeHeadingIds = ref<Array<string>>([]);
-
-const observerCallback: IntersectionObserverCallback = (entries) => {
-  const temporaryIds = new Array<string>();
-  entries.forEach(entry => {
-    const id = entry.target.getAttribute('id') as string;
-    if (entry.isIntersecting) {
-      if (!activeHeadingIds.value.includes(id)) {
-        activeHeadingIds.value.push(id)
-        temporaryIds.push(id);
-      }
-    } else {
-      const index = activeHeadingIds.value.indexOf(id)
-      if (index > -1) {
-        activeHeadingIds.value.splice(index, 1)
-      }
-    }
-  })
-}
-
-const observer = ref<IntersectionObserver|null>(null)
-
-onMounted(() => {
-  observer.value = new IntersectionObserver(observerCallback, {
-    rootMargin: '-100px 0px -66% 0px'
-  });
-
-  // TOC 데이터 구조 생성 및 헤더 요소 관찰 시작
-  const headers = document.querySelectorAll('.post-content h1, h2, h3, h4, h5, h6');
-  headers.forEach(header => {
-    observer.value?.observe(header)
-  });
-});
-
-onUnmounted(() => {
-  if (observer.value) {
-    observer.value.disconnect()
-  }
-})
 </script>
 <style lang="scss" scoped>
 @import '@styles/index';

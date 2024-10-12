@@ -12,7 +12,7 @@
       <div class="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap text-ellipsis overflow-hidden" >
         <span aria-hidden="true">{{ props.header.currentPosition }} At <strong>{{ props.header.currentCompany }}</strong></span>
         </div>
-      <div class="font-small-medium flex justify-start items-center">
+      <div class="font-small-medium flex justify-start items-center text-gray-500 dark:text-gray-400">
         <span class="px-1.5">
           <FontAwesomeIcon class="clock-icon" :icon="['fa', 'clock']"/>
         </span>

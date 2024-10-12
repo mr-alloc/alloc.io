@@ -1,6 +1,11 @@
 import TocNode from "~/core/classes/TocNode";
 
-const headlineRE = /^(##{0,5})\s+([^\n]+)/gm
+const headlineRE = () => {
+    return /^(#{2,3})\s+([^\n]+)/gm;
+}
+
+
+
 export default (content: string) =>  {
     const lines = content.split('\n');
     const rootNode = new TocNode(0, 'root');
@@ -19,9 +24,9 @@ export default (content: string) =>  {
         }
     }
 
-    lines.filter(line => headlineRE.test(line))
+    lines.filter(line => headlineRE().test(line))
         .forEach(line => {
-            const executed = line.match(headlineRE) &&  headlineRE.exec(line)
+            const executed = line.match(headlineRE()) &&  headlineRE().exec(line)
             if (executed) {
                 const node = new TocNode(executed[1].length, executed[2].trim())
                 addHeadline(node)
