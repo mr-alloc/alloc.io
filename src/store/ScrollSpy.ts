@@ -37,7 +37,7 @@ export const useScrollspy = () => {
     })
 
     // Create intersection observer
-    onBeforeMount(() => observer.value?.disconnect());
+    onBeforeMount(() => (observer.value = new IntersectionObserver(observerCallback)));
 
     // Destroy it
     onBeforeUnmount(() => observer.value?.disconnect());

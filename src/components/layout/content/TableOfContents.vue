@@ -22,7 +22,7 @@ import {useScrollspy} from "@/store/ScrollSpy";
 const router = useRouter();
 const nuxtApp = useNuxtApp();
 
-const { activeHeadings, updateHeadings } = useScrollspy()
+const { activeHeadings, updateHeadings } = useScrollspy();
 const props = defineProps<{
   headline: TocNode,
   isInner: boolean,
