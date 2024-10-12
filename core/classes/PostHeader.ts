@@ -10,6 +10,7 @@ export default class PostHeader {
     private static readonly HEADLINES = "headlines";
     private static readonly DATE = "date";
     private static readonly LAYOUT = "layout";
+    private static readonly CATEGORIES = "categories";
 
     private readonly _value: any;
 
@@ -52,6 +53,10 @@ export default class PostHeader {
 
     public hide(defaultValue: boolean): boolean {
         return this._value[PostHeader.HIDE] ?? defaultValue;
+    }
+
+    public categories(): Array<String> {
+        return this._value[PostHeader.CATEGORIES] ?? [];
     }
 
     public static of(value: any): PostHeader {

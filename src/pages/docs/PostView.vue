@@ -11,7 +11,16 @@
     <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
       <div class="lg:col-span-2">
         <aside class="hidden overflow-y-auto lg:block lg:max-h-[calc(100vh-var(--header-height))] lg:sticky lg:top-[--header-height] py-8 lg:px-4 lg:-mx-4">
-
+          <div class="relative">
+            <div class="space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0 select-none">
+              <div class="flex items-center gap-1.5 lg:gap-2 group text-primary font-semibold">
+                <div class="rounded-md p-1 inline-flex ring-inset ring-1 bg-primary ring-primary text-background">
+                  <span class="iconify i-ph:algorithm w-4 h-4 flex-shrink-0" aria-hidden="true"></span>
+                </div>
+                <span class="text-sm/6 relative">알고리즘</span>
+              </div>
+            </div>
+          </div>
         </aside>
       </div>
       <div class="lg:col-span-8 " id="post-sub-container">
@@ -92,7 +101,6 @@ const state = reactive({
   postContent: postContent,
   post: PagePost.of(postContent)
 });
-
 </script>
 <style lang="scss" scoped>
 @import '@styles/index';

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Heap sort (힙 정렬) feat.java
-categories: [Development, Algorithm]
+categories: [algorithm]
 tags: [Java, Algorithm, Sort, Heap Sort, Heap]
 date: 2022-05-06 20:53:00 +0900
 profile-image: /blogging/profile/profile4.jpeg
