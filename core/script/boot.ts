@@ -78,19 +78,21 @@ const posts = postDataList
         return post
     });
 
-createSitemap().then((data: any) => {
-    const file = data.toString().replace(/\\(.)/mg, '$1');
-    refresh(__SITEMAP__, file, true)
-});
+export default async () => {
 
-/* posting list data */
-refresh(__POSTS__, posts)
+    /* posting list data */
+    console.log('포스트 리프레시')
+    await refresh(__POSTS__, posts)
 
-/* routing paths for routing */
-refresh(__KEYS__, routePaths)
+    console.log('키 리프레시')
+    /* routing paths for routing */
+    await refresh(__KEYS__, routePaths)
 
-
-
+    await createSitemap().then((data: any) => {
+        const file = data.toString().replace(/\\(.)/mg, '$1');
+        refresh(__SITEMAP__, file, true)
+    });
+}
 
 
 
