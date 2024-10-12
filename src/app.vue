@@ -5,14 +5,16 @@
       <ClientOnly>
         <BackdropCurtain />
       </ClientOnly>
-      <NuxtPage class="mx-auto current-content" id="current-content-element" :page-key="route.fullPath" :keepalive="false" />
+      <Transition name="page">
+        <NuxtPage class="mx-auto current-content" id="current-content-element" :page-key="route.fullPath" :keepalive="false" />
+      </Transition>
     </main>
     <div class="background" :class="[
         photoViewStatus.isPhotoView || searchStatus.isSearchMode
         ? ['z-50', 'fixed', 'inset-0', 'overflow-y-auto', 'transition-opacity', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : []
         ]"
          v-on:click="methods.clickBackground($event)">
-      <div class="flex min-h-full items-end sm:items-center justify-center text-center p-0 sm:p-4">
+      <div class="flex min-h-full items-end sm:items-center justify-center text-center p-0 sm:p-4" v-if="!photoViewStatus.isPhotoView">
         <SearchView />
       </div>
       <PhotoView v-if="photoViewStatus.isPhotoView" v-on:click="$event.stopPropagation()" />

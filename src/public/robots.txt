@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://devis.kr/sitemap.xml
+Sitemap: https://olo.dev/sitemap.xml
