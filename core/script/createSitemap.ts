@@ -1,10 +1,11 @@
 import { SitemapStream, streamToPromise } from 'sitemap'
 import { Readable } from 'stream'
 import packageJson from '~/package.json'
-import keys from '@/static/keys.json'
+import {read} from "@core/util/FileUtil";
 
 export default () => {
-    const links = keys.map(key => {
+    const keys: Array<string> = JSON.parse(read('/src/static/keys.json'));
+    const links = keys.map((key: string) => {
         return {
             //리디렉션
             url: key + '/'
