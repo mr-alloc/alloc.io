@@ -11,5 +11,5 @@ yarn.lock
 package-lock.json
 .idea
 /static/*
-!/static/file-name.json
-!/static/keys.json
+!/src/static/post.json
+!/stc/static/keys.json

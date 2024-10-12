@@ -5,9 +5,7 @@
       <ClientOnly>
         <BackdropCurtain />
       </ClientOnly>
-      <Transition name="page">
-        <NuxtPage class="mx-auto current-content" id="current-content-element" :page-key="route.fullPath" :keepalive="false" />
-      </Transition>
+      <NuxtPage class="mx-auto current-content" id="current-content-element" :page-key="route.fullPath" :keepalive="false" />
     </main>
     <div class="background" :class="[
         photoViewStatus.isPhotoView || searchStatus.isSearchMode
