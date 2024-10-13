@@ -4,6 +4,7 @@ import Header from "@/classes/implement/Header";
 import postJson from '@/static/posts.json';
 import type StarterService from "@/service/StarterService";
 import {usePostContentStore} from "@/store/PostContentStore";
+import {useCategoriesStore} from "@/store/CategoriesStore";
 
 
 // @ts-ignore
@@ -38,13 +39,17 @@ class DefaultStarterService implements StarterService {
 
                 // 새로고침시 피드용만 초기화
                 if (this.isInitialized) return
-
+                //포스팅용
                 postContentStore.add(post)
 
                 if(post.header) {
                     this.setTags(post.header, post.path)
                 }
-            })
+            });
+
+        if (this.isInitialized) {
+            return;
+        }
 
     }
 

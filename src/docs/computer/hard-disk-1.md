@@ -1,7 +1,7 @@
 ---
 layout: post
 title: HDD(Hard Drive Disk)는 어떻게 동작하는가
-categories: [Development, Computer]
+categories: [computer]
 tags: [HDD, Hard Drive Disk, 하드디스크, Hardware, 하드웨어, 저장장치, 컴퓨터]
 date: 2023-09-19 21:16:00 +0900
 thumbnail: /blogging/computer/hdd.png

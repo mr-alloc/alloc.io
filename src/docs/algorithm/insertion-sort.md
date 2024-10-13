@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 삽입 정렬 알아보기(Java)
-categories: [Development, Algorithm]
+categories: [algorithm]
 tags: [Java, Algorithm, Sort, Insertion Sort]
 date: 2022-04-21 23:25:00 +0900
 thumbnail: /blogging/algorithm/insertion_sort_intro.png
@@ -9,7 +9,7 @@ current-company: Herit Corporation
 current-position: Backend Server Developer
 summary: 삽입 정렬 알아보기
 excerpt-separator: <!--more-->
-hide: true
+hide: false
 ---
 이번 포스팅 순서는, 
 기본 정렬 알고리즘중 하나인 삽입 정렬(Insertion Sort)입니다.

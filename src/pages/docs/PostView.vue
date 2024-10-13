@@ -10,18 +10,7 @@
     </Head>
     <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
       <div class="lg:col-span-2">
-        <aside class="hidden overflow-y-auto lg:block lg:max-h-[calc(100vh-var(--header-height))] lg:sticky lg:top-[--header-height] py-8 lg:px-4 lg:-mx-4">
-          <div class="relative">
-            <div class="space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0 select-none">
-              <div class="flex items-center gap-1.5 lg:gap-2 group text-primary font-semibold">
-                <div class="rounded-md p-1 inline-flex ring-inset ring-1 bg-primary ring-primary text-background">
-                  <span class="iconify i-ph:algorithm w-4 h-4 flex-shrink-0" aria-hidden="true"></span>
-                </div>
-                <span class="text-sm/6 relative">알고리즘</span>
-              </div>
-            </div>
-          </div>
-        </aside>
+        <PostCategories />
       </div>
       <div class="lg:col-span-8 " id="post-sub-container">
         <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
@@ -83,24 +72,31 @@
 import {useRoute} from "vue-router";
 import PagePost from "@/classes/implement/PagePost";
 import {reactive} from "vue";
-import {usePagePrepareStore} from "@/store/PreparePostStore";
 import appCache from "@/store/appCache";
-import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import TableOfContents from "@/components/layout/content/TableOfContents.vue";
 import TagArea from "@/components/layout/content/post-card/TagArea.vue";
 import {usePostContentStore} from "@/store/PostContentStore";
 import PostContentDecorator from "@/components/layout/content/PostContentDecorator.vue";
+import {useCategoriesStore} from "@/store/CategoriesStore";
+import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
 
-const photoViewStore = usePhotoViewStatusStore();
 const postRoot = ref<HTMLDivElement|null>(null);
 const postContentStore = usePostContentStore();
 const route = useRoute();
 
+const categoriesStore = useCategoriesStore();
 const postContent = postContentStore.get(route.path);
 const state = reactive({
   postContent: postContent,
   post: PagePost.of(postContent)
 });
+
+onMounted(() => {
+  const contents = postContentStore.values()
+      .filter(post => post.header.layout === 'post');
+  categoriesStore.initialize(contents);
+});
+
 </script>
 <style lang="scss" scoped>
 @import '@styles/index';

@@ -1,10 +1,10 @@
 import { Dirent } from 'node:fs';
+import {existsIcon, readDirectory} from "@core/util/FileUtil";
 import type PostData from "@core/classes/PostData";
 import FileNode from "@core/classes/FileNode";
 import Filename from "@core/classes/Filename";
 import readMarkdown from "@core/script/readMarkdown";
 import Path from "@core/classes/Path";
-import {existsIcon, readDirectory} from "@core/util/FileUtil";
 import exclude from "@core/script/excludeFileName";
 import createSitemap from "@core/script/createSitemap";
 import refresh from "@core/script/refresh";
@@ -78,21 +78,16 @@ const posts = postDataList
         return post
     });
 
-export default async () => {
 
-    /* posting list data */
-    console.log('포스트 리프레시')
-    await refresh(__POSTS__, posts)
+refresh(__POSTS__, posts)
 
-    console.log('키 리프레시')
-    /* routing paths for routing */
-    await refresh(__KEYS__, routePaths)
+/* routing paths for routing */
+refresh(__KEYS__, routePaths)
 
-    await createSitemap().then((data: any) => {
-        const file = data.toString().replace(/\\(.)/mg, '$1');
-        refresh(__SITEMAP__, file, true)
-    });
-}
+createSitemap().then((data: any) => {
+    const file = data.toString().replace(/\\(.)/mg, '$1');
+    refresh(__SITEMAP__, file, true)
+});
 
 
 

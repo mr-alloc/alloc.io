@@ -1,7 +1,7 @@
 ---
 layout: post
 title: -Algorithm- Selection Sort (선택정렬 알고리즘) feat.java
-categories: [Development, Algorithm]
+categories: [algorithm]
 tags: [Java, Algorithm, Sort, Selection Sort]
 date: 2022-04-04 23:34:00 +0900
 thumbnail: /blogging/algorithm/selection_sort_intro.png
@@ -9,7 +9,7 @@ current-company: Herit Corporation
 current-position: Backend Server Developer
 summary: 선택 정렬
 excerpt-separator: <!--more-->
-hide: true
+hide: false
 ---
 기본 정렬 알고리즘중 하나인 선택 정렬(Selection Sort)입니다.
 간단한 그림과 함께 쉽게 이해할 수 있도록 정리했어요.
