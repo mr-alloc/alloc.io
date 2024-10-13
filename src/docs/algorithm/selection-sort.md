@@ -9,7 +9,7 @@ current-company: Herit Corporation
 current-position: Backend Server Developer
 summary: 선택 정렬
 excerpt-separator: <!--more-->
-hide: false
+hide: true
 ---
 기본 정렬 알고리즘중 하나인 선택 정렬(Selection Sort)입니다.
 간단한 그림과 함께 쉽게 이해할 수 있도록 정리했어요.
