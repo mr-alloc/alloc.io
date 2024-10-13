@@ -9,7 +9,7 @@ current-company: Herit Corporation
 current-position: Backend Server Developer
 summary: 삽입 정렬 알아보기
 excerpt-separator: <!--more-->
-hide: false
+hide: true
 ---
 이번 포스팅 순서는, 
 기본 정렬 알고리즘중 하나인 삽입 정렬(Insertion Sort)입니다.
