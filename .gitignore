@@ -11,5 +11,3 @@ yarn.lock
 package-lock.json
 .idea
 /static/*
-!/src/static/post.json
-!/stc/static/keys.json

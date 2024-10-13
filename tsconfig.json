@@ -1,5 +1,6 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
+  //여기서는 .nuxt/tsconfig가 필요한데, .nuxt 디렉토리를 삭제하고 tsconfig를 사용하면 정상적으로 동작하지않는다.
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",

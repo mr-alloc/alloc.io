@@ -3766,6 +3766,20 @@
     --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800px' height='800px' viewBox='0 0 64 64' stroke-width='3.2' stroke='%23000000' fill='none'%3E%3Cscript xmlns=''/%3E%3Cg id='SVGRepo_bgCarrier' stroke-width='0'/%3E%3Cg id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cg id='SVGRepo_iconCarrier'%3E%3Ccircle cx='34.52' cy='11.43' r='5.82'/%3E%3Ccircle cx='53.63' cy='31.6' r='5.82'/%3E%3Ccircle cx='34.52' cy='50.57' r='5.82'/%3E%3Ccircle cx='15.16' cy='42.03' r='5.82'/%3E%3Ccircle cx='15.16' cy='19.27' r='5.82'/%3E%3Ccircle cx='34.51' cy='29.27' r='4.7'/%3E%3Cline x1='20.17' y1='16.3' x2='28.9' y2='12.93'/%3E%3Cline x1='38.6' y1='15.59' x2='49.48' y2='27.52'/%3E%3Cline x1='50.07' y1='36.2' x2='38.67' y2='46.49'/%3E%3Cline x1='18.36' y1='24.13' x2='30.91' y2='46.01'/%3E%3Cline x1='20.31' y1='44.74' x2='28.7' y2='48.63'/%3E%3Cline x1='17.34' y1='36.63' x2='31.37' y2='16.32'/%3E%3Cline x1='20.52' y1='21.55' x2='30.34' y2='27.1'/%3E%3Cline x1='39.22' y1='29.8' x2='47.81' y2='30.45'/%3E%3Cline x1='34.51' y1='33.98' x2='34.52' y2='44.74'/%3E%3C/g%3E%3Cscript xmlns=''/%3E%3C/svg%3E")
 }
 
+:where(.i-ph\:development) {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800px' height='800px' viewBox='0 0 24 24' fill='none'%3E%3Cscript xmlns=''/%3E%3Cg id='SVGRepo_bgCarrier' stroke-width='0'/%3E%3Cg id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cg id='SVGRepo_iconCarrier'%3E%3Cpath d='M7 8L3 11.6923L7 16M17 8L21 11.6923L17 16M14 4L10 20' stroke='%23000000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/g%3E%3Cscript xmlns=''/%3E%3C/svg%3E")
+}
+
 :where(.i-simple-icons\:discord) {
     display: inline-block;
     width: 1em;
