@@ -8,7 +8,7 @@ current-company: NEOWIZ
 current-position: Software Engineer
 summary: 원자란?
 excerpt-separator: <!--more-->
-hide: false
+hide: true
 ---
 
 <!--more-->
