@@ -10,7 +10,7 @@
     </Head>
     <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
       <div class="lg:col-span-2">
-        <PostCategories />
+        <PostCategories :groups="state.postContent.header.categories ?? []" />
       </div>
       <div class="lg:col-span-8 " id="post-sub-container">
         <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
