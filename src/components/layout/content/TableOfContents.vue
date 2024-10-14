@@ -36,18 +36,18 @@ const config = {
   depth: 'ml-3'
 }
 
-const emit = defineEmits(['move'])
-nuxtApp.hooks.hookOnce('page:finish', () => {
-  updateHeadings([
-    ...document.querySelectorAll('h2'),
-    ...document.querySelectorAll('h3')
-  ]);
-});
-
+const emit = defineEmits(['move']);
 const scrollToHeading = (id: string) => {
   router.push(`#${id}`)
   emit('move', id)
 };
+
+onMounted(() => {
+  updateHeadings([
+    ...document.querySelectorAll('h2'),
+    ...document.querySelectorAll('h3')
+  ]);
+})
 </script>
 
 <style lang="scss" scoped>
