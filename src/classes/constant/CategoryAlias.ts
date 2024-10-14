@@ -4,6 +4,7 @@ export class CategoryAlias {
 
     private static readonly DEVELOPMENT = new CategoryAlias('development', '개발');
     private static readonly ALGORITHM = new CategoryAlias('algorithm', '알고리즘');
+    private static readonly TYPESCRIPT = new CategoryAlias('typescript', '타입스크립트');
     private static readonly ETC = new CategoryAlias('etc', '기타');
 
     private static readonly CACHED = toMap(this.values(), (alias) => alias.name);
@@ -25,7 +26,7 @@ export class CategoryAlias {
     }
 
     private static values(): Array<CategoryAlias> {
-        return [this.DEVELOPMENT, this.ALGORITHM, this.ETC];
+        return [this.DEVELOPMENT, this.ALGORITHM, this.TYPESCRIPT, this.ETC];
     }
 
 

@@ -1,12 +1,11 @@
 <script setup lang="ts">
 
 import {usePostContentStore} from "@/store/PostContentStore";
-import {useCategoriesStore} from "@/store/CategoriesStore";
 import type ICategoryNode from "@/classes/ICategoryNode";
 import {ref} from "@vue/reactivity";
 import CategoryContent from "@/classes/implement/CategoryContent";
 import CategoryGroup from "@/classes/implement/CategoryGroup";
-import {CategoryAlias} from "@/classes/constant/CategoryAlias";
+import PostCategoryTree from "@/components/layout/sidebar/PostCategoryTree.vue";
 
 const postContentStore = usePostContentStore();
 const categories = ref<Array<ICategoryNode>>(new Array<ICategoryNode>());
@@ -48,9 +47,12 @@ const ui = {
   icon: {
     default: 'rounded-md p-1 inline-flex ring-inset ring-1 bg-gray-100/50 dark:bg-gray-800/50 ring-gray-300 dark:ring-gray-700 group-hover:bg-primary group-hover:ring-primary group-hover:text-background',
     active: 'rounded-md p-1 inline-flex ring-inset ring-1 bg-primary ring-primary text-background',
-    wrapper: 'flex items-center gap-1.5 lg:gap-2 group text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 font-medium'
+    wrapper: 'flex items-center gap-1.5 lg:gap-2 group text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 font-medium cursor-pointer'
   },
 }
+defineProps<{
+  groups: Array<string>
+}>();
 </script>
 
 <style scoped lang="scss">
@@ -59,16 +61,9 @@ const ui = {
 <template>
   <aside class="hidden overflow-y-auto lg:block lg:max-h-[calc(100vh-var(--header-height))] lg:sticky lg:top-[--header-height] py-8 lg:px-4 lg:-mx-4">
     <div class="relative">
-      <div class="space-y-3 mb-3 lg:mb-6 -mx-1 lg:mx-0 select-none">
-        <div :class="ui.icon.wrapper"
-             v-for="category in categories.filter(cat => cat.isDirectory) as Array<ICategoryNode>"
-             :key="category.name">
-          <div :class="ui.icon.default">
-            <span :class="`iconify i-ph:${CategoryAlias.find(category.name).name} w-4 h-4 flex-shrink-0`" aria-hidden="true"></span>
-          </div>
-          <span class="text-sm/6 relative">{{ CategoryAlias.find(category.name).alias }}</span>
-        </div>
-      </div>
+      <ul class="m-0">
+        <PostCategoryTree :categories="categories" :groups="groups" :depth="0"/>
+      </ul>
     </div>
   </aside>
 </template>
