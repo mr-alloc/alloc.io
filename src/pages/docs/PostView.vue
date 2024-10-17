@@ -10,7 +10,7 @@
     </Head>
     <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
       <div class="lg:col-span-2">
-        <PostCategories :groups="state.postContent.header.categories ?? []" />
+        <PostCategories :groups="state.postContent.header.categories ?? []" :path="state.postContent.path" />
       </div>
       <div class="lg:col-span-8 " id="post-sub-container">
         <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="mt-8 pb-24 dark:text-gray-300 dark:prose-pre:!bg-gray-800/60 prose prose-primary dark:prose-invert max-w-none" id="document-content">
-              <TagArea :tags="state.post?.tags" />
+<!--              <TagArea :tags="state.post?.tags" />-->
               <div class="post-content" ref="postContentDiv">
                 <PostContentDecorator :metadata="state.post.metadata" />
               </div>

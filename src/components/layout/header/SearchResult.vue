@@ -1,9 +1,7 @@
 <template>
   <div class="search-result-row">
-    <div class="category-icon-area">
-      <span class="category-icon">
-        <img :src="`/icon/${props.row.icon}.png`" alt="Category Image"/>
-      </span>
+    <div class="flex shrink-0 justify-center pt-4 mx-4">
+      <span class="iconify text-2xl" :class="`i-ph:${props.row.icon}`"/>
     </div>
     <div class="detected-content-area">
       <ul class="detected-list">
@@ -63,17 +61,6 @@ const goTo = (path: string) => {
     width: 55px;
     justify-content: center;
     padding-top: 7px;
-
-    .category-icon {
-      display: inline-block;
-      height: 25px;
-      border: 0.88px $linear-color solid;
-      border-radius: 3px;
-
-      img {
-        width: $small-icon-size;
-      }
-    }
   }
 
   .detected-content-area {

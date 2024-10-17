@@ -39,23 +39,23 @@ export default class Header {
         this._rootHeadLine = TocNode.createRecursive(header.headlines);
     }
     get layout(): string {
-        return this._layout
+        return this._layout;
     }
 
     get title(): string {
-        return this._title
+        return this._title;
     }
 
     get categories(): string[] {
-        return this._categories
+        return this._categories;
     }
 
     get tags(): string[] {
-        return this._tags
+        return this._tags;
     }
 
     get date(): Date {
-        return this._date
+        return this._date;
     }
 
     get images(): Image[] {

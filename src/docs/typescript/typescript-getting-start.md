@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 타입스크립트 시작하기 1 (소개)
-categories: [development]
+categories: [language, typescript]
 tags: [Typescript, Javascript, Type]
 date: 2023-04-15 19:01:00 +0900
 current-company: NEOWIZ
@@ -10,7 +10,7 @@ profile-image: /blogging/profile/profile1.JPG
 thumbnail: /blogging/typescript/typescript_getting_start.png
 summary: 타입스크립트 소개
 excerpt-separator: <!--more-->
-hide: true
+hide: false
 ---
 타입스크립트 시작하기.
 도대체 왜 사용하는거고, 뭐가 좋은걸까?
