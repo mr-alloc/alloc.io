@@ -5,8 +5,8 @@
     </div>
     <nuxt-link v-bind:to="props.path" v-if="props.header.layout === 'post'">
       <div class="post-default-image">
-        <div class="default-image-wrapper">
-          <img :src="props.header.thumbnail" alt="profile thumbnail" />
+        <div class="select-none">
+          <img class="dark:brightness-75" :src="props.header.thumbnail" alt="profile thumbnail" />
         </div>
         <div class="post-title-box ring-prima">
           <span class="post-title">{{ props.header.summary }}</span>

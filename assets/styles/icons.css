@@ -1857,6 +1857,10 @@
     --tw-ring-color: rgb(var(--color-primary-400)/var(--tw-ring-opacity))
 }
 
+dark\:brightness-75:is(.dark *) {
+    filter: brightness(75%)
+}
+
 @media (min-width: 640px) {
     .sm\:-mx-6 {
         margin-left: -1.5rem;
