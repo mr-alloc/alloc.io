@@ -5,7 +5,7 @@
     }">
       <a class="block text-sm/6 truncate"
          :href="`#${child.fragmentId}`"
-         :class="activeHeadings.includes(decodeURIComponent(child.fragmentId)) ? config.active : config.inactive"
+         :class="scrollspy.activeHeadings.includes(decodeURIComponent(child.fragmentId)) ? config.active : config.inactive"
          @click.prevent="scrollToHeading(child.fragmentId)"
       > {{ child.title }}</a>
       <TableOfContents  v-if="child.children.length > 0" :headline="child" :is-inner="true" />
@@ -16,12 +16,11 @@
 <script lang="ts" setup>
 import TocNode from "@/classes/implement/TocNode";
 import TableOfContents from "@/components/layout/content/TableOfContents.vue";
-import {slugify} from "@/utils/StringUtils";
 import {useScrollspy} from "@/store/ScrollSpy";
 
 const router = useRouter();
 
-const { activeHeadings, updateHeadings } = useScrollspy();
+const scrollspy = useScrollspy();
 const props = defineProps<{
   headline: TocNode,
   isInner: boolean,
@@ -42,7 +41,7 @@ const scrollToHeading = (id: string) => {
 };
 
 onMounted(() => {
-  updateHeadings([
+  scrollspy.updateHeadings([
     ...document.querySelectorAll('h2'),
     ...document.querySelectorAll('h3')
   ]);
