@@ -1,16 +1,16 @@
 <template>
   <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
     <Head>
-      <Meta property="og:title" v-bind:content="state.post.title.replace('\n', '')" />
-      <Meta property="og:description" v-bind:content="state.postContent.description.replace('\n', '')" />
-      <Meta property="og:image" v-bind:content="state.postContent.header.thumbnail" />
+      <Meta property="og:title" v-bind:content="content?.header.title" />
+      <Meta property="og:description" v-bind:content="content?.description" />
+      <Meta property="og:image" v-bind:content="content?.header.thumbnail" />
       <Meta property="og:url" v-bind:content="appCache.blogInfo.domain + route.fullPath" />
-      <Meta name="description" :content="state.postContent?.description.replace('\n', '')"/>
-      <Title>{{ state.postContent.header.summary }}</Title>
+      <Meta name="description" :content="content?.description"/>
+      <Title>{{ content?.header.summary }}</Title>
     </Head>
     <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
       <div class="lg:col-span-2">
-        <PostCategories :groups="state.postContent.header.categories ?? []" :path="state.postContent.path" />
+        <PostCategories :groups="content?.header.categories ?? []" :path="content?.path" />
       </div>
       <div class="lg:col-span-8 " id="post-sub-container">
         <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
@@ -20,16 +20,16 @@
                 <nav aria-label="Breadcrumb" class="relative min-w-0">
                   <ol class="flex items-center gap-x-1.5">
                     <li class="flex items-center gap-x-1.5 text-gray-500 dark:text-gray-400 text-sm leading-6 min-w-0"
-                        v-for="(snippet, index) in state.postContent.header.breadcrumbs.slice(0, state.postContent.header.breadcrumbs.length)">
+                        v-for="(snippet, index) in content?.header.breadcrumbs.slice(0, content?.header.breadcrumbs.length)">
                       <a class="flex items-center gap-x-1.5 group cursor-pointer font-semibold min-w-0"
-                         :class="index === state.postContent.header.breadcrumbs.length -1
+                         :class="index === content?.header.breadcrumbs.length -1
                          ? ['text-primary-500', 'dark:text-primary-400']
                          : ['hover:text-gray-700', 'dark:hover:text-gray-200']"
                       >
                         <span class="block truncate">{{ snippet }}</span>
                       </a>
                       <span class="iconify i-ph:caret-right flex-shrink-0 rtl:rotate-180 w-4 h-4"
-                            v-if="index !== state.postContent.header.breadcrumbs.length -1"
+                            v-if="index !== content?.header.breadcrumbs.length -1"
                             aria-hidden="true" role="presentation"></span>
                     </li>
                   </ol>
@@ -39,16 +39,15 @@
                 <div class="flex-1">
                   <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                     <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
-                      {{ state.postContent.header.title }}
+                      {{ content?.header.title }}
                     </h1>
                   </div>
                 </div>
               </div>
             </div>
             <div class="mt-8 pb-24 dark:text-gray-300 dark:prose-pre:!bg-gray-800/60 prose prose-primary dark:prose-invert max-w-none" id="document-content">
-<!--              <TagArea :tags="state.post?.tags" />-->
               <div class="post-content" ref="postContentDiv">
-                <PostContentDecorator :metadata="state.post.metadata" />
+                <PostContentDecorator :metadata="content" />
               </div>
             </div>
           </div>
@@ -59,7 +58,7 @@
                   <span class="font-semibold text-sm/6 truncate">Table of Contents</span>
                   <span class="iconify i-ph:caret-down lg:!hidden ms-auto transform transition-transform duration-200 flex-shrink-0 mr-1.5 w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 -rotate-90" aria-hidden="true"></span>
                 </button>
-                <TableOfContents :headline="state.postContent.header.rootHeadLine" :is-inner="false" />
+                <TableOfContents :headline="content?.header.rootHeadLine" :is-inner="false" />
               </div>
             </nav>
           </div>
@@ -70,26 +69,18 @@
 </template>
 <script lang="ts" setup>
 import {useRoute} from "vue-router";
-import PagePost from "@/classes/implement/PagePost";
-import {reactive} from "vue";
 import appCache from "@/store/appCache";
 import TableOfContents from "@/components/layout/content/TableOfContents.vue";
-import TagArea from "@/components/layout/content/post-card/TagArea.vue";
 import {usePostContentStore} from "@/store/PostContentStore";
 import PostContentDecorator from "@/components/layout/content/PostContentDecorator.vue";
 import {useCategoriesStore} from "@/store/CategoriesStore";
 import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
 
-const postRoot = ref<HTMLDivElement|null>(null);
 const postContentStore = usePostContentStore();
 const route = useRoute();
 
 const categoriesStore = useCategoriesStore();
-const postContent = postContentStore.get(route.path);
-const state = reactive({
-  postContent: postContent,
-  post: PagePost.of(postContent)
-});
+const content = postContentStore.get(route.path);
 
 onMounted(() => {
   const contents = postContentStore.values()

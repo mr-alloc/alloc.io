@@ -95,7 +95,6 @@ const methods = {
             return RE.test(title)
           })
           .map(content => new PostSearchResult(content));
-      console.log('results', results);
       methods.deployResult(results);
     }
   },
