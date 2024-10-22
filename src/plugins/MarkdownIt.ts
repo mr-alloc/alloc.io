@@ -13,6 +13,17 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     DecoratorProvider.provide(RuleType.CODE_BLOCK).decorate(markdownIt);
 
     markdownIt.use(await shiki({
+        transformers: [
+            {
+                code(hast) {
+                    const original: string = hast.properties['class'] as string;
+                    const classes = original?.split(' ');
+                    classes.push('text-nowrap');
+                    hast.properties['class'] = classes.join(' ');
+                    return hast;
+                }
+            }
+        ],
         themes: {
             light: 'catppuccin-frappe',
             dark: 'catppuccin-mocha'
