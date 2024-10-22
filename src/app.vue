@@ -13,7 +13,7 @@
         ]"
          v-on:click="methods.clickBackground($event)">
       <div class="flex min-h-full items-end sm:items-center justify-center text-center p-0 sm:p-4" v-if="!photoViewStatus.isPhotoView">
-        <SearchView />
+        <SearchView v-if="searchStatus.isSearchMode" />
       </div>
       <PhotoView v-if="photoViewStatus.isPhotoView" v-on:click="$event.stopPropagation()" />
     </div>

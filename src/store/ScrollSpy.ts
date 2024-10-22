@@ -8,12 +8,11 @@ export const useScrollspy = () => {
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
-            const id = entry.target.id
-
+            const id = entry.target.id;
             if (entry.isIntersecting) {
-                visibleHeadings.value = [...visibleHeadings.value, id]
+                visibleHeadings.value = [...visibleHeadings.value, id];
             } else {
-                visibleHeadings.value = visibleHeadings.value.filter(h => h !== id)
+                visibleHeadings.value = visibleHeadings.value.filter(h => h !== id);
             }
         })
     }
@@ -21,18 +20,18 @@ export const useScrollspy = () => {
     const updateHeadings = (headings: Element[]) => {
         headings.forEach((heading) => {
             if (!observer.value) {
-                return
+                return;
             }
 
-            observer.value.observe(heading)
+            observer.value.observe(heading);
         })
     }
 
     watch(visibleHeadings, (val, oldVal) => {
         if (val.length === 0) {
-            activeHeadings.value = oldVal
+            activeHeadings.value = oldVal;
         } else {
-            activeHeadings.value = val
+            activeHeadings.value = val;
         }
     })
 

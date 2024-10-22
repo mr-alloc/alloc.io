@@ -56,13 +56,11 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
                 : token.content
             const lang = token.info ? token.info.trim() : 'text'
 
-            const finalCode = `<div class="language-${lang} extra-class">
+            return `<div class="relative language-${lang} extra-class">
                         <!--afterbegin-->
                         ${code}
                         <!--beforeend-->
-                    </div>`
-
-            return finalCode;
+                    </div>`;
         }
     }
 

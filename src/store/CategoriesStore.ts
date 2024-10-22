@@ -21,7 +21,7 @@ export const useCategoriesStore = defineStore('Categories', () => {
         const found = existingGroups.find(exist => exist.isDirectory && exist.name === currentGroup);
         //존재하지 않는 경우 생성
         if (!found) {
-            const newGroup = new CategoryGroup(true, currentGroup);
+            const newGroup = new CategoryGroup(true, currentGroup, false);
             existingGroups.push(newGroup);
             if (newGroups.length -1 === depth) {
                 return newGroup;

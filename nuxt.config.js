@@ -13,7 +13,7 @@ export default defineNuxtConfig({
         "@styles": fileURLToPath(new URL('./assets/styles', import.meta.url))
     },
     experimental: {
-        payloadExtraction: false
+        payloadExtraction: false,
     },
     ssr: true,
     generate: {
