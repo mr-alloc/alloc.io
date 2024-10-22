@@ -10,11 +10,12 @@ import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 const photoViewStore = usePhotoViewStatusStore();
 const prepareStore = usePagePrepareStore();
 const nuxtApp = useNuxtApp();
+const route = useRoute();
 const props = defineProps<{
   metadata: PostMetadata
 }>();
 
-const html = useState('content', () => {
+const html = useState(route.path, () => {
   const markdown = props.metadata.content;
   const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
 

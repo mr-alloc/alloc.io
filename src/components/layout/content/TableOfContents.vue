@@ -5,7 +5,7 @@
     }">
       <a class="block text-sm/6 truncate"
          :href="`#${child.fragmentId}`"
-         :class="activeHeadings.includes(decodeURI(child.fragmentId)) ? config.active : config.inactive"
+         :class="activeHeadings.includes(decodeURIComponent(child.fragmentId)) ? config.active : config.inactive"
          @click.prevent="scrollToHeading(child.fragmentId)"
       > {{ child.title }}</a>
       <TableOfContents  v-if="child.children.length > 0" :headline="child" :is-inner="true" />
@@ -20,7 +20,6 @@ import {slugify} from "@/utils/StringUtils";
 import {useScrollspy} from "@/store/ScrollSpy";
 
 const router = useRouter();
-const nuxtApp = useNuxtApp();
 
 const { activeHeadings, updateHeadings } = useScrollspy();
 const props = defineProps<{
