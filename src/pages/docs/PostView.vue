@@ -55,7 +55,8 @@
             <nav>
               <div class="py-3 lg:py-8 border-b border-dashed border-gray-200 dark:border-gray-800 lg:border-0 space-y-3">
                 <button class="flex items-center gap-1.5 lg:cursor-text lg:select-text w-full group" tabindex="-1">
-                  <span class="font-semibold text-sm/6 truncate">Table of Contents</span>
+                  <span class="text-sm/6 truncate sm:block block lg:hidden font-bold">{{ scrollSpy.activeHeadings[scrollSpy.activeHeadings.length - 1] }}</span>
+                  <span class="font-semibold text-sm/6 truncate sm:hidden hidden lg:block">Table Of Contents</span>
                   <span class="iconify i-ph:caret-down lg:!hidden ms-auto transform transition-transform duration-200 flex-shrink-0 mr-1.5 w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 -rotate-90" aria-hidden="true"></span>
                 </button>
                 <TableOfContents :headline="content?.header.rootHeadLine" :is-inner="false" />
@@ -75,10 +76,12 @@ import {usePostContentStore} from "@/store/PostContentStore";
 import PostContentDecorator from "@/components/layout/content/PostContentDecorator.vue";
 import {useCategoriesStore} from "@/store/CategoriesStore";
 import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
+import {useScrollspy} from "@/store/ScrollSpy";
 
 const postContentStore = usePostContentStore();
 const route = useRoute();
 
+const scrollSpy = useScrollspy();
 const categoriesStore = useCategoriesStore();
 const content = postContentStore.get(route.path);
 

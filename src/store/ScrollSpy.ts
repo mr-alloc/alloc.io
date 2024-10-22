@@ -1,5 +1,6 @@
+import {defineStore} from "pinia";
 
-export const useScrollspy = () => {
+export const useScrollspy = defineStore('scroll-spy', () => {
 
     const observer = ref<IntersectionObserver>();
     const visibleHeadings = ref<string[]>([]);
@@ -46,4 +47,4 @@ export const useScrollspy = () => {
         activeHeadings,
         updateHeadings
     }
-}
+});

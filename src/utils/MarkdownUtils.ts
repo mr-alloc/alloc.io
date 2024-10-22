@@ -1,5 +1,3 @@
-import Prism from "prismjs";
-import * as PrismUtils from "@/utils/prismUtils";
 import escapeHtml from "escape-html";
 import MarkdownIt from "markdown-it";
 
@@ -53,7 +51,5 @@ export function highlight(code: string, lang: string) {
     if (!lang) {
         return wrap(code, 'text')
     }
-
-    console.log('highlight lang:', lang);
     return wrap(code, lang);
 }
