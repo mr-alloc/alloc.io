@@ -4,6 +4,7 @@
       <div class="relative flex items-center">
         <span aria-hidden="true" class="iconify i-ph:magnifying-glass-duotone pointer-events-none absolute start-4 text-gray-400 dark:text-gray-500 h-5 w-5"></span>
         <input
+            v-model="searchStatusStore.inputValue"
             ref="searchInput"
             placeholder="Search..."
             aria-expanded="true"
@@ -55,7 +56,6 @@ const methods = {
   },
   inactivateSearchMode: () => {
     const input = searchInput.value as HTMLInputElement;
-    input.value = ''
     input.blur()
     searchStatusStore.cancelSearch();
 
