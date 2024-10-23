@@ -2,6 +2,7 @@ export default class PromptType {
 
     private static readonly NOTE = new PromptType('note');
     private static readonly TIP = new PromptType('tip');
+    private static readonly IMPORTANT = new PromptType('important');
 
     private readonly _name: string;
 
