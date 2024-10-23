@@ -1,30 +1,24 @@
 \<template>
   <div class="post-preview-header flex pt-4 px-3 mb-2">
-    <div class="profile-image">
-      <img class="bg-contain bg-no-repeat w-full h-full object-cover" :src="props.header?.profileImage ?? '/blogging/profile/default.jpeg'" alt="Profile Image" />
+    <div :class="ui.image.frame">
+      <img :class="ui.image.source" :src="props.image" alt="Profile Image" />
     </div>
-    <div class="author-info">
-      <div class="">
-        <a :href="`https://github.com/${appCache.blogInfo.fullName}`" target="_blank">
-          <span class="inline-block font-medium text-emerald-500 dark:text-emerald-50 whitespace-nowrap font" aria-hidden="true">{{ appCache.blogInfo.fullName }}</span>
-        </a>
-      </div>
-      <div class="text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap text-ellipsis overflow-hidden" >
-        <span aria-hidden="true">{{ props.header.currentPosition }} At <strong>{{ props.header.currentCompany }}</strong></span>
+    <div :class="ui.author.wrapper">
+      <a :href="`https://github.com/${props.nickname}`" target="_blank">
+        <span :class="ui.author.name" aria-hidden="true">{{ appCache.blogInfo.fullName }}</span>
+      </a>
+      <div :class="ui.author.intro" >
+        <span aria-hidden="true">{{ props.position }} At <strong>{{ props.company }}</strong></span>
         </div>
-      <div class="font-small-medium flex justify-start items-center text-gray-500 dark:text-gray-400">
-        <span class="px-1.5">
-          <FontAwesomeIcon class="clock-icon" :icon="['fa', 'clock']"/>
+      <div :class="ui.date.wrapper">
+        <span :class="ui.date.icon">
+          <FontAwesomeIcon :icon="['fa', 'clock']"/>
         </span>
-        <span class="inline-block">
-          {{ calPostDate(props.header.date.toString()) }}
-        </span>
+        <span :class="ui.date.value">{{ calPostDate(props.date) }}</span>
       </div>
     </div>
   </div>
 </template>
-
-
 <script lang="ts" setup>
 import appCache from "@/store/appCache";
 import {calPostDate} from "@/utils/DateUtils";
@@ -32,10 +26,30 @@ import Header from "@/classes/implement/Header";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const props = defineProps<{
-  header: Header,
+  image: string,
+  nickname: string,
+  position: string,
+  company: string,
+  date: string
 }>();
-</script>
 
+const ui = {
+  image: {
+    frame: 'inline-block w-14 h-14 rounded-full overflow-hidden',
+    source: 'bg-contain bg-no-repeat w-full h-full object-cover'
+  },
+  author: {
+    wrapper: 'px-2.5 w-4/5',
+    name: 'inline-block font-medium text-emerald-500 dark:text-emerald-50 whitespace-nowrap font',
+    intro: 'text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap text-ellipsis overflow-hidden'
+  },
+  date: {
+    wrapper: 'font-small-medium flex justify-start items-center text-gray-500 dark:text-gray-400',
+    icon: 'px-1.5',
+    value: 'inline-block'
+  }
+}
+</script>
 <style lang="scss" scoped>
 @import '@styles/index';
 

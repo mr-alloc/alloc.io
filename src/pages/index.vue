@@ -2,10 +2,7 @@
     <div class="relative py-0 sm:py-16 max-w-md z-30" id="main-content-body">
       <div class="grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 gap-8">
         <ClientOnly fallback-tag="span" fallback="Loading Posts...">
-          <div class="rounded-none sm:rounded-xl divide-y divide-gray-200 dark:divide-gray-800 ring-1 ring-gray-200 dark:ring-gray-800 shadow bg-white dark:bg-gray-900 relative group flex flex-col overflow-hidden group h-fit"
-               v-for="(feed, index) in appCache.feeds" v-bind:key="index">
-            <PostCard :feed="feed" />
-          </div>
+          <PostCard :feed="feed" v-for="(feed, index) in appCache.feeds" v-bind:key="index" />
         </ClientOnly>
       </div>
     </div>

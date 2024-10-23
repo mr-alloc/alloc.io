@@ -93,7 +93,7 @@ onMounted(() => {
 useHead(() => ({
   htmlAttrs: {
     lang: 'ko-kr',
-    class: computed(() => darkModeStore.isDarkMode ? 'dark' : 'light')
+    class: darkModeStore.isDarkMode ? 'dark' : 'light2'
   },
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' }
