@@ -35,9 +35,6 @@
     "date-format-parse": "^0.2.7",
     "jekyll-markdown-parser": "^4.0.0",
     "markdown-it": "^13.0.1",
-    "markdown-it-anchor": "^8.6.7",
-    "markdown-it-sub": "^1.0.0",
-    "markdown-it-table-of-contents": "^0.6.0",
     "mitt": "^3.0.0",
     "paginator": "^1.0.0",
     "pinia": "^2.0.33",
@@ -50,14 +47,11 @@
     "@types/markdown-it": "^12.2.3",
     "@types/node": "^22.5.4",
     "nuxt": "^3.13.0",
-    "path": "^0.12.7",
     "postcss": "^8.4.47",
     "sass": "^1.49.9",
     "sass-loader": "^12.6.0",
     "shiki": "^1.21.0",
-    "sitemap": "^7.1.1",
-    "tslib": "^2.7.0",
-    "tsx": "^4.19.0"
+    "sitemap": "^7.1.1"
   },
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }
