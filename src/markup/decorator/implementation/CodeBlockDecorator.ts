@@ -106,7 +106,7 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
 
         return `<div class="relative [&>pre]:!rounded-t-none [&>pre]:!my-0 my-5">
                     <div class="flex items-center gap-1.5 border border-gray-200 dark:border-gray-700 border-b-0 relative rounded-t-md px-4 py-3 not-prose">
-                        <span class="iconify i-vscode-icons:file-type-vue"></span>
+                        <span class="iconify i-vscode-icons:file-type-${getLanguageCode(filename.ext)}"></span>
                         <span class="text-gray-700 dark:text-gray-200 text-sm/6">${token.info}</span>
                     </div>
                     <button type="button" aria-label="Copy file code to clipbloard" tabindex="-1" class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 flex-shrink-0 font-medium rounded-md text-xs gap-x-1.5 p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline-offset-4 hover:underline focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center absolute top-2.5 right-2.5">
