@@ -52,6 +52,9 @@ const methods = {
   },
 }
 
+onServerPrefetch(() => {
+})
+
 onMounted(() => {
 
   const element = document.getElementById('application-container')!
@@ -82,7 +85,7 @@ onMounted(() => {
   const prefersColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
   darkModeStore.force(prefersColorScheme.matches);
 
-  //add event
+//add event
   prefersColorScheme.addEventListener('change', event => {
     darkModeStore.force(event.matches);
   });
@@ -93,7 +96,6 @@ onMounted(() => {
 useHead(() => ({
   htmlAttrs: {
     lang: 'ko-kr',
-    class: darkModeStore.isDarkMode ? 'dark' : 'light2'
   },
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' }
