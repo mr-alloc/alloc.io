@@ -1,15 +1,17 @@
-import { toMap} from "@/utils/CollectionUtil";
+import { toMap } from "@/utils/CollectionUtil";
 
 export default class FileAlias {
 
-    public static readonly DOCS = new FileAlias("docs", "문서");
-    public static readonly ALGORITHM = new FileAlias("algorithm", "알고리즘");
-    public static readonly JAVA = new FileAlias("java", "자바");
-    public static readonly JAVASCRIPT = new FileAlias("javascript", "자바스크립트");
-    public static readonly TYPESCRIPT = new FileAlias("typescript", "타입스크립트");
-    public static readonly SPRING = new FileAlias("spring", "스프링");
-    public static readonly SWIFT = new FileAlias("swift", "스위프트");
-    public static readonly TOOLS = new FileAlias("tools", "도구");
+    private static readonly DOCS = new FileAlias("docs", "문서");
+    private static readonly ALGORITHM = new FileAlias("algorithm", "알고리즘");
+    private static readonly JAVA = new FileAlias("java", "자바");
+    private static readonly JAVASCRIPT = new FileAlias("javascript", "자바스크립트");
+    private static readonly TYPESCRIPT = new FileAlias("typescript", "타입스크립트");
+    private static readonly SPRING = new FileAlias("spring", "스프링");
+    private static readonly SWIFT = new FileAlias("swift", "스위프트");
+    private static readonly TOOLS = new FileAlias("tools", "도구");
+    private static readonly OS = new FileAlias("os", "운영체제");
+
     private static readonly CACHED = toMap(FileAlias.values(), (file) => file._value);
 
     private readonly _value: string;
@@ -34,7 +36,7 @@ export default class FileAlias {
 
     public static values(): Array<FileAlias> {
         return [FileAlias.DOCS, FileAlias.ALGORITHM, FileAlias.JAVA, FileAlias.JAVASCRIPT, FileAlias.TYPESCRIPT,
-            FileAlias.SPRING, FileAlias.SWIFT, FileAlias.TOOLS]
+            FileAlias.SPRING, FileAlias.SWIFT, FileAlias.TOOLS, FileAlias.OS]
     }
 
 

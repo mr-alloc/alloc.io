@@ -40,6 +40,7 @@ import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/MarkdownUtils";
 import DecoratorProvider from "@/markup/decorator/DecoratorProvider";
 import RuleType from "@/markup/constant/RuleType";
 
+const nuxtApp = useNuxtApp();
 const photoViewStatus = usePhotoViewStatusStore()
 
 const props = defineProps<{
@@ -58,11 +59,7 @@ const methods = {
 const html = ref('');
 onMounted(() => {
 
-  const markdownIt = new MarkdownIt(DEFAULT_MARKDOWN_IT_OPTIONS);
-
-  DecoratorProvider.provide(RuleType.BLOCK_QUOTE).decorate(markdownIt);
-  DecoratorProvider.provide(RuleType.HEADLINE).decorate(markdownIt);
-  DecoratorProvider.provide(RuleType.CODE_BLOCK).decorate(markdownIt);
+  const markdownIt: MarkdownIt = nuxtApp.$md as MarkdownIt;
 
   html.value = markdownIt.render(props.description);
 });
