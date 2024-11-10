@@ -22,6 +22,7 @@ const html = useState(route.path, () => {
   return md.render(markdown);
 });
 
+
 onMounted(() => {
 
   prepareStore.prepare();
@@ -50,7 +51,7 @@ onMounted(() => {
   // const markdown = props.metadata.content;
   // const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
   //
-  // md.render(markdown);
+  // html.value = md.render(markdown);
 });
 
 </script>
