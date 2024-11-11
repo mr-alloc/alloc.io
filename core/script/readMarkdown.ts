@@ -17,7 +17,7 @@ export default function (filePath: Path): PostData {
         header.breadcrumbs = filePath.array.slice(0, filePath.array.length -1)
             .map(node => FileAlias.toNameIfAbsent(node));
     }
-    const body: Array<string> = contentRegex.exec(md.markdown) ?? [];
+    const body: Array<string> = contentRegex.exec(md.markdown) ?? ['', '',md.markdown];
 
     return new PostData(
         filePath.realValue.replace('.md', '').toLowerCase(),
