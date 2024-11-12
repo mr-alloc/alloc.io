@@ -106,6 +106,6 @@ export default class Header {
         const defaultImages = ['default1.JPG', 'default2.jpeg', 'default3.jpeg']//, 'default4.jpeg', 'default5.JPG']
         const r = Math.floor(Math.random() * defaultImages.length)
 
-        return path ?? `/blogging/default/${defaultImages[r]}`
+        return path ?? `/post/default/${defaultImages[r]}`
     }
 }

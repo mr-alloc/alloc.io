@@ -12,7 +12,7 @@
       <div class="profile-element-wrapper">
         <div class="profile-image-area">
           <div class="round-image-frame">
-            <img src="/blogging/profile/default.jpeg" alt="프로필 이미지"/>
+            <img src="/post/profile/default.jpeg" alt="프로필 이미지"/>
           </div>
         </div>
         <div class="profile-info-area">
