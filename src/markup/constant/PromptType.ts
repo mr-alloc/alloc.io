@@ -3,6 +3,7 @@ export default class PromptType {
     private static readonly NOTE = new PromptType('note');
     private static readonly TIP = new PromptType('tip');
     private static readonly IMPORTANT = new PromptType('important');
+    private static readonly WARNING = new PromptType('warning');
 
     private readonly _name: string;
 
@@ -15,7 +16,7 @@ export default class PromptType {
     }
 
     private static values (): Array<PromptType> {
-        return [this.NOTE, this.TIP];
+        return [this.NOTE, this.TIP, this.IMPORTANT, this.WARNING];
     }
 
     public static includes(name: string) {

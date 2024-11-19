@@ -60,7 +60,7 @@
 }
 
 .prose :where(strong):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    color: var(--tw-prose-bold);
+    /*color: var(--tw-prose-bold);*/
     font-weight: 600
 }
 
