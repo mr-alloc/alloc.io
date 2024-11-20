@@ -2,7 +2,7 @@
 layout: wiki
 title: 하드웨어와 DMAC
 categories: [computer, hardware]
-tags: [Operating System, Interrupt]
+tags: [Hardware, DMAC, Dynamic Memory Access Controller]
 date: 2021-01-15 19:10:00 +0900
 current-company: Cubic INC
 current-position: SI Researcher
