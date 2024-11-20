@@ -71,7 +71,7 @@ const bookedList = appCache.tagMap.store.get(booked)
 const decoded = decodeURI(booked)
 const isNotUndefined = typeof bookedList !== undefined
 const postList = decoded && isNotUndefined
-    ? appCache.tagMap.store.get(decoded).map((path) => postContentStore.get(path))
+    ? appCache.tagMap.store.get(decoded).map((path) => postContentStore.getWiki(path))
     : []
 
 const paginated = new Paginator(6, 4)
