@@ -52,4 +52,8 @@ export default class TemplateAttributes {
     public hasIcon(): boolean {
         return this._attributes[TemplateAttributes.KEY_ICON] !== undefined;
     }
+
+    public toMap(): Map<string, string> {
+        return new Map<string, string>(Object.entries(this._attributes));
+    }
 }

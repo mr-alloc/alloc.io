@@ -19,6 +19,16 @@ export const usePostContentStore = defineStore("PostMap", () => {
         throw new Error("Not found post with path: "+ path);
     }
 
+    function getWiki(filename: string): PostMetadata {
+        const wiki = values()
+            .filter(post => post.header.layout === 'wiki')
+            .find(post => post.filename === filename);
+        if (wiki) {
+            return wiki;
+        }
+        throw new Error("Not found wiki with filename: "+ filename);
+    }
+
     function values(): Array<PostMetadata> {
         const values = postContents.value.values();
         return Array.from(values) as Array<PostMetadata>;
@@ -27,6 +37,7 @@ export const usePostContentStore = defineStore("PostMap", () => {
     return {
         add,
         get,
-        values
+        values,
+        getWiki
     }
 });

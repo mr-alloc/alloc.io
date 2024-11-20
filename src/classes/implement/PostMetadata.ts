@@ -14,6 +14,11 @@ export class PostMetadata implements IPostMetadata {
         this._content = postContent.content;
     }
 
+    get filename(): string {
+        const each = this._path.split('/');
+        return each[each.length - 1];
+    }
+
     get path(): string {
         return this._path;
     }

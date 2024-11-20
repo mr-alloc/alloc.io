@@ -11,6 +11,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     DecoratorProvider.provide(RuleType.BLOCK_QUOTE).decorate(markdownIt);
     DecoratorProvider.provide(RuleType.HEADLINE).decorate(markdownIt);
     DecoratorProvider.provide(RuleType.CODE_BLOCK).decorate(markdownIt);
+    DecoratorProvider.provide(RuleType.PARAGRAPH).decorate(markdownIt);
 
     markdownIt.use(await shiki({
         transformers: [
