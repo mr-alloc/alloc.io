@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 
-const __ROOT__ = process.env.PWD;
+const __ROOT__ = process.platform === 'win32' ? process.cwd() : process.env.PWD;
 export function existsIcon(filename: string): boolean {
     return fs.existsSync(`${__ROOT__}/public/assets/icon/${filename}.png`);
 }

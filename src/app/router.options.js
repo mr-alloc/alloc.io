@@ -14,6 +14,11 @@ export default {
             component: () => import('@/pages/docs/PostView.vue')
         },
         {
+            name: 'wiki',
+            path: '/wiki/:pathMatch(.*)*',
+            component: () => import('@/pages/wiki/[...slug].vue')
+        },
+        {
             name: 'tag',
             path: '/tags/:tag/:page(\\d+)',
             component: () => import('@/components/layout/content/TagList.vue')

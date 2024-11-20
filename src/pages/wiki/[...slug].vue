@@ -1,0 +1,80 @@
+<template>
+  <div class="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <Head>
+      <Meta property="og:title" v-bind:content="content?.header.title" />
+      <Meta property="og:description" v-bind:content="content?.description" />
+      <Meta property="og:image" v-bind:content="content?.header.thumbnail" />
+      <Meta property="og:url" v-bind:content="appCache.blogInfo.domain + route.fullPath" />
+      <Meta name="description" :content="content?.description"/>
+      <Title>{{ content?.header.summary }}</Title>
+    </Head>
+    <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
+      <div class="lg:col-span-2">
+      </div>
+      <div class="lg:col-span-8 " id="post-sub-container">
+        <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
+          <div class="lg:col-span-8" ref="postRoot">
+            <div class="relative border-b border-gray-200 dark:border-gray-800 py-8">
+              <div class="flex flex-col lg:flex-row items-start gap-6">
+                <div class="flex-1">
+                  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
+                      {{ content?.header.title }}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-8 pb-24 dark:text-gray-300 dark:prose-pre:!bg-gray-800/60 prose prose-primary dark:prose-invert max-w-none" id="document-content">
+              <div class="post-content" ref="postContentDiv">
+                <PostContentDecorator :metadata="content" />
+              </div>
+            </div>
+          </div>
+          <div class="lg:col-span-2 order-first lg:order-last sticky top-[--header-height] bg-background/75 backdrop-blur group -mx-4 sm:-mx-6 px-4 sm:px-6 lg:px-4 lg:-mx-4 overflow-y-auto max-h-[calc(100vh-var(--header-height))] z-10">
+            <nav>
+              <div class="py-3 lg:py-8 border-b border-dashed border-gray-200 dark:border-gray-800 lg:border-0 space-y-3">
+                <button class="flex items-center gap-1.5 lg:cursor-text lg:select-text w-full group" tabindex="-1">
+                  <span class="text-sm/6 truncate sm:block block lg:hidden font-bold">{{ scrollSpy.activeHeadings[scrollSpy.activeHeadings.length - 1] }}</span>
+                  <span class="font-semibold text-sm/6 truncate sm:hidden hidden lg:block">Table Of Contents</span>
+                  <span class="iconify i-ph:caret-down lg:!hidden ms-auto transform transition-transform duration-200 flex-shrink-0 mr-1.5 w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 -rotate-90" aria-hidden="true"></span>
+                </button>
+                <TableOfContents :headline="content?.header.rootHeadLine" :is-inner="false" />
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+<script lang="ts" setup>
+import {useRoute} from "vue-router";
+import appCache from "@/store/appCache";
+import TableOfContents from "@/components/layout/content/TableOfContents.vue";
+import {usePostContentStore} from "@/store/PostContentStore";
+import PostContentDecorator from "@/components/layout/content/PostContentDecorator.vue";
+import {useCategoriesStore} from "@/store/CategoriesStore";
+import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
+import {useScrollspy} from "@/store/ScrollSpy";
+
+const postContentStore = usePostContentStore();
+const route = useRoute();
+
+const scrollSpy = useScrollspy();
+const categoriesStore = useCategoriesStore();
+const content = computed(() => {
+  const paths = route.path.split('/');
+  return postContentStore.getWiki(paths[paths.length -1]);
+});
+
+onMounted(() => {
+  const contents = postContentStore.values()
+      .filter(post => post.header.layout === 'post');
+  categoriesStore.initialize(contents);
+});
+
+</script>
+<style lang="scss" scoped>
+@import '@styles/index';
+</style>
