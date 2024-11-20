@@ -221,7 +221,7 @@ SHOW INDEX FROM  *table_name* 으로 테이블 인덱스를 볼수 있다.
 최대 값은 100이며, 이는 행의 필터링이 발생되지않음을 의미한다. 100에서 감소된 값은 필터링 양이 증가함을 나타낸다. 
 `rows` 는 검된 행의 예상치를 보여주고`rows` × `filtered`는 다음 테이블로 조인된 행의 갯수를 보여준다. 예를들어, `rows`가 1000이고 `filtered`가 50.00(50%)라면, 다음 테이블로 조인된 행의 개수는 1000 × 50% = 500이다.
 
-### Extra ()
+### Extra (추가적인 내용)
 (JSON: 없음)
 이컬럼은  `MySQL`이 쿼리를 어떻게 해결하는지에 대한 추가적인 정보를 포함한다. 다른 값의 설명들은 `EXPLAIN` [Extra 정보]()을 보자.
 
@@ -231,9 +231,44 @@ SHOW INDEX FROM  *table_name* 으로 테이블 인덱스를 볼수 있다.
 * Zero limit  
 쿼리에 `LIMIT 0`절이있고 어떤 행도 선택할 수 없는 경우이다.
 
-* Using Where with pushed condition
+* Using Where with pushed condition  
 이 항목은 [NDB]() 테이블들에만 적용된다.
 
-* Using Where
+* Using Where  
 `WHERE`절은 다음 테이블과 일치시킬 행이나 클라이언트에 보내낼 행을 제한하는데 사용된다.  
-특별하게 테이블의 모든행을 가져오길 의도하거나 검사하려 하지 않는한, 쿼리가 `Extra` 값 
+특별하게 테이블의 모든행을 가져오길 의도하거나 검사하려 하지 않는한, `Extra` 값이 `Using Where`이 아니고 테이블 조인 타입이 `ALL` 또는 `index`라면, 쿼리에 문제가 있을수 있다.  
+
+`Using Where`은 직접적으로 대응되는 JSON 속성이 없고 `attached_condition` 속성은 사용되는 모든 `WHERE` 조건을 포함한다.
+
+* Using temporary  
+쿼리를 해결하기위해 `MySQL`은 결과를 보관하기위해 임시테이블을 생성할 필요가 있다. 이는 일반적으로 쿼리가 컬럼을 다르게 나열하는 `GROUP BY`와 `ORDER BY`절을 포함하면 발생한다.  
+
+* Using sort_union(...), Using union(...), Using intersect(...)  
+이런것들은 `index_merge` 조인타입에 대한 인덱스 스캔이 어떻게 병합되는지를 보여주는 특별한 알고리즘을 나타낸다.
+
+* Using MRR  
+테이블은 다중범위 읽기 최적화 전략을 사용하여 읽힌다.  
+
+* Using join buffer (Block Nested Loop), Using join buffer (Batched Key Access), Using join buffer (hash join)  
+이전 조인의 테이블은 조인버퍼로 부분적으로 읽히고, 그 행들은 버퍼에서 현재 테이블과 조인을 수행하는데 사용된다. 
+(Block Nested Loop)는 Block Nested-Loop 알고리즘 사용을 나타내고,(Batched Key Access)는 Batched Key Access 알고리즘 사용을 나타내며 (hash join)은 해시조인 사용을 나타낸다.
+즉 `EXPLAIN` 출력의 이전라인에 있는 테이블의 키가 버퍼에 저장되고, 일치하는 행은 `Using join buffter`가 나타나는 줄로 보여진 테이블에서 일괄적으로 가져온다.
+
+* Using index for skip scan  
+스캔 스킵에대한 인덱스를 나타낸다.
+
+* using index for group-by  
+`Using index` 테이블 접근 방법과 유사하며, `Using index for group-by`sms `MySQL`이 실제테이블에 추가적인 어떤 디스크 접근도 없이 `GROUP BY` 또는 `DISTINT` 쿼리의 모든 컬럼을 검색하는데 사용할수 있는 인덱스를 찾았다는 것을 나타낸다.
+게다가, 각 그룹에대해 몇개의 인덱스 항목만 읽도록하는 가장 효융적인 방식으로 인덱스가 사용된다.
+
+* Using index condition  
+테이블은 인덱스 튜블을 접근하여 읽고 전체 테이블 행을 읽을것인지 결정하기위해 먼저 테스트한다. 이 방법의 경우, 인덱스 정보는 필수가 아닌한 전체 테이블 행을 읽는것을 연기("푸시다운")하는 데 사용된다.
+
+* Using index  
+실제 행을 읽기위한 추가적인 탐색 없이 인덱스트리에서 정보만을 사용하여 테이블에서 컬럼 정보를 가져온다. 이 전략은 단일 인덱스의 부분인 컬럼만 사용하는 쿼리일때 사용될 수 있다.
+InnoDB에서 사용자정의 클러스터드 인덱스(기본키)를 가진 테이블인 경우, `Extra` 컬럼에 `Using index`가 없더라도 해당 인덱스가 사용될 수 있다. 이는 `type`이 인덱스와 `key`가 `PRIMARY`인 경우에 해당한다.
+사용된 커버링 인덱스에 대한 정보는 `EXPLAIN FORMAT=TRADITIONAL`과 `EXPLAIN FORMAT=JSON`에 대해 보여진다.
+
+* Using filesort  
+`MySQL`은 정렬된 순서로 행을 검색하는 방법을 찾기위해 한번 더 데이터를 훑어야 한다.
+정렬은 조인타입에 따라 모든 행을 검토하면서 `WHERE`절과 일치하는 모든 행에 대해 행을 가리키는 포인터와 정렬키를 저장하는 방식으로 수행된 다음 키들이 정렬되고 정렬된 순서로 행들을 가져온다.
