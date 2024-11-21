@@ -3,7 +3,7 @@ import RuleType from "@/markup/constant/RuleType";
 import BlockquoteDecorator from "@/markup/decorator/implementation/BlockquoteDecorator";
 import HeadlineDecorator from "@/markup/decorator/implementation/HeadlineDecorator";
 import CodeBlockDecorator from "@/markup/decorator/implementation/CodeBlockDecorator";
-import ParagraphDecorator from "@/markup/decorator/implementation/ParagraphDecorator";
+import ImageDecorator from "@/markup/decorator/implementation/ImageDecorator";
 
 export default class DecoratorProvider {
 
@@ -15,7 +15,7 @@ export default class DecoratorProvider {
             [RuleType.BLOCK_QUOTE, new BlockquoteDecorator()],
             [RuleType.HEADLINE, new HeadlineDecorator()],
             [RuleType.CODE_BLOCK, new CodeBlockDecorator()],
-            [RuleType.PARAGRAPH, new ParagraphDecorator()]
+            [RuleType.PARAGRAPH, new ImageDecorator()]
         ]
 
         this._decorators = new Map<RuleType, IMarkdownDecorator>(entries);
