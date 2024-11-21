@@ -24,7 +24,7 @@ interrupt `[ˌɪntəˈrʌpt]`
 이 경우 이동이 끝나지 않아도, 우리는 새로운 위치를 클릭하여 방향을 바꿀수도있다. 
 
 ![캐릭터의 이동](/post/computer/move-unit.png)
-:{ "max-width": "300px", "description": "눈꽃시비르의 방향을 조작하는 프로겐 선수", "align": "center" }
+:{ "max-width": "300px", "align": "center", "description": "눈꽃시비르의 방향을 조작하는 프로겐 선수" }
 
 이 처럼 CPU가 명령을 실행하는중에도 긴급하거나, 실시간 처리가 필요한경우 IRQ를 통해, CPU에 인터럽트 신호를 보내 우선적으로 처리를 수행할 수 있다.
 
