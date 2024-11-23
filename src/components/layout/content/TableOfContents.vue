@@ -17,6 +17,7 @@
 import TocNode from "@/classes/implement/TocNode";
 import TableOfContents from "@/components/layout/content/TableOfContents.vue";
 import {useScrollspy} from "@/store/ScrollSpy";
+import {useNuxtApp} from "nuxt/app";
 
 const router = useRouter();
 
@@ -35,17 +36,18 @@ const config = {
 }
 
 const emit = defineEmits(['move']);
+const nuxtApp = useNuxtApp();
 const scrollToHeading = (id: string) => {
   router.push(`#${id}`)
   emit('move', id)
 };
 
-onMounted(() => {
+nuxtApp.hook('page:finish', () => {
   scrollspy.updateHeadings([
     ...document.querySelectorAll('h2'),
     ...document.querySelectorAll('h3')
   ]);
-})
+});
 </script>
 
 <style lang="scss" scoped>
