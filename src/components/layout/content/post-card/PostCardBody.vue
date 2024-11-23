@@ -117,7 +117,7 @@ onMounted(() => {
 
       display: block;
       font-family: inherit;
-      white-space: break-spaces;
+      white-space: normal;
       word-break: break-all;
 
       img {
