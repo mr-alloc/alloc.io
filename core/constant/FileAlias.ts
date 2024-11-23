@@ -7,6 +7,7 @@ export default class FileAlias {
     private static readonly JAVA = new FileAlias("java", "자바");
     private static readonly JAVASCRIPT = new FileAlias("javascript", "자바스크립트");
     private static readonly TYPESCRIPT = new FileAlias("typescript", "타입스크립트");
+    private static readonly FRAMEWORK = new FileAlias("framework", "프레임워크");
     private static readonly SPRING = new FileAlias("spring", "스프링");
     private static readonly SWIFT = new FileAlias("swift", "스위프트");
     private static readonly TOOLS = new FileAlias("tools", "도구");
@@ -35,8 +36,8 @@ export default class FileAlias {
     }
 
     public static values(): Array<FileAlias> {
-        return [FileAlias.DOCS, FileAlias.ALGORITHM, FileAlias.JAVA, FileAlias.JAVASCRIPT, FileAlias.TYPESCRIPT,
-            FileAlias.SPRING, FileAlias.SWIFT, FileAlias.TOOLS, FileAlias.OS]
+        return [this.DOCS, this.ALGORITHM, this.JAVA, this.JAVASCRIPT, this.TYPESCRIPT,
+            this.FRAMEWORK, this.SPRING, this.SWIFT, this.TOOLS, this.OS]
     }
 
 
