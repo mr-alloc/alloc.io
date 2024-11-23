@@ -11,7 +11,7 @@ export default {
         {
             name: 'post',
             path: '/docs/:pathMatch(.*)*',
-            component: () => import('@/pages/docs/PostView.vue')
+            component: () => import('@/pages/docs/[...slug].vue')
         },
         {
             name: 'wiki',
