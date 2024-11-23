@@ -77,6 +77,7 @@ import PostContentDecorator from "@/components/layout/content/PostContentDecorat
 import {useCategoriesStore} from "@/store/CategoriesStore";
 import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
 import {useScrollspy} from "@/store/ScrollSpy";
+import {useNuxtApp} from "nuxt/app";
 
 const postContentStore = usePostContentStore();
 const route = useRoute();
