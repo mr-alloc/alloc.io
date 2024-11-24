@@ -1,5 +1,7 @@
 [
   "/docs/database/mysql-explain",
   "/docs/framework/spring/abstract-transaction-manager",
-  "/docs/algorithm/heap-sort"
+  "/docs/tool/customize-markdown-it",
+  "/docs/algorithm/heap-sort",
+  "/docs/language/java/install-zulu-in-mac"
 ]
