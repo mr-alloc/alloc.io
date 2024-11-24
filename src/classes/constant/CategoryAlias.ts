@@ -10,6 +10,7 @@ export class CategoryAlias {
     private static readonly MYSQL = new CategoryAlias('mysql', 'MySQL');
     private static readonly FRAMEWORK = new CategoryAlias('framework', '프레임워크');
     private static readonly SPRING = new CategoryAlias('spring', '스프링');
+    private static readonly TOOL = new CategoryAlias('tool', '라이브러리/도구');
     private static readonly ETC = new CategoryAlias('etc', '기타');
 
     private static readonly CACHED = toMap(this.values(), (alias) => alias.name);
@@ -32,7 +33,7 @@ export class CategoryAlias {
 
     private static values(): Array<CategoryAlias> {
         return [this.DEVELOPMENT, this.ALGORITHM, this.LANGUAGE, this.TYPESCRIPT, this.OS, this.DATABASE, this.MYSQL,
-            this.FRAMEWORK, this.SPRING, this.ETC];
+            this.FRAMEWORK, this.SPRING, this.TOOL, this.ETC];
     }
 
 

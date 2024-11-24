@@ -15,7 +15,12 @@ const props = defineProps<{
   metadata: PostMetadata
 }>();
 
-const html = ref('');
+const html = computed(() => {
+  const markdown = props.metadata.content;
+  const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
+
+  return md.render(markdown);
+});
 
 
 onMounted(() => {
@@ -43,10 +48,10 @@ onMounted(() => {
 
 
   //콘솔로그를 찍기위해 CSR에서 테스트
-  const markdown = props.metadata.content;
-  const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
-
-  html.value = md.render(markdown);
+  // const markdown = props.metadata.content;
+  // const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
+  //
+  // html.value = md.render(markdown);
 });
 
 </script>
