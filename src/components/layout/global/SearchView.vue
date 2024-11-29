@@ -31,11 +31,12 @@ import {Key} from "@/classes/implement/Key";
 import {PostMetadata} from "@/classes/implement/PostMetadata";
 import {PostSearchResult} from "@/classes/implement/PostSearchResult";
 import {useNuxtApp} from "nuxt/app";
-import {usePostContentStore} from "@/store/PostContentStore";
+import {usePostContentStore} from "@/store/post-content-store";
 import {PostSearchGroup} from "@/classes/implement/PostSearchGroup";
 import {Pair} from "@/classes/implement/Pair";
 import appCache from "@/store/appCache";
 import {grouping} from "@/utils/CollectionUtil";
+import DocumentType from "@/classes/constant/document-type";
 
 const searchInput = ref<HTMLInputElement | null>(null);
 const postContentStore = usePostContentStore();
@@ -88,7 +89,7 @@ const methods = {
 
     if (/([a-zA-Z가-힣0-9@\W\-_])/.test(text)) {
       const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i');
-      const contentsForSearch = postContentStore.values() as Array<PostMetadata>;
+      const contentsForSearch = postContentStore.values(DocumentType.POST) as Array<PostMetadata>;
       const results: PostSearchResult [] = contentsForSearch
           .filter(content => {
             const title = content.header.title;
@@ -100,7 +101,7 @@ const methods = {
   },
   deployResult(results: Array<PostSearchResult>) {
     const map: Map<string, PostSearchResult[]> = grouping<string, PostSearchResult>(results, (result)=> {
-      const node = appCache.fileNodeMap.store.get(result.content.path);
+      const node = postContentStore.get(result.content.path);
       return node.group;
     })
 

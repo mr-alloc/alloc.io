@@ -1,6 +1,7 @@
 import {defineStore} from "pinia";
 import {PostMetadata} from "@/classes/implement/PostMetadata";
 import {ref} from "@vue/reactivity";
+import DocumentType from "@/classes/constant/document-type";
 
 export const usePostContentStore = defineStore("PostMap", () => {
 
@@ -19,9 +20,12 @@ export const usePostContentStore = defineStore("PostMap", () => {
         throw new Error("Not found post with path: "+ path);
     }
 
+    function isWiki(filename: string): boolean {
+        return values(DocumentType.WIKI).some(post => post.filename === filename);
+    }
+
     function getWiki(filename: string): PostMetadata {
-        const wiki = values()
-            .filter(post => post.header.layout === 'wiki')
+        const wiki = values(DocumentType.WIKI)
             .find(post => post.filename === filename);
         if (wiki) {
             return wiki;
@@ -29,15 +33,16 @@ export const usePostContentStore = defineStore("PostMap", () => {
         throw new Error("Not found wiki with filename: "+ filename);
     }
 
-    function values(): Array<PostMetadata> {
+    function values(documentType: DocumentType): Array<PostMetadata> {
         const values = postContents.value.values();
-        return Array.from(values) as Array<PostMetadata>;
+        return Array.from(values).filter(post => post.header.layout === documentType.name) as Array<PostMetadata>;
     }
 
     return {
         add,
         get,
         values,
-        getWiki
+        getWiki,
+        isWiki
     }
 });

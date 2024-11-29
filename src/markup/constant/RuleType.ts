@@ -4,6 +4,7 @@ export default class RuleType {
     public static readonly HEADLINE = new RuleType('headline');
     public static readonly CODE_BLOCK = new RuleType('code_block');
     public static readonly PARAGRAPH = new RuleType('paragraph');
+    public static readonly LINK = new RuleType('link');
 
     private readonly _name: string;
     private constructor(name: string) {
