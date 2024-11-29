@@ -72,12 +72,13 @@
 import {useRoute} from "vue-router";
 import appCache from "@/store/appCache";
 import TableOfContents from "@/components/layout/content/TableOfContents.vue";
-import {usePostContentStore} from "@/store/PostContentStore";
+import {usePostContentStore} from "@/store/post-content-store";
 import PostContentDecorator from "@/components/layout/content/PostContentDecorator.vue";
 import {useCategoriesStore} from "@/store/CategoriesStore";
 import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
 import {useScrollspy} from "@/store/ScrollSpy";
 import {useNuxtApp} from "nuxt/app";
+import DocumentType from "@/classes/constant/document-type";
 
 const postContentStore = usePostContentStore();
 const route = useRoute();
@@ -87,7 +88,7 @@ const categoriesStore = useCategoriesStore();
 const content = postContentStore.get(route.path);
 
 onMounted(() => {
-  const contents = postContentStore.values()
+  const contents = postContentStore.values(DocumentType.POST)
       .filter(post => post.header.layout === 'post');
   categoriesStore.initialize(contents);
 });

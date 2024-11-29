@@ -1,6 +1,6 @@
 import MarkdownIt from "markdown-it";
 import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/MarkdownUtils";
-import DecoratorProvider from "@/markup/decorator/DecoratorProvider";
+import DecoratorProvider from "@/markup/decorator/decorator-provider";
 import RuleType from "@/markup/constant/RuleType";
 import shiki from "@shikijs/markdown-it";
 
@@ -12,6 +12,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     DecoratorProvider.provide(RuleType.HEADLINE).decorate(markdownIt);
     DecoratorProvider.provide(RuleType.CODE_BLOCK).decorate(markdownIt);
     DecoratorProvider.provide(RuleType.PARAGRAPH).decorate(markdownIt);
+    DecoratorProvider.provide(RuleType.LINK).decorate(markdownIt);
 
     markdownIt.use(await shiki({
         transformers: [

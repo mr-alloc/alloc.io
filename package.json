@@ -44,6 +44,7 @@
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@shikijs/markdown-it": "^1.21.0",
+    "@types/lodash": "^4.17.13",
     "@types/markdown-it": "^12.2.3",
     "@types/node": "^22.5.4",
     "nuxt": "^3.13.0",
