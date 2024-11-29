@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {usePostContentStore} from "@/store/PostContentStore";
+import {usePostContentStore} from "@/store/post-content-store";
 import type ICategoryNode from "@/classes/ICategoryNode";
 import CategoryContent from "@/classes/implement/CategoryContent";
 import CategoryGroup from "@/classes/implement/CategoryGroup";
