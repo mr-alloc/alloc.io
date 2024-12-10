@@ -5,13 +5,13 @@ import type ICategoryNode from "@/classes/ICategoryNode";
 import CategoryContent from "@/classes/implement/CategoryContent";
 import CategoryGroup from "@/classes/implement/CategoryGroup";
 import PostCategoryTree from "@/components/layout/sidebar/PostCategoryTree.vue";
+import DocumentType from "@/classes/constant/document-type";
 
 const postContentStore = usePostContentStore();
 const categories = computed(() => {
   const temporary = new Array<ICategoryNode>();
 
-  const contents = postContentStore.values()
-      .filter(post => post.header.layout === 'post');
+  const contents = postContentStore.values(DocumentType.POST);
 
   contents.forEach(post => {
     const foundGroup = findOrCreateGroup(temporary, post.header.categories, 0);

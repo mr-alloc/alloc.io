@@ -11,7 +11,7 @@
         photoViewStatus.isPhotoView || searchStatus.isSearchMode
         ? ['z-50', 'fixed', 'inset-0', 'overflow-y-auto', 'transition-opacity', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : []
         ]"
-         v-on:click="methods.clickBackground($event)">
+         v-on:click="($event) => methods.clickBackground($event as PointerEvent)">
       <div class="flex min-h-full items-end sm:items-center justify-center text-center p-0 sm:p-4" v-if="!photoViewStatus.isPhotoView">
         <SearchView v-if="searchStatus.isSearchMode" />
       </div>

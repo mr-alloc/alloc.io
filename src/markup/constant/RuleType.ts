@@ -5,6 +5,7 @@ export default class RuleType {
     public static readonly CODE_BLOCK = new RuleType('code_block');
     public static readonly PARAGRAPH = new RuleType('paragraph');
     public static readonly LINK = new RuleType('link');
+    public static readonly TABLE = new RuleType('table');
 
     private readonly _name: string;
     private constructor(name: string) {
