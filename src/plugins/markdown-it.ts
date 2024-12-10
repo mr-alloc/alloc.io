@@ -13,6 +13,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     DecoratorProvider.provide(RuleType.CODE_BLOCK).decorate(markdownIt);
     DecoratorProvider.provide(RuleType.PARAGRAPH).decorate(markdownIt);
     DecoratorProvider.provide(RuleType.LINK).decorate(markdownIt);
+    DecoratorProvider.provide(RuleType.TABLE).decorate(markdownIt);
 
     markdownIt.use(await shiki({
         transformers: [
@@ -27,7 +28,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
             }
         ],
         themes: {
-            light: 'catppuccin-frappe',
+            light: 'min-light',
             dark: 'catppuccin-mocha'
         },
     }));

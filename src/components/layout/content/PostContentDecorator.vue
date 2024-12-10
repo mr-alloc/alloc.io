@@ -15,6 +15,13 @@ const props = defineProps<{
   metadata: PostMetadata
 }>();
 
+// const html = computed(() => {
+//   const markdown = props.metadata.content;
+//   const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
+//
+//   return md.render(markdown);
+// });
+
 const html = ref('');
 
 
