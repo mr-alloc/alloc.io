@@ -33,14 +33,6 @@ export default defineNuxtConfig({
         '@styles/main.css',
         '@styles/icons.css'
     ],
-    build: {
-        transpile: [
-            '@fortawesome/fontawesome-svg-core',
-            '@fortawesome/free-brands-svg-icons',
-            '@fortawesome/free-regular-svg-icons',
-            '@fortawesome/free-solid-svg-icons',
-        ]
-    },
     modules: ['@pinia/nuxt', '@nuxt/image', '@nuxtjs/tailwindcss'],
     pinia: {
         storesDirs: ['@/store/**']

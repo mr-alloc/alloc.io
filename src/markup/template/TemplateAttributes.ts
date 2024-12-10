@@ -4,6 +4,7 @@ export default class TemplateAttributes {
 
     private static readonly KEY_TYPE: string = 'type';
     private static readonly KEY_ICON: string = 'icon';
+    private static readonly KEY_DESCRIPTION: string = 'description';
 
     private readonly _text: string;
     private readonly _origin: string;
@@ -30,6 +31,10 @@ export default class TemplateAttributes {
 
     get icon(): string {
         return this._attributes[TemplateAttributes.KEY_ICON];
+    }
+
+    get description(): string {
+        return this._attributes[TemplateAttributes.KEY_DESCRIPTION] ?? '';
     }
 
     public static parse(src: string): TemplateAttributes {
