@@ -37,6 +37,14 @@ export default class TemplateAttributes {
         return this._attributes[TemplateAttributes.KEY_DESCRIPTION] ?? '';
     }
 
+    get class(): string {
+        return this._attributes['class'] ?? '';
+    }
+
+    get wrapperClass(): string {
+        return this._attributes['wrapper-class'] ?? '';
+    }
+
     public static parse(src: string): TemplateAttributes {
         if ( ! TemplateExpression.test(src)) {
             console.error(`Cannot parse template for string: "${src}"`);
