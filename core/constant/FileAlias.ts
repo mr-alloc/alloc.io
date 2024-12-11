@@ -11,7 +11,8 @@ export default class FileAlias {
     private static readonly LANGUAGE = new FileAlias("language", "언어");
     private static readonly SPRING = new FileAlias("spring", "스프링");
     private static readonly SWIFT = new FileAlias("swift", "스위프트");
-    private static readonly TOOLS = new FileAlias("tools", "도구");
+    private static readonly TOOL = new FileAlias("tool", "도구");
+    private static readonly DATABASE = new FileAlias("database", "데이터베이스");
     private static readonly OS = new FileAlias("os", "운영체제");
 
     private static readonly CACHED = toMap(FileAlias.values(), (file) => file._value);
@@ -24,6 +25,11 @@ export default class FileAlias {
         this._name = name;
     }
 
+    public static values(): Array<FileAlias> {
+        return [this.DOCS, this.ALGORITHM, this.JAVA, this.JAVASCRIPT, this.TYPESCRIPT,
+            this.FRAMEWORK, this.SPRING, this.LANGUAGE, this.SWIFT, this.TOOL, this.DATABASE, this.OS]
+    }
+
     get value(): string {
         return this._value;
     }
@@ -34,11 +40,6 @@ export default class FileAlias {
 
     public static toNameIfAbsent(value: string): string {
         return FileAlias.CACHED.get(value)?.name ?? value;
-    }
-
-    public static values(): Array<FileAlias> {
-        return [this.DOCS, this.ALGORITHM, this.JAVA, this.JAVASCRIPT, this.TYPESCRIPT,
-            this.FRAMEWORK, this.SPRING, this.SWIFT, this.TOOLS, this.OS]
     }
 
 

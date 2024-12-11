@@ -287,11 +287,7 @@ md.renderer.rules.blockquote_open = (tokens: Array<Token>, index: number, option
 }
 ```
 
-
-
 ---
-
-
 
 `:{ "type" : "warning" }` 템플릿은 뭔가 급조해서 만들어서 만들었기 때문에 자신만의 템플릿을 만들어 더 나은 parser를 구현할 수 있을듯 하다.
 
