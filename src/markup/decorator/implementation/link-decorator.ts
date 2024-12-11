@@ -3,7 +3,7 @@ import type IMarkdownDecorator from "@/markup/decorator/IMarkdownDecorator";
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
 import {usePostContentStore} from "@/store/post-content-store";
-import {last} from "lodash";
+import * as _ from "lodash";
 
 
 export default class LinkDecorator implements IMarkdownDecorator {
@@ -26,7 +26,7 @@ export default class LinkDecorator implements IMarkdownDecorator {
             const token = tokens[index];
             const path = token.attrGet('href') ?? '';
 
-            const wikiName = last(path.split('/'))?.split('#')[0] ?? '';
+            const wikiName = _.last(path.split('/'))?.split('#')[0] ?? '';
             const notUpdated = path.length === 0 || path.startsWith('/wiki') && this.isExistedWiki(wikiName);
 
             if (notUpdated) {
