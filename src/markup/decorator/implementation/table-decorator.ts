@@ -25,13 +25,13 @@ export default class TableDecorator implements IMarkdownDecorator {
             const original = Object.assign({}, tokens);
             const tableRange = tokens.slice(index, tokens.length);
             const closeIndex = this.getCloseIndex(tokens, index, 'table');
-            console.log('self', self);
 
-            const templateIndex = tableRange.slice(index, closeIndex)
-                .findIndex(token => TemplateExpression.test(token.content)) + index;
+            let templateIndex = tableRange.slice(index, closeIndex)
+                .findIndex(token => TemplateExpression.test(token.content));
             if (templateIndex === -1) {
                 return fallbackRule(tokens, index, options, env, self);
             }
+            templateIndex += index;
             const realTemplateIndex = templateIndex + index;
             const realTemplateToken = tokens[realTemplateIndex];
             const templateToken = Object.assign({}, realTemplateToken);
