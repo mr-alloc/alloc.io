@@ -3,7 +3,6 @@ import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
 import TemplateExpression from "@/markup/template/TemplateExpression";
-import {fa} from "cronstrue/dist/i18n/locales/fa";
 import TemplateAttributes from "@/markup/template/TemplateAttributes";
 
 export default class TableDecorator implements IMarkdownDecorator {
@@ -22,24 +21,28 @@ export default class TableDecorator implements IMarkdownDecorator {
             env: any,
             self: Renderer
         ): string => {
-            const original = Object.assign({}, tokens);
-            const tableRange = tokens.slice(index, tokens.length);
             const closeIndex = this.getCloseIndex(tokens, index, 'table');
 
-            let templateIndex = tableRange.slice(index, closeIndex)
+            console.debug(`table(${index}, ${closeIndex}) `, tokens);
+
+            let templateIndex = tokens.slice(index, closeIndex)
                 .findIndex(token => TemplateExpression.test(token.content));
+            console.log('templateIndex', templateIndex);
             if (templateIndex === -1) {
                 return fallbackRule(tokens, index, options, env, self);
             }
             templateIndex += index;
-            const realTemplateIndex = templateIndex + index;
-            const realTemplateToken = tokens[realTemplateIndex];
+            const realTemplateToken = tokens[templateIndex];
             const templateToken = Object.assign({}, realTemplateToken);
             //템플릿 옵션을 그대로 랜더링한다면 테이블 로우가 생성되기 떄문에 tr_open ~ tr_close 까지 삭제해야한다.
-            const trOpenIndex = realTemplateIndex -2;
+            const trOpenIndex = templateIndex -2;
             realTemplateToken.children = [];
             const trCloseIndex = this.getCloseIndex(tokens, trOpenIndex, 'tr');
             const count = trCloseIndex - trOpenIndex;
+
+            console.debug('templateIndex', templateIndex);
+            console.debug('trOpenIndex', trOpenIndex);
+            console.debug('trCloseIndex', trCloseIndex);
 
             [...new Array(count)].forEach((_, i) => {
                 tokens[trOpenIndex + i].hidden = true;
