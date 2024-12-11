@@ -36,7 +36,6 @@ import BackdropCurtain from "@/components/layout/content/BackdropCurtain.vue";
 Runner.init();
 const route = useRoute();
 const router = useRouter();
-const { $emitter } = useNuxtApp();
 const searchStatus = useSearchStatusStore();
 const photoViewStatus = usePhotoViewStatusStore();
 const darkModeStore = useDarkModeStore();

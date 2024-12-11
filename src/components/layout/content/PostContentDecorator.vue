@@ -10,49 +10,19 @@ import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 const photoViewStore = usePhotoViewStatusStore();
 const prepareStore = usePagePrepareStore();
 const nuxtApp = useNuxtApp();
-const route = useRoute();
+
 const props = defineProps<{
   metadata: PostMetadata
 }>();
 
-const html = computed(() => {
-  const markdown = props.metadata.content;
+const html = computed<string>(() => {
   const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
-
-  return md.render(markdown);
+  return md.render(props.metadata.content);
 });
-
-// const html = ref('');
-
 
 onMounted(() => {
   prepareStore.prepare();
-
-  const tables = [...document.querySelectorAll('.rendered-markdown-wrapper table').values()]
-  tables.forEach(table => {
-    const div = document.createElement('div')
-    div.innerHTML = table.outerHTML
-    div.className = 'content-table'
-
-    table.parentNode?.insertBefore(div, table)
-    table.remove();
-  });
-
-  const imageTags = document.querySelectorAll('.rendered-markdown-wrapper img')
-  imageTags.forEach((imgTag, index) => {
-    imgTag.addEventListener('click', (e) => {
-      photoViewStore.open(index +1)
-    });
-  });
-
   photoViewStore.load(props.metadata.header.images);
-
-
-  //콘솔로그를 찍기위해 CSR에서 테스트
-  // const markdown = props.metadata.content;
-  // const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
-
-  // html.value = md.render(markdown);
 });
 
 </script>

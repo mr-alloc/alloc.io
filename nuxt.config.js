@@ -3,17 +3,6 @@ import { fileURLToPath} from "node:url";
 import Keys from './src/static/keys.json'
 
 export default defineNuxtConfig({
-    build: {
-        extractCSS: true,
-        splitChunks: {
-            layouts: true,
-            pages: true,
-            commons: true
-        }
-    },
-    optimization: {
-        minimize: true
-    },
     devtools: {
         enabled: false
     },
@@ -26,7 +15,9 @@ export default defineNuxtConfig({
     experimental: {
         payloadExtraction: false,
     },
-    ssr: true,
+    nitro: {
+        preset: 'static'
+    },
     generate: {
         dir: 'dist',
         fallback: true,
