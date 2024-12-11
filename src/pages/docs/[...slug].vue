@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="mt-8 pb-24 dark:text-gray-300 dark:prose-pre:!bg-gray-800/60 prose prose-primary dark:prose-invert max-w-none" id="document-content">
-              <div class="post-content" ref="postContentDiv">
+              <div class="post-content">
                 <PostContentDecorator :metadata="content" />
               </div>
             </div>

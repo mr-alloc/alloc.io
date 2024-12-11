@@ -3,6 +3,17 @@ import { fileURLToPath} from "node:url";
 import Keys from './src/static/keys.json'
 
 export default defineNuxtConfig({
+    build: {
+        extractCSS: true,
+        splitChunks: {
+            layouts: true,
+            pages: true,
+            commons: true
+        }
+    },
+    optimization: {
+        minimize: true
+    },
     devtools: {
         enabled: false
     },
@@ -38,4 +49,4 @@ export default defineNuxtConfig({
         storesDirs: ['@/store/**']
     },
     compatibilityDate: '2024-07-09',
-})
+});

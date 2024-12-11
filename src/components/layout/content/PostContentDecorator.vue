@@ -15,18 +15,17 @@ const props = defineProps<{
   metadata: PostMetadata
 }>();
 
-// const html = computed(() => {
-//   const markdown = props.metadata.content;
-//   const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
-//
-//   return md.render(markdown);
-// });
+const html = computed(() => {
+  const markdown = props.metadata.content;
+  const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
 
-const html = ref('');
+  return md.render(markdown);
+});
+
+// const html = ref('');
 
 
 onMounted(() => {
-
   prepareStore.prepare();
 
   const tables = [...document.querySelectorAll('.rendered-markdown-wrapper table').values()]
@@ -50,10 +49,10 @@ onMounted(() => {
 
 
   //콘솔로그를 찍기위해 CSR에서 테스트
-  const markdown = props.metadata.content;
-  const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
+  // const markdown = props.metadata.content;
+  // const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
 
-  html.value = md.render(markdown);
+  // html.value = md.render(markdown);
 });
 
 </script>
