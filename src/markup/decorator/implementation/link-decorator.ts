@@ -3,7 +3,7 @@ import type IMarkdownDecorator from "@/markup/decorator/IMarkdownDecorator";
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
 import {usePostContentStore} from "@/store/post-content-store";
-import * as _ from "lodash";
+import _ from "lodash";
 
 
 export default class LinkDecorator implements IMarkdownDecorator {

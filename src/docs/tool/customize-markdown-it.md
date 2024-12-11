@@ -1,6 +1,6 @@
 ---
 layout: post
-title: markdown-it의 규칙을 알아보고 커스텀 해보자
+title: markdown-it의 Renderer Rule
 categories: [tool]
 tags: [markdown-it, typescript]
 date: 2023-07-14 19:17:00 +0900

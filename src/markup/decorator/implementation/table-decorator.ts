@@ -23,11 +23,10 @@ export default class TableDecorator implements IMarkdownDecorator {
         ): string => {
             const closeIndex = this.getCloseIndex(tokens, index, 'table');
 
-            console.debug(`table(${index}, ${closeIndex}) `, tokens);
+            // console.debug(`table(${index}, ${closeIndex}) `, tokens);
 
             let templateIndex = tokens.slice(index, closeIndex)
                 .findIndex(token => TemplateExpression.test(token.content));
-            console.log('templateIndex', templateIndex);
             if (templateIndex === -1) {
                 return fallbackRule(tokens, index, options, env, self);
             }
@@ -40,9 +39,9 @@ export default class TableDecorator implements IMarkdownDecorator {
             const trCloseIndex = this.getCloseIndex(tokens, trOpenIndex, 'tr');
             const count = trCloseIndex - trOpenIndex;
 
-            console.debug('templateIndex', templateIndex);
-            console.debug('trOpenIndex', trOpenIndex);
-            console.debug('trCloseIndex', trCloseIndex);
+            // console.debug('templateIndex', templateIndex);
+            // console.debug('trOpenIndex', trOpenIndex);
+            // console.debug('trCloseIndex', trCloseIndex);
 
             [...new Array(count)].forEach((_, i) => {
                 tokens[trOpenIndex + i].hidden = true;
