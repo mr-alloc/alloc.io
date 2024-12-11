@@ -356,7 +356,7 @@
     "path": "/docs/tool/customize-markdown-it",
     "header": {
       "layout": "post",
-      "title": "markdown-it의 규칙을 알아보고 커스텀 해보자",
+      "title": "markdown-it의 Renderer Rule",
       "categories": [
         "tool"
       ],
