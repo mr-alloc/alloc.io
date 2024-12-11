@@ -106,41 +106,6 @@ useHead(() => ({
 <style lang="scss">
 @import '@styles/index';
 
-
-/* Global Styles */
-@font-face {
-  font-family: 'AppleSDGothicNeoB';
-  src: url('/assets/fonts/Apple_Sandol_Gothic_Neo/AppleSDGothicNeoB.ttf');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'AppleSDGothicNeoL';
-  src: url('/assets/fonts/Apple_Sandol_Gothic_Neo/AppleSDGothicNeoL.ttf');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'SFMonoLight';
-  src: url('/assets/fonts/sf-mono-cufonfonts/SFMonoLight.otf');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'JetBrainsMono EL';
-  src: url('/assets/fonts/JetBrains_Mono/JetBrainsMono-ExtraLight.ttf');
-}
-
-@font-face {
-  font-family: 'JetBrainsMono it';
-  src: url('/assets/fonts/JetBrains_Mono/JetBrainsMono-Italic.ttf');
-}
-
-
-
 #__nuxt {
   font-family: -apple-system, BlinkMacSystemFont;
 
