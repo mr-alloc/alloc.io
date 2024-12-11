@@ -2,7 +2,7 @@
 layout: wiki
 title: 메모리에 직접 접근할 수 있는 DMA
 categories: [computer, hardware]
-tags: [Hardware, DMAC, Dynamic Memory Access Controller]
+tags: [Hardware, DMAC, Direct Memory Access Controller]
 summary: DMA란?
 hide: false
 ---
@@ -18,11 +18,11 @@ DMA는 `IO 장치`와 `메모리`간의 데이터 전송을 위한 기술이다.
 이를 해결하기위해 등장한 DMA 기술은 `I/O 장치에서 메모리`로 또는 `메모리에서 I/O 장치`로 데이터를 CPU의 개입없이 전송하여 CPU의 부담을 줄여준다.
 
 ![메모리와 I/O 장치간의 데이터 전송](/post/computer/data-transfer-between-memory-and-io-device.png)
-:{ "max-width": "400px", "align": "center", "description": "메모리와 I/O 장치간의 데이터 전송" }
+:{ "max-width": "400px", "wrapper-class": "justify-center", "description": "메모리와 I/O 장치간의 데이터 전송" }
 
 ## DMA는 어떻게 사용되는가?
 
-**D**ynamic **M**emory **A**cess **C**ontroller (이하 `DMAC`)는 하드웨어 장치로서, [메모리](/wiki/memory) 입출력 장치간의 데이터 전송을 DMA 기술로서 관리하는 장치이다.
+**D**irect **M**emory **A**cess **C**ontroller (이하 `DMAC`)는 하드웨어 장치로서, [메모리](/wiki/memory) 입출력 장치간의 데이터 전송을 DMA 기술로서 관리하는 장치이다.
 
 
 

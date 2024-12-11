@@ -6,6 +6,7 @@ import TemplateExpression from "@/markup/template/TemplateExpression";
 import Renderer from "markdown-it/lib/renderer";
 import StateInline from "markdown-it/lib/rules_inline/state_inline";
 import TokenNesting from "@/markup/constant/TokenNesting";
+import StyleDecorator from "@/markup/decorator/style/style-decorator";
 
 
 export default class ImageDecorator implements IMarkdownDecorator {
@@ -13,10 +14,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
     private readonly KEY_OPEN = 'paragraph_open';
     private readonly KEY_CLOSE = 'paragraph_close';
 
-    private readonly ATTR_IMAGE_MAX_WIDTH = 'max-width';
-    private readonly ATTR_IMAGE_MAX_HEIGHT = 'max-height';
     private readonly ATTR_INNER_ALIGN = 'align';
-    private readonly IMAGE_STYLE_ATTRS = [this.ATTR_IMAGE_MAX_WIDTH, this.ATTR_IMAGE_MAX_HEIGHT];
 
 
     decorate(markdownIt: MarkdownIt): void {
@@ -34,16 +32,16 @@ export default class ImageDecorator implements IMarkdownDecorator {
                 const inline = tokens[index +1];
                 inline.content = '';
                 const imageToken = this.findChild(inline.children, 'image');
+                this.addDefaultImageClass(imageToken);
                 const templateToken = this.findChild(inline.children, 'text');
                 const attributes = TemplateAttributes.parse(templateToken.content).toMap();
 
                 imageToken.attrJoin('data-description', attributes.get('description') ?? '');
                 templateToken.content = '';
 
-                const wrapperStyle = this.stylingWrapper(attributes);
-                const wrapperClass = this.classWrapper(attributes);
-                this.styleImage(imageToken, attributes);
-                return `<div style="${wrapperStyle}" class="${wrapperClass}"><div><a href="#" class="my-2 inline-flex">`
+                StyleDecorator.getInstance().apply(imageToken, attributes);
+                const wrapperClass = attributes.get('wrapper-class');
+                return `<div class="flex ${wrapperClass}"><div><a href="#" class="my-2 inline-flex">`
             } catch (skip) {}
             return fallbackRule(tokens, index, options, env, self);
         }
@@ -68,29 +66,6 @@ export default class ImageDecorator implements IMarkdownDecorator {
         }
     }
 
-    private stylingWrapper(attributes: Map<string, string>): string {
-        return '';
-    }
-
-    private classWrapper(attributes: Map<string, string>): string {
-        const defaultClass = ['flex'];
-        const alignClass = this.getAlignClass(attributes);
-        if (alignClass !== '') {
-            defaultClass.push(alignClass);
-        }
-
-        return defaultClass.join(' ');
-    }
-
-    private styleImage(imageToken: Token, attributes: Map<string, string>): void {
-        const styles = this.IMAGE_STYLE_ATTRS.filter((key) => attributes.has(key))
-            .map((key) => `${key}: ${attributes.get(key)}`);
-
-
-        imageToken.attrJoin('style', styles.join(';'));
-        imageToken.attrJoin('class', 'my-0');
-    }
-
     private findChild(children: Token[] | null, inlineName: string): Token {
         if (!children) {
             throw new Error('No children found');
@@ -104,15 +79,8 @@ export default class ImageDecorator implements IMarkdownDecorator {
         return child;
     }
 
-    private getAlignClass(attributes: Map<string, string>): string {
-        const align = attributes.get(this.ATTR_INNER_ALIGN);
-        if (align === 'center') {
-            return 'justify-center';
-        } else if (align === 'right') {
-            return 'justify-end';
-        } else if (align === 'left') {
-            return 'justify-start';
-        }
-        return '';
+    private addDefaultImageClass(imageToken: Token) {
+        imageToken.attrJoin('class', 'my-0');
+        imageToken.attrJoin('class', 'rounded-md');
     }
 }
