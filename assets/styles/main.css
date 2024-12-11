@@ -325,7 +325,6 @@
     margin-top: 2em;
     overflow-x: auto;
     table-layout: auto;
-    width: 100%
 }
 
 .prose :where(thead):not(:where([class~=not-prose],[class~=not-prose] *)) {
@@ -376,6 +375,14 @@
     font-size: .875em;
     line-height: 1.4285714;
     margin-top: .8571429em
+}
+
+.prose :where(caption):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    color: var(--tw-prose-captions);
+    font-size: .875em;
+    line-height: 1.4285714;
+    margin-top: .8571429em;
+    caption-side: bottom;
 }
 
 .prose {

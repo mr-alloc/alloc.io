@@ -6,6 +6,7 @@ import CodeBlockDecorator from "@/markup/decorator/implementation/CodeBlockDecor
 import ImageDecorator from "@/markup/decorator/implementation/image-decorator";
 import LinkDecorator from "@/markup/decorator/implementation/link-decorator";
 import TableDecorator from "@/markup/decorator/implementation/table-decorator";
+import StyleDecorator from "@/markup/decorator/style/style-decorator";
 
 export default class DecoratorProvider {
 
@@ -23,6 +24,7 @@ export default class DecoratorProvider {
         ]
 
         this._decorators = new Map<RuleType, IMarkdownDecorator>(entries);
+        this.initStyleDecorator()
     }
 
     private static getInstance(): DecoratorProvider {
@@ -38,5 +40,33 @@ export default class DecoratorProvider {
         }
 
         return this.getInstance()._decorators.get(rule)!;
+    }
+
+    private initStyleDecorator() {
+        const styleDecorator = StyleDecorator.getInstance();
+
+        styleDecorator.styles
+            .add('align', (token, attributes) => {
+                const align = attributes.get('align');
+                if (align === 'center') {
+                    token.attrJoin('class', 'justify-center');
+                } else if (align === 'right') {
+                    token.attrJoin('class', 'justify-end');
+                } else if (align === 'left') {
+                    token.attrJoin('class', 'justify-start');
+                }
+            })
+            .add('max-width', (token, attributes) => {
+                const maxWidth = attributes.get('max-width');
+                if (maxWidth) {
+                    token.attrJoin('style', `max-width: ${maxWidth}`);
+                }
+            })
+            .add('max-height', (token, attributes) => {
+                const maxHeight = attributes.get('max-height');
+                if (maxHeight) {
+                    token.attrJoin('style', `max-height: ${maxHeight}`);
+                }
+            });
     }
 }

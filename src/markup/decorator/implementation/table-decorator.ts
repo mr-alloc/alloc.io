@@ -42,20 +42,15 @@ export default class TableDecorator implements IMarkdownDecorator {
             const count = trCloseIndex - trOpenIndex;
 
             [...new Array(count)].forEach((_, i) => {
-                console.log(`tokens[${trOpenIndex + i}]`, tokens[trOpenIndex + i]);
                 tokens[trOpenIndex + i].hidden = true;
             });
 
             const attributes = TemplateAttributes.parse(templateToken.content);
-            console.log('tokens', tokens);
-            console.log('trOpenIndex', trOpenIndex);
-            console.log('trCloseIndex', trCloseIndex);
             const desc = attributes.description;
-
             return (
-                `<div class="flex flex-col">
-                    <table class="table-fixed w-full">
-                    <caption class="text-gray-300 text-sm caption-bottom">${desc}</caption>`
+                `<div class="flex flex-col ${attributes.wrapperClass}">
+                    <table class="table-fixed w-max">
+                    <caption class="text-gray-300 text-sm">${desc}</caption>`
             );
         }
 

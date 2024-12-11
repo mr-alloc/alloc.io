@@ -39,6 +39,7 @@ MacOS는 일반적으로 `/Library/Java/JavaVirtualMachines` 하위 경로에 jd
 | :----: | :------------------------: | :-----------: |
 |  JDK   | `zulu-<major_version>.jdk` | `zulu-11.jdk` |
 |  JRE   | `zulu-<major_version>.jdk` | `zulu-11.jre` |
+:{ "align": "center" }
 
 예를 들어, Azul Zulu JDK11을 위한 기본설치 폴더인경우:
 

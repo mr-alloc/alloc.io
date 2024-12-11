@@ -24,7 +24,7 @@ interrupt `[ˌɪntəˈrʌpt]`
 이 경우 이동이 끝나지 않아도, 우리는 새로운 위치를 클릭하여 방향을 바꿀수도있다. 
 
 ![캐릭터의 이동](/post/computer/move-unit.png)
-:{ "max-width": "300px", "align": "center", "description": "눈꽃시비르의 방향을 조작하는 프로겐 선수" }
+:{ "wrapper-class": "justify-center", "max-width": "300px", "description": "눈꽃시비르의 방향을 조작하는 프로겐 선수" }
 
 이 처럼 CPU가 명령을 실행하는중에도 긴급하거나, 실시간 처리가 필요한경우 IRQ를 통해, CPU에 인터럽트 신호를 보내 우선적으로 처리를 수행할 수 있다.
 
@@ -53,7 +53,7 @@ interrupt `[ˌɪntəˈrʌpt]`
 | 18     | 기기 검사              |
 | 19~31  | (Intel에서 예약, 사용금지) |
 | 32~255 | Maskale 인터럽트       |
-:{ "description": "표 1: Intel Processor 이벤트-벡터", "align": "center" }
+:{ "description": "표 1: Intel Processor 이벤트-벡터", "wrapper-class": "items-center" }
 
 `ISR`이 실행되는 동안에는 프로세서의 레지스터 값을 변경할수 있기때문에, `ISR`이 끝나기전에 인터럽트를 지우고(*clear*) 스택에 저장해 두었던 레지스터 값들을 다시 복원 하여 CPU가 인터럽트 발생 전 상태로 되돌아 갈수 있게 레지스터 값을 원복한다.
 `ISR`실행 후 인터럽트 요청에서 받았았던 복귀 주소를 `PC`로 적재하여 인터럽트 발생시점부터 실행을 옮겨 중단되었던 연산을 다시 시작한다.
