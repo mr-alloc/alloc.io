@@ -33,13 +33,13 @@ MacOS는 일반적으로 `/Library/Java/JavaVirtualMachines` 하위 경로에 jd
 /Library/Java/JavaVirtualMachines/<zulu_folder>/Contents/Home
 ```
 
-   `<zulu_folder>` 플레이스 홀더는 그 버전과 Azul Zulu 패키지(JDK or JRE)의 타입을 말한다. 
+`<zulu_folder>` 플레이스 홀더는 그 버전과 Azul Zulu 패키지(JDK or JRE)의 타입을 말한다. 
 
 | 패키지 |      Azul Zulu 폴더명      |     예시      |
 | :----: | :------------------------: | :-----------: |
 |  JDK   | `zulu-<major_version>.jdk` | `zulu-11.jdk` |
 |  JRE   | `zulu-<major_version>.jdk` | `zulu-11.jre` |
-:{ "align": "center" }
+:{ "wrapper-class": "items-center" }
 
 예를 들어, Azul Zulu JDK11을 위한 기본설치 폴더인경우:
 

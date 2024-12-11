@@ -1,6 +1,6 @@
 import type IMarkdownDecorator from "@/markup/decorator/IMarkdownDecorator";
 import RuleType from "@/markup/constant/RuleType";
-import BlockquoteDecorator from "@/markup/decorator/implementation/BlockquoteDecorator";
+import BlockquoteDecorator from "@/markup/decorator/implementation/blockquote-decorator";
 import HeadlineDecorator from "@/markup/decorator/implementation/headline-decorator";
 import CodeBlockDecorator from "@/markup/decorator/implementation/CodeBlockDecorator";
 import ImageDecorator from "@/markup/decorator/implementation/image-decorator";

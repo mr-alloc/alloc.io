@@ -1,42 +1,32 @@
-# Nuxt 3 Minimal Starter
+## 테이블 스타일 옵션
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+### 표 정렬
 
-## Setup
+```
+:{ "wrapper-class": "items-center" } //옵션 적용예시 "wrapper-class"로 적용
+```
+|  방향  | Description  |
+|--------|--------------|
+|  Left  | items-start  |
+| Center | items-center |
+| Right  | items-end    |
 
-Make sure to install the dependencies:
+### 표 설명 추가
 
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
+```
+:{ "description": "표 설명" }
 ```
 
-## Development Server
+## 이미지 스타일 옵션
 
-Start the development server on http://localhost:3000
+### 이미지 정렬
 
-```bash
-npm run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
+![이미지](이미지경로)
+:{ "wrapper-class": "justify-center" } //옵션 적용예시 "wrapper-class"로 적용
 ```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+|  방향  | Description  |
+|--------|--------------|
+|  Left  | justify-start  |
+| Center | justify-center |
+| Right  | justify-end    |

@@ -25,7 +25,6 @@ export default class BlockquoteDecorator implements IMarkdownDecorator {
             self: Renderer
         ): string => {
             const inline = tokens[index +2];
-
             const blockquoteOpen = tokens[index];
             const blockquoteClose = tokens[index +4];
             const paragraphOpen = tokens[index +1];
@@ -37,6 +36,7 @@ export default class BlockquoteDecorator implements IMarkdownDecorator {
             tokens[index +3] = inline;
             tokens[index +2] = paragraphClose;
 
+            console.log('inline', inline);
             const template = TemplateAttributes.parse(inline.content);
             if (inline.children) {
                 const count = countNewline(template.origin) * 2 +1; /* 각 라인 + 라인피드 개수*/
