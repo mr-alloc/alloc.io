@@ -57,7 +57,7 @@ import TagArea from "@/components/layout/content/post-card/TagArea.vue";
 import appCache from "@/store/appCache";
 import {useRoute} from "#app";
 import Paginator from 'paginator'
-import {usePostContentStore} from "@/store/post-content-store.js";
+import {usePostContentStore} from "@/store/post-content-store.ts";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
