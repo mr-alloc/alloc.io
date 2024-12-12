@@ -14,7 +14,7 @@
       </div>
       <div class="lg:col-span-8 " id="post-sub-container">
         <div class="flex flex-col lg:grid lg:grid-cols-10 lg:gap-8">
-          <div class="lg:col-span-8" ref="postRoot">
+          <div class="lg:col-span-8">
             <div class="relative border-b border-gray-200 dark:border-gray-800 py-8">
               <div class="mb-3 text-sm/6 font-semibold text-primary flex items-center gap-1.5">
                 <nav aria-label="Breadcrumb" class="relative min-w-0">
