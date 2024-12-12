@@ -25,10 +25,13 @@ DMA는 `IO 장치`와 `메모리`간의 데이터 전송을 위한 기술이다.
 **D**irect **M**emory **A**cess **C**ontroller (이하 `DMAC`)는 하드웨어 장치로서, [메모리](/wiki/memory) 입출력 장치간의 데이터 전송을 DMA 기술로서 관리하는 장치이다.
 
 
+### DMA 의 동작 순서
 
-  
 
 
+**Bus Grant**
+
+**Cycle Stealing**
 
 
 
