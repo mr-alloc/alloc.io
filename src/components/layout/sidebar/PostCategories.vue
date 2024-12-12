@@ -55,10 +55,6 @@ const props = defineProps<{
   path: string
 }>();
 </script>
-
-<style scoped lang="scss">
-
-</style>
 <template>
   <aside class="hidden overflow-y-auto lg:block lg:max-h-[calc(100vh-var(--header-height))] lg:sticky lg:top-[--header-height] py-8 lg:px-4 lg:-mx-4">
     <div class="relative">

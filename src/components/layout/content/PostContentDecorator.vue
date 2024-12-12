@@ -17,11 +17,12 @@ const props = defineProps<{
 
 const html = computed(() => {
   const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
-
   return md.render(props.metadata.content);
 });
 
+
 onMounted(() => {
+
   prepareStore.prepare();
   photoViewStore.load(props.metadata.header.images);
 });
