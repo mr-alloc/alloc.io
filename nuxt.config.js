@@ -4,7 +4,7 @@ import Keys from './src/static/keys.json'
 
 export default defineNuxtConfig({
     devtools: {
-        enabled: false
+        enabled: true
     },
     srcDir: "src/",
     alias: {
