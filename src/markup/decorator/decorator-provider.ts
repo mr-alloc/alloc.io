@@ -43,9 +43,7 @@ export default class DecoratorProvider {
     }
 
     private initStyleDecorator() {
-        const styleDecorator = StyleDecorator.getInstance();
-
-        styleDecorator.styles
+        StyleDecorator.getInstance().styles
             .add('align', (token, attributes) => {
                 const align = attributes.get('align');
                 if (align === 'center') {
