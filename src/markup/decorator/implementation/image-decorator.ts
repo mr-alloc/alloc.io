@@ -41,7 +41,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
 
                 StyleDecorator.getInstance().apply(imageToken, attributes);
                 const wrapperClass = attributes.get('wrapper-class');
-                return `<div class="flex ${wrapperClass}"><div><a href="#" class="my-2 inline-flex">`
+                return `<div class="flex not-prose ${wrapperClass}"><div><a href="#" class="my-2 inline-flex">`
             } catch (skip) {}
             return fallbackRule(tokens, index, options, env, self);
         }
