@@ -26,11 +26,11 @@ export default class LinkDecorator implements IMarkdownDecorator {
             const token = tokens[index];
             const path = token.attrGet('href') ?? '';
 
-            const wikiName = _.last(path.split('/'))?.split('#')[0] ?? '';
-            const notUpdated = path.length === 0 || path.startsWith('/wiki') && this.isExistedWiki(wikiName);
+            const notUpdated = path.length === 0 || this.isNotExistWiki(path);
 
             if (notUpdated) {
-                token.attrJoin('class', 'not-updated');
+                token.attrJoin('class', 'text-red-500 dark:text-red-700');
+                token.attrJoin('href', '#');
             }
 
             return fallbackRule(tokens, index, options, env, self);
@@ -39,7 +39,7 @@ export default class LinkDecorator implements IMarkdownDecorator {
     }
 
 
-    private isExistedWiki(path: string): boolean {
-        return usePostContentStore().isWiki(path);
+    private isNotExistWiki(path: string): boolean {
+        return path.startsWith('/wiki') && !usePostContentStore().isWiki(_.last(path.split('/'))?.split('#')[0] ?? '');
     }
 }
