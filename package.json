@@ -48,10 +48,10 @@
     "@types/lodash": "^4.17.13",
     "@types/markdown-it": "^12.2.3",
     "@types/node": "^22.5.4",
-    "nuxt": "^3.13.0",
+    "nuxt": "^3.13.2",
     "postcss": "^8.4.47",
-    "sass": "^1.49.9",
-    "sass-loader": "^12.6.0",
+    "sass": "^1.83.0",
+    "sass-loader": "^16.0.4",
     "shiki": "^1.21.0",
     "sitemap": "^7.1.1",
     "tsx": "^4.19.2"

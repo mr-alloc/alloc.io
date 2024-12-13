@@ -1,6 +1,6 @@
 <template>
-  <div class="photo-view-area" :class="{ 'full-screen': photoViewStore.isFullScreen }">
-    <div class="photo-view-panel" :class="[`photoViewStore.zoom !== 1 && ${`x${photoViewStore.zoom}`}`, { zoom: photoViewStore.zoom !== 1}]">
+  <div class="photo-view-area relative w-screen h-screen flex flex-col" :class="{ 'full-screen': photoViewStore.isFullScreen }">
+    <div class="photo-view-panel flex h-4/5 shrink-0 bg-gray-800 dark:bg-gray-800 overflow-hidden relative" :class="[`photoViewStore.zoom !== 1 && ${`x${photoViewStore.zoom}`}`, { zoom: photoViewStore.zoom !== 1}]">
       <!-- 이전 버튼 -->
       <button class="before-button" type="button" v-if="photoViewStore.hasBefore()"
               v-on:click="photoViewStore.beforeImage()">
@@ -12,9 +12,9 @@
         </svg>
       </button>
       <!-- 이미지 -->
-      <img id="current-image" :src="photoViewStore.current().src" :alt="photoViewStore.current().alt"/>
+      <img id="current-image w-full my-0 mx-auto object-contain origin-top-left" :src="photoViewStore.current()?.src" :alt="photoViewStore.current()?.alt"/>
       <!-- 자막 -->
-      <span class="image-description">{{ photoViewStore.current().alt }}</span>
+      <span class="image-description">{{ photoViewStore.current()?.alt }}</span>
       <!-- 다음 버튼 -->
       <button class="next-button" type="button" v-if="photoViewStore.hasNext()" v-on:click="photoViewStore.nextImage()">
         <svg class="svg-inline--fa fa-chevron-right" aria-hidden="true" focusable="false" data-prefix="fas"
@@ -33,27 +33,25 @@
           </li>
           <li class="image-tool" v-on:click="methods.zoonIn()">
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
                   d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM184 296c0 13.3 10.7 24 24 24s24-10.7 24-24V232h64c13.3 0 24-10.7 24-24s-10.7-24-24-24H232V120c0-13.3-10.7-24-24-24s-24 10.7-24 24v64H120c-13.3 0-24 10.7-24 24s10.7 24 24 24h64v64z"/>
             </svg>
           </li>
           <li class="image-tool" v-on:click="methods.zoonOut()">
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
                   d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM136 184c-13.3 0-24 10.7-24 24s10.7 24 24 24H280c13.3 0 24-10.7 24-24s-10.7-24-24-24H136z"/>
             </svg>
           </li>
           <li class="image-tool" v-on:click="methods.toggleFullScreen()">
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
-              <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
               <path
                   d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/>
             </svg>
           </li>
           <li class="image-tool" v-on:click="photoViewStore.close()">
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512">
+              <path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM175 175c-9.4 9.4-9.4 24.6 0 33.9l47 47-47 47c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l47-47 47 47c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-47-47 47-47c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-47 47-47-47c-9.4-9.4-24.6-9.4-33.9 0z"/></svg>
           </li>
         </ul>
       </div>
@@ -96,7 +94,6 @@ const methods = {
 </script>
 
 <style scoped lang="scss">
-@import '@styles/index.scss';
 
 $photo-view-height: 500px;
 $tool-item-width: 60px;

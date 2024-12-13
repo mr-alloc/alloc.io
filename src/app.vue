@@ -97,16 +97,22 @@ useHead(() => ({
     lang: 'ko-kr',
   },
   meta: [
-    { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' }
+    { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' },
+  ],
+  link: [
+    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
+    { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap' },
   ]
 }))
 </script>
 
 <style lang="scss">
-@import '@styles/index';
 
 #__nuxt {
-  font-family: -apple-system, BlinkMacSystemFont;
+  font-family: "Noto Sans KR", serif, -apple-system, BlinkMacSystemFont;
+  font-optical-sizing: auto;
+  font-style: normal;
 
   .dark {
     background-color: $point-dark-color;
