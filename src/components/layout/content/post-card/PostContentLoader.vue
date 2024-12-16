@@ -29,7 +29,6 @@
 </template>
 
 <style lang="scss">
-@import '@styles/index';
 
 .content-loader {
 
@@ -38,14 +37,6 @@
     background-color: $main-light-color;
 
   }
-}
-
-@include tablet() {
-
-}
-
-@include mobile() {
-
 }
 
 .dark .content-loader {
