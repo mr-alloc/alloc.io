@@ -26,9 +26,14 @@
         </div>
         <ul :class="ui.header.menu.wrapper">
           <li :class="ui.header.menu.item.frame">
-              <div :class="ui.header.menu.item.inner">
-                  <a href="/tags" :class="ui.header.menu.item.link">태그</a>
-              </div>
+            <div :class="ui.header.menu.item.inner">
+              <a href="/wiki" :class="ui.header.menu.item.link">WIKI</a>
+            </div>
+          </li>
+          <li :class="ui.header.menu.item.frame">
+            <div :class="ui.header.menu.item.inner">
+              <a href="/tags" :class="ui.header.menu.item.link">TAG</a>
+            </div>
           </li>
         </ul>
         <div :class="ui.header.feature.wrapper">
