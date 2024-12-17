@@ -27,7 +27,7 @@
         <ul :class="ui.header.menu.wrapper">
           <li :class="ui.header.menu.item.frame">
             <div :class="ui.header.menu.item.inner">
-              <a href="/wiki" :class="ui.header.menu.item.link">WIKI</a>
+              <a href="/wikis" :class="ui.header.menu.item.link">WIKI</a>
             </div>
           </li>
           <li :class="ui.header.menu.item.frame">

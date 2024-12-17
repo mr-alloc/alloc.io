@@ -38,10 +38,15 @@ export const usePostContentStore = defineStore("PostMap", () => {
         return Array.from(values).filter(post => post.header.layout === documentType.name) as Array<PostMetadata>;
     }
 
+    function allValues(): Array<PostMetadata> {
+        return Array.from(postContents.value.values()) as Array<PostMetadata>;
+    }
+
     return {
         add,
         get,
         values,
+        allValues,
         getWiki,
         isWiki
     }

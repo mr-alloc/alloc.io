@@ -8,11 +8,11 @@ export default () => {
     const links = keys.map((key: string) => {
         return {
             //리디렉션
-            url: key + '/'
+            url: key
         }
     })
     const stream = new SitemapStream({
-        hostname: packageJson.domain
+        hostname: 'https://devis.kr'
     });
     return streamToPromise(Readable.from(links).pipe(stream))
 }

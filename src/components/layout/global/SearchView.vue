@@ -89,7 +89,7 @@ const methods = {
 
     if (/([a-zA-Z가-힣0-9@\W\-_])/.test(text)) {
       const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i');
-      const contentsForSearch = postContentStore.values(DocumentType.POST) as Array<PostMetadata>;
+      const contentsForSearch = postContentStore.allValues() as Array<PostMetadata>;
       const results: PostSearchResult [] = contentsForSearch
           .filter(content => {
             const title = content.header.title;

@@ -51,7 +51,6 @@ nuxtApp.hook('page:finish', () => {
 </script>
 
 <style lang="scss" scoped>
-@import "@styles/index";
 
 .outline-link {
   color: #3c3c3cb3;

@@ -1,11 +1,11 @@
-\<template>
+<template>
   <div class="post-preview-header flex pt-4 px-3 mb-2">
     <div :class="ui.image.frame">
       <img :class="ui.image.source" :src="props.image" alt="Profile Image" />
     </div>
     <div :class="ui.author.wrapper">
       <a :href="`https://github.com/${props.nickname}`" target="_blank">
-        <span :class="ui.author.name" aria-hidden="true">{{ appCache.blogInfo.fullName }}</span>
+        <span :class="ui.author.name" aria-hidden="true">{{ appConfig.fullName }}</span>
       </a>
       <div :class="ui.author.intro" >
         <span aria-hidden="true">{{ props.position }} At <strong>{{ props.company }}</strong></span>
@@ -20,11 +20,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import appCache from "@/store/appCache";
 import {calPostDate} from "@/utils/DateUtils";
-import Header from "@/classes/implement/Header";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
+const appConfig = useAppConfig();
 const props = defineProps<{
   image: string,
   nickname: string,

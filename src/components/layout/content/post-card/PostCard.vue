@@ -14,7 +14,7 @@ import PostCardBody from '@/components/layout/content/post-card/PostCardBody.vue
 import PostCardFooter from "@/components/layout/content/post-card/PostCardFooter.vue";
 import appCache from "@/store/appCache";
 
-
+const appConfig = useAppConfig();
 const props = defineProps<{
   feed: PostMetadata
 }>();
@@ -24,7 +24,7 @@ const ui = {
 const header = computed(() => {
   return {
     image: props.feed.header.profileImage ?? '/post/profile/default.jpeg',
-    nickname: appCache.blogInfo.fullName,
+    nickname: appConfig.fullName,
     position: props.feed.header.currentPosition,
     company: props.feed.header.currentCompany,
     date: props.feed.header.date.toString()

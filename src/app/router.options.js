@@ -9,14 +9,33 @@ export default {
             component: () => import('@/pages/index.vue')
         },
         {
-            name: 'post',
-            path: '/docs/:pathMatch(.*)*',
-            component: () => import('@/pages/docs/[...slug].vue')
+            name: 'docs',
+            path: '/docs',
+            component: () => import('@/pages/docs.vue'),
+            children: [
+                {
+                    name: 'docs-child',
+                    path: ':slug(.*)*',
+                    component: () => import('@/pages/docs/[...slug].vue')
+                }
+            ]
+        },
+        {
+            name: 'wiki-index',
+            path: '/wikis',
+            component: () => import('@/pages/wikis.vue')
         },
         {
             name: 'wiki',
-            path: '/wiki/:pathMatch(.*)*',
-            component: () => import('@/pages/wiki/[...slug].vue')
+            path: '/wiki',
+            component: () => import('@/pages/wiki.vue'),
+            children: [
+                {
+                    name: 'wiki-child',
+                    path: ':slug(.*)*',
+                    component: () => import('@/pages/wiki/[...slug].vue')
+                }
+            ]
         },
         {
             name: 'tag',

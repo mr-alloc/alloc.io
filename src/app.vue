@@ -2,7 +2,7 @@
   <div id="application-container" class="app-container">
     <MainHeader />
 
-    <PageMain class="relative">
+    <AppMain class="relative">
       <BackdropCurtain
           class="absolute w-full top-[1px] transition-all text-primary flex-shrink-0"
           :class="[
@@ -11,8 +11,8 @@
               heroBackgroundClass
           ]"
       />
-      <NuxtPage class="mx-auto current-content" id="current-content-element" :page-key="route.fullPath" :keepalive="false" />
-    </PageMain>
+      <NuxtPage />
+    </AppMain>
 
     <div class="background" :class="[
         photoViewStatus.isPhotoView || searchStatus.isSearchMode
@@ -20,7 +20,7 @@
         ]"
          v-on:click="($event) => methods.clickBackground($event as PointerEvent)">
       <div class="flex min-h-full items-end sm:items-center justify-center text-center p-0 sm:p-4" v-if="!photoViewStatus.isPhotoView">
-        <SearchView v-if="searchStatus.isSearchMode" />
+        <SearchView v-show="searchStatus.isSearchMode" />
       </div>
       <PhotoView v-if="photoViewStatus.isPhotoView" v-on:click="$event.stopPropagation()" />
     </div>
@@ -39,7 +39,7 @@ import SearchView from "@/components/layout/global/SearchView.vue";
 import {usePostCallStore} from "@/store/PostCallStore";
 import {useDarkModeStore} from "@/store/DarkModeStore";
 import BackdropCurtain from "@/components/layout/content/BackdropCurtain.vue";
-import PageMain from "@/components/layout/content/MainPage.vue";
+import AppMain from "@/components/layout/global/AppMain.vue";
 
 Runner.init();
 const route = useRoute();
@@ -58,9 +58,6 @@ const methods = {
     }
   },
 }
-
-onServerPrefetch(() => {
-})
 
 onMounted(() => {
 
@@ -115,11 +112,7 @@ useHead(() => ({
   ]
 }))
 
-const heroBackgroundClass = computed(() => {
-  const bg = route.meta?.heroBackground || '';
-  console.log('app.vue bg:', bg);
-  return bg;
-});
+const heroBackgroundClass = computed(() => route.meta?.heroBackground || '');
 const { isLoading } = useLoadingIndicator();
 const appear = ref(false)
 const appeared = ref(false)
