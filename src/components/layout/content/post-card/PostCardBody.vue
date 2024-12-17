@@ -36,9 +36,6 @@ import Header from "@/classes/implement/Header";
 import Image from "@/classes/implement/Image";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import MarkdownIt from "markdown-it";
-import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/MarkdownUtils";
-import DecoratorProvider from "@/markup/decorator/decorator-provider";
-import RuleType from "@/markup/constant/RuleType";
 
 const nuxtApp = useNuxtApp();
 const photoViewStatus = usePhotoViewStatusStore()
@@ -67,7 +64,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import '@styles/index';
 
 .post-preview-body {
   display: flex;

@@ -43,6 +43,8 @@
     "vue-utterances": "^0.3.4"
   },
   "devDependencies": {
+    "@nuxt/ui": "latest",
+    "@nuxtjs/color-mode": "latest",
     "@nuxtjs/tailwindcss": "^6.12.1",
     "@shikijs/markdown-it": "^1.21.0",
     "@types/lodash": "^4.17.13",

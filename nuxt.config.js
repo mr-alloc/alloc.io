@@ -56,7 +56,7 @@ export default defineNuxtConfig({
             }
         }
     },
-    modules: ['@pinia/nuxt', '@nuxt/image', '@nuxtjs/tailwindcss'],
+    modules: ['@pinia/nuxt', '@nuxt/image', '@nuxtjs/tailwindcss', '@nuxtjs/color-mode', '@nuxt/ui'],
     pinia: {
         storesDirs: ['@/store/**']
     },
