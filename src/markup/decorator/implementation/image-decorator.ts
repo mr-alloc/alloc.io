@@ -57,7 +57,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
                 const inline = tokens[index - 1];
                 const imageToken = this.findChild(inline.children, 'image');
                 if (imageToken.attrGet('data-description') === null) {
-                    return `</a></div></div>`
+                    return `</img>`
                 }
 
                 return (`</a><figcaption class="m-0 text-center">${imageToken.attrGet('data-description')}</figcaption></div></div>`);

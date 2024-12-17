@@ -14,20 +14,11 @@
     </MainPageBody>
 
     <template v-if="content.header.rootHeadLine" #right>
+      <ContentToc :headline="content.header.rootHeadLine">
 
+      </ContentToc>
     </template>
-    <div class="lg:col-span-2 order-first lg:order-last sticky top-[--header-height] bg-background/75 backdrop-blur group -mx-4 sm:-mx-6 px-4 sm:px-6 lg:px-4 lg:-mx-4 overflow-y-auto max-h-[calc(100vh-var(--header-height))] z-10">
-      <nav>
-        <div class="py-3 lg:py-8 border-b border-dashed border-gray-200 dark:border-gray-800 lg:border-0 space-y-3">
-          <button class="flex items-center gap-1.5 lg:cursor-text lg:select-text w-full group" tabindex="-1">
-            <span class="text-sm/6 truncate sm:block block lg:hidden font-bold">{{ scrollSpy.activeHeadings[scrollSpy.activeHeadings.length - 1] }}</span>
-            <span class="font-semibold text-sm/6 truncate sm:hidden hidden lg:block">Table Of Contents</span>
-            <span class="iconify i-ph:caret-down lg:!hidden ms-auto transform transition-transform duration-200 flex-shrink-0 mr-1.5 w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 -rotate-90" aria-hidden="true"></span>
-          </button>
-          <TableOfContents :headline="content?.header.rootHeadLine" :is-inner="false" />
-        </div>
-      </nav>
-    </div>
+
   </MainPage>
 </template>
 <script lang="ts" setup>
@@ -45,13 +36,12 @@ import MainPage from "@/components/layout/content/MainPage.vue";
 import MainPageHeader from "@/components/layout/content/MainPageHeader.vue";
 import Breadcrumb from "@/components/layout/content/Breadcrumb.vue";
 import MainPageBody from "@/components/layout/content/MainPageBody.vue";
+import ContentToc from "@/components/layout/content/ContentToc.vue";
 
-const postContentStore = usePostContentStore();
 const route = useRoute();
-
-const scrollSpy = useScrollspy();
+const postContentStore = usePostContentStore();
 const categoriesStore = useCategoriesStore();
-const content = postContentStore.get(route.path);
+const content = postContentStore.get(route.fullPath);
 
 if (!content) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
@@ -66,6 +56,7 @@ const titleTemplate = computed(() => {
   return '%s · DEVIS 블로그'
 });
 
+const appConfig = useAppConfig();
 const title = content.header.title;
 const description = content.description;
 useSeoMeta({
@@ -75,6 +66,6 @@ useSeoMeta({
   ogTitle: title,
   ogDescription: description,
   ogImage: content.header.thumbnail,
-  ogUrl: appCache.blogInfo.domain + route.path
+  ogUrl: appConfig.domain + route.path
 });
 </script>

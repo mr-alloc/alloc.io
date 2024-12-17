@@ -25,22 +25,13 @@ onMounted(() => {
   prepareStore.prepare();
   photoViewStore.load(props.metadata.header.images);
 });
-const titleTemplate = (titleChunk: string) => {
-  return "%s · DEVIS 블로그"
-}
-const title = props.metadata.header.title;
-
-useSeoMeta({
-  titleTemplate,
-  title
-});
 </script>
 
 <style lang="scss">
-@import "@styles/index";
-@import "@styles/markup";
-@import '@styles/languages';
-@import '@styles/icons';
+@use "@styles/index" as *;
+@use "@styles/markup" as *;
+@use '@styles/languages' as *;
+@use '@styles/icons' as *;
 
 div[class*=language-].line-numbers-mode pre {
   margin-left: $code-ln-wrapper-width;

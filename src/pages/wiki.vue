@@ -20,7 +20,8 @@ definePageMeta({
 });
 const route = useRoute();
 const postContentStore = usePostContentStore();
-const content = postContentStore.get(route.fullPath);
+const paths = route.path.split('/');
+const content = postContentStore.getWiki(paths[paths.length -1]);
 
 if (!content) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });

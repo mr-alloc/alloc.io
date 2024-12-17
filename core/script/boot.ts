@@ -73,6 +73,10 @@ const posts = postDataList
         if (!post.header.hide(true) && post.header.layout === 'post') {
             routePaths.push(post.path.replace('/src', ''));
         }
+        if (post.header.layout === 'wiki') {
+            const paths = post.path.split('/');
+            routePaths.push(`/wiki/${paths[paths.length -1]}`)
+        }
         post.header.images = extractImages(post.content);
         post.header.headlines = extractHeadlines(post.content);
         return post

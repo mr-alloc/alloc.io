@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { fileURLToPath} from "node:url";
-import Keys from './src/static/keys.json'
+import Keys from './src/static/keys.json';
+import { toValueMap } from './core/util/CollectionUtil'
 
 export default defineNuxtConfig({
     build: {
@@ -27,7 +28,7 @@ export default defineNuxtConfig({
         payloadExtraction: false,
     },
     nitro: {
-        preset: 'static'
+        preset: 'static',
     },
     generate: {
         dir: 'dist',
@@ -56,7 +57,12 @@ export default defineNuxtConfig({
             }
         }
     },
-    modules: ['@pinia/nuxt', '@nuxt/image', '@nuxtjs/tailwindcss', '@nuxtjs/color-mode', '@nuxt/ui'],
+    routeRules: Object.fromEntries(toValueMap(Array.from(Keys), (e) => e, (e) => {
+        return {
+            prerender: false
+        }
+    }).entries()),
+    modules: ['@pinia/nuxt', '@nuxt/image', '@nuxtjs/color-mode', '@nuxt/ui', '@nuxtjs/tailwindcss'],
     pinia: {
         storesDirs: ['@/store/**']
     },

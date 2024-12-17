@@ -80,7 +80,7 @@ SELECT 식별자이다. 쿼리 내에서 SELECT의 순서가 있는 숫자이며
 | UNCHAHEABLE SUBQUERY | cacheable (false)          | 바깥쪽 쿼리의 각  행에대해 결과가 캐시될수 없고 재 평가 되어아야하는 서브쿼리 |
 | UNCACHEABLE UNION    | cacheable (false)          | 캐시를 할 수 없는 서브쿼리에 속해있는 UNION 내 두번째 이상 SELECT |
 
-> `DEPENDENT`는 일반적으로 [상관관계 서브쿼리]() 사용을 의미한다.
+> `DEPENDENT`는 일반적으로 [상관관계 서브쿼리](https://dev.mysql.com/doc/refman/8.4/en/correlated-subqueries.html) 사용을 의미한다.
 :{ "type": "note", "icon": "info"}
 
 ### table (참조 테이블)

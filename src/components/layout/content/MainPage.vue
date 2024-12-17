@@ -3,11 +3,11 @@
     <div v-if="$slots.left" :class="ui.left">
       <slot name="left" />
     </div>
-    
+
     <div :class="centerClass">
       <slot />
     </div>
-    
+
     <div v-if="$slots.right" :class="ui.right">
       <slot name="right" />
     </div>
@@ -35,5 +35,9 @@ const centerClass = computed(() => {
   }
 
   return ui.center.full
+})
+
+defineOptions({
+  inheritAttrs: false
 })
 </script>
