@@ -1,12 +1,19 @@
 <template>
   <div id="application-container" class="app-container">
     <MainHeader />
-    <main class="min-h-[calc(100vh-var(--header-height))] relative">
-      <ClientOnly>
-        <BackdropCurtain />
-      </ClientOnly>
+
+    <PageMain class="relative">
+      <BackdropCurtain
+          class="absolute w-full top-[1px] transition-all text-primary flex-shrink-0"
+          :class="[
+              isLoading ? 'animate-pulse' : (appear ? 'opacity-100' : 'opacity-0'),
+              appeared ? 'duration-[400ms]': 'duration-1000',
+              heroBackgroundClass
+          ]"
+      />
       <NuxtPage class="mx-auto current-content" id="current-content-element" :page-key="route.fullPath" :keepalive="false" />
-    </main>
+    </PageMain>
+
     <div class="background" :class="[
         photoViewStatus.isPhotoView || searchStatus.isSearchMode
         ? ['z-50', 'fixed', 'inset-0', 'overflow-y-auto', 'transition-opacity', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : []
@@ -32,6 +39,7 @@ import SearchView from "@/components/layout/global/SearchView.vue";
 import {usePostCallStore} from "@/store/PostCallStore";
 import {useDarkModeStore} from "@/store/DarkModeStore";
 import BackdropCurtain from "@/components/layout/content/BackdropCurtain.vue";
+import PageMain from "@/components/layout/content/MainPage.vue";
 
 Runner.init();
 const route = useRoute();
@@ -91,10 +99,11 @@ onMounted(() => {
 })
 
 
-
+const colorMode = useColorMode();
 useHead(() => ({
   htmlAttrs: {
     lang: 'ko-kr',
+    class: colorMode.value
   },
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' },
@@ -105,6 +114,23 @@ useHead(() => ({
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap' },
   ]
 }))
+
+const heroBackgroundClass = computed(() => {
+  const bg = route.meta?.heroBackground || '';
+  console.log('app.vue bg:', bg);
+  return bg;
+});
+const { isLoading } = useLoadingIndicator();
+const appear = ref(false)
+const appeared = ref(false)
+onMounted(() => {
+  setTimeout(() => {
+    appear.value = true
+    setTimeout(() => {
+      appeared.value = true
+    }, 1000)
+  }, 0)
+})
 </script>
 
 <style lang="scss">

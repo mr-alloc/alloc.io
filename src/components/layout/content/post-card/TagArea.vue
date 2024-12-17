@@ -30,7 +30,6 @@ const methods = {
 </script>
 
 <style lang="scss">
-@import '@styles/index';
 
 .post-tag-area {
   padding: 7px;

@@ -14,7 +14,6 @@ const props = defineProps<{
 </script>
 
 <style lang="scss">
-@import "@styles/index";
 
 .post-preview-footer {
   display: flex;
