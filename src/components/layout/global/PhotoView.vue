@@ -94,7 +94,6 @@ const methods = {
 </script>
 
 <style scoped lang="scss">
-
 $photo-view-height: 500px;
 $tool-item-width: 60px;
 

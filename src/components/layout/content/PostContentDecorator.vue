@@ -22,11 +22,18 @@ const html = computed(() => {
 
 
 onMounted(() => {
-
   prepareStore.prepare();
   photoViewStore.load(props.metadata.header.images);
 });
+const titleTemplate = (titleChunk: string) => {
+  return "%s · DEVIS 블로그"
+}
+const title = props.metadata.header.title;
 
+useSeoMeta({
+  titleTemplate,
+  title
+});
 </script>
 
 <style lang="scss">

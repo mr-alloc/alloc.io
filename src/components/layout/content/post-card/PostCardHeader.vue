@@ -51,7 +51,6 @@ const ui = {
 }
 </script>
 <style lang="scss" scoped>
-@import '@styles/index';
 
 .post-preview-header {
   display: flex;

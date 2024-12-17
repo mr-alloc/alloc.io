@@ -1,7 +1,6 @@
 <template>
-  <svg viewBox="0 0 1440 181" fill="none" xmlns="http://www.w3.org/2000/svg"
-       class="pointer-events-none absolute w-full top-[1px] transition-all text-primary flex-shrink-0 opacity-100 duration-[400ms] z-20"
-       :class="[useRouteStore().path !== '/' && 'opacity-30']">
+  <svg viewBox="0 0 1440 181" fill="none" xmlns="http://www.w3.org/2000/svg" class="pointer-events-none"
+       :class="[route.path !== '/' && 'opacity-30']">
     <mask id="path-1-inside-1_414_5526" fill="white">
       <path d="M0 0H1440V181H0V0Z"></path>
     </mask>
@@ -21,9 +20,5 @@
   </svg>
 </template>
 <script setup lang="ts">
-
-import {useRouteStore} from "@/store/RouteStore";
+const route = useRoute();
 </script>
-<style scoped lang="scss">
-
-</style>
