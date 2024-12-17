@@ -1,13 +1,15 @@
 <template>
   <div class="main-footer">
     <div class="footer-text">
-      <span>© 2022 <a :href="`https://github.com/${appCache.blogInfo.fullName}`">{{ appCache.blogInfo.username }}.</a> All rights reserved.</span>
+      <span>© 2022 <a :href="`https://github.com/${appConfig.fullName}`">{{ appConfig.username }}.</a> All rights reserved.</span>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import appCache from "@/store/appCache";
+
+const appConfig = useAppConfig();
 </script>
 
 <style lang="scss">

@@ -29,7 +29,7 @@ export default class LinkDecorator implements IMarkdownDecorator {
             const notUpdated = path.length === 0 || this.isNotExistWiki(path);
 
             if (notUpdated) {
-                token.attrJoin('class', 'text-red-500 dark:text-red-700');
+                token.attrJoin('class', 'not-prose text-red-500 dark:text-red-700');
                 token.attrJoin('style', 'text-decoration: underline wavy;');
                 token.attrJoin('href', '#');
             }

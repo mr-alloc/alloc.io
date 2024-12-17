@@ -1,7 +1,10 @@
 [
+  "/wiki/direct-memory-access",
   "/docs/database/mysql-explain",
   "/docs/framework/spring/abstract-transaction-manager",
   "/docs/tool/customize-markdown-it",
   "/docs/algorithm/heap-sort",
+  "/wiki/io-manager",
+  "/wiki/interrupt",
   "/docs/language/java/install-zulu-in-mac"
 ]

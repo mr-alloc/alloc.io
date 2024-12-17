@@ -1,7 +1,10 @@
 <template>
-    <div class="relative py-0 sm:py-16 max-w-md z-30" id="main-content-body">
+    <div class="relative py-0 sm:py-16 max-w-md z-30 mx-auto" id="main-content-body">
       <div class="grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 gap-8">
-        <ClientOnly :fallback="PostContentLoader">
+        <ClientOnly>
+          <template #fallback>
+            <PostContentLoader />
+          </template>
           <PostCard :feed="feed as PostMetadata" v-for="(feed, index) in appCache.feeds" v-bind:key="index" />
         </ClientOnly>
       </div>

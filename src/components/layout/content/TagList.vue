@@ -106,7 +106,6 @@ const methods = {
 }
 </script>
 <style lang="scss">
-@import "@styles/index";
 
 $card-width: 200px;
 

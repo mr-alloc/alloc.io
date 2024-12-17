@@ -15,11 +15,14 @@
           </div>
           <div class="text-slate-600 text-xs">
             <ul class="flex">
-              <li class="flex items-center" v-for="(crumb, index) in result.content.header.breadcrumbs">
+              <li v-if="result.content.header.layout === 'post'" class="flex items-center" v-for="(crumb, index) in result.content.header.breadcrumbs">
                 <span>{{ crumb }}</span>
                 <span class="iconify i-ph:caret-right flex-shrink-0 rtl:rotate-180 w-4 h-4"
                       v-if="index < result.content.header.breadcrumbs.length -1"
                       aria-hidden="true" role="presentation"></span>
+              </li>
+              <li v-else-if="result.content.header.layout === 'wiki'">
+                <span>위키</span>
               </li>
             </ul>
           </div>

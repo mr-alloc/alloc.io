@@ -1,8 +1,5 @@
-import { reactive } from "vue"
-import { PostMetadata } from "@/classes/implement/PostMetadata";
-import packageJson from '~/package.json'
-import {BlogInfo} from "@/classes/implement/BlogInfo";
-
+import {reactive} from "vue"
+import {PostMetadata} from "@/classes/implement/PostMetadata";
 
 
 export default {
@@ -16,16 +13,4 @@ export default {
     tagMap: reactive({
         store: new Map()
     }),
-
-    /* 블로그 메타 정보*/
-    blogInfo: reactive<BlogInfo>(
-        BlogInfo.create(
-            packageJson.fullname,
-            packageJson.username,
-            packageJson.domain,
-            packageJson.title,
-            packageJson.description,
-            packageJson.defaultProfile
-        )
-    ),
 }
