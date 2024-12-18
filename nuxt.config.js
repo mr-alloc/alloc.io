@@ -33,7 +33,7 @@ export default defineNuxtConfig({
     generate: {
         dir: 'dist',
         fallback: true,
-        routes: [...Keys]
+        routes: ['/wikis',...Keys]
     },
     router: {
         base: '/special-posted-in/'
@@ -57,7 +57,7 @@ export default defineNuxtConfig({
             }
         }
     },
-    routeRules: Object.fromEntries(toValueMap(Array.from(['/wiki', '/docs', ...Keys]), (e) => e, (e) => {
+    routeRules: Object.fromEntries(toValueMap(Array.from(['/wiki', '/docs', '/wikis', ...Keys]), (e) => e, (e) => {
         //nuxt에서는 내부적인 크롤러로 링크된 경로까지 확인하기 때문에 존재하지 않는 경로는 링크 되지 않아야한다.
         //또한 /wiki 나 '/docs' 처럼 래핑 컴포넌트에대한 라우딩은 이루어지면 안되기 때문에 리다이렉트 시킨다.
         if (e === '/wiki' || e === '/docs') {
@@ -73,6 +73,11 @@ export default defineNuxtConfig({
     modules: ['@pinia/nuxt', '@nuxt/image', '@nuxtjs/color-mode', '@nuxt/ui', '@nuxtjs/tailwindcss'],
     pinia: {
         storesDirs: ['@/store/**']
+    },
+    googleFonts: {
+        families: {
+            'Noto+Sans+KR': [400, 700],
+        }
     },
     compatibilityDate: '2024-07-09',
 });

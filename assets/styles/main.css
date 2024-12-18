@@ -1,3 +1,7 @@
+.dark {
+    --ui-background: var(--color-gray-950);
+    --ui-foreground: var(--color-gray-200);
+}
 
 :root {
     --color-primary-50: 239 253 245;
@@ -25,11 +29,10 @@
     --color-gray-950: 2 4 32;
 
     --header-height: 4rem;
-    --ui-background: 255 255 255;
-    --ui-foreground: var(--color-gray-700);
 
     --color-light: #00C16A;
     --color-dark: #00DC82;
+
 }
 
 
@@ -2522,6 +2525,16 @@
     transition-duration: .4s
 }
 
+
+body {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--ui-background)/var(--tw-bg-opacity,1));
+    font-family: Public Sans, "Public Sans Fallback: Arial",ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    --tw-text-opacity: 1;
+    color: rgb(var(--ui-foreground)/var(--tw-text-opacity,1));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
 
 
 
