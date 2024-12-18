@@ -1,0 +1,17 @@
+<template>
+  <UButton
+      icon="i-simple-icons-github"
+      to="https://github.com/devisitem"
+      target="_blank"
+      variant="ghost"
+      color="gray"
+      size="xs"
+  />
+  <UButton
+      icon="i-simple-icons-linkedin"
+      to="https://www.linkedin.com/in/tae-gu-jeon-431566209/"
+      target="_blank"
+      variant="ghost"
+      color="gray"
+      size="xs"/>
+</template>

@@ -97,6 +97,8 @@ onMounted(() => {
 
 
 const colorMode = useColorMode();
+const color = computed(() => colorMode.value === 'dark' ? '#020420' : 'white');
+
 useHead(() => ({
   htmlAttrs: {
     lang: 'ko-kr',
@@ -104,6 +106,7 @@ useHead(() => ({
   },
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=1.0' },
+    { name: 'theme-color', key: 'theme-color', content: color }
   ],
   link: [
     { rel: 'preconnect', href: 'https://fonts.googleapis.com' },

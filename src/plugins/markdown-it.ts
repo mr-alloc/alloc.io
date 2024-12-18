@@ -28,8 +28,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
             }
         ],
         themes: {
-            light: 'min-light',
-            dark: 'catppuccin-mocha'
+            light: 'material-theme-lighter',
+            dark: 'material-theme-palenight'
         },
     }));
 
