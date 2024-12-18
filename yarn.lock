@@ -2963,7 +2963,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.14.1592, @nuxt/kit@npm:^3.13.1, @nuxt/kit@npm:^3.13.2, @nuxt/kit@npm:^3.14.1592, @nuxt/kit@npm:^3.5.0":
+"@nuxt/kit@npm:3.14.1592, @nuxt/kit@npm:^3.10.3, @nuxt/kit@npm:^3.13.1, @nuxt/kit@npm:^3.13.2, @nuxt/kit@npm:^3.14.1592, @nuxt/kit@npm:^3.5.0":
   version: 3.14.1592
   resolution: "@nuxt/kit@npm:3.14.1592"
   dependencies:
@@ -3146,6 +3146,17 @@ __metadata:
     pkg-types: ^1.2.1
     semver: ^7.6.3
   checksum: 07c4a2690fb18a08fa86b739ac30d94e6144683150d703f170c32b69d1f566bb96e77dac9c117574d206d83a34bbcd31d295ef6e0d5a9822c849abdf54c16c84
+  languageName: node
+  linkType: hard
+
+"@nuxtjs/google-fonts@npm:3.2.0":
+  version: 3.2.0
+  resolution: "@nuxtjs/google-fonts@npm:3.2.0"
+  dependencies:
+    "@nuxt/kit": ^3.10.3
+    google-fonts-helper: ^3.5.0
+    pathe: ^1.1.2
+  checksum: a404ab92b88d3d1c19c54a791fadfb4d4d7e0c43b70345bfa4ff453e1dcce34e5488129c466ea3e6b8d18eafcb1c742239fc7ab6689b790200da98bf88ed3da1
   languageName: node
   linkType: hard
 
@@ -5735,7 +5746,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deepmerge@npm:^4.2.2":
+"deepmerge@npm:^4.2.2, deepmerge@npm:^4.3.1":
   version: 4.3.1
   resolution: "deepmerge@npm:4.3.1"
   checksum: 2024c6a980a1b7128084170c4cf56b0fd58a63f2da1660dcfe977415f27b17dbe5888668b59d0b063753f3220719d5e400b7f113609489c90160bb9a5518d052
@@ -7035,6 +7046,18 @@ __metadata:
     slash: ^5.1.0
     unicorn-magic: ^0.1.0
   checksum: 2cee79efefca4383a825fc2fcbdb37e5706728f2d39d4b63851927c128fff62e6334ef7d4d467949d411409ad62767dc2d214e0f837a0f6d4b7290b6711d485c
+  languageName: node
+  linkType: hard
+
+"google-fonts-helper@npm:^3.5.0":
+  version: 3.6.0
+  resolution: "google-fonts-helper@npm:3.6.0"
+  dependencies:
+    deepmerge: ^4.3.1
+    hookable: ^5.5.3
+    ofetch: ^1.3.4
+    ufo: ^1.5.3
+  checksum: c188ef503b014e8e0d423ab253688b2e7b600a0e9280ecb54c8e32b3cc6d3123e70df11ec12aca9e4cbd264d91ee4ea3e1b4811ee12d96575e9985ffae69761e
   languageName: node
   linkType: hard
 
@@ -11414,6 +11437,7 @@ __metadata:
     "@nuxt/image": ^1.0.0-rc.1
     "@nuxt/ui": latest
     "@nuxtjs/color-mode": latest
+    "@nuxtjs/google-fonts": 3.2.0
     "@nuxtjs/tailwindcss": ^6.12.1
     "@pinia/nuxt": ^0.4.7
     "@shikijs/markdown-it": ^1.21.0
@@ -12033,7 +12057,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ufo@npm:^1.1.2, ufo@npm:^1.3.2, ufo@npm:^1.5.4":
+"ufo@npm:^1.1.2, ufo@npm:^1.3.2, ufo@npm:^1.5.3, ufo@npm:^1.5.4":
   version: 1.5.4
   resolution: "ufo@npm:1.5.4"
   checksum: f244703b7d4f9f0df4f9af23921241ab73410b591f4e5b39c23e3147f3159b139a4b1fb5903189c306129f7a16b55995dac0008e0fbae88a37c3e58cbc34d833

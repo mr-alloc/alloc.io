@@ -27,12 +27,7 @@
         <ul :class="ui.header.menu.wrapper">
           <li :class="ui.header.menu.item.frame">
             <div :class="ui.header.menu.item.inner">
-              <a href="/wikis" :class="ui.header.menu.item.link">WIKI</a>
-            </div>
-          </li>
-          <li :class="ui.header.menu.item.frame">
-            <div :class="ui.header.menu.item.inner">
-              <a href="/tags" :class="ui.header.menu.item.link">TAG</a>
+              <NuxtLink to="/wikis" :class="ui.header.menu.item.link">WIKI</NuxtLink>
             </div>
           </li>
         </ul>
@@ -42,6 +37,14 @@
                     :aria-label="feature.label" v-on:click="feature.click">
               <span :class="[ui.header.feature.item.icon, feature.icon]"></span>
             </button>
+          </div>
+          <div :class="ui.header.feature.item.wrapper">
+            <ClientOnly>
+              <button type="button" :class="ui.header.feature.item.button"
+                      :aria-label="$colorMode.preference === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'" v-on:click="isDark = !isDark">
+                <span :class="[ui.header.feature.item.icon, isDark ? appConfig.ui.icons.dark : appConfig.ui.icons.light]"></span>
+              </button>
+            </ClientOnly>
           </div>
         </div>
       </div>
@@ -58,7 +61,9 @@ const nuxtApp = useNuxtApp();
 const emitter: any = nuxtApp.$emitter;
 
 const searchStatusStore = useSearchStatusStore();
+const appConfig = useAppConfig();
 const photoViewStatus = usePhotoViewStatusStore();
+const colorMode = useColorMode();
 
 const features = [
   {
@@ -68,6 +73,14 @@ const features = [
   }
 ]
 
+const isDark = computed({
+  get () {
+    return colorMode.value === 'dark'
+  },
+  set () {
+    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
+  }
+})
 
 onMounted(() => {
   emitter.on('initScroll', () => {

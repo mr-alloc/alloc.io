@@ -15,7 +15,12 @@
 
     <template v-if="content.header.rootHeadLine" #right>
       <ContentToc :headline="content.header.rootHeadLine">
-
+        <template #bottom>
+          <div class="hidden lg:block space-y-6" :class="{ '!mt-6': content.header.rootHeadLine }">
+            <UDivider v-if="content.header.rootHeadLine" type="dashed" />
+            <SocialLinks />
+          </div>
+        </template>
       </ContentToc>
     </template>
 
@@ -32,6 +37,7 @@ import MainPageHeader from "@/components/layout/content/MainPageHeader.vue";
 import Breadcrumb from "@/components/layout/content/Breadcrumb.vue";
 import MainPageBody from "@/components/layout/content/MainPageBody.vue";
 import ContentToc from "@/components/layout/content/ContentToc.vue";
+import SocialLinks from "@/components/layout/content/SocialLinks.vue";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
