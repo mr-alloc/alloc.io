@@ -14,6 +14,7 @@ export default class FileAlias {
     private static readonly TOOL = new FileAlias("tool", "도구");
     private static readonly DATABASE = new FileAlias("database", "데이터베이스");
     private static readonly OS = new FileAlias("os", "운영체제");
+    private static readonly LIFE = new FileAlias("life", "일상");
 
     private static readonly CACHED = toMap(FileAlias.values(), (file) => file._value);
 

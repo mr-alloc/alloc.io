@@ -13,9 +13,13 @@
 import MainPage from "@/components/layout/content/MainPage.vue";
 import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
 import {usePostContentStore} from "@/store/post-content-store";
+import {useCategoriesStore} from "@/store/category-store";
+import DocumentType from "@/classes/constant/document-type";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
+const categoriesStore = useCategoriesStore();
+categoriesStore.initialize(postContentStore.values(DocumentType.POST));
 const content = postContentStore.get(route.fullPath);
 
 if (!content) {

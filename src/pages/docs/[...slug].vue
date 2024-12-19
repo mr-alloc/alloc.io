@@ -30,8 +30,6 @@
 import {useRoute} from "vue-router";
 import {usePostContentStore} from "@/store/post-content-store";
 import PostContentDecorator from "@/components/layout/content/PostContentDecorator.vue";
-import {useCategoriesStore} from "@/store/CategoriesStore";
-import DocumentType from "@/classes/constant/document-type";
 import MainPage from "@/components/layout/content/MainPage.vue";
 import MainPageHeader from "@/components/layout/content/MainPageHeader.vue";
 import Breadcrumb from "@/components/layout/content/Breadcrumb.vue";
@@ -41,18 +39,12 @@ import SocialLinks from "@/components/layout/content/SocialLinks.vue";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
-const categoriesStore = useCategoriesStore();
 const content = postContentStore.get(route.fullPath);
 
 if (!content) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
 }
 
-onMounted(() => {
-  const contents = postContentStore.values(DocumentType.POST)
-      .filter(post => post.header.layout === 'post');
-  categoriesStore.initialize(contents);
-});
 const titleTemplate = computed(() => {
   return '%s · DEVIS 블로그'
 });
