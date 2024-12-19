@@ -4,7 +4,7 @@ import Header from "@/classes/implement/Header";
 import postJson from '@/static/posts.json';
 import type StarterService from "@/service/StarterService";
 import {usePostContentStore} from "@/store/post-content-store";
-import {useCategoriesStore} from "@/store/CategoriesStore";
+import {useCategoriesStore} from "@/store/category-store";
 
 
 // @ts-ignore
