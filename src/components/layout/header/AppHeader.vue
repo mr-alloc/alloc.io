@@ -27,24 +27,24 @@
         <ul :class="ui.header.menu.wrapper">
           <li :class="ui.header.menu.item.frame">
             <div :class="ui.header.menu.item.inner">
-              <NuxtLink to="/wikis" :class="ui.header.menu.item.link">WIKI</NuxtLink>
+              <NuxtLink to="/wikis" :class="ui.header.menu.item.link">나만의 위키</NuxtLink>
             </div>
           </li>
         </ul>
         <div :class="ui.header.feature.wrapper">
           <div :class="ui.header.feature.item.wrapper" v-for="feature in features">
-            <button type="button" :class="ui.header.feature.item.button"
-                    :aria-label="feature.label" v-on:click="feature.click">
+            <UTooltip :text="feature.label">
+              <button type="button" :class="ui.header.feature.item.button" v-on:click="feature.click">
               <span :class="[ui.header.feature.item.icon, feature.icon]"></span>
-            </button>
+              </button>
+            </UTooltip>
           </div>
           <div :class="ui.header.feature.item.wrapper">
-            <ClientOnly>
-              <button type="button" :class="ui.header.feature.item.button"
-                      :aria-label="$colorMode.preference === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'" v-on:click="isDark = !isDark">
+            <UTooltip :text="$colorMode.preference === 'dark' ? '라이트 모드로' : '다크모드로'">
+              <button type="button" :class="ui.header.feature.item.button" v-on:click="isDark = !isDark">
                 <span :class="[ui.header.feature.item.icon, isDark ? appConfig.ui.icons.dark : appConfig.ui.icons.light]"></span>
               </button>
-            </ClientOnly>
+            </UTooltip>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@ const colorMode = useColorMode();
 
 const features = [
   {
-    label: 'Search',
+    label: '검색',
     click: (e: PointerEvent) => searchStatusStore.searching(),
     icon: 'i-ph:magnifying-glass'
   }

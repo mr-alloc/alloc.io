@@ -60,7 +60,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
                     return `</img>`
                 }
 
-                return (`</a><figcaption class="m-0 text-center">${imageToken.attrGet('data-description')}</figcaption></div></div>`);
+                return (`</a><figcaption class="m-0 text-center text-sm text-gray-600 dark:text-gray-400">${imageToken.attrGet('data-description')}</figcaption></div></div>`);
             } catch(skip) {}
             return fallbackRule(tokens, index, options, env, self);
         }

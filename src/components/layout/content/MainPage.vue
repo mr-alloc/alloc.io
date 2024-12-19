@@ -8,7 +8,7 @@
       <slot />
     </div>
 
-    <div v-if="$slots.right" :class="ui.right">
+    <div v-if="$slots.right" :class="[ui.right, props.ui.right]">
       <slot name="right" />
     </div>
   </div>
@@ -25,6 +25,17 @@ const ui = {
   },
   right: 'lg:col-span-2 order-first lg:order-last'
 }
+
+const props = defineProps({
+  ui: {
+    type: Object,
+    default: () => ({}),
+    right: {
+      type: String,
+      default: ''
+    }
+  }
+});
 
 const slots = useSlots()
 const centerClass = computed(() => {

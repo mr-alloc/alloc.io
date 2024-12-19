@@ -1,5 +1,5 @@
 <template>
-  <nav :class="ui.wrapper">
+  <nav :class="noWrapper ? '' : ui.wrapper">
     <div :class="[headline ? ui.container.base : ui.container.empty]">
 
       <slot name="top" />
@@ -9,12 +9,11 @@
 
         <span class="font-semibold text-sm/6 truncate sm:hidden hidden lg:block">Table Of Contents</span>
 
-
         <span class="iconify i-ph:caret-down lg:!hidden ms-auto transform transition-transform duration-200 flex-shrink-0 mr-1.5 w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 -rotate-90" aria-hidden="true"></span>
       </button>
 
 
-      <TableOfContents :headline="props.headline" :is-inner="false" />
+      <TableOfContents :headline="props.headline as TocNode" :is-inner="false" />
 
       <slot name="bottom" />
     </div>
@@ -29,7 +28,8 @@ const appConfig = useAppConfig();
 const scrollspy = useScrollspy();
 
 const props = defineProps<{
-  headline: TocNode | undefined
+  headline: TocNode | undefined,
+  noWrapper: boolean
 }>();
 
 const ui = computed(() => ({

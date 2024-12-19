@@ -14,7 +14,7 @@
     </MainPageBody>
 
     <template v-if="content.header.rootHeadLine" #right>
-      <ContentToc :headline="content.header.rootHeadLine">
+      <ContentToc :headline="content.header.rootHeadLine" no-wrapper>
 
       </ContentToc>
     </template>
