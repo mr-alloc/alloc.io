@@ -79,5 +79,11 @@ export default defineNuxtConfig({
             'Noto+Sans+KR': [400, 700],
         }
     },
+    colorMode: {
+        preference: 'system', // 기본 설정 (system, light, dark 중 선택)
+        fallback: 'light', // 시스템 환경이 없을 경우 기본 모드
+        classSuffix: '',
+        storageKey: 'nuxt-color-mode', // 저장할 localStorage의 키 이름
+    },
     compatibilityDate: '2024-07-09',
 });

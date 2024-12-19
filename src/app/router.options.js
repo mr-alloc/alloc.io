@@ -12,6 +12,9 @@ export default {
             name: 'docs',
             path: '/docs',
             component: () => import('@/pages/docs.vue'),
+            meta: {
+                heroBackground: 'opacity-30 z-20'
+            },
             children: [
                 {
                     name: 'docs-child',

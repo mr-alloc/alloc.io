@@ -14,10 +14,6 @@ import MainPage from "@/components/layout/content/MainPage.vue";
 import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
 import {usePostContentStore} from "@/store/post-content-store";
 
-
-definePageMeta({
-  heroBackground: 'opacity-30 z-20'
-});
 const route = useRoute();
 const postContentStore = usePostContentStore();
 const content = postContentStore.get(route.fullPath);
@@ -27,4 +23,9 @@ if (!content) {
 }
 
 const categories = computed(() => content.header.categories ?? []);
+definePageMeta({
+  key: () => route.fullPath,
+  heroBackground: 'opacity-30 z-20'
+});
+
 </script>

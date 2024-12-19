@@ -1,6 +1,6 @@
 <template>
-  <div id="application-container" class="app-container">
-    <MainHeader />
+  <div id="application-container" class="duration-300">
+    <AppHeader />
 
     <AppMain class="relative">
       <BackdropCurtain
@@ -28,7 +28,7 @@
 </template>
 <script lang="ts" setup>
 import Runner from '@/service/DefaultStarterService'
-import MainHeader from "@/components/layout/header/MainHeader.vue";
+import AppHeader from "@/components/layout/header/AppHeader.vue";
 import PhotoView from "@/components/layout/global/PhotoView.vue";
 import {callPostFeed} from "@/utils/PostUtil";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
@@ -43,7 +43,6 @@ import AppMain from "@/components/layout/global/AppMain.vue";
 
 Runner.init();
 const route = useRoute();
-const router = useRouter();
 const searchStatus = useSearchStatusStore();
 const photoViewStatus = usePhotoViewStatusStore();
 const darkModeStore = useDarkModeStore();
@@ -113,7 +112,7 @@ useHead(() => ({
     { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap' },
   ]
-}))
+}));
 
 const heroBackgroundClass = computed(() => route.meta?.heroBackground || '');
 const { isLoading } = useLoadingIndicator();

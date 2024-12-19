@@ -14,7 +14,7 @@
     </MainPageBody>
 
     <template v-if="content.header.rootHeadLine" #right>
-      <ContentToc :headline="content.header.rootHeadLine">
+      <ContentToc :headline="content.header.rootHeadLine" no-wrapper>
         <template #bottom>
           <div class="hidden lg:block space-y-6" :class="{ '!mt-6': content.header.rootHeadLine }">
             <UDivider v-if="content.header.rootHeadLine" type="dashed" />
