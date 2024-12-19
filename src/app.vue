@@ -34,10 +34,8 @@ import {callPostFeed} from "@/utils/PostUtil";
 import {useSearchStatusStore} from "@/store/SearchStatusStore";
 import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
 import {computed, onMounted} from "vue";
-import {useNuxtApp} from "nuxt/app";
 import SearchView from "@/components/layout/global/SearchView.vue";
 import {usePostCallStore} from "@/store/PostCallStore";
-import {useDarkModeStore} from "@/store/DarkModeStore";
 import BackdropCurtain from "@/components/layout/content/BackdropCurtain.vue";
 import AppMain from "@/components/layout/global/AppMain.vue";
 
@@ -45,7 +43,6 @@ Runner.init();
 const route = useRoute();
 const searchStatus = useSearchStatusStore();
 const photoViewStatus = usePhotoViewStatusStore();
-const darkModeStore = useDarkModeStore();
 const postCallStore = usePostCallStore();
 
 const methods = {
@@ -82,16 +79,7 @@ onMounted(() => {
     }
 
   }
-  window.addEventListener('scroll', handleForScroll)
-
-//initialize
-  const prefersColorScheme = window.matchMedia('(prefers-color-scheme: dark)');
-  darkModeStore.force(prefersColorScheme.matches);
-
-//add event
-  prefersColorScheme.addEventListener('change', event => {
-    darkModeStore.force(event.matches);
-  });
+  window.addEventListener('scroll', handleForScroll);
 })
 
 
