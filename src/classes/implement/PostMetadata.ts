@@ -46,4 +46,8 @@ export class PostMetadata implements IPostMetadata {
     static toPosts (posts: IPostMetadata[]): PostMetadata[] {
         return posts.map(PostMetadata.toPostContent)
     }
+
+    get hasCategories() {
+        return this._header.categories.length > 0;
+    }
 }

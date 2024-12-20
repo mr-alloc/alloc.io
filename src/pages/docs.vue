@@ -19,7 +19,6 @@ import DocumentType from "@/classes/constant/document-type";
 const route = useRoute();
 const postContentStore = usePostContentStore();
 const categoriesStore = useCategoriesStore();
-categoriesStore.initialize(postContentStore.values(DocumentType.POST));
 const content = postContentStore.get(route.fullPath);
 
 if (!content) {
