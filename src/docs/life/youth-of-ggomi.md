@@ -15,7 +15,7 @@ hide: false
 <!--more-->
 
 ![꼬미가 처음 온 날](/post/life/first-day-of-ggomi.jpg)
-:{ "wrapper-class": "justify-center", "description": "꼬미가 처음 만난날" "class": "w-3/5" }
+:{ "wrapper-class": "justify-center", "description": "꼬미가 처음 만난날", "class": "w-3/5" }
 
 꼬미는 엄마를 잃고, 죽어 가던 형제들 사이에서 같이 생명을 잃어가고 있었다.  
 꼬미는 태어났을때 다른 강아지들보다 너무 작아서 쪼꼬미라고 지었다. (엄마가 조씨라서 조꼬미)  
