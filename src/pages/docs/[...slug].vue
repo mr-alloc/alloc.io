@@ -59,6 +59,7 @@ useSeoMeta({
   ogTitle: title,
   ogDescription: description,
   ogImage: content.header.thumbnail,
-  ogUrl: appConfig.domain + route.path
+  ogUrl: appConfig.domain + route.path,
+  ogSiteName: '$ alloc(*io);',
 });
 </script>
