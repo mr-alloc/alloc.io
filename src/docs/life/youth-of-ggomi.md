@@ -9,7 +9,7 @@ current-company: NEOWIZ
 current-position: Software Engineer
 summary: 나란 꼬미
 excerpt-separator: <!--more-->
-hide: false
+hide: true
 ---
 
 <!--more-->

@@ -23,6 +23,13 @@ const html = computed(() => {
 
 onMounted(() => {
   prepareStore.prepare();
+
+  const imageTags = document.querySelectorAll('.rendered-markdown-wrapper img')
+  imageTags.forEach((imgTag, index) => {
+    imgTag.addEventListener('click', (e) => {
+      photoViewStore.open(index +1)
+    });
+  });
   photoViewStore.load(props.metadata.header.images);
 });
 </script>
