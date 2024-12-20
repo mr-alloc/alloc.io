@@ -40,7 +40,7 @@ function explore(path: string ) {
 function toFile (wholePath: Path, file: Dirent) {
     const filename = new Filename(file.name);
     const post = readMarkdown(wholePath)
-    if ( ! post.header.hide(true)) postDataList.push(post);
+    postDataList.push(post);
     const summary = post.header.summary(post.header.get("title"));
 
     return FileNode.forFile(wholePath, filename, summary)

@@ -75,12 +75,12 @@
         "Life"
       ],
       "date": 1734591600000,
-      "thumbnail": "/post/life/tired-ggomi.jpg",
+      "thumbnail": "/post/life/tired-ggomi.png",
       "current-company": "NEOWIZ",
       "current-position": "Software Engineer",
       "summary": "나란 꼬미",
       "excerpt-separator": "<!--more-->",
-      "hide": false,
+      "hide": true,
       "breadcrumbs": [
         "문서",
         "life"
@@ -100,7 +100,7 @@
       }
     },
     "description": "\r\n",
-    "content": "\r\n\r\n![꼬미가 처음 온 날](/post/life/first-day-of-ggomi.jpg)\r\n:{ \"wrapper-class\": \"justify-center\", \"description\": \"꼬미가 처음 만난날\", \"max-width\": \"300px\"}\r\n\r\n꼬미는 엄마를 잃고, 죽어 가던 형제들 사이에서 같이 생명을 잃어가고 있었다.  \r\n꼬미는 태어났을때 다른 강아지들보다 너무 작아서 쪼꼬미라고 지었다. (엄마가 조씨라서 조꼬미)  \r\n\r\n집에 데려가던 차안에서 토를 했는데, 몇 백마리의 기생충이 나왔다.\r\n"
+    "content": "\r\n\r\n![꼬미가 처음 온 날](/post/life/first-day-of-ggomi.jpg)\r\n:{ \"wrapper-class\": \"justify-center\", \"description\": \"꼬미가 처음 온날\", \"max-width\": \"300px\"}\r\n\r\n꼬미는 엄마를 잃고, 죽어 가던 형제들 사이에서 같이 생명을 잃어가고 있었다.  \r\n꼬미는 태어났을때 다른 강아지들보다 너무 작아서 쪼꼬미라고 지었다. (엄마가 조씨라서 조꼬미)  \r\n\r\n집에 데려가던 차안에서 토를 했는데, 몇 백마리의 기생충이 나왔다.\r\n"
   },
   {
     "path": "/docs/database/mysql-explain",
@@ -402,6 +402,138 @@
     "content": "\r\n\r\n## AbstractPlatformTransactionManager\r\n\r\nSpring은 Transaction Manager를 추상화하여 간단하게 사용할수 있다. `DataSourceTransactionManager` 이던 `HibernateSessionMannager` 던 등등 다른 Transaction Manager를 하나로 추상화 되어있는 `AbstractPlatformTransactionManager`를 상황에 맞는 구성을 Spring이 구성해주기때문에 별다른 설정없이 사용하면 된다.\r\n\r\n\r\n\r\n### 설명\r\n`org.springframework.transaction.jta.JtaTransactionManager` 같이 실제 플랫폼 트랜잭션매니저의 기반으로 사용되는 Spring의 표준 트랜잭션 작업흐름 구현체, 추상 기본  클래스이다.\r\n\r\n이 기본 클래스는 다음의  작업흐름을 처리를 제공한다.\r\n\r\n* 트랜잭션이 있는지 판단\r\n* 적절한 전파 동작을 적용\r\n* 필요하다면 트랜잭션을 중단하고 재개\r\n* 커밋 시 rollback-only 표시를 확인\r\n* 롤백 시 적절한 수정 사항을 적용 (실제 롤백 또는  rollback-only를 설정해서)\r\n* 등록된 동기화 콜백을 트리거 (트랜잭션 동기화가 활성화 된 경우)\r\n\r\n하위클래스는 트랜잭션의 특정 상태에대한 특정 템플릿 메서드를 구현해야 함 (예:  중단, 재개, 커밋, 롤백전). 가장중요한 건 추상화와 실제 구현체로 제공되어야만 하는것이고, 그외에는 기본값이 제공되므로 `overriding` 선택사항.  \r\n\r\n트랜잭션 동기화는 트랜잭션 완료시간에 호출되는 콜백을 등록하기위한 일반적인 메커니즘. 이것은 JTA 트랜잭션 내에서 동작할때 JDBC, 하이버네이트, JPA 등등에 대한 데이터 접근클래스로부터 내부적으로 사용. (트랜잭션 완료 시간에 닫히기 위해 트랜잭션 내에서 개방된 리소스를 등록. 예 : 트랜잭션 내 동일한 하이버네이트 세션의 재사용을 위해 )  \r\n\r\n이 클래스의 상태는 직렬화 가능하여  트랜잭션 인터셉터를 전달하는 프록시와 마찬가지로 트랜잭션 전략를 직렬화 가능. 이것은 하위클래스에 달려있는데, 상태를 직렬화 되게 만들고 싶다면 진행. 이 경우에 하위클래스는 마커 인터페이스인 `java.io.Seializable` 를 구현해야하며 일시적인 상태를 복원해야하는경우 잠재적으로 `private` readObject()  메소드 (자바 직렬화 규칙에따라 )를 구현해야함.  \r\n\r\n\r\n### 필드\r\n\r\n* SYNCHRONIZATION_ALWAYS = 0;\r\n    * 트랜잭션 동기화를 항상 활성화며 기존 백엔드 트랜잭션이 없는 PROPAGATION_SUPPORTS인 \"비어있는\" 트랜잭션 까지도 적용.\r\n\r\n* SYNCHRONIZATION_ON_ACTUAL_TRANSACTION = 1;\r\n    * 실제 트랜잭션을 위해서만 트랜잭션 동기화를 활성화 하며, 기존 백엔드 트랜잭션이 없는  PROPAGATION_SUPPORTS 인 비어있는 트랜잭션에는 적용되지 않음.\r\n\r\n* SYNCHRONIZATION_NEVER = 2;\r\n    * 실제 트랜잭션까지도 트랜잭션동기화를 활성화하지 않음.\r\n\r\n## 설정기능\r\n`AbstactPlatformTransactionManager`는 트랜잭션 동기화를 등록하고 관리할 수 있음.\r\n\r\n### final setTransactionSynchronizationName(String constantName)\r\n\r\n* 이 클래스의 해당 상수명으로 트랜잭션 동기화를 설정.\r\n\r\n\r\n\r\n### final setTransactionSynchronization( int transactionSynchronization)\r\n\r\n* 이 트랜잭션 매니저가 Thread-bound 트랜잭션 동기화 지원을 활성화 해야만 할때 설정함. 기본값은 `SYNCHRONIZATION_ALWAYS`.\r\n* 참고로 트랜잭션 동기화는 다른 트랜잭션 매니저에 의해 다중 동시 트랜잭션을 지원하지 않음. 한개의 트랜잭션 매니저만이 이것을 언제든지 허용할 수 있음.\r\n\r\n\r\n### final setDefaultTimeout(int defaultTimeout)\r\n\r\n* 트랜잭션 레벨에 초단위로 명시된 타임아웃이 없는경우 이 트랜잭션 매니저가 적용해야만하는 기본 타임아웃을 명시.\r\n* 기본값은 근본적인 트랜잭션 인프라 기본 타임아웃(예: 일반적으로, JTA Provider 의 경우 30초)이며, TransactionDefinition.TIMEOUT_DEFAULT 값으로 나타남.\r\n\r\n\r\n\r\n### final setNestedTransactionAllowed(boolean nestedTransactionAllowed)\r\n\r\n* 기본값은 \"false\"이며, 중복 트랜잭을 허용할지 설정.\r\n* 일반적으로 구체적인 트랜잭션 매니저 하위클래스에 의해 적절한 기본값으로 초기화 됨.\r\n\r\n\r\n### final setValidateExistingTransaction(boolean validateExistingTransaction)\r\n\r\n* 기존 트랜잭션에 참여하기 전에 검증돼야 하는지 설정.\r\n* 기존 트랜잭션(예: PROPAGATION_REQUIRED 또는 PROPAGATION_SUPPORT가 기존 트랜잭션을 만나는 경우)에 참여할때, 이 외부 트랜잭션의 형질은 내부 트랜잭션영역에 까지도 적용.\r\n* 유효성 검사는 내부 트랜잭션 정의에서 호환되지 않는 고립레벨 및 읽기전용 설정을 감지하고 해당 예외를 throw하여 이에따라 참여를 거부.\r\n* 기본값은 \"false\"이며, 내부 트랜잭션 설정을 느슨하게 무시하여, 외부 트랜잭션의 형질로 간단히 재정의.\r\n* \"true\" 플래그로 변경은 엄격한 유효성검사를 강제하도록 명령.\r\n\r\n\r\n### final setGlobalRollbackOnParticipationFailure(boolean gloabalRollbackOnParticipationFailure)\r\n\r\n* 참여하는 트랜잭션이 실패한후에 기존 트랜잭션을 `rollback-only`로 전역적으로 표시할지 설정.\r\n* 기본값은 \"true\"이며, 참여하는 트랜잭션(예: PROPAGATION_REQUIRED 또는 PROPAGATION_SUPPORT가 기존 트랜잭션을 만나는 경우)이 실패한다면, 트랜잭션은 `rollback-only`로 전역적으로 마킹. *이런 트랜잭션에 오직 가능한 결과는 롤백.*  \r\n* “false”로 변경시: 트랜잭션 발신자가 롤백 결정을 내림. 만약 참여하는 트랜잭션이 예외로 실패한다면, 호출자는 트랜잭션 내 다른경로로 계속하기로 결정할 수 있음. 하지만, 이는 모든 참여 자원이 데이터 액세스 실패 후에도 트랜잭션 커밋을 향해 계속할 수 있는 경우에만 작동. (일반적으로 Hibernate 세션은 해당되지 않는 경우임. 예: JDBC insert/update/delete 동작들의 sequence)  \r\n* **참고:** 이 플래그는 일반적으로 데이터 접근 작업(TransactionInterceptor가 롤백룰에 따라 PlatformTransactionManager.rollback() 호출을 트리거하는 경우)으로 인해 throw 된 예외가 발생한 하위 트랜잭션에 대한 명시적 롤백시도에만 적용. 플래그가 비활성화라면 호출자는 하위 트랜잭션의 롤백룰과 관계없이 예외를 처리하고 롤백을 결정할 수 있음. 그러나 이 플래그는 하위트랜잭션에 명시적 `setRollbackOnly` 호출을 적용하지 않으므로,이는  항상 최종적인 글로벌 롤백(`rollback-only` 호출후 예외가 발생하지 않을 수 있기 때문에 )을 유발.\r\n* 하위트랜잭션의 실패처리에 대한 추천드리는 방법은 글로벌 트랜잭션이 하위트랜잭션의 시작시 가져온 세이브포인트로 롤백될 수 있도록 하는 “중복 트랜잭션” 임. `PROPAGATION_NESTED`는 정확히 이러한 의미를 제공함. 그러나, 중복 트랜잭션 지원이 가능할 때만 동작함. `DataSource TransactionManager` 경우지만, `JtaTransactionManager`의 경우는 아님.\r\n\r\n\r\n### final setFailEarlyOnGlobalRollbackOnly(boolean failEarlyOnGlobalRollbackOnly)\r\n* 트랜잭션이 `rollback-only`로 전역적으로 표시된 경우에 조기 실패할 것 인지 설정.\r\n* 기본값은 “false” 이며, 가장 바깥쪽의 트랜잭션 바운더리에서만 `UnexpectedRollbackExcetpion`을 발생시킴. 내부 트랜잭션 바운더리 내에서 전역 rollback-only 마커가 처음 감지하여 즉시 `UnexpectedRollbackException`을 발생시키려면 이 값을 변경해야함.\r\n* 참고로 스프링 2.0부터 전역  rollback-only 표시자에 대한 조기실패 동작이 통합 됨. (모든 트랜잭션 매니져는 기본적으로 가장 바깥쪽의 트랜잭션 바운더리에서만 `UnexpectedRollbackException`을 발생시킴.) 이 허용 예를들어 동작이 실패하고 트랜잭션이 완료되지 않은 후에도 유닛 테스트를 계속할 수 있음. 모든 트랜잭션 매니저는 이 플래그가 명시적으로 \"true\"로 설정됐을 때만 조기실패 시킴.\r\n\r\n### final setRollbackOnCommitFailure(boolean rollbackOnCommitFailure)\r\n*  `doCommit`메소드 호출의 실패에 `doRollback`이 수행 해야만하는지 설정함. 일반적으로 필요하지 않고 후속 롤백 예외로 커밋 예외를 무시할 가능성이 있으며, 따라서 피해야함.\r\n\r\n## PlatformTransactionManager 구현체\r\n\r\n\r\n### final getTransaction(TransactionDefinition definition)\r\n\r\n```java\r\n@Override\r\n\tpublic final TransactionStatus getTransaction(@Nullable TransactionDefinition definition)\r\n\t\t\tthrows TransactionException {\r\n\r\n\t\t// Use defaults if no transaction definition given.\r\n\t\tTransactionDefinition def = (definition != null ? definition : TransactionDefinition.withDefaults());\r\n\r\n\t\tObject transaction = doGetTransaction();\r\n\t\tboolean debugEnabled = logger.isDebugEnabled();\r\n\r\n\t\tif (isExistingTransaction(transaction)) {\r\n\t\t\t// Existing transaction found -> check propagation behavior to find out how to behave.\r\n\t\t\treturn handleExistingTransaction(def, transaction, debugEnabled);\r\n\t\t}\r\n\r\n\t\t// Check definition settings for new transaction.\r\n\t\tif (def.getTimeout() < TransactionDefinition.TIMEOUT_DEFAULT) {\r\n\t\t\tthrow new InvalidTimeoutException(\"Invalid transaction timeout\", def.getTimeout());\r\n\t\t}\r\n\r\n\t\t// No existing transaction found -> check propagation behavior to find out how to proceed.\r\n\t\tif (def.getPropagationBehavior() == TransactionDefinition.PROPAGATION_MANDATORY) {\r\n\t\t\tthrow new IllegalTransactionStateException(\r\n\t\t\t\t\t\"No existing transaction found for transaction marked with propagation 'mandatory'\");\r\n\t\t}\r\n\t\telse if (def.getPropagationBehavior() == TransactionDefinition.PROPAGATION_REQUIRED ||\r\n\t\t\t\tdef.getPropagationBehavior() == TransactionDefinition.PROPAGATION_REQUIRES_NEW ||\r\n\t\t\t\tdef.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NESTED) {\r\n\t\t\tSuspendedResourcesHolder suspendedResources = suspend(null);\r\n\t\t\tif (debugEnabled) {\r\n\t\t\t\tlogger.debug(\"Creating new transaction with name [\" + def.getName() + \"]: \" + def);\r\n\t\t\t}\r\n\t\t\ttry {\r\n\t\t\t\treturn startTransaction(def, transaction, debugEnabled, suspendedResources);\r\n\t\t\t}\r\n\t\t\tcatch (RuntimeException | Error ex) {\r\n\t\t\t\tresume(null, suspendedResources);\r\n\t\t\t\tthrow ex;\r\n\t\t\t}\r\n\t\t}\r\n\t\telse {\r\n\t\t\t// Create \"empty\" transaction: no actual transaction, but potentially synchronization.\r\n\t\t\tif (def.getIsolationLevel() != TransactionDefinition.ISOLATION_DEFAULT && logger.isWarnEnabled()) {\r\n\t\t\t\tlogger.warn(\"Custom isolation level specified but no actual transaction initiated; \" +\r\n\t\t\t\t\t\t\"isolation level will effectively be ignored: \" + def);\r\n\t\t\t}\r\n\t\t\tboolean newSynchronization = (getTransactionSynchronization() == SYNCHRONIZATION_ALWAYS);\r\n\t\t\treturn prepareTransactionStatus(def, null, true, newSynchronization, debugEnabled, null);\r\n\t\t}\r\n\t}\r\n```\r\n\r\n이 구현체는 전파동작을 처리함. doGetTransaction, isExistingTransaction 및 doBegin 메서드를 위임함.\r\n설정된 값을 먼저확인하고 없다면 기본값으로 세팅하  트랜잭션을 가져옴. 제일먼저 `TransactionDefinition` 기본값 세팅 후 `doGetTransaction`으로 트랜잭션을 불러옴.\r\n이 메서드에서는 먼저 살펴봐야할 메서드가 3가지정도로 나눌수 있음. `doGetTransaction`, `handleExistingTransaction`, `doBegin`을 보며 유추함.\r\n\r\n\r\n### doGetTransaction\r\n\r\n* 현재 트랜잭션 상태에대한 트랜잭션 객체를 리턴하는 메서드임.\r\n* 반환된 객체는 일반적으로 변경할수 있는 방식에 해당하는 트랜잭션을 전달하여 구체적인 트랜잭션 매니저 구현체에 명시됨.\r\n\r\n\r\n이 메서드는 추상화되어있고 각 구현체인 Transaction Manager들에 의하여 구현되있음. 일반적으로 `JDBC`를 사용하는 `DataSourceTransactionManager`를 예:\r\n\r\n```java\r\n@Override\r\nprotected Object doGetTransaction() {\r\n  DataSourceTransactionObject txObject = new DataSourceTransactionObject();\r\n  txObject.setSavepointAllowed(isNestedTransactionAllowed());\r\n  ConnectionHolder conHolder =\r\n      (ConnectionHolder) TransactionSynchronizationManager.getResource(obtainDataSource());\r\n  txObject.setConnectionHolder(conHolder, false);\r\n  return txObject;\r\n}\r\n```\r\n`line 4`에서 세이브포인트를 이 트랜잭션내에서 허용될 것인지를 정하고 매개변수로 중첩트랜잭션의 허용 여부을 보냄. `line 5`에 `ConnnectionHolder`가 컨넥션 및 세이브 포인트를 생성함. 아래 코드를 보시면 세이브포인트의 네이밍을 확인할 수 있음.\r\n\r\n```java\r\npublic Savepoint createSavepoint() throws SQLException {\r\n\t\tthis.savepointCounter++;\r\n\t\treturn getConnection().setSavepoint(SAVEPOINT_NAME_PREFIX + this.savepointCounter);\r\n\t}\r\n```\r\n트랜잭션 내에서 `SAVEPOINT_0`, `SAVEPOINT_1` .. 이런식으로 생성되면서 갯수를 체크함. `ConnectionHolder`는 현재 설정된 DataSource로 `Connnection`을 생성하여 할당. 결과적으로 세이브포인트 사용 여부와 컨넥션을 가지고 트랜잭션 객체를 반환함.\r\n\r\n### handleExistingTransaction\r\n트랜잭션이 존재하는지 확인하고 존재한다면 `handleExistingTransaction`으로 보내버림.\r\n\r\n```java\r\nprivate TransactionStatus handleExistingTransaction(\r\n\t\t\tTransactionDefinition definition, Object transaction, boolean debugEnabled)\r\n\t\t\tthrows TransactionException {\r\n\r\n\t\tif (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NEVER) {\r\n\t\t\tthrow new IllegalTransactionStateException(\r\n\t\t\t\t\t\"Existing transaction found for transaction marked with propagation 'never'\");\r\n\t\t}\r\n\r\n\t\tif (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {\r\n\t\t\tif (debugEnabled) {\r\n\t\t\t\tlogger.debug(\"Suspending current transaction\");\r\n\t\t\t}\r\n\t\t\tObject suspendedResources = suspend(transaction);\r\n\t\t\tboolean newSynchronization = (getTransactionSynchronization() == SYNCHRONIZATION_ALWAYS);\r\n\t\t\treturn prepareTransactionStatus(\r\n\t\t\t\t\tdefinition, null, false, newSynchronization, debugEnabled, suspendedResources);\r\n\t\t}\r\n\r\n\t\tif (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_REQUIRES_NEW) {\r\n\t\t\tif (debugEnabled) {\r\n\t\t\t\tlogger.debug(\"Suspending current transaction, creating new transaction with name [\" +\r\n\t\t\t\t\t\tdefinition.getName() + \"]\");\r\n\t\t\t}\r\n\t\t\tSuspendedResourcesHolder suspendedResources = suspend(transaction);\r\n\t\t\ttry {\r\n\t\t\t\treturn startTransaction(definition, transaction, debugEnabled, suspendedResources);\r\n\t\t\t}\r\n\t\t\tcatch (RuntimeException | Error beginEx) {\r\n\t\t\t\tresumeAfterBeginException(transaction, suspendedResources, beginEx);\r\n\t\t\t\tthrow beginEx;\r\n\t\t\t}\r\n\t\t}\r\n\r\n\t\tif (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NESTED) {\r\n\t\t\tif (!isNestedTransactionAllowed()) {\r\n\t\t\t\tthrow new NestedTransactionNotSupportedException(\r\n\t\t\t\t\t\t\"Transaction manager does not allow nested transactions by default - \" +\r\n\t\t\t\t\t\t\"specify 'nestedTransactionAllowed' property with value 'true'\");\r\n\t\t\t}\r\n\t\t\tif (debugEnabled) {\r\n\t\t\t\tlogger.debug(\"Creating nested transaction with name [\" + definition.getName() + \"]\");\r\n\t\t\t}\r\n\t\t\tif (useSavepointForNestedTransaction()) {\r\n\t\t\t\t// Create savepoint within existing Spring-managed transaction,\r\n\t\t\t\t// through the SavepointManager API implemented by TransactionStatus.\r\n\t\t\t\t// Usually uses JDBC 3.0 savepoints. Never activates Spring synchronization.\r\n\t\t\t\tDefaultTransactionStatus status =\r\n\t\t\t\t\t\tprepareTransactionStatus(definition, transaction, false, false, debugEnabled, null);\r\n\t\t\t\tstatus.createAndHoldSavepoint();\r\n\t\t\t\treturn status;\r\n\t\t\t}\r\n\t\t\telse {\r\n\t\t\t\t// Nested transaction through nested begin and commit/rollback calls.\r\n\t\t\t\t// Usually only for JTA: Spring synchronization might get activated here\r\n\t\t\t\t// in case of a pre-existing JTA transaction.\r\n\t\t\t\treturn startTransaction(definition, transaction, debugEnabled, null);\r\n\t\t\t}\r\n\t\t}\r\n\r\n\t\t// Assumably PROPAGATION_SUPPORTS or PROPAGATION_REQUIRED.\r\n\t\tif (debugEnabled) {\r\n\t\t\tlogger.debug(\"Participating in existing transaction\");\r\n\t\t}\r\n\t\tif (isValidateExistingTransaction()) {\r\n\t\t\tif (definition.getIsolationLevel() != TransactionDefinition.ISOLATION_DEFAULT) {\r\n\t\t\t\tInteger currentIsolationLevel = TransactionSynchronizationManager.getCurrentTransactionIsolationLevel();\r\n\t\t\t\tif (currentIsolationLevel == null || currentIsolationLevel != definition.getIsolationLevel()) {\r\n\t\t\t\t\tConstants isoConstants = DefaultTransactionDefinition.constants;\r\n\t\t\t\t\tthrow new IllegalTransactionStateException(\"Participating transaction with definition [\" +\r\n\t\t\t\t\t\t\tdefinition + \"] specifies isolation level which is incompatible with existing transaction: \" +\r\n\t\t\t\t\t\t\t(currentIsolationLevel != null ?\r\n\t\t\t\t\t\t\t\t\tisoConstants.toCode(currentIsolationLevel, DefaultTransactionDefinition.PREFIX_ISOLATION) :\r\n\t\t\t\t\t\t\t\t\t\"(unknown)\"));\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t\tif (!definition.isReadOnly()) {\r\n\t\t\t\tif (TransactionSynchronizationManager.isCurrentTransactionReadOnly()) {\r\n\t\t\t\t\tthrow new IllegalTransactionStateException(\"Participating transaction with definition [\" +\r\n\t\t\t\t\t\t\tdefinition + \"] is not marked as read-only but existing transaction is\");\r\n\t\t\t\t}\r\n\t\t\t}\r\n\t\t}\r\n\t\tboolean newSynchronization = (getTransactionSynchronization() != SYNCHRONIZATION_NEVER);\r\n\t\treturn prepareTransactionStatus(definition, transaction, false, newSynchronization, debugEnabled, null);\r\n\t}\r\n```\r\n`PROPAGATION_NEVER`은 현재 트랜잭션이 존재한다면 바로 예외를 throwing 하고,  `PROPAGATION_NOT_SUPPORTED`는 현재 트랜잭션을 중지함.\r\n`PROPAGATION_REQUIRES_NEW`는 현재 진행중인 트랜잭션을 중단하고 새로운 커넥션으로 트랜잭션을 시작하기 때문에 `startTransaction()`로 보냄.\r\n이처럼 다는 설명하지 못하지만 각 전파옵션과 현재 진행중인 트랜잭션의 유무를 판단하여 트랜잭션(상태)를 리턴함.\r\n\r\n### doBegin\r\n\r\n```java\r\n@Override\r\nprotected void doBegin(Object transaction, TransactionDefinition definition) {\r\n  DataSourceTransactionObject txObject = (DataSourceTransactionObject) transaction;\r\n  Connection con = null;\r\n\r\n  try {\r\n    if (!txObject.hasConnectionHolder() ||\r\n        txObject.getConnectionHolder().isSynchronizedWithTransaction()) {\r\n      Connection newCon = obtainDataSource().getConnection();\r\n      if (logger.isDebugEnabled()) {\r\n        logger.debug(\"Acquired Connection [\" + newCon + \"] for JDBC transaction\");\r\n      }\r\n      txObject.setConnectionHolder(new ConnectionHolder(newCon), true);\r\n    }\r\n\r\n    txObject.getConnectionHolder().setSynchronizedWithTransaction(true);\r\n    con = txObject.getConnectionHolder().getConnection();\r\n\r\n    Integer previousIsolationLevel = DataSourceUtils.prepareConnectionForTransaction(con, definition);\r\n    txObject.setPreviousIsolationLevel(previousIsolationLevel);\r\n    txObject.setReadOnly(definition.isReadOnly());\r\n\r\n    // Switch to manual commit if necessary. This is very expensive in some JDBC drivers,\r\n    // so we don't want to do it unnecessarily (for example if we've explicitly\r\n    // configured the connection pool to set it already).\r\n    if (con.getAutoCommit()) {\r\n      txObject.setMustRestoreAutoCommit(true);\r\n      if (logger.isDebugEnabled()) {\r\n        logger.debug(\"Switching JDBC Connection [\" + con + \"] to manual commit\");\r\n      }\r\n      con.setAutoCommit(false);\r\n    }\r\n\r\n    prepareTransactionalConnection(con, definition);\r\n    txObject.getConnectionHolder().setTransactionActive(true);\r\n\r\n    int timeout = determineTimeout(definition);\r\n    if (timeout != TransactionDefinition.TIMEOUT_DEFAULT) {\r\n      txObject.getConnectionHolder().setTimeoutInSeconds(timeout);\r\n    }\r\n\r\n    // Bind the connection holder to the thread.\r\n    if (txObject.isNewConnectionHolder()) {\r\n      TransactionSynchronizationManager.bindResource(obtainDataSource(), txObject.getConnectionHolder());\r\n    }\r\n  }\r\n\r\n  catch (Throwable ex) {\r\n    if (txObject.isNewConnectionHolder()) {\r\n      DataSourceUtils.releaseConnection(con, obtainDataSource());\r\n      txObject.setConnectionHolder(null, false);\r\n    }\r\n    throw new CannotCreateTransactionException(\"Could not open JDBC Connection for transaction\", ex);\r\n  }\r\n}\r\n```\r\n\r\n이 메서드는 주어진 트랜잭션 정의에따라 의미하  새로운 트랜잭션을 시작함. 이 추상 트랜잭션 매니저에의해 이미 처리되기 때문에 전파동작을 적용하는것에 대해 걱정할 필요없음.   \r\n이 메소드는 트랜잭션 매니저가 실제로 새로운 트랜잭션을 시작하기로 결정할때 호출함. 이전 트랜잭션이 없거나, 이전트랜잭션이 중단됐거나 둘중 하나임.\r\n\r\n특별한 경우는 세이브 포인트 없이 중첩된 트랜잭션임. `useSavepointForNestedTransaction()`이 \"false\"를 리턴 한다면, 이 메소드는 필요할때 중첩된 트랜잭션을 시작을 호출함. 그런 흐름에, 활성트랜잭션이 있음. (이 메소드의 구현체는 이를 감지하고 적절한 중첩 트랜잭션을 시작해야함).\r\n\r\n### final commit(TransactionStatus status)\r\n이 커밋 구현은 기존 트랜잭션 및 프로그래밍 방식 롤백 요청에 참여하는 것을 처리함. `isRollbackOnly`및 `doCommit`그리고 `rollback`에 위임함.\r\n\r\n```java\r\n@Override\r\n\tpublic final void commit(TransactionStatus status) throws TransactionException {\r\n\t\tif (status.isCompleted()) {\r\n\t\t\tthrow new IllegalTransactionStateException(\r\n\t\t\t\t\t\"Transaction is already completed - do not call commit or rollback more than once per transaction\");\r\n\t\t}\r\n\r\n\t\tDefaultTransactionStatus defStatus = (DefaultTransactionStatus) status;\r\n\t\tif (defStatus.isLocalRollbackOnly()) {\r\n\t\t\tif (defStatus.isDebug()) {\r\n\t\t\t\tlogger.debug(\"Transactional code has requested rollback\");\r\n\t\t\t}\r\n\t\t\tprocessRollback(defStatus, false);\r\n\t\t\treturn;\r\n\t\t}\r\n\r\n\t\tif (!shouldCommitOnGlobalRollbackOnly() && defStatus.isGlobalRollbackOnly()) {\r\n\t\t\tif (defStatus.isDebug()) {\r\n\t\t\t\tlogger.debug(\"Global transaction is marked as rollback-only but transactional code requested commit\");\r\n\t\t\t}\r\n\t\t\tprocessRollback(defStatus, true);\r\n\t\t\treturn;\r\n\t\t}\r\n\r\n\t\tprocessCommit(defStatus);\r\n\t}\r\n```\r\n"
   },
   {
+    "path": "/docs/computer/hard-disk-1",
+    "header": {
+      "layout": "post",
+      "title": "HDD(Hard Drive Disk)는 어떻게 동작하는가",
+      "categories": [
+        "computer"
+      ],
+      "tags": [
+        "HDD",
+        "Hard Drive Disk",
+        "하드디스크",
+        "Hardware",
+        "하드웨어",
+        "저장장치",
+        "컴퓨터"
+      ],
+      "date": 1695125760000,
+      "thumbnail": "/post/computer/hdd.png",
+      "profile-image": "/post/profile/winkkom.png",
+      "current-company": "NEOWIZ",
+      "current-position": "Software Engineer",
+      "summary": "하드디스크란 무엇이고, 어떻게 동작할까?",
+      "excerpt-separator": "<!--more-->",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "computer"
+      ],
+      "images": [
+        {
+          "src": "/post/computer/hdd_consist_of.png",
+          "alt": "하드디스크 구성요소의 설명"
+        }
+      ],
+      "headlines": {
+        "grade": 0,
+        "title": "root",
+        "fragmentId": "root",
+        "children": [
+          {
+            "grade": 2,
+            "title": "하드디스크의 구성",
+            "fragmentId": "%ED%95%98%EB%93%9C%EB%94%94%EC%8A%A4%ED%81%AC%EC%9D%98-%EA%B5%AC%EC%84%B1",
+            "children": [
+              {
+                "grade": 3,
+                "title": "Head",
+                "fragmentId": "head",
+                "children": [],
+                "isSelected": false
+              }
+            ],
+            "isSelected": false
+          }
+        ],
+        "isSelected": false
+      }
+    },
+    "description": "대표적인 저장장치 하드디스크는 어떻게 동작할까?\r\n하드디스크의 구성과, 동작원리를 파해쳐보자.\r\n",
+    "content": "\r\n\r\n## 하드디스크의 구성\r\n\r\n![하드디스크 구성요소의 설명](/post/computer/hdd_consist_of.png)\r\n\r\n먼저 하드디스크가 어떤 구성으로 이루어져있는지를 알기전에, 동작과정을 간단하게 살펴보자.\r\n고정되어있는 `Platter(플래터)`는 `Spindle(스핀들)`에 의해 돌아가며, 가깝게 붙어있는 `Head(헤드)`가 `플래터`의 저장된 값을 읽는다.\r\n\r\n### Head \r\n\r\n"
+  },
+  {
+    "path": "/wiki/about-electron",
+    "header": {
+      "layout": "wiki",
+      "title": "전기에너지를 만드는 전자",
+      "tags": [
+        "원자",
+        "전자",
+        "원자핵",
+        "렙톤"
+      ],
+      "date": 1694348520000,
+      "profile-image": "/post/profile/winkkom.png",
+      "current-company": "NEOWIZ",
+      "current-position": "Software Engineer",
+      "summary": "전자란?",
+      "excerpt-separator": "<!--more-->",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "electric"
+      ],
+      "images": [],
+      "headlines": {
+        "grade": 0,
+        "title": "root",
+        "fragmentId": "root",
+        "children": [],
+        "isSelected": false
+      }
+    },
+    "description": "\r\n",
+    "content": "\r\n전자는 대부분의 원자에 모두 존재한다.\r\n원자가 전기적으로 중성이려면, 음전하를 띄고 있는 전자와, 양전하를 띄고있는 양성자의 개수가 동일해야 한다.\r\n따라서, 자연에 존재하는 모든 원소는 전자를 갖고있다고 봐도 된다.\r\n\r\n전자는 양전하에서 음전하로 이동하게 되는데, 이를 이용해 전기 에너지를 흐르게 할 수 있다.\r\n`(+)양전하` 에서 `(-)음전하`의 방향으로 전자가 이동하게 되면, 그 반대방향으로 전기장이 만들어진다.\r\n전기에너지는 그 전기장을 통에 전달이 된다.  \r\n\r\n<!--more-->\r\n"
+  },
+  {
+    "path": "/wiki/about-atom",
+    "header": {
+      "layout": "wiki",
+      "title": "만물을 이루는 원자",
+      "tags": [
+        "원자",
+        "전자",
+        "원자핵",
+        "양성자",
+        "중성자",
+        "반도체"
+      ],
+      "date": 1693486620000,
+      "profile-image": "/post/profile/winkkom.png",
+      "current-company": "NEOWIZ",
+      "current-position": "Software Engineer",
+      "summary": "원자란?",
+      "excerpt-separator": "<!--more-->",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "electric"
+      ],
+      "images": [],
+      "headlines": {
+        "grade": 0,
+        "title": "root",
+        "fragmentId": "root",
+        "children": [],
+        "isSelected": false
+      }
+    },
+    "description": "\r\n",
+    "content": "\r\n원자는 모든 물질을 이루는 가장 기본적인 입자이다. \r\n원자핵과 그 주변을 이동하는 전자로 구성되어있다. \r\n원자핵을 구성하는 핵자는 양성자와 중성자가 있으며, 화학적 또는 물리적 방법으로 분해할 수 없다.\r\n\r\n일반적으로 원자핵을 양전하를 띄고, 전자는 음전하를 띈다. \r\n원자핵에서 양성자가 양전하를 띄게 되는데,  해당 양전하의 개수와 전자의 개수가 같을 때 가장 안정적으로 전기적인 중성 상태가 된다. \r\n즉, 전하를 띄지 않는다. 양성자는 바꿀 수 없지만, 전자는 다른 원자로 이동시킬 수 있기 때문에 양전하와 음전하의 개수가 달라지게 된다.\r\n\r\n이때, 양전하의 개수보다 음전하(전자)의 개수가 많으면 음이온, 적으면 양이온이라고 칭하기도 한다. \r\n전자는 원자핵 주변을 돌게 되는데 이때 이동 속도는 약 30만 km (진공 상태의 빛의 속도)이다. \r\n전자가 이동하는 궤도는 양자 역학으로 인해 일정하지 않다고 한다. \r\n전자의 수(또는 양성자의 수)에 따라 원자번호가 결정되기 때문에 우리가 과학적으로 정의하는 원소가 고유성을 가질 수 있는 이유이기도 하다. \r\n양성자를 비롯한 핵자의 수가 바뀌는건 핵융합과 핵분열이 대표적이다.\r\n\r\n전자는 원자핵 주위를 돌며 , 원자의 가장 안쪽 핵자의 주변부터 원자의 밖의 방향으로 껍질처럼 배치된 위치에서 운동한다. \r\n또한 최대로 배치될 수 있는 이 개수는 (양성자의 개수와 같아야 하기 때문에) 정해져 있다.  \r\n전자는 외부로부터 에너지를 가하면, 가장자리부터 떨어져 나가며, 모든 전자가 떨어져 나가, 원자핵만 남은 경우 플라즈마라고 한다.\r\n<!--more-->\r\n\r\n"
+  },
+  {
     "path": "/docs/tool/customize-markdown-it",
     "header": {
       "layout": "post",
@@ -488,6 +620,89 @@
     },
     "description": "javascript의 마크다운 파서인 markdown-it 라이브러리를 커스텀해서 사용해보자. \r\n",
     "content": "\r\n\r\n## 개요\r\n\r\n`markdown-it`은 대중적으로 많이 알려진 javascript markdown parser library이다.\r\n\r\n이글은 마크다운이 무엇 인지에 대해서는 설명하지 않는다. 그저 개인 블로그를 직접 만드는 입장에서 골치덩이인 마크다운 파서를 어떻게하면 조금더 유용하게 쓸수 있을까 고민해보며 만들면서 작성하였다.\r\n\r\n예를 들어 `> BlockQuote`를 작성한다고 가정했을때. 단순히 블럭으로 묶는 것보다 `> BlockQuote {{ \"type\": \"warning\" }}`과 같이 추가적인 템플릿 구문을 추가하여, 경고 스타일의 블럭으로 보여 줄 수도 있을 것이다. 이를 하기 위해서는 기존 `markdown` 해석 형식에서 더 나아가 새로운 템플릿 해석 로직을 추가해야한다. 아래 코드를 보고 좀 더 쉽게 이해해보자.\r\n\r\n\r\n\r\n### 적용 전\r\n\r\n*Markdown*\r\n\r\n```markdown\r\n> 준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다.\r\n```\r\n\r\n*HTML*\r\n\r\n```html\r\n<blockquote>\r\n  준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다.\r\n</blockquote>\r\n```\r\n\r\n\r\n\r\n### 적용 후\r\n\r\n*Markdown*\r\n\r\n```markdown\r\n> 준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다.\r\n:{ \"type\": \"warning\" }\r\n```\r\n\r\n*HTML*\r\n\r\n```html\r\n<blockquote class=\"warning\">\r\n  <p>준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다.</p>\r\n</blockquote>\r\n```\r\n\r\n이는 더 많은 정보를 담을수 있으며, 동시에 추가적인 스타일로 시각적인 효과를 주어, 더 나은 가독성을 만들 수 있다.\r\n\r\n물론 이렇게 만드려면 사용하려는 markdown 구문마다 모두 규칙을 만들어 줘야한다.\r\n\r\n`Markdown-it` 같은 경우 많은 사람들이 블로그 제작시 사용하지만, 실제로 커스텀할 수 있는 `Renderer Rule(랜더링을 하기 위한 규칙)` 같은 기능은 사용하지 않는다. 사실 잘 알려져 있지도 않기 때문에, 많이 사용하지 않는것 일 수 있다.  자신의 블로그를 대충 꾸미고 싶은 사람은 없을테니 이런 방식을 알려 조금이라도 쉽게 이해를 돕고, 나 또한 정리를 하며 다시한번 정립하고 싶다.\r\n\r\n\r\n\r\n## 분석\r\n\r\n### Render Rule (규칙)\r\n\r\n`Renderer Rule(이하 *규칙)` 같은 경우는 `Markdown-it`에서 제공하는 내부적인 규칙의 흐름이다.\r\n\r\n```typescript\r\nimport MarkdownIt from 'mardown-it';\r\n\r\nconst markdown = new MarkdownIt();\r\nconsole.log('rules: ', Object.keys(markdown.renderer.rules));\r\n// Output\r\n// rules: ['code_inline', 'code_block', 'fence', 'image', 'hardbreak', 'softbreak', 'text', 'html_block', 'html_inline']\r\n```\r\n\r\n위는 기본적으로 제공하는 규칙이며, 대략적으로 9개로 볼 수 있다. 이 배열에 명시적으로 있지 않은 요소는 기본규칙이 적용 된다. 예를 들어 `bullet_list_opend` 규칙이 정의 되어 있지 않았으므로, `markdown-it`은 `HTML`로 해석을 시도할 때, `Renderer.prototype.renderToken`이라는 일반 렌더러가 사용된다.\r\n\r\n\r\n\r\n새로운 마크다운 문법을 창시하지 않는한, 아마 기존 문법에서 조금 수정하는 정도 일 것이다.\r\n\r\n따라서 만약 `blockquote_open`이라는 규칙을 수정한다고하면 아래와 같이 할수 있다.\r\n\r\n```typescript\r\nimport MarkdownIt from \"markdown-it\";\r\nimport Token from \"markdown-it/lib/token\";\r\nimport Renderer from \"markdown-it/lib/renderer\";\r\n\r\nconst md = new MarkdownIt();\r\nmd.renderer.rules.blockquote_open = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer): string => {\r\n\r\n  return '';\r\n}\r\n```\r\n\r\n위에서 받아오는 규칙 함수같은 경우 아래와 같이 타입으로 정의 되어있다.\r\n\r\n```typescript\r\ndeclare namespace Renderer {\r\n    type RenderRule = (tokens: Token[], idx: number, options: MarkdownIt.Options, env: any, self: Renderer) => string;\r\n\r\n    interface RenderRuleRecord {\r\n        [type: string]: RenderRule | undefined;\r\n        code_inline?: RenderRule | undefined;\r\n        code_block?: RenderRule | undefined;\r\n        fence?: RenderRule | undefined;\r\n        image?: RenderRule | undefined;\r\n        hardbreak?: RenderRule | undefined;\r\n        softbreak?: RenderRule | undefined;\r\n        text?: RenderRule | undefined;\r\n        html_block?: RenderRule | undefined;\r\n        html_inline?: RenderRule | undefined;\r\n    }\r\n}\r\n```\r\n\r\n| 인자      | 의미                                         |\r\n| --------- | -------------------------------------------- |\r\n| *tokens*  | 해석되는 모든 토큰 목록 (각 태그에대한 토큰) |\r\n| *index*   | 현재 토큰의 키에 해당하는 인덱스             |\r\n| *options* | `markdown-it`객체가 생성될 때, 정의된 옵션   |\r\n| *env*     | ???                                          |\r\n| *self*    | 렌더러 자체에대한 참조                       |\r\n\r\n규칙을 수정할 때, 실패한다면 기존 규칙으로 `fallback` 시켜줄수 있는 로직도 추가한다면 아래와 같다.\r\n\r\n```typescript\r\nimport MarkdownIt from \"markdown-it\";\r\nimport Token from \"markdown-it/lib/token\";\r\nimport Renderer from \"markdown-it/lib/renderer\";\r\n\r\nconst md = new MarkdownIt();\r\nconst proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);\r\n//기본 fallback 규칙\r\nconst defaultBlockquoteOpenRule = md.renderer.rules.blockquote_open || proxy;\r\n\r\nmd.renderer.rules.blockquote_open = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer): string => {\r\n  return defaultBlockquoteOpenRule(tokens, index, options, env, self);\r\n}\r\n\r\nconst markdownText = '뜨거운 태양아래 시원한 계곡물에 잠수!\\n> 준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다.';\r\n//HTML 렌더링\r\nconst html = md.render(markdownText);\r\n/* html \r\n<p>뜨거운 태양아래 시원한 계곡물에 잠수!</p>\r\n<blockquote>\r\n\t<p>준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다.</p>\r\n</blockquote>\r\n*/\r\n```\r\n\r\n*tokens*  인자를 출력해보면 다음과 같다.\r\n\r\n```\r\n[\r\n\t{ \"type\": \"paragraph_open\", \"tag\": \"p\" ...},\r\n\t{ \"type\": \"inline\" \"tag\": '' ...},\r\n\t{ \"type\": \"paragraph_close\", \"tag\": \"p\" ...},\r\n\t{ \"type\": \"blockquote_open\", \"tag\": \"blockquote\" ...},\r\n\t{ \"type\": \"paragraph_open\", \"tag\": \"p\" ...},\r\n\t{ \"type\": \"inline\", \"tag\": '' ...},\r\n\t{ \"type\": \"paragragh_close\", \"tag\": 'p' ...},\r\n\t{ \"type\": \"blockquote_close\", \"tag\": \"blockquote\" ...}\r\n]\r\n```\r\n\r\n어떤 패턴이 보인다. 그렇다. `tokens`는 위에서부터 순서대로 html 을 랜더링할 정보를 가지고 있다.\r\n\r\n랜더링 된 `HTML`과 비교하면 직관적으로 알 수 있다.\r\n\r\n```html\r\n<!-- paragraph_open, inline, paragraph_close -->\r\n<p>뜨거운 태양아래 시원한 계곡물에 잠수!</p>\r\n<!-- blockquote_open, paragraph_open, inline, paragragh_close, blockquote_close -->\r\n<blockquote>\r\n\t<p>준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다.</p>\r\n</blockquote>\r\n```\r\n\r\n\r\n\r\n위와 같이 규칙은 랜더링 되어야할 순서대로 생성되기 때문에, 이미 랜더링 된 토큰을 수정할수 없다.\r\n\r\n```html\r\n<blockquote>\r\n\t<p>준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다.</p>\r\n</blockquote>\r\n```\r\n\r\n이런 코드를 보면 순서로 봤을 때 [`blockquote_open` ,`paragraph_open`, `inline`, `paragragh_close`, `blockquote_close`] 로 진행된다.\r\n\r\n만약 내가 `blockquote` 태그에 `class=\"waring\" 이라는 속성을 추가 해주고 싶다면. 이 정보를 전달해야한다.\r\n\r\n```markdown\r\n> 준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다.\r\n> 또는 심장마비가 올수도 있다.\r\n:{ \"type\": \"warning\" }\r\n```\r\n\r\n이런 마크다운이 있을때 별다른 처리가 없다면 아래와 같이 전달하는 속성정보가 그대로 전달되어 출력될 것이다.\r\n\r\n```markdown\r\n<blockquote>\r\n\t<p>준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다. 또는 심장마비가 올수도 있다. :{ \"type\": \"warning\" }</p>\r\n</blockquote>\r\n```\r\n\r\n따라서 `inline` 토큰에서 \"warning\" 값을 추출해서 `blockquote` 토큰에 `class` 속성으로 추가해줘야한다. 또한 `inline` 토큰에는 실제 노출이 필요한 문자열인 `준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다. 또는 심장마비가 올수도 있다.`만 아래와 같이 남아야한다.\r\n\r\n```markdown\r\n<blockquote class=\"warning\">\r\n\t<p>준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다. 또는 심장마비가 올수도 있다.<p>\r\n</bloackquote>\r\n```\r\n\r\n\r\n\r\n위에서 이미 랜더링된 토큰은 수정할 수 없다고 했다. 그 말은 현재 상황에서 보면 [`blockquote_open` ,`paragraph_open`, `inline`, `paragragh_close`, `blockquote_close`]  순서로 진행될때 `inline`토큰에서 `blockquote_open` 토큰에 `class` 속성을 주입해도 이미 랜더링된 `blockquote_open` 토큰에는 적용이 안된다는 말이다. 따라서 `blockquote_open` 에서 뒤에 랜더링될 `inline` 토큰을 수정해야 정상적으로 노출될 수 있다.\r\n\r\n## 템플릿 규칙 적용\r\n\r\n\r\n\r\n### 규칙 수정\r\n\r\n```typescript\r\nimport MarkdownIt from \"markdown-it\";\r\nimport Token from \"markdown-it/lib/token\";\r\nimport Renderer from \"markdown-it/lib/renderer\";\r\n\r\nconst md = new MarkdownIt();\r\nconst proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);\r\n//기본 fallback 규칙\r\nconst defaultBlockquoteOpenRule = md.renderer.rules.blockquote_open || proxy;\r\n\r\nmd.renderer.rules.blockquote_open = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer): string => {\r\n  try {\r\n    const templateRE = /^([\\s\\S]*?)\\s*:\\s*(\\{[\\s\\S]*\\})\\s*$/mg;\r\n    const inlineIndex = index +2;\r\n\r\n    if (inlineIndex >= tokens.length) throw new Error(`Index out of range from tokens: ${inlineIndex}`);\r\n    const inline = tokens[inlineIndex];\r\n    const content = inline.content;\r\n    const noneMatch = !templateRE.test(content);\r\n    templateRE.lastIndex = 0;\r\n    if (!inline.map || noneMatch) {\r\n      return defaultBlockquoteOpen(tokens, index, options, env, self);\r\n    }\r\n    /*\r\n    * 준비운동을 하지 않고 물에 들어간다면, 다리에 쥐가 날 수 있다. 두번째 줄이지! - executed[1]\r\n    * :{ \"type\": \"warning\" } - executed[2]\r\n    */\r\n    const executed = templateRE.exec(content);\r\n    const text = executed?.[1] ?? '';\r\n    const attributesStr = executed?.[2];\r\n    const attributes = JSON.parse(attributesStr ?? '{}');\r\n    //type = \"warning\"\r\n    const type = attributes['type'];\r\n\r\n\t\t//children은 inline내부에서 랜더링될 자식 토큰들의 목록이다.\r\n    //여기서 slice는 text값 뒤에 템플릿은 필요없기 때문에 제거해주기 위함이다.\r\n    const lfCount = countNewline(text);\r\n    const lineCount = lfCount +1;\r\n    inline.children = inline.children?.slice(0, lfCount + lineCount) ?? inline.children;\r\n    inline.content = text ?? inline.content;\r\n\r\n    //현재 토큰에 class 속성을 부여한다.\r\n    const blockquoteOpen = tokens[index];\r\n    if (type) {\r\n      blockquoteOpen.attrJoin('class', type);\r\n    }\r\n\r\n    return defaultBlockquoteOpen(tokens, index, options, env, self);\r\n  } catch (e: Error) {\r\n    console.error(`Error occurred at parsing token: \"${e.message}\"`);\r\n    return '';\r\n  }\r\n}\r\n```\r\n\r\n---\r\n\r\n`:{ \"type\" : \"warning\" }` 템플릿은 뭔가 급조해서 만들어서 만들었기 때문에 자신만의 템플릿을 만들어 더 나은 parser를 구현할 수 있을듯 하다.\r\n\r\n사실 기존에도 `chirpy` 같은 Jekyll 테마 같은 경우에는 커스텀 템플릿을 만들어 공유되고 있었다.\r\n\r\n"
+  },
+  {
+    "path": "/docs/language/typescript/typescript-getting-start",
+    "header": {
+      "layout": "post",
+      "title": "타입스크립트 시작하기 1 (소개)",
+      "categories": [
+        "language",
+        "typescript"
+      ],
+      "tags": [
+        "Typescript",
+        "Javascript",
+        "Type"
+      ],
+      "date": 1681552860000,
+      "current-company": "NEOWIZ",
+      "current-position": "Software Engineer",
+      "profile-image": "/post/profile/profile1.JPG",
+      "thumbnail": "/post/typescript/typescript_getting_start.png",
+      "summary": "타입스크립트 소개",
+      "excerpt-separator": "<!--more-->",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "언어",
+        "타입스크립트"
+      ],
+      "images": [],
+      "headlines": {
+        "grade": 0,
+        "title": "root",
+        "fragmentId": "root",
+        "children": [
+          {
+            "grade": 2,
+            "title": "우리가 아는 자바스크립트",
+            "fragmentId": "%EC%9A%B0%EB%A6%AC%EA%B0%80-%EC%95%84%EB%8A%94-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8",
+            "children": [],
+            "isSelected": false
+          },
+          {
+            "grade": 2,
+            "title": "타입스크립트는 무엇인가?",
+            "fragmentId": "%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%3F",
+            "children": [],
+            "isSelected": false
+          },
+          {
+            "grade": 2,
+            "title": "타입스크립트를 배우기전 ES5 또는 ESNext의 주요 문법을 알아보자",
+            "fragmentId": "%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A5%BC-%EB%B0%B0%EC%9A%B0%EA%B8%B0%EC%A0%84-es5-%EB%98%90%EB%8A%94-esnext%EC%9D%98-%EC%A3%BC%EC%9A%94-%EB%AC%B8%EB%B2%95%EC%9D%84-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90",
+            "children": [
+              {
+                "grade": 3,
+                "title": "비구조화 할당",
+                "fragmentId": "%EB%B9%84%EA%B5%AC%EC%A1%B0%ED%99%94-%ED%95%A0%EB%8B%B9",
+                "children": [],
+                "isSelected": false
+              },
+              {
+                "grade": 3,
+                "title": "화살표 함수 (arrow function)",
+                "fragmentId": "%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98-(arrow-function)",
+                "children": [],
+                "isSelected": false
+              },
+              {
+                "grade": 3,
+                "title": "클래스 (class)",
+                "fragmentId": "%ED%81%B4%EB%9E%98%EC%8A%A4-(class)",
+                "children": [],
+                "isSelected": false
+              }
+            ],
+            "isSelected": false
+          }
+        ],
+        "isSelected": false
+      }
+    },
+    "description": "타입스크립트 시작하기.\r\n도대체 왜 사용하는거고, 뭐가 좋은걸까?\r\n",
+    "content": "\r\n\r\n## 우리가 아는 자바스크립트\r\n\r\n사실 나도 타입스크립트를 처음 배우는 거고, 잘 알지 못한다. 하지만, 자바스크립트와 같이 **동적타입**의 언어는 결국 많은 문제를 유발 시킬수 있는걸 알고 있다.\r\n일반 자바스크립트에는 타입이 없기 때문에 코드대로 그냥 변수로 받아야한다. 따라서 아래와 같은 일반 자바스크립트에서는 해괴한 연산도 가능하다.\r\n\r\n```javascript\r\n//일반 자바스크립트 함수의 선언\r\nfunction getNow() {\r\n    return new Date()\r\n}\r\n\r\nvar now = getNow();\r\nvar plus1Day = now + '1Day';\r\nconsole.log('plusDay:', plus1Day) \r\n//출력결과 -> plusDay: Sat Apr 15 2023 19:12:32 GMT+0900 (한국 표준시)1Day\r\n```\r\n\r\n3번라인에서 보면 `getNow()` 함수는 `Date` 타입의 현재시간 값을 리턴한다. 근데, 7번라인에서 다시보면 `Date` 타입과 `string` 연산을 한다.\r\n하지만, 어떠한 에러도 발생되지 않는다. 결과적으로 연산된 `plus1Day` 변수의 타입은 `string`이다.\r\n`Date` 함수와 `string`의 덧셈에 결과타입이 `string`인 내용은, 타입스크립트를 알아보는 과정에서 별로 중요하지 않기에 넘어간다.\r\n\r\n이 처럼 타입이 존재는 하지만, 변수가 타입에 연연하지않은 언어를 `동적타입 언어`라고 한다. \r\n우리가 일반적으로 알고있는 객체지향 언어는 모두 정적타입 언어 이다. 각 변수의 타입이 정해져있고, 정해진대로 연산을 하기 때문이다.\r\n게다가 `javascript`는 ECMA Script(ES)라는 표준 스크립트 버전이 있는데, 현재 우리가 사용중인 브라우저는 ES5 버전만 해석할 수 있다.\r\n\r\n`ES5`버전은 2009년에 공개된 버전이며, 현재까지 브라우저는 해당 버전이상의 자바스크립트는 해석할 수 없다.\r\n이 이상의 버전을 사용하려면, Babel(Javascript Compiler)같은 특정도구를 이용해 브라우저가 해석할 수 있는 자바스크립트의 버전으로 컴파일 해줘야 한다.\r\n이 외에도 `ES5`이상에서 지원되는 javascript 버전에는 여러가지 기능 및 문법들을 사용할수 있었다.\r\n\r\n```javascript\r\n//ES6 문법 const\r\nconst sum = (a, b) => {\r\n    return a + b\r\n}\r\n```\r\n위의 설명대로 브라우저는 `const`를 알 수 없다. 하지만 브라우저 내부에있는 js 엔진이 해석할 수 있기에 우리는 `ES`버전은 딱히 몰라도 상관없다.\r\n타입스크립트를 배우기위해선, 위의 내용들을 알고있어야한다. `ES5`의 문법은 당연히 `ESNext(6, 7..)`에서 포함하고 있고, 이또한 `Typescript`에서 포함하고있다.\r\n`타입스크립트`또한, `ESNext`와 동일하게 ES5로 `Transpile`을 해줘야 하는건 예외 없다. \r\n\r\n그럼 우리가 아는 자바스크립트를 그냥 사용해도 되는데, 왜 굳이 타입스크립트를 사용하는 걸까?\r\n\r\n## 타입스크립트는 무엇인가?\r\n\r\n간단하게 설명하면, 동적타입의 언어와 같이 모든 객체는 타입을 가지며, `Null-Sefe`한 연산을 할 수 있는 등 여러 장점이 있다.\r\n예를 들어 다음과 같은 `Javascript` 코드에서 문제가 발생 했을 때, 쉽게 문제를 알수 없다.\r\n\r\n```javascript\r\nfunction makePerson(name, age) {\r\n    return {\r\n        name: name,\r\n        age: age\r\n    }\r\n}\r\n\r\nconst person = makePerson(30, 'Kim')\r\n```\r\n\r\n하지만, 위와 같은 코드에 각 변수에대한 타입이 생긴다면, 작성할 때부터 문제를 알 수 있다.\r\n만약 위에 코드에서 타입이 추가된다면 어떻게 달라질까?\r\n\r\n```typescript\r\nclass Person {\r\n    name: string\r\n    age: number\r\n\r\n    constructor(name: string, _age_: number) {\r\n        this.name = name\r\n        this.age = age\r\n    }\r\n}\r\n\r\nfunction makePerson(name: string, age: number): Person {\r\n    return new Person(name, age)\r\n}\r\n\r\nconst person: Person = makePerson('Kim', 4)\r\n```\r\n\r\n좀 더 많은 코드가 작성되었다. 하지만, 각 변수는 타입을 가지며, 좀 더 견고한 어플리케이션을 만들수 있는 타입이 생겼다.\r\n클래스 생성을 통해, 의도한 값을 가지는 타입의 객체가 생성되었다. 이는 정말 중요한 내용이다.\r\n기존에 자바스크립트에서 할 수 없었던, 그리고 걱정하지 않아도 되었던, 코드를 작성할 수 있게된다.\r\n\r\n## 타입스크립트를 배우기전 ES5 또는 ESNext의 주요 문법을 알아보자\r\n\r\n앞서 말한것처럼 `Typescript`는 `ESNext`, `ES5`모두 포괄하고 있는 상위 집합이기에, 두가지 문법을 모두 사용할 수 있다.\r\n타입스크립몇가지 간단한 문법을 \r\n\r\n### 비구조화 할당\r\n\r\n`비구조화 할당(destructuring assignment)`는 객체와 배열에 적용할 수 있으며, 말그대로 구조화 하지않은 채 값을 특정 변수로 할당 하는 것 이다.\r\n이는 `ESNext`에서 제공되며,  \r\n\r\n```javascript{6}\r\nlet person = {\r\n    first_name: 'John',\r\n    age: 30\r\n}\r\n\r\nlet { first_name, age } = person\r\n\r\nconsole.log(typeof age) // \"number\"\r\nconsole.log(age)        // 30\r\nconsole.log(first_name) // \"John\"\r\n```\r\n\r\nperson을 이용하여, 비구조화 할당을 통해 `first_name` field와 `age`필드를 할당 할 수 있다.\r\n그럼 이 할당을 통해, `let { first_name, age }`의 값 중 `first_name`의 값을 바꾸면 어떻게 될까?\r\n\r\n```javascript\r\nlet person = {\r\n    first_name: 'John',\r\n    age: 30\r\n}\r\n\r\nlet { first_name, age } = person\r\n\r\nfirst_name = 'Micheal'\r\nconsole.log('person:', person)\r\n/*\r\n    person: {\r\n        \"first_name\": \"John\",\r\n        \"age\": 30\r\n    }\r\n */\r\nperson.first_name = 'Smith'\r\nconsole.log('first_name:', first_name)\r\n/*\r\n    first_name: Micheal\r\n */\r\n```\r\n\r\n첫번째로 할당된 `first_name`의 값을 변경했지만, 변경 되지 않았다.\r\n또한, 반대로 `person.first_name`의 값을 변경 했지만, 역시나 `first_name`의 값이 변경 되지 않았다.\r\n여기서 `비구조화 할당`은 얕은복사를 하는걸 알 수 있다.\r\n배열의 비구조화 할 당은 어떻게 사용할 수 있을까?\r\n\r\n```javascript{2}\r\nlet array = [1, 7, 54, 66, 90]\r\nlet [first, ...mod] = array\r\n\r\nconsole.log(array) // [1, 7, 54, 66, 90]\r\nconsole.log(first) // 1\r\nconsole.log(mod)   // [7, 54, 66, 90]\r\n```\r\n\r\n>2번 라인의 `...mod`는 `스프레드 연산자`이며, 내부 요소를 한번에 가져온다.\r\n> 스프레드 연산자는 인자의 마지막에만 사용할 수 있다.\r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n`first`와 `mod`로 나누어 할당 했고 출력 결과는 위 처럼 배열의 순서에 맞는 값들로 나뉘어졌다.\r\n`객체`또는 `배열`의 구조를 분해해서 할당하기 때문에 `구조분해 할당`(`또는 \"비구조화 할당\"`)이라고 칭한다.\r\n\r\n\r\n### 화살표 함수 (arrow function)\r\n\r\n```javascript\r\n// 일반 함수형\r\nfunction toUpperCase(str) {\r\n    return str.toUpperCase()\r\n}\r\n\r\n// 화살표 함수형\r\nconst toUpperCase = () => str.toUpperCase()\r\n```\r\n\r\n자바스크립트에서는 함수또한 객체로 취급되며, 위와 같은 표현식으로 선언할 수 있다.\r\n이 화살표 함수(`arrow function`)은 내부로직이 한줄로 표현이 된다면, `{}`괄호와 `return`을 생략할 수있다.\r\n중요한 부분은 `=`다음으로 오는 `() => {}`구문이다. `()`에는 일반함수처럼 매개변수를 받을 수 있고, `{}` 내부 또한 함수와 동일하게 작성할 수 있다.\r\n*주의할 점*은 `화살표 함수` 내에서 `this` 키워드는 함수 `자신`을 의미한다는 점을 알고 있어야 한다. \r\n이는 `javascript`객체와 관련된 부분인데, `javascript`에서 `this`는 객체의 참조를 의미한다. \r\n`class` 또는 모듈에서 사용한다면, 현재 속해있는 객체(`브라우저`일반적으로 `window: DOM tree`로 바인딩) 에대해 바인딩 하기때문에, \r\n객체 자체인 `arrow`함수는 `this`에 대해 자기 자신이 바인드 되는 것이다.\r\n\r\n### 클래스 (class)\r\n\r\n일반적으로 객체지향 언어에서 지원 하는 `class`의 개념은 어떤 객체에 대해 정적인 관점에서 서술 할 때 사용 된다.\r\n아래의 예제를 통해 `알람시계`가 갖고있는 정적인 관점의 상태와 책임에 대해 좀더 객체지향적으로 이해하기 위해 `typescript`를 통해 알아보자.\r\n\r\n```typescript\r\n\r\nclass Speaker {\r\n    ringing() {\r\n        //저장된 음악으로, 스피커 동작 로직    \r\n    }\r\n}\r\n\r\ninterface Alarm {\r\n    alert(message: string): never\r\n}\r\n\r\nclass Clock implements Alarm {\r\n\r\n    private readonly _speaker: Speaker\r\n\r\n    constructor(speaker: Speaker) {\r\n        this._speaker = speaker\r\n    }\r\n    \r\n    setTimeOfRinging(milis: number, message: string): never {\r\n        setTimeout(() => {\r\n            this._speaker.ringing()\r\n            alert()\r\n        }, milis)\r\n    }\r\n    \r\n    alert(message: string): never {\r\n        console.log(message)\r\n    }\r\n}\r\n\r\nconst clock: Clock = new Clock(new Speaker())\r\nclock.setTimeOfRinging(1000, '1초가 지났습니다.')\r\n```\r\n\r\n기존에 `javascript`에서는 할 수 없던, 객체의 상속, 추상화가 가능 하므로서, 간단한 알람시계 클래스지만,각 객체들의 `책임`을 부여하므로써,\r\n좀 더 견고한 `어플리케이션`을 만들 수 있다.\r\n"
   },
   {
     "path": "/docs/algorithm/heap-sort",
@@ -631,6 +846,177 @@
     "content": "\r\n\r\n## 설명\r\n\r\n간단하게 말하여, 힙은 우선순위 큐 입니다. `JAVA`에서는 `PriorityQueue`라는 구현체를 통해 Heap 자료구조를 사용할 수 있어요.\r\n힙은 두 종류가 있는데 `최대 힙`과 `최소 힙`이 있어요. \r\n최대 Heap(최소 Heap)은 단어와 같이 최대 값(최소 값)을 우선순위로 판단하여, 어떠한 값이 들어와도, 항상 같은 순서의\r\n트리를 유지하며, 언제든지 최고 우선순위의 값을 적은 비용으로 쉽게 얻을수 있는 자료구조 입니다.\r\n\r\n### Heap의 속성 (특징)\r\n\r\n* 최대 힙(**또는 최소 힙**)은 `잎(leaf)`의 계층을 제외한 모든 노드는 자식의 노드 보다 큰(**또는 작은**) 값을 가지고 있어야합니다.\r\n* 왼쪽부터 차례대로 채워져있는 `완전 이진 트리(Complete binary tree)`이어야 합니다.\r\n* 같은 계층의 노드들과는 정렬하지 않습니다.\r\n* 루트(뿌리)노드로 부터 내려오는 위치의 노드들 오름차순(**또는 내림차순**)입니다\r\n\r\n![위 트리중 어떤것이 힙인지 찾아보세요.](/post/algorithm/heap/tree_images.svg)\r\n\r\n* 트리 A: 잎을 제외한 노드는 모두 정렬되었지만, 왼쪽부터 채워지지않아 Heap이 아닙니다.\r\n* 트리 B: 왼쪽부터 채워졌지만, 2번노드의 값은 그 자식에값보다 작습니다. 따라서 Heap이 아닙니다.\r\n* 트리 C: 잎을 제외한 모든 노드가 자식 또는 부모와 정렬 되어있고, 왼쪽부터 채워져있으므로 `Heap`입니다.\r\n\r\n> 이를 정리하면 아래와 같습니다.   \r\n> 1.`𝑛개`의 노드를 가진 힙은 정확히 하나만 있고 그 힙(트리)의 높이(height)는 `⎣log₂𝑛⎦`이다. 트리의 전체 노드의 개수가 `8`일경우 트리(힙)의 높이는 `3`이다. 즉 힢의 높이는 힙의 성질(속성)에 부합되는 노드들만 인정이 된다는 의미이다.  \r\n> 2.힙의 루트 노드는 항상 최댓값(**또는 최솟값**)을 저장한다. 최대 힙(**또는 최소 힙**)은 쵀댓값(**또는 최솟값**)을 효율적으로 관리하기 위한 자료구조이며, 루트에는 항상 가장 큰(**또는 작은**)값을 유지한다.  \r\n> 3.힙의 한 노드와 그 노드의 자손 노드들로 이루어진 부분 트리(subtree)도 힙이다. 힙은 힙으로 이루어져있으며 자식노드도 힙이 될수있지만, 노드의 자식이없다면 힙이될 수없다. 따라서 위 C 트리의 `4, 5, 6`번 노드는 힙이 아니다.  \r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n### Heap을 만드는 방법\r\n\r\n힙을 구성 하기 위해서는 다음의 순서대로 진행됩니다.\r\n\r\n1. 순회를 시작할 힙이되는 마지막 노드`⎣𝑛/₂⎦`를 찾는다.\r\n2. 마지막 노드 i를 이용해 자식노드가 있는지, 또한 있다면 그 중 자신 보다 큰값을 자신과 찾는다.\r\n3. 찾은 값과 자신을 바꾸고 바꾼 자신의 위치는 그값의 자식이 되며, 자신보다 큰값이 나오지 않을때까지 반복한다.\r\n4. 다음 노드(i -1)에서 다시 `3.`을 반복한다.\r\n\r\n> 자식 노드의 위치를 찾을때는 왼쪽`arr[2i]`값과 오른쪽`arr[2i + 1]`로 구할 수 있습니다.\r\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\r\n\r\n위 의 내용을 정리하면 아래와 같습니다.\r\n\r\n\r\n![힙을 만드려면 완전 이진트리가 있어야 해요.](/post/algorithm/heap/first_iteration.svg)\r\n\r\n> 위의 트리는 *완전 이진트리* 입니다. 힙은 완전이진트리에서 만들수 있으므로, 일반 이진트리는 Compact하게 완전이진트리로 바꿔야 힙을 만들수 있습니다.\r\n> 왼쪽 트리의 마지막 힙의 값은 `15` 이며, 이는 자식(`6, 4`) 어느것 보다도 큰값입니다. 따라서 다음 순회로 넘어갑니다.\r\n> 순회는 내부 노드의 마지막 힙의 위치에서 부터 1까지 이어집니다. 따라서 다음 인덱스인 3번 노드(9)로 넘어갑니다.\r\n> 3번노드는 자신의 자식들 중 6번째, 7번째 (7, 12)와 비교하여 더 큰값을 가지는 12와 바꿉니다.\r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n![만약 마지막 내부노드부터 순회할 때, 쵀대힙을 만드려면 위와 같이 만들수 있어요.](/post/algorithm/heap/other_iteration.svg)\r\n\r\n> 이후 과정은 위와 같이 반복됩니다. 내부노드를 순회하며 자신의 자식노드가 있는지 확인하고 있다면, 자신과 비교하여 더큰 값으로 바꿉니다. 이는 바꾼이후에도 `3.`이 반복되게 됩니다. 순회되는 노드가 최상위노드가 되고 모든 내부노드가 힙이 될때, 전체 트리는 힙이 됩니다.   \r\n> 마지막까지 바꾼 최종트리는 아래와 같습니다.\r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n![최대힙을 만들어 이런 형태로 노드를 나눌수 있어요.](/post/algorithm/heap/last_iteration.svg)\r\n\r\n* 최상위 노드(루트)가 가장 큰값이 되며, 위는 최대힙을 만드는 단계였습니다.\r\n* 부모노드와 자식노드끼리는 순서의 값을 가지며, 항상 최대의 값을 가집니다.  \r\n\r\n### Heap이 우선 값을 유지하는 방법\r\n\r\n위에서는 완전이진트리로 힙을 어떻게 만드는지에 대해 알아봤습니다.\r\n하지만, 힙은 언제나 새로운값이 들어와도 항상 우선 순위로 값을 관리합니다. 만약 저기서 더큰값이 추가된다면,\r\n저 힙트리는 어떻게 바뀔까요? 새로운 값들을 추가해서 힙이 다시 어떻게 유지되는지 배워봅니다.\r\n\r\n#### 값추가\r\n\r\n힙트리에서 값을 추가 할때는 마지막 노드로 붙여주고 위에서 했던것과 동일하게 힙을 만들어 줍니다.\r\n만약 새로운 값 17이 힙에 들어온다면 순서는 아래와 같이 바뀝니다.\r\n\r\n![만약 다음의 힙에서 17이라는 값이 추가 된다면](/post/algorithm/heap/add_new_17.svg)\r\n![이런식으로 부모노드와 바꿔가며, 다시 힙을 유지할 수 있어요.](/post/algorithm/heap/add_new_17_2.svg)\r\n\r\n\r\n> A: 새로 들어온 값 17은 트리의 맨뒤인 10번노드로 들어갑니다.     \r\n> 또한 마지막 내부노드이자 자신의 부모인 5번 노드(4)부터 다시 순회를 시작하며,  \r\n> 자신보다 큰 값은 가진 자식 10번 노드(17)과 값을 바꿉니다. \r\n> B: 값이 바뀐 10번 노드(4)는 자식을 가지고있지 않으므로 다음 순회로 넘어갑니다.  \r\n> C: 다음 순회인 4번 노드(6)은 자식들보다 큰값이므로 다음 3번 노드(12)로 이동합니다. 하지만 이또한 자식들보다 값이 크므로, 2번 노드(8)로 이동합니다. 자신보다 큰값을 가지는 5번 자식노드(17)과 바꿉니다.  \r\n> D: 값이 바뀐 5번 노드(8)은 자식들 보다 값이 커, 바꿀 필요가 없으므로 다음 순회인 1번 노드(15)로 이동합니다.  \r\n> E: 현재 순회인 1번 노드(15)는 자신의 2번 노드(17)보다 값이 작으므로 바꿉니다.  \r\n> F: 최종적으로 힙이 완성되었습니다.\r\n:{ \"type\": \"tip\", \"icon\": \"check-circle\" }\r\n\r\n\r\n### Heap을 이용해 정렬을 하는 방법\r\n\r\n힙 정렬을 위해서는 사전에 완전 이진 트리를 힙으로 만들고, 정렬을 수행할 수 있습니다.\r\n위에서 만든 힙을 통해 정렬을 하는 방법을 구현합니다.  \r\n힙 정렬은 간단하게, 아래의 정렬하는 순서를 가지고있습니다.\r\n\r\n1. 최상위 노드 `A`와 가장 끝의 노드 `B`를 바꾼다.\r\n2. 바꿔진 A는 맨뒤로 가며,힙에서 제외한다. \r\n3. 바꾼 값 `B`는, 자신의 자식이 있다면, 두개를 비교하여 가장 큰 값과 맞 바꾼다.\r\n4. `3.`의 내용을 힙이될때까지 반복한다.\r\n\r\n위의 순서를 반복하며, 만든 힙 정렬은 아래와 같습니다.\r\n\r\n![힙 정렬 1](/post/algorithm/heap/heap_sort_1_1.svg)\r\n![힙 정렬 2](/post/algorithm/heap/heap_sort_1_2.svg)\r\n![힙 정렬 3](/post/algorithm/heap/heap_sort_1_3.svg)\r\n![힙 정렬 4](/post/algorithm/heap/heap_sort_1_4.svg)\r\n![힙 정렬 5](/post/algorithm/heap/heap_sort_1_5.svg)\r\n![힙 정렬 6](/post/algorithm/heap/heap_sort_1_6.svg)\r\n![힙 정렬 7](/post/algorithm/heap/heap_sort_1_7.svg)\r\n![힙 정렬 8](/post/algorithm/heap/heap_sort_1_8.svg)\r\n\r\n## 구현 코드 (Java)\r\n\r\n```java\r\nimport java.util.Arrays;\r\n\r\npublic class Heap {\r\n    \r\n    //== 힙(Heap) 을 만드는 메소드 ==//\r\n    public static void makeHeap(int arr[]) {\r\n        // last heap\r\n        int lh = arr.length / 2;\r\n        System.out.println(\"Normal Array = \" + Arrays.toString(arr));\r\n        int eh = arr.length;\r\n        while (lh-- > 0) {\r\n\r\n            System.out.println(\"i: \" + lh);\r\n            pushDown(arr, lh, eh);\r\n        }\r\n\r\n        System.out.println(\"Array as Max Heap = \" + Arrays.toString(arr));\r\n    }\r\n    \r\n    \r\n    //== 노드와 그 자식중에서 더큰(또는 작은) 위치를 찾는 메소드 ==//\r\n    public static int findLargest(int arr[], int node, int eh) {\r\n        // first child\r\n        int fc = (2 * (node + 1)) - 1;\r\n\r\n        if (fc + 1 < eh) {\r\n            if (arr[fc] <= arr[fc + 1]) {\r\n                return arr[fc + 1] <= arr[node] ? node : fc + 1;\r\n            } else {\r\n                return arr[fc] <= arr[node] ? node : fc;\r\n            }\r\n        }\r\n        if (fc < eh && arr[node] < arr[fc]) {\r\n            return fc;\r\n        } else {\r\n            return node;\r\n        }\r\n    }\r\n    //== 값을 아래로 내리는 메소드 ==//\r\n\r\n    /**\r\n     * 간단하게 보면 트리에서 마지막 힙의 위치를 구하고,\r\n     * 루트 노드까지 역순으로 힙을 만들어갑니다.\r\n     * \r\n     * 최대 힙(또는 최소 힙)의 조건에 따라 더큰(또는 더 작은)값을 기준으로,\r\n     * 해당 노드를 위로올리고 변경된 대상은 아래로 내려가며 계속 바꿉니다.\r\n     */\r\n    public static void pushDown(int arr[], int node, int eh) {\r\n        do {\r\n            System.out.println(\"j: \" + node);\r\n            int temp = arr[node];\r\n            int large = findLargest(arr, node, eh);\r\n            System.out.println(drawBinaryTree(arr));\r\n\r\n            if (large == node)\r\n                break;\r\n\r\n            arr[node] = arr[large];\r\n            arr[large] = temp;\r\n\r\n            node = large;\r\n        } while (node <= eh);\r\n    }\r\n\r\n    public static void sort(int arr[]) {\r\n        int last = arr.length;\r\n        makeHeap(arr);\r\n\r\n        while (--last >= 0) {\r\n\r\n            int temp = arr[0];\r\n            arr[0] = arr[last];\r\n            arr[last] = temp;\r\n\r\n            System.out.println(\"last: \" + last);\r\n            pushDown(arr, 0, last);\r\n        }\r\n        ;\r\n    }\r\n\r\n    //== 출력 메소드 ==//\r\n    public static String drawBinaryTree(int arr[]) {\r\n        StringBuilder builder = new StringBuilder();\r\n\r\n        int nol = (int) (Math.log(arr.length) / Math.log(2)) + 1;\r\n        int max = (int) Math.pow(2, nol - 1);\r\n\r\n        int printed = 0;\r\n        for (int i = 0; i < nol; i++) {\r\n            int perFloor = (int) Math.pow(2, i);\r\n            int tab = (max - perFloor) / 2 + (max - perFloor) % 2;\r\n            int last = printed + perFloor;\r\n\r\n            for (int j = 0; j < tab; j++) {\r\n                builder.append(\"  \");\r\n            }\r\n            for (int j = printed; (j < arr.length && j < last); j++) {\r\n                builder.append(String.format(\"(%d)\", arr[j]));\r\n            }\r\n            builder.append(\"\\n\");\r\n            printed += perFloor;\r\n        }\r\n\r\n        return builder.toString();\r\n    }\r\n    \r\n    public static void main(String args []) throws Exception {\r\n        //== 힙 으로 만들기==//\r\n        int arrForMake [] = {1, 5, 8, 2, 74, 9, 12, 104, 87, 43};\r\n        Heap.makeHeap();\r\n        \r\n        //== 힙 + 정렬 ==//\r\n        int arrForSort [] = {1, 8, 9, 15, 4, 7, 12, 6, 4, 17};\r\n        Heap.sort(arr);\r\n        \r\n    }\r\n}\r\n```\r\n\r\n\r\n\r\n"
   },
   {
+    "path": "/docs/algorithm/insertion-sort",
+    "header": {
+      "layout": "post",
+      "title": "삽입 정렬 알아보기(Java)",
+      "categories": [
+        "algorithm"
+      ],
+      "tags": [
+        "Java",
+        "Algorithm",
+        "Sort",
+        "Insertion Sort"
+      ],
+      "date": 1650551100000,
+      "thumbnail": "/post/algorithm/insertion_sort_intro.png",
+      "current-company": "Herit Corporation",
+      "current-position": "Backend Server Developer",
+      "summary": "삽입 정렬 알아보기",
+      "excerpt-separator": "<!--more-->",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "알고리즘"
+      ],
+      "images": [],
+      "headlines": {
+        "grade": 0,
+        "title": "root",
+        "fragmentId": "root",
+        "children": [
+          {
+            "grade": 2,
+            "title": "삽입정렬 (Insertion Sort)",
+            "fragmentId": "%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC-(insertion-sort)",
+            "children": [
+              {
+                "grade": 3,
+                "title": "설명",
+                "fragmentId": "%EC%84%A4%EB%AA%85",
+                "children": [],
+                "isSelected": false
+              },
+              {
+                "grade": 3,
+                "title": "예제코드",
+                "fragmentId": "%EC%98%88%EC%A0%9C%EC%BD%94%EB%93%9C",
+                "children": [],
+                "isSelected": false
+              }
+            ],
+            "isSelected": false
+          }
+        ],
+        "isSelected": false
+      }
+    },
+    "description": "이번 포스팅 순서는, \r\n기본 정렬 알고리즘중 하나인 삽입 정렬(Insertion Sort)입니다.\r\n\r\n이전 포스팅의 선택정렬하고는 또 다른 맛이있네용 ㅋㅋ\r\n\r\n지적 및 조언 댓글 환영입니다. ㅎㅎ\r\n",
+    "content": "\r\n\r\n\r\n## 삽입정렬 (Insertion Sort)\r\n\r\n\r\n🌸 삽입정렬은 배열을 순회하며, 삽입할 위치를 찾고 요소들을 **한단계씩 밀어** 해당 위치에 삽입하며 정렬하는 알고리즘 입니다.\r\n삽입정렬 또한 선택정렬과 마찬가지로 정렬된 부분과 정렬되지 않은 부분으로 나뉩니다.\r\n\r\n> **한단계씩 밀어** 라는 말은 `[ 1 ][ 3 ][ 2 ]` 에서 2라는 요소를 임시로 빼고 1 과 3사이에 들어갈공간을 만들기 위해 뺀 2의 자리로 3을 한 단계밀어,\r\n> `[ 1 ][    ][ 3 ]` 처럼 빈 공간을 만든 다는 의미입니다.\r\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\"}\r\n> \r\n---\r\n\r\n### 설명\r\n\r\n순회 인덱스 i: 3 (0, 1, 2는 요소가 1, 4, 7이므로 정렬이되어 있으므로, 넘어갑니다.)\r\n\r\n[1, 4, `7`, 3, 2, 5] -> [1, 4, **3**, `7`, 2, 5]\r\n\r\n> 삽입정렬은 선택정렬과 다르게 지나온 요소들과 비교하여 밀면서 정렬해 나갑니다. 위 배열에서 1, 4, 7 요소는 정렬 되있기때문에,\r\n> j는(j = i - 1, 현재 3) 0이 될때까지 계속 순회하며 이전값과 비교하여 정렬 대상인지 아닌지를 판단합니다. 3은 7과 정렬 대상이기 때문에 정렬을 위해 밀고 삽입합니다.\r\n> 3의 값을 복사해두고 3의 자리로 7을 밀게됩니다. 그럼 위와 같은 상황이되고 삽입할 위치에 3을 삽입하여, 아래처럼 만들수있습니다.\r\n:{ \"type\": \"note\", \"icon\": \"info\"}\r\n\r\n순회 인덱스 i: 3\r\n\r\n> 한번의 정렬이 끝났으니 j를 감소시켜 또다시 이전 요소 (3과 4)를 비교하여 정렬대상이 되었습니다. \r\n> i는 현재 3이지만 i이전의 인덱스를 가진 요소들은 정렬되지 않았기 때문에 j를 감소시켜가며 끝까지 정렬합니다.\r\n:{ \"type\": \"note\", \"icon\": \"info\"}\r\n\r\n* 순회 인덱스 i: 3\r\n* 내부 순회 인덱스 j: 2 -> 내부 순회 인덱스 j: 1\r\n\r\n[1, `4`, 3, 7, 2, 5] -> [1, **3**, `4`, 7, 2, 5]\r\n\r\n> 내부 순회 인덱스를 줄여가며 정렬을 하였고 현재 내부 순회 인덱스(j)인 1에대한 요소(3)가 비교할 인덱스 0에대한 요소(1)과 정렬되어있다고 판단 하기에,\r\n> j는 더이상 감소시키지 않습니다. 따라서 i를 다시 증가시키며 이과정을 반복하여 정렬합니다.\r\n> 이후의 과정은 아래와 같습니다.\r\n:{ \"type\": \"note\", \"icon\": \"info\"}\r\n\r\n* 순회 인덱스 i: 4\r\n* 내부 순회 인덱스 j: 3 (i - 1)\r\n\r\n[1, 3, 4, `7`, **2**, 5] -> [1, 3, 4, **2**, `7`, 5]  \r\n\r\n* 순회 인덱스 i: 4\r\n* 내부 순회 인덱스 j: 2 (j--)\r\n\r\n[1, 3, `4`, **2**, 7, 5] -> [1, 3, **2**, `4`, 7, 5]\r\n\r\n* 순회 인덱스 i: 4\r\n* 내부 순회 인덱스 j: 1 (j--)\r\n\r\n[1, `3`, **2**, 4, 7, 5] -> [1, **2**, `3`, 4, 7, 5]  \r\n\r\n* 순회 인덱스 i: 5\r\n* 내부 순회 인덱스 j: 4 (j - 1)\r\n\r\n[1, 2, 3, 4, `7`, **5**] -> [1, 2, 3, 4, **5**, `7`]  \r\n\r\n* 정렬 결과\r\n\r\n[1, 2, 3, 4, 5, 7]\r\n\r\n> 모든 정렬을 수행했으므로 정렬이 완료되었습니다.\r\n:{ \"type\": \"tip\", \"icon\": \"check-circle\"}\r\n\r\n\r\n### 예제코드\r\n\r\n* 예제코드는 생각 보다 단순합니다. 아래와 같이 배열을 순회하는 i가 있고, `array[1..i]`에서 정렬을 하는 방식입니다.\r\n\r\n\r\n```java\r\npublic class InsertionSort {\r\n    \r\n    public static void sort(int [] array) {\r\n\r\n        for (int i = 1; i < array.length; i++) {\r\n            int current = array[i];\r\n            int j = i - 1;\r\n\r\n            while(array[j + 1] < array[j]) {\r\n                array[j + 1] = array[j];\r\n                array[j--] = current;\r\n            }\r\n        }\r\n    }\r\n}\r\n```\r\n"
+  },
+  {
+    "path": "/docs/algorithm/selection-sort",
+    "header": {
+      "layout": "post",
+      "title": "-Algorithm- Selection Sort (선택정렬 알고리즘) feat.java",
+      "categories": [
+        "algorithm"
+      ],
+      "tags": [
+        "Java",
+        "Algorithm",
+        "Sort",
+        "Selection Sort"
+      ],
+      "date": 1649082840000,
+      "thumbnail": "/post/algorithm/selection_sort_intro.png",
+      "current-company": "Herit Corporation",
+      "current-position": "Backend Server Developer",
+      "summary": "선택 정렬",
+      "excerpt-separator": "<!--more-->",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "알고리즘"
+      ],
+      "images": [],
+      "headlines": {
+        "grade": 0,
+        "title": "root",
+        "fragmentId": "root",
+        "children": [
+          {
+            "grade": 2,
+            "title": "선택정렬 (Selection Sort)",
+            "fragmentId": "%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC-(selection-sort)",
+            "children": [],
+            "isSelected": false
+          },
+          {
+            "grade": 2,
+            "title": "과정 코드",
+            "fragmentId": "%EA%B3%BC%EC%A0%95-%EC%BD%94%EB%93%9C",
+            "children": [
+              {
+                "grade": 3,
+                "title": "호출",
+                "fragmentId": "%ED%98%B8%EC%B6%9C",
+                "children": [],
+                "isSelected": false
+              },
+              {
+                "grade": 3,
+                "title": "콘솔",
+                "fragmentId": "%EC%BD%98%EC%86%94",
+                "children": [],
+                "isSelected": false
+              }
+            ],
+            "isSelected": false
+          }
+        ],
+        "isSelected": false
+      }
+    },
+    "description": "기본 정렬 알고리즘중 하나인 선택 정렬(Selection Sort)입니다.\r\n간단한 그림과 함께 쉽게 이해할 수 있도록 정리했어요.\r\n",
+    "content": "\r\n\r\n\r\n## 선택정렬 (Selection Sort)\r\n\r\n\r\n🌸 선택 정렬은 정렬할 배열을 순회하며, 어떤 원소로 대치할지 선택하여 정렬하는 알고리즘 입니다.\r\n설명을 보기에 앞서, 통상적으로 정렬은 오름 또는 내림으로 배열의 수열을 맞추어 순서를 만드는 행위로 의미합니다.\r\n\r\n---\r\n  \r\n  \r\n  \r\n\r\n<div class=\"array\">\r\n    <span>1</span>\r\n    <span>4</span>\r\n    <span>7</span>\r\n    <span>3</span>\r\n    <span>2</span>\r\n    <span>5</span>\r\n</div>\r\n\r\n\r\n> 정렬을 하기위해 배열을 준비합니다. 또한, 해당 배열을 순회하면서 *나머지들의 값들중 가장작은 값으로 변경합니다.\r\n\r\n순회 인덱스 i: 0\r\n\r\n<div class=\"array\">\r\n    <span class=\"current\">1</span>\r\n    <span>4</span>\r\n    <span>7</span>\r\n    <span>3</span>\r\n    <span>2</span>\r\n    <span>5</span>\r\n</div>\r\n\r\n> 첫번째 순회요소는 나머지의 값들중 가장작은 값인 1 입니다. 따라서, 변경하지않습니다.\r\n\r\n순회 인덱스 i: 1\r\n\r\n<div class=\"array\">\r\n    <span class=\"over\">1</span>\r\n    <span class=\"current\">4</span>\r\n    <span>7</span>\r\n    <span>3</span>\r\n    <span class=\"target\">2</span>\r\n    <span>5</span>\r\n</div>\r\n\r\n> 두번째는 4입니다. 나머지의 요소들중 가장작은값이 2가 존재합니다. 4와 2를 변경합니다. 다음 부터는 정렬 순서가 동일합니다. 배열의 끝까지 순회하며 나머지 값들로 선택후 변경으로 정렬합니다.\r\n\r\n순회 인덱스 i: 2\r\n\r\n<div class=\"array\">\r\n    <span class=\"over\">1</span>\r\n    <span class=\"over\">2</span>\r\n    <span class=\"current\">7</span>\r\n    <span class=\"target\">3</span>\r\n    <span>4</span>\r\n    <span>5</span>\r\n</div>\r\n\r\n순회 인덱스 i: 3\r\n\r\n<div class=\"array\">\r\n    <span class=\"over\">1</span>\r\n    <span class=\"over\">2</span>\r\n    <span class=\"over\">3</span>\r\n    <span class=\"current\">7</span>\r\n    <span class=\"target\">4</span>\r\n    <span>5</span>\r\n</div>\r\n\r\n순회 인덱스 i: 4\r\n\r\n<div class=\"array\">\r\n    <span class=\"over\">1</span>\r\n    <span class=\"over\">2</span>\r\n    <span class=\"over\">3</span>\r\n    <span class=\"over\">4</span>\r\n    <span class=\"current\">7</span>\r\n    <span class=\"target\">5</span>\r\n</div>\r\n\r\n순회 인덱스 i: 5\r\n\r\n<div class=\"array\">\r\n    <span class=\"over\">1</span>\r\n    <span class=\"over\">2</span>\r\n    <span class=\"over\">3</span>\r\n    <span class=\"over\">4</span>\r\n    <span class=\"over\">5</span>\r\n    <span class=\"over\">7</span>\r\n</div>\r\n\r\n## 과정 코드\r\n\r\n* 요소 교환\r\n```java\r\n    /**\r\n     * i 와 j 값 변경\r\n     * 각 인덱스로 접근하므로 시간복잡도는 상수시간을 갖는다. O(1)\r\n     * @param array\r\n     * @param i\r\n     * @param j\r\n     */\r\npublic static void swapElements(int [] array, int i, int j) {\r\n    int temp = array[i];\r\n    array[i] = array[j];\r\n    array[j] = temp;\r\n}\r\n```\r\n\r\n* 최소값 찾기\r\n```java\r\n/**\r\n * start 인덱스 부터 시작해서 끝까지 순회중 가장 작은 값을 리턴한다.\r\n * @param array\r\n * @param start\r\n * @return\r\n */\r\npublic static int indexLowest(int [] array, int start) {\r\n    int lowIndex = start;\r\n\r\n    for(int i = start;i < array.length;i++) {\r\n        if(array[i] < array[lowIndex]) {\r\n            lowIndex = i;\r\n        }\r\n    }\r\n    return lowIndex;\r\n}\r\n```\r\n\r\n* 최소값을 찾고, 변경\r\n```java\r\n/**\r\n * indexLowest 메서드를 통해 얻어온 가장작은값의 인덱스를 현재 인덱스와 변경한다.\r\n * @param array\r\n */\r\npublic static void selectionSort(int [] array) {\r\n    System.out.printf(\"before selection sort : %s\\n\", Arrays.toString(array));\r\n    for(int i = 0;i < array.length;i++) {\r\n        int j = indexLowest(array, i);\r\n        swapElements(array, i, j);\r\n\r\n        System.out.printf(\"(i = %d) array : %s\\n\",i , Arrays.toString(array));\r\n    }\r\n\r\n}\r\n```\r\n\r\n### 호출\r\n\r\n```java\r\nimport sort.selection_sort.SelectionSort;\r\n\r\npublic class Main {\r\n\r\n    public static void main(String[] args) throws Exception {\r\n    \r\n        int [] needSort = {1, 4, 7, 3, 2, 5};\r\n        \r\n        SelectionSort.selectionSort(needSort);\r\n    }\r\n}\r\n```\r\n\r\n### 콘솔\r\n```\r\nbefore selection sort : [1, 4, 7, 3, 2, 5]\r\n(i = 0) array : [1, 4, 7, 3, 2, 5]\r\n(i = 1) array : [1, 2, 7, 3, 4, 5]\r\n(i = 2) array : [1, 2, 3, 7, 4, 5]\r\n(i = 3) array : [1, 2, 3, 4, 7, 5]\r\n(i = 4) array : [1, 2, 3, 4, 5, 7]\r\n(i = 5) array : [1, 2, 3, 4, 5, 7]\r\nafter selection sort : [1, 2, 3, 4, 5, 7]\r\n```\r\n\r\n> 풀이 또는 잘못된 설명은 아래 댓글로 말씀 부탁드립니다.\r\n\r\n"
+  },
+  {
+    "path": "/docs/computer/os/operating-system-1",
+    "header": {
+      "layout": "post",
+      "title": "컴퓨터의 구성요소",
+      "categories": [
+        "computer",
+        "os"
+      ],
+      "tags": [
+        "Operating System",
+        "OS"
+      ],
+      "date": 1611141570000,
+      "current-company": "Cubic INC",
+      "current-position": "SI Researcher",
+      "summary": "컴퓨터와 운영체제 1",
+      "excerpt-separator": "<!--more-->",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "computer",
+        "운영체제"
+      ],
+      "images": [],
+      "headlines": {
+        "grade": 0,
+        "title": "root",
+        "fragmentId": "root",
+        "children": [
+          {
+            "grade": 2,
+            "title": "컴퓨터의 구성",
+            "fragmentId": "%EC%BB%B4%ED%93%A8%ED%84%B0%EC%9D%98-%EA%B5%AC%EC%84%B1",
+            "children": [],
+            "isSelected": false
+          }
+        ],
+        "isSelected": false
+      }
+    },
+    "description": "운영체제가 어떤일을 하는지를 알려면, 컴퓨터가 어떤 요소들로 구성되어 있는지를 이해 해야한다.\r\n각 요소의 구성과 이해관계 그리고 역할을 알아보자.\r\n",
+    "content": "\r\n\r\n## 컴퓨터의 구성\r\n\r\n컴퓨터는 크게 응용프로그램, 운영체제, 하드웨어 계층으로 분류된다.\r\n이 문서에서는 응용프로그램을 제외하고 운영체제와 하드웨어에 대해 논한다.\r\n\r\n[CPU]()와 [입출력 장치]() 그리고 [메모리]()는 [시스템 버스]()를 통해 서로 연결되어 있으며, 버스의 종류에 따라 단방향 또는 양방향으로 신호를 보낸다.\r\n입출력 장치의 경우 메인보드 위에 사전에 만들어진 장치 컨트롤러를 운영체제의 장치 드라이버가 제어하며, 장치드라이버는 운영체제에 일관된 인터페이스를 제공한다.\r\nCPU와 장치컨트롤러는 병렬로 실행되기 떄문에 메모리에 접근하기위해 메모리 사이클을 두고 경쟁한다. 이 메모리에 순차적으로 접근하기 위해 메모리 컨트롤러는 메모리에 대한 액세스를 동기화한다.\r\n\r\n\r\n위에서 간단히 설명한 내용은 OS 내부의 커널과 시스템 프로그램에 의해 제어되며, 하드웨어의 경우 사전에 설계된 회로의 동작을 수행한다.\r\n\r\n\r\n\r\n\r\n"
+  },
+  {
     "path": "/wiki/io-manager",
     "header": {
       "layout": "wiki",
@@ -754,6 +1140,39 @@
     },
     "description": "",
     "content": "\r\n## 인터럽트는 무엇인가?\r\n\r\ninterrupt `[ˌɪntəˈrʌpt]`\r\n1. (말·행동을) 방해하다[중단시키다/가로막다]\r\n2. (무엇을 잠깐) 중단시키다\r\n\r\n사전 상의 `interrupt`(이하 인터럽트)는 위와 같은 어떤 행동이나 흐름을 중단시키는 의미로 등재 되어있다.\r\n컴퓨터에서도 인터럽트는 어떤 흐름을 중지하는 역할을 한다.\r\n\r\n[CPU]()는 순차적으로 명령어를 처리한다. 하지만 예상치못하거나 긴급한상황에 의도적으로 특별한 처리를 해야한다.\r\n예를 들어 스타크래프트나 리그오브레전드처럼 3인칭시점에서 마우스로 지면을 클릭하는 경우, 해당위치로 캐릭터가 이동한다.\r\n이 경우 이동이 끝나지 않아도, 우리는 새로운 위치를 클릭하여 방향을 바꿀수도있다. \r\n\r\n![캐릭터의 이동](/post/computer/move-unit.png)\r\n:{ \"wrapper-class\": \"justify-center\", \"max-width\": \"300px\", \"description\": \"눈꽃시비르의 방향을 조작하는 프로겐 선수\" }\r\n\r\n이 처럼 CPU가 명령을 실행하는중에도 긴급하거나, 실시간 처리가 필요한경우 IRQ를 통해, CPU에 인터럽트 신호를 보내 우선적으로 처리를 수행할 수 있다.\r\n\r\n> **I**nterrupt **R**e**Q**uest Line는 인터럽트 요청을 받을수있는 인터럽트 버스이다 이는 하드웨어에서 각 장치까지 물리적으로 연결된 신호선이다.\r\n:{ \"type\": \"note\", \"icon\": \"info\"}\r\n\r\n## 인터럽트 서비스 루틴\r\n\r\n**I**nterrupt **S**ervice **R**outine (이하 ISR)은 다른말로 Interrupt Handler(인터럽트 핸들러)라고도 한다.\r\n`ISR`은 인터럽트를 처리하기위한 어떤 일련의 프로세스이다. `IRQ`를 통해 `CPU`로 인터럽트 신호를 보내면(CPU의 인터럽트), CPU는 하던 일을 중단하고 ISR이 있는 주소로 실행을 옮긴다.\r\n그리고 `ISR`이 실행된후 다시 원래 연산을 재개한다. ISR은 인터럽트 번호 테이블로 구성되어있다. 이는 시스템마다 다를수 있고 콜백루틴 방식으로 처리된다.\r\n\r\n인터럽트 원인에 따라 처리되는 ISR이 별도로 있으며,이는 [커널(kernel)]()에 존재한다. \r\n인터럽트가 발생되는 원인은 일반적으로 `하드웨어 리셋`, `정해진 메모리 외부 참조`, `0으로 나누기` 등 여러 예외가 존재한다.\r\n\r\n인터럽트가 발생(*raise*)하면 `ISR`의 주소를 Interrupt Vector(이하 인터럽트 벡터)라고 하는 배열을 인터럽트 요청과 함께 장치 고유번호로 인덱싱한다.\r\n또한 `CPU`는 인터럽트를 포착(*catch*)하면 현재 실행 중이던 작업을 중단하고 `ISR`로 전송(*dispatch*)하면 루틴을 실행해야하기 때문에 실행중인 작업의 레지스터 값들을 스택에 저장하여 상태를 보존한다.\r\n이러한 값들에는 [프로그램 카운터(이하 PC)](), [스택 포인터]() 등 범용 레지스터 들이 포함된다. \r\n\r\n| 벡터 번호  | 설명                 |\r\n|--------|--------------------|\r\n| 0      | 나눗셈 에러             |\r\n| 1      | 디버그 예외             |\r\n| 2      | Null 인터럽터          |\r\n| ...    |\r\n| 18     | 기기 검사              |\r\n| 19~31  | (Intel에서 예약, 사용금지) |\r\n| 32~255 | Maskale 인터럽트       |\r\n:{ \"description\": \"표 1: Intel Processor 이벤트-벡터\", \"wrapper-class\": \"items-center\" }\r\n\r\n`ISR`이 실행되는 동안에는 프로세서의 레지스터 값을 변경할수 있기때문에, `ISR`이 끝나기전에 인터럽트를 지우고(*clear*) 스택에 저장해 두었던 레지스터 값들을 다시 복원 하여 CPU가 인터럽트 발생 전 상태로 되돌아 갈수 있게 레지스터 값을 원복한다.\r\n`ISR`실행 후 인터럽트 요청에서 받았았던 복귀 주소를 `PC`로 적재하여 인터럽트 발생시점부터 실행을 옮겨 중단되었던 연산을 다시 시작한다.\r\n\r\n실제로는 인터럽트 벡터의 주소 개수보다 많은 장치가 있기 때문에, `인터럽트 체인` 방식을 사용한다.   \r\n이는 벡터의 각 요소를 핸들럭 목록을 체인으로 묶어, 처리할수 있는 핸들러를 찾을 떄까지 하나씩 호출하는 방법이다.\r\n\r\n위에서 `표1`에서 0~31까지는 각 루틴에 대한 마스킹이 이미 되어있기때문에 `Non Maskable Interrupt`라고 하며 예약된 루틴이고, 32부터는 Maskable 이므로 그외 인터럽트를 처리하기 위해 사용된다.\r\n\r\n> 인터럽트 우선순위 레벨 (Interrupt Priority Level *이하 `IPL`)  \r\n> `IPL`은 인터럽트 별로 우선 순위를 정하여, 인터럽트 처리에도 우선순위를 둘 수 있다.  \r\n> `IPL`은 순위에 따라 처리를 연기하거나, 순위가 더높은 인터럽트가 실행을 선점 할 수 도있다.  \r\n: { \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n\r\n## 인터럽트의 매커니즘\r\n\r\n인터럽트는 CPU연산 중 신호를 받아 `ISR`을 실행한다고 하였다. 하지만 컴퓨터는 동기순차회로이기 때문에 순차적으로 연산이 이루어져야 한다.\r\n때문에, CPU가 하나의 명령어 실행이 완료될 때마다 IRQ를 감지하여 인터럽트 번호를 읽어 이 번호를 인터럽트 벡터의 인덱스로 사용하고, `ISR`로 점프하여 인덱스와 관련된 주소에서 실행을 시작한다.\r\n인터럽트 처리후 복원까지 수행하면 `return_from_interrupt` 명령어로 CPU를 인터럽트 전 실행상태로 되돌린다.\r\n\r\n> 폴링 (Polling)  \r\n> CPU가 주기적으로 장치의 상태를 직접확인하고, 상태에따라 처리하는 방식이다.  \r\n> 이는 장치컨트롤러와 연관이이 있는데, CPU와 병렬로 실행되는 장치컨트롤러는 내부의 로컬버퍼와 장치간 데이터의 전송을 담당한다.  \r\n> 장치에서 입력이있다면, 로컬버퍼로 데이터를 이동시키고 상태 레지스터의 값을 변경한다. 여기서 CPU는 장치컨트롤러의 상태 레지스터를 주기적으로 확인하여, 상태가 변경되었는지 확인하며 로컬버퍼의 데이터를 읽어와 처리한다.  \r\n> 이러한 방식은 CPU가 주기적으로 장치의 상태를 확인하기 때문에, CPU의 부하가 높아지고, 실시간 처리에 적합하지 않다. 이때 전송하는 빈도를 폴링 레이트라고한다.  폴링레이트가 높을때 입력이 많은경우 CPU의 부하가 높아지는 이유가 이것 때문이다.  \r\n:{ \"icon\": \"warning-diamond\", \"type\": \"warning\" }\r\n\r\n"
+  },
+  {
+    "path": "/docs/computer/computer-organization",
+    "header": {
+      "layout": "post",
+      "title": "컴퓨터는 어떤 구조로 설계되었을까?",
+      "categories": [
+        "computer"
+      ],
+      "tags": [
+        "Computer"
+      ],
+      "date": 1608610620000,
+      "current-company": "Cubic INC",
+      "current-position": "SI Researcher",
+      "summary": "컴퓨터의 구성요소",
+      "excerpt-separator": "<!--more-->",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "computer"
+      ],
+      "images": [],
+      "headlines": {
+        "grade": 0,
+        "title": "root",
+        "fragmentId": "root",
+        "children": [],
+        "isSelected": false
+      }
+    },
+    "description": "\r\n",
+    "content": "\r\n"
   },
   {
     "path": "/docs/language/java/install-zulu-in-mac",
