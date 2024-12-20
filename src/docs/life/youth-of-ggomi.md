@@ -4,7 +4,7 @@ title: 꼬미의 젊은 시절
 categories: []
 tags: [Life]
 date: 2024-12-19 16:00:00 +0900
-thumbnail: /post/life/tired-ggomi.jpg
+thumbnail: /post/life/tired-ggomi.png
 current-company: NEOWIZ
 current-position: Software Engineer
 summary: 나란 꼬미
