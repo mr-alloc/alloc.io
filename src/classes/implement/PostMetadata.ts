@@ -50,4 +50,8 @@ export class PostMetadata implements IPostMetadata {
     get hasCategories() {
         return this._header.categories.length > 0;
     }
+
+    get isPublic(): boolean {
+        return this._header.hide !== undefined && !this.header.hide;
+    }
 }

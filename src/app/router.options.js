@@ -32,6 +32,9 @@ export default {
             name: 'wiki',
             path: '/wiki',
             component: () => import('@/pages/wiki.vue'),
+            meta: {
+                heroBackground: 'opacity-30 z-20'
+            },
             children: [
                 {
                     name: 'wiki-child',
