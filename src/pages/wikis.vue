@@ -33,7 +33,7 @@ import DocumentType from "@/classes/constant/document-type";
 const route = useRoute();
 
 const titleTemplate = computed(() => {
-  return 'WIKI · DEVIS 블로그'
+  return 'WIKI · Alloc'
 });
 
 const appConfig = useAppConfig();

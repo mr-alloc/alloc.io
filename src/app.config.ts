@@ -1,8 +1,8 @@
 export default defineAppConfig({
-    fullName: "devisitem",
-    username: "devis",
+    fullName: "alloc",
+    username: "alloc",
     domain: "https://alloc.io",
-    title: "DEVIS의 기술블로그",
+    title: "alloc place",
     description: "불편해야 성장할 수 있어.",
     defaultProfile: "https://avatars.githubusercontent.com/u/65699391?v=4",
     ui: {
