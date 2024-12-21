@@ -46,7 +46,7 @@ if (!content) {
 }
 
 const titleTemplate = computed(() => {
-  return '%s · DEVIS 블로그'
+  return '%s · Alloc Blog'
 });
 
 const appConfig = useAppConfig();
