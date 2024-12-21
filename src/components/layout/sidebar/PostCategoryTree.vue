@@ -9,9 +9,9 @@ import {useRouter} from "vue-router";
 
 const ui = {
   icon: {
-    default: 'rounded-md p-1 inline-flex ring-inset ring-1 group-hover:bg-primary group-hover:ring-primary group-hover:text-background',
-    wrapper: 'flex items-center gap-1.5 lg:gap-2 group hover:text-gray-700 dark:hover:text-gray-200 font-medium cursor-pointer duration-300',
-    active: 'bg-primary ring-primary text-background dark:bg-primary dark:ring-primary dark:text-background',
+    default: 'rounded-md p-1 inline-flex ring-inset ring-1 group-hover:bg-primary group-hover:ring-primary',
+    wrapper: 'flex items-center gap-1.5 lg:gap-2 group hover:text-white dark:hover:text-white font-medium cursor-pointer duration-300',
+    active: 'bg-primary ring-primary text-white dark:bg-primary dark:ring-primary dark:text-background',
     inactive: 'bg-gray-100/50 dark:bg-gray-800/50 ring-gray-300 dark:ring-gray-700'
   }
 }
@@ -50,9 +50,9 @@ function collapseCategory(category: CategoryGroup) {
       <div :class="[ui.icon.default, isRange && group === category.name ? ui.icon.active : ui.icon.inactive]">
         <span :class="`iconify i-ph:${CategoryAlias.find(category.name).name} w-4 h-4 flex-shrink-0`" aria-hidden="true"></span>
       </div>
-      <span class="text-sm/6 relative">{{ CategoryAlias.find(category.name).alias }}</span>
+      <span class="text-sm/6 relative text-gray-700 dark:text-gray-200">{{ CategoryAlias.find(category.name).alias }}</span>
     </a>
-    <ul v-if="category.isDirectory" class="ml-6 mt-0 text-slate-600 duration-300 overflow-hidden" :class="{ 'h-0 my-0': collapseGroup.has(category.name) && collapseGroup.get(category.name)! }"
+    <ul v-if="category.isDirectory" class="ml-6 mt-0 text-slate-600 overflow-hidden" :class="{ 'h-0 my-0': collapseGroup.has(category.name) && collapseGroup.get(category.name)! }"
     >
       <PostCategoryTree :categories="(category as CategoryGroup).children" :groups="groups" :depth="depth +1" :path="path" />
     </ul>

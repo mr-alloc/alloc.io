@@ -1,14 +1,14 @@
 import {defineStore} from "pinia"
 
 export const usePagePrepareStore = defineStore('preparePostStatus', () => {
-    const preparePost = ref(true)
+    const isPrepare = ref(true)
 
     function prepare() {
-        preparePost.value = true
+        isPrepare.value = true
     }
     function done() {
-        preparePost.value = false
+        isPrepare.value = false
     }
 
-    return { isPrepare: preparePost, prepare, done }
+    return { isPrepare, prepare, done }
 })
