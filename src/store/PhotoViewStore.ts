@@ -40,6 +40,7 @@ export const usePhotoViewStatusStore = defineStore('photoViewStatus', () => {
         const html = document.querySelector('html')!
         html.style.overflow = 'unset'
         document.body.style.overflow = 'unset'
+
     }
 
     function zoomIn() {

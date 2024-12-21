@@ -42,6 +42,10 @@ export default class DecoratorProvider {
         return this.getInstance()._decorators.get(rule)!;
     }
 
+    public static provides(...rules: Array<RuleType>): Array<IMarkdownDecorator> {
+        return rules.map(rule => this.provide(rule));
+    }
+
     private initStyleDecorator() {
         StyleDecorator.getInstance().styles
             .add('align', (token, attributes) => {

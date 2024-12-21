@@ -8,14 +8,16 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
     const markdownIt = new MarkdownIt(DEFAULT_MARKDOWN_IT_OPTIONS);
 
-    DecoratorProvider.provide(RuleType.BLOCK_QUOTE).decorate(markdownIt);
-    DecoratorProvider.provide(RuleType.HEADLINE).decorate(markdownIt);
-    DecoratorProvider.provide(RuleType.CODE_BLOCK).decorate(markdownIt);
-    DecoratorProvider.provide(RuleType.PARAGRAPH).decorate(markdownIt);
-    DecoratorProvider.provide(RuleType.LINK).decorate(markdownIt);
-    DecoratorProvider.provide(RuleType.TABLE).decorate(markdownIt);
+    DecoratorProvider.provides(
+        RuleType.BLOCK_QUOTE,
+        RuleType.HEADLINE,
+        RuleType.CODE_BLOCK,
+        RuleType.PARAGRAPH,
+        RuleType.LINK,
+        RuleType.TABLE
+    ).forEach(decorator => decorator.decorate(markdownIt));
 
-    markdownIt.use(await shiki({
+    const shikiExtension = await shiki({
         transformers: [
             {
                 code(hast) {
@@ -31,7 +33,9 @@ export default defineNuxtPlugin(async (nuxtApp) => {
             light: 'material-theme-lighter',
             dark: 'material-theme-palenight'
         },
-    }));
+    });
+    console.log('Create shiki instance');
+    markdownIt.use(shikiExtension);
 
     nuxtApp.provide('md', markdownIt);
 });

@@ -42,12 +42,6 @@ const scrollToHeading = (id: string) => {
   emit('move', id)
 };
 
-nuxtApp.hook('page:finish', () => {
-  scrollspy.updateHeadings([
-    ...document.querySelectorAll('h2'),
-    ...document.querySelectorAll('h3')
-  ]);
-});
 </script>
 
 <style lang="scss" scoped>

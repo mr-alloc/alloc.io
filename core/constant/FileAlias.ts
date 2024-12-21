@@ -28,7 +28,7 @@ export default class FileAlias {
 
     public static values(): Array<FileAlias> {
         return [this.DOCS, this.ALGORITHM, this.JAVA, this.JAVASCRIPT, this.TYPESCRIPT,
-            this.FRAMEWORK, this.SPRING, this.LANGUAGE, this.SWIFT, this.TOOL, this.DATABASE, this.OS]
+            this.FRAMEWORK, this.SPRING, this.LANGUAGE, this.SWIFT, this.TOOL, this.DATABASE, this.OS, this.LIFE]
     }
 
     get value(): string {
