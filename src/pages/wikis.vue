@@ -39,7 +39,7 @@ const titleTemplate = computed(() => {
 const appConfig = useAppConfig();
 const allWikis = computed(() => {
   const postContentStore = usePostContentStore();
-  return postContentStore.values(DocumentType.WIKI);
+  return postContentStore.values(DocumentType.WIKI).filter(wiki => wiki.isPublic);
 })
 const ui = {
   button: {

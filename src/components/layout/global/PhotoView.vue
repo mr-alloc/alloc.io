@@ -14,7 +14,7 @@
       <!-- 이미지 -->
       <img id="current-image w-full my-0 mx-auto object-contain origin-top-left" :src="photoViewStore.current()?.src" :alt="photoViewStore.current()?.alt"/>
       <!-- 자막 -->
-      <span class="image-description">{{ photoViewStore.current()?.alt }}</span>
+      <span class="image-subtitles">{{ photoViewStore.current()?.alt }}</span>
       <!-- 다음 버튼 -->
       <button class="next-button" type="button" v-if="photoViewStore.hasNext()" v-on:click="photoViewStore.nextImage()">
         <svg class="svg-inline--fa fa-chevron-right" aria-hidden="true" focusable="false" data-prefix="fas"
@@ -246,19 +246,18 @@ $tool-item-width: 60px;
       }
     }
 
-    .image-description {
+    .image-subtitles {
       padding: 3px 5px;
       position: fixed;
-      top: 10px;
+      bottom: 200px;
       display: flex;
       font-size: 1.5rem;
       font-weight: 500;
       width: 100%;
       justify-content: center;
       color: white;
-      text-shadow: #000000 0 0 7px;
+      text-shadow: #000000 0 0 5px;
       margin: 0 auto;
-      background-color: rgb(0, 0, 0, 0.3);
       transition: .3s ease-in-out;
     }
   }
@@ -307,12 +306,13 @@ $tool-item-width: 60px;
     .photo-view-panel {
       height: 100vh;
 
-      .image-description {
-        top: 10px;
-      }
-
       img {
       }
+
+      .image-subtitles {
+        bottom: 80px;
+      }
+
 
       &.x2 {
         img {

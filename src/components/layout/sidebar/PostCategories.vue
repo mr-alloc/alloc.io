@@ -11,6 +11,7 @@ import {useCategoriesStore} from "@/store/category-store";
 const postContentStore = usePostContentStore();
 const categoryTree = computed(() => postContentStore.values(DocumentType.POST)
     .filter(post => post.hasCategories)
+    .filter(post => post.isPublic)
     .reduce((tree, post) => {
       const foundGroup = findOrCreateGroup(tree, post.header.categories, 0);
       foundGroup.addChild(new CategoryContent(false, post.header.title, post.path));
@@ -19,7 +20,7 @@ const categoryTree = computed(() => postContentStore.values(DocumentType.POST)
 
 function findOrCreateGroup(existingGroups: Array<ICategoryNode>, categories: Array<string>, depth: number): CategoryGroup {
   const currentGroup = categories[depth];
-  const found = existingGroups.find(exist => exist.isDirectory && exist.name === currentGroup);
+  const found = existingGroups.find(exist => exist.isDirectory && exist.name === currentGroup);existingGroups
   //존재하지 않는 경우 생성
   if (!found) {
     const isActive = props.groups.length > depth && props.groups[depth] === currentGroup;

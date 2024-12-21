@@ -35,6 +35,8 @@ import MainPage from "@/components/layout/content/MainPage.vue";
 import MainPageHeader from "@/components/layout/content/MainPageHeader.vue";
 import ContentToc from "@/components/layout/content/ContentToc.vue";
 import Breadcrumb from "@/components/layout/content/Breadcrumb.vue";
+import {useNuxtApp} from "nuxt/app";
+import {useThrottleFn} from "@vueuse/shared";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
@@ -54,6 +56,7 @@ const titleTemplate = computed(() => {
 });
 
 const appConfig = useAppConfig();
+const nuxtApp = useNuxtApp();
 const title = content.header.title;
 const description = content.description;
 useSeoMeta({
