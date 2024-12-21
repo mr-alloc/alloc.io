@@ -10,7 +10,7 @@
         </div>
         <div class="post-title-box ring-prima">
           <span class="post-title">{{ props.header.summary }}</span>
-          <span class="post-path">devis.kr</span>
+          <span class="post-path">alloc.io</span>
         </div>
       </div>
     </nuxt-link>
