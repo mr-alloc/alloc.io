@@ -29,7 +29,7 @@ definePageMeta({
 
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} - DEVIS 블로그` : 'DEVIS 블로그';
+    return titleChunk ? `${titleChunk} - Alloc Blog` : 'Alloc Blog';
   }
 });
 onMounted(() => {

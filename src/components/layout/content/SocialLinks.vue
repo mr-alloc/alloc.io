@@ -1,7 +1,7 @@
 <template>
   <UButton
       icon="i-simple-icons-github"
-      to="https://github.com/devisitem"
+      to="https://github.com/mr-alloc"
       target="_blank"
       variant="ghost"
       color="gray"
