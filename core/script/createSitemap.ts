@@ -12,7 +12,7 @@ export default () => {
         }
     })
     const stream = new SitemapStream({
-        hostname: 'https://devis.kr'
+        hostname: 'https://alloc.io'
     });
     return streamToPromise(Readable.from(links).pipe(stream))
 }
