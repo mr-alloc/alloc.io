@@ -5,6 +5,7 @@ export default class PromptIcon {
     private static readonly WARNING_DIAMOND = new PromptIcon('warning-diamond');
     private static readonly WARNING_OCTAGON = new PromptIcon('warning-octagon');
     private static readonly CHECK_CIRCLE = new PromptIcon('check-circle');
+    private static readonly X_CIRCLE = new PromptIcon('x-circle');
 
     private readonly _name: string;
 
@@ -17,7 +18,7 @@ export default class PromptIcon {
     }
 
     private static values () {
-        return [this.LIGHTBULB, this.INFO, this.WARNING_DIAMOND, this.WARNING_OCTAGON, this.CHECK_CIRCLE];
+        return [this.LIGHTBULB, this.INFO, this.WARNING_DIAMOND, this.WARNING_OCTAGON, this.CHECK_CIRCLE, this.X_CIRCLE];
     }
 
     public static includes(name: string) {
