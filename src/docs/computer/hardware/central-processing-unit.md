@@ -17,7 +17,7 @@ hide: false
 ::image-group
 
 ![멀티코어 프로세서](/post/computer/multicore-processor.png)
-:{ "align": "left", "description": "하나의 칩에 두개 이상의 코어를 가지는 설계를 의미한다." }
+:{ "max-width": "300px", "align": "left", "description": "하나의 칩에 두개 이상의 코어를 가지는 설계를 의미한다." }
 
 CPU의 코어는 실질적으로 연산을 수행하는 장치이다. 코어 내에는 연산하는 과정에서 임시로 적제할 여러 레지스터를 갖고 있다.
 제조사별로 [캐시메모리]() 구조가 다르지만, 왼쪽의 경우는 `L2 캐시`는 프로세서 내에서 공유가 가능하다.  
