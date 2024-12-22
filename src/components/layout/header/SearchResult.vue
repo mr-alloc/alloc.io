@@ -1,17 +1,17 @@
 <template>
-  <div class="search-result-row flex flex-row">
+  <div class="search-result-row flex flex-row text-gray-600 dark:text-gray-50 hover:text-primary-600 hover:dark:text-primary-400 duration-300">
     <div class="flex shrink-0 justify-center pt-4 mx-4 w-14">
       <span class="iconify text-2xl" :class="`i-ph:${props.row.icon}`"/>
     </div>
     <div class="grow w-full py-0.5">
       <ul class="list-none">
-        <li class="py-2 px-1 my-1 mx-0.5 rounded-md cursor-pointer"
+        <li class="py-2 px-1 my-1 mx-0.5 rounded-md cursor-pointer hover:bg-gray-100 hover:dark:bg-gray-800 duration-300"
             :class="[`${result.status}`, { select: result.isSelected}]"
             v-for="result in props.row.results"
             :key="result.content.path"
             v-on:click="goTo(result.content.path)">
-          <div class="text-black">
-            <span class="text-gray-600 dark:text-gray-50 font-bold">{{ result.content.header.title }}</span>
+          <div class="text-gray-600 dark:text-gray-50">
+            <span class="text-inherit font-bold">{{ result.content.header.title }}</span>
           </div>
           <div class="text-slate-600 text-xs">
             <ul class="flex">
