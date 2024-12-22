@@ -12,25 +12,17 @@ export const usePostContentStore = defineStore("PostMap", () => {
         postContents.value.set(post.path,  post);
     }
 
-    function get(path: string): PostMetadata {
-        if (postContents.value.has(path)) {
-            return postContents.value.get(path) as PostMetadata;
-        }
-
-        throw new Error("Not found post with path: "+ path);
+    function get(path: string): PostMetadata | undefined {
+        return postContents.value.get(path) as PostMetadata;
     }
 
     function isWiki(filename: string): boolean {
         return values(DocumentType.WIKI).some(post => post.filename === filename);
     }
 
-    function getWiki(filename: string): PostMetadata {
-        const wiki = values(DocumentType.WIKI)
-            .find(post => post.filename === filename);
-        if (wiki) {
-            return wiki;
-        }
-        throw new Error("Not found wiki with filename: "+ filename);
+    function getWiki(filename: string): PostMetadata | undefined {
+        return values(DocumentType.WIKI)
+            .find(post => post.filename === filename);;
     }
 
     function values(documentType: DocumentType): Array<PostMetadata> {
