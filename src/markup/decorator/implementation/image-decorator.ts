@@ -28,7 +28,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
             env: any,
             self: Renderer
         ): string => {
-            let wrapperClasses = ['flex', 'flex-col', 'not-prose'];
+            let wrapperClasses = ['flex', 'flex-col', 'not-prose', 'w-full'];
             try {
                 const inline = tokens[index +1];
                 inline.content = '';
@@ -78,7 +78,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
 
                 return (
                     `</a>
-                   <figcaption class="m-0 text-center text-sm text-gray-600 dark:text-gray-400">${imageToken.attrGet('data-description')}</figcaption>
+                   <figcaption class="m-0 text-center text-sm text-gray-600 dark:text-gray-400 w-full">${imageToken.attrGet('data-description')}</figcaption>
                  </div>`
                 );
             } catch(skip) {}
