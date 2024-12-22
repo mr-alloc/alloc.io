@@ -1,6 +1,6 @@
 ---
 layout: wiki
-title: Central Processing Unit (CPU)
+title: 중앙처리장치 (CPU)
 categories: [computer, hardware]
 tags: [Hardware, CPU]
 summary: CPU란?
