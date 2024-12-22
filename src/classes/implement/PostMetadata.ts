@@ -1,5 +1,6 @@
 import Header from "@/classes/implement/Header";
 import type IPostMetadata from "@/classes/IPostContent";
+import DocumentType from "@/classes/constant/document-type";
 
 export class PostMetadata implements IPostMetadata {
     private readonly _path: string
@@ -36,6 +37,9 @@ export class PostMetadata implements IPostMetadata {
     }
 
     get group(): string {
+        if (this._header.layout === DocumentType.WIKI.name) {
+            return 'wiki';
+        }
         return this._path.split('/').slice(2, 3)[0] ?? 'etc';
     }
 
