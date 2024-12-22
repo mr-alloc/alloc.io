@@ -136,7 +136,7 @@ const methods = {
       const group = new PostSearchGroup(key, value)
       groups.value.set(key, group)
       group.updateNewer()
-    })
+    });
 
     const array = [...groups.value.values()]
     searchLocationPair.value = array.map(val => val.results.map((res, idx) => new Pair<string, number>(val.icon, idx)))
