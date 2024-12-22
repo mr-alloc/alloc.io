@@ -1592,6 +1592,10 @@
 }
 
 
+.w-max {
+    width: max-content;
+}
+
 .max-w-none {
     max-width: none;
 }

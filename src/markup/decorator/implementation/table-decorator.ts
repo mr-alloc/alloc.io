@@ -4,6 +4,7 @@ import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
 import TemplateExpression from "@/markup/template/TemplateExpression";
 import TemplateAttributes from "@/markup/template/TemplateAttributes";
+import StyleDecorator from "@/markup/decorator/style/style-decorator";
 
 export default class TableDecorator implements IMarkdownDecorator {
 
@@ -23,7 +24,7 @@ export default class TableDecorator implements IMarkdownDecorator {
         ): string => {
             try {
                 const closeIndex = this.getCloseIndex(tokens, index, 'table');
-
+                const tableOpenToken = tokens[index];
                 // console.debug(`table(${index}, ${closeIndex}) `, tokens);
 
                 let templateIndex = tokens.slice(index, closeIndex)
@@ -32,7 +33,7 @@ export default class TableDecorator implements IMarkdownDecorator {
                     tokens[closeIndex].meta = {
                         'no-wrap': true
                     };
-                    return fallbackRule(tokens, index, options, env, self);
+                    return this.getFallbackWrapper([]);
                 }
                 templateIndex += index;
                 const realTemplateToken = tokens[templateIndex];
@@ -43,23 +44,22 @@ export default class TableDecorator implements IMarkdownDecorator {
                 const trCloseIndex = this.getCloseIndex(tokens, trOpenIndex, 'tr');
                 const count = trCloseIndex - trOpenIndex;
 
-                // console.debug('templateIndex', templateIndex);
-                // console.debug('trOpenIndex', trOpenIndex);
-                // console.debug('trCloseIndex', trCloseIndex);
-
                 [...new Array(count)].forEach((_, i) => {
                     tokens[trOpenIndex + i].hidden = true;
                 });
 
                 const attributes = TemplateAttributes.parse(templateToken.content);
                 const desc = attributes.description;
+
+                const styleDecorator = StyleDecorator.getInstance();
+                styleDecorator.apply(tableOpenToken, attributes.toMap());
+
+                const classes = tableOpenToken.meta.wrapperClasses;
                 return (
-                    `<div class="flex flex-col ${attributes.wrapperClass}">
-                        <table class="table-fixed w-max">
-                        <caption class="text-gray-300 text-sm">${desc}</caption>`
+                    this.getFallbackWrapper([...attributes.wrapperClass.split(' '), classes]) + `<caption class="text-gray-300 text-sm">${desc}</caption>`
                 );
             } catch (skip) {}
-            return fallbackRule(tokens, index, options, env, self);
+            return this.getFallbackWrapper([]);
         }
 
         markdownIt.renderer.rules[this.KEY_CLOSE] = (
@@ -69,13 +69,6 @@ export default class TableDecorator implements IMarkdownDecorator {
             env: any,
             self: Renderer
         ): string => {
-            const token = tokens[index];
-
-            const isWrapping = token.meta?.['no-wrap'];
-            if (isWrapping) {
-                return `</table>`
-            }
-
             return (
                 `</table></div>`
             );
@@ -84,5 +77,10 @@ export default class TableDecorator implements IMarkdownDecorator {
 
     private getCloseIndex(tokens: Array<Token>, openIndex: number, closeType: string): number {
         return tokens.slice(openIndex, tokens.length).findIndex(token => token.type === (closeType + '_close')) + openIndex;
+    }
+
+    private getFallbackWrapper(additionalWrapperClasses: Array<string>) {
+        const wrapperClasses = ['flex', 'flex-col', 'overflow-x-auto'].concat(additionalWrapperClasses).join(' ');
+        return `<div class="${wrapperClasses}"><table class="table-fixed w-max">`;
     }
 }

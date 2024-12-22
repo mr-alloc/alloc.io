@@ -50,24 +50,26 @@ export default class DecoratorProvider {
         StyleDecorator.getInstance().styles
             .add('align', (token, attributes) => {
                 const align = attributes.get('align');
+                token.meta = Object.assign({}, token.meta);
+                token.meta.wrapperClasses = token.meta?.wrapperClasses ?? [];
                 if (align === 'center') {
-                    token.attrJoin('class', 'justify-center');
+                    token.meta.wrapperClasses.push('items-center');
                 } else if (align === 'right') {
-                    token.attrJoin('class', 'justify-end');
+                    token.meta.wrapperClasses.push('items-end');
                 } else if (align === 'left') {
-                    token.attrJoin('class', 'justify-start');
+                    token.meta.wrapperClasses.push('items-start');
                 }
             })
             .add('max-width', (token, attributes) => {
                 const maxWidth = attributes.get('max-width');
                 if (maxWidth) {
-                    token.attrJoin('style', `max-width: ${maxWidth}`);
+                    token.attrJoin('style', `max-width: ${maxWidth};`);
                 }
             })
             .add('max-height', (token, attributes) => {
                 const maxHeight = attributes.get('max-height');
                 if (maxHeight) {
-                    token.attrJoin('style', `max-height: ${maxHeight}`);
+                    token.attrJoin('style', `max-height: ${maxHeight};`);
                 }
             });
     }

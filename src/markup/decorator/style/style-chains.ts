@@ -18,7 +18,8 @@ export default class StyleChains {
         return this._chains;
     }
 
-    public findWith(attributes: Map<string, string>) {
-        return this._chains.filter(style => attributes.has(style.name));
+    public findWith(attributes: Map<string, string>): Array<MarkupStyle> {
+        const markupStyles = this._chains.filter(style => attributes.has(style.name));
+        return markupStyles;
     }
 }
