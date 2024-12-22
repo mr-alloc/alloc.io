@@ -1,7 +1,8 @@
 <template>
   <div class="relative">
-
-    <HomeHeroBackground />
+    <ClientOnly>
+      <HomeHeroBackground />
+    </ClientOnly>
 
     <div class="relative py-0 sm:py-16 max-w-md z-30 mx-auto" id="main-content-body">
       <div class="grid grid-cols-1 sm:grid-cols-1 xl:grid-cols-1 gap-8">
