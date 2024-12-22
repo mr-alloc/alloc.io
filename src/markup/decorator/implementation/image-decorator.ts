@@ -28,22 +28,35 @@ export default class ImageDecorator implements IMarkdownDecorator {
             env: any,
             self: Renderer
         ): string => {
+            let wrapperClasses = ['flex', 'flex-col', 'not-prose'];
             try {
                 const inline = tokens[index +1];
                 inline.content = '';
                 const imageToken = this.findChild(inline.children, 'image');
-                this.addDefaultImageClass(imageToken);
+                if (!imageToken) {
+                    return fallbackRule(tokens, index, options, env, self);
+                }
+
                 const templateToken = this.findChild(inline.children, 'text');
+                if (!templateToken) {
+                    return fallbackRule(tokens, index, options, env, self);
+                }
+
                 const attributes = TemplateAttributes.parse(templateToken.content).toMap();
 
                 imageToken.attrJoin('data-description', attributes.get('description') ?? '');
                 templateToken.content = '';
 
-                StyleDecorator.getInstance().apply(imageToken, attributes);
-                const wrapperClass = attributes.get('wrapper-class');
-                return `<div class="flex not-prose ${wrapperClass}"><div><a href="#" class="my-2 inline-flex">`
+                this.addDefaultImageClass(imageToken);
+
+                const styleDecorator = StyleDecorator.getInstance();
+                styleDecorator.apply(imageToken, attributes);
+
+                const classes = imageToken.meta.wrapperClasses;
+                wrapperClasses = wrapperClasses.concat(classes);
             } catch (skip) {}
-            return fallbackRule(tokens, index, options, env, self);
+            return `<div class="${wrapperClasses.join(' ')}">
+                            <a href="#" class="my-2 inline-flex">`;
         }
 
         markdownIt.renderer.rules[this.KEY_CLOSE] = (
@@ -56,31 +69,30 @@ export default class ImageDecorator implements IMarkdownDecorator {
             try {
                 const inline = tokens[index - 1];
                 const imageToken = this.findChild(inline.children, 'image');
+                if (!imageToken) {
+                    return fallbackRule(tokens, index, options, env, self);
+                }
                 if (imageToken.attrGet('data-description') === null) {
-                    return `</img>`
+                    return `</a></div>`
                 }
 
-                return (`</a><figcaption class="m-0 text-center text-sm text-gray-600 dark:text-gray-400">${imageToken.attrGet('data-description')}</figcaption></div></div>`);
+                return (
+                    `</a>
+                   <figcaption class="m-0 text-center text-sm text-gray-600 dark:text-gray-400">${imageToken.attrGet('data-description')}</figcaption>
+                 </div>`
+                );
             } catch(skip) {}
-            return fallbackRule(tokens, index, options, env, self);
+            return `</a></div>`;
         }
     }
 
-    private findChild(children: Token[] | null, inlineName: string): Token {
-        if (!children) {
-            throw new Error('No children found');
-        }
-
-        const child = children.find((token) => token.type === inlineName);
-        if (!child) {
-            throw new Error(`No child with ${inlineName} found`);
-        }
-
-        return child;
+    private findChild(children: Token[] | null, inlineName: string): Token | undefined {
+        return children?.find((token) => token.type === inlineName)
     }
 
     private addDefaultImageClass(imageToken: Token) {
         imageToken.attrJoin('class', 'my-0 rounded-md');
-        imageToken.attrJoin('style', 'cursor: zoom-in');
+        imageToken.attrJoin('style', 'cursor: zoom-in;');
     }
+
 }
