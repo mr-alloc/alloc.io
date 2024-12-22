@@ -2,7 +2,7 @@ export default class TemplateExpression {
 
     public static readonly TEXT_INDEX = 0;
     public static readonly ATTRS_INDEX = 1;
-    private static readonly EXPRESSION = /^:\s*(\{[\s\S]*\})\s*$/m;
+    private static readonly EXPRESSION = /^\s*:\s*(\{[\s\S]*\})\s*$/m;
     private static INSTANCE: TemplateExpression;
     private constructor() {}
 

@@ -4,8 +4,8 @@ import TemplateAttributes from "@/markup/template/TemplateAttributes";
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
 import {countNewline} from "@/utils/MarkdownUtils";
-import PromptIcon from "@/markup/constant/PromptIcon";
-import PromptType from "@/markup/constant/PromptType";
+import PromptIcon from "@/markup/constant/prompt-icon";
+import PromptType from "@/markup/constant/prompt-type";
 
 export default class BlockquoteDecorator implements IMarkdownDecorator {
 
