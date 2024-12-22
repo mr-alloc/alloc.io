@@ -4,7 +4,7 @@ import type {PostMetadata} from "@/classes/implement/PostMetadata";
 import CategoryGroup from "@/classes/implement/CategoryGroup";
 import CategoryContent from "@/classes/implement/CategoryContent";
 
-export const useCategoriesStore = defineStore('Categories', () => {
+export const useCategoriesStore = defineStore('categories', () => {
 
     const categoryTree = ref<Array<ICategoryNode>>(new Array<ICategoryNode>());
 
