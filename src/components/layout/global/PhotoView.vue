@@ -62,7 +62,7 @@
             v-for="(image, index) in photoViewStore.imageList() as Array<Image>"
             :key="index"
             v-on:click="photoViewStore.open(index +1)">
-          <img class="image-preview" :src="image.src" :alt="image.alt"/>
+          <img class="image-preview object-cover" :src="image.src" :alt="image.alt"/>
         </li>
       </ol>
     </div>
