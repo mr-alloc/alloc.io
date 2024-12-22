@@ -1,5 +1,10 @@
 <template>
-  <div v-show="searchStatusStore.isSearchMode" v-if="searchStatusStore.isSearchMode" class="relative text-left rtl:text-right flex flex-col bg-white dark:bg-gray-900 shadow-xl w-full sm:max-w-3xl h-dvh sm:h-[28rem] rounded-none sm:rounded-lg sm:my-8">
+  <div v-show="searchStatusStore.isSearchMode" v-if="searchStatusStore.isSearchMode"
+       class="relative text-left rtl:text-right flex flex-col bg-white dark:bg-gray-900 shadow-xl w-full sm:max-w-3xl h-dvh sm:h-[28rem] rounded-none sm:rounded-lg sm:my-8"
+       :class="[
+           searchStatusStore.isSearchMode ? [] : ['opacity-0', 'duration-200']
+           ]"
+  >
     <div class="flex flex-col flex-1 min-h-0 divide-y divide-gray-100 dark:divide-gray-800" v-on:click="$event.stopPropagation()">
       <div class="relative flex items-center">
         <span aria-hidden="true" class="iconify i-ph:magnifying-glass-duotone pointer-events-none absolute start-4 text-gray-400 dark:text-gray-500 h-5 w-5"></span>

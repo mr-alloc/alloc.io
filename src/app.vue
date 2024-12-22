@@ -13,17 +13,22 @@
       />
       <NuxtPage />
     </AppMain>
-
-    <div class="background" :class="[
-        photoViewStatus.isPhotoView || searchStatus.isSearchMode
-        ? ['z-50', 'fixed', 'inset-0', 'overflow-y-auto', 'transition-opacity', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : []
-        ]"
-         v-on:click="($event) => methods.clickBackground($event as PointerEvent)">
-      <div class="flex min-h-full items-end sm:items-center justify-center text-center p-0 sm:p-4" v-if="!photoViewStatus.isPhotoView">
-        <SearchView v-show="searchStatus.isSearchMode" />
-      </div>
-      <PhotoView v-if="photoViewStatus.isPhotoView" v-on:click="$event.stopPropagation()" />
-    </div>
+    <ClientOnly>
+      <Transition name="fade">
+        <div class="background fixed inset-0 overflow-y-auto transition-opacity"
+              v-if="photoViewStatus.isPhotoView || searchStatus.isSearchMode"
+             :class="[
+               photoViewStatus.isPhotoView || searchStatus.isSearchMode
+            ? ['z-50', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : ['opacity-0']
+            ]"
+             v-on:click="($event) => methods.clickBackground($event as PointerEvent)">
+          <div class="flex min-h-full items-end sm:items-center justify-center text-center p-0 sm:p-4" v-show="!photoViewStatus.isPhotoView">
+            <SearchView v-show="searchStatus.isSearchMode" />
+          </div>
+          <PhotoView v-if="photoViewStatus.isPhotoView" v-on:click="$event.stopPropagation()" />
+        </div>
+      </Transition>
+    </ClientOnly>
   </div>
 </template>
 <script lang="ts" setup>
