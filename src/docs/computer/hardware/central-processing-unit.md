@@ -1,7 +1,6 @@
 ---
 layout: wiki
 title: 중앙처리장치 (CPU)
-categories: [computer, hardware]
 tags: [Hardware, CPU]
 summary: CPU란?
 hide: false
@@ -11,7 +10,7 @@ hide: false
 
 **C**entral **P**rocessing **U**nit (이하 `CPU`)는 컴퓨터의 모든 연산을 실행하거나 처리하는 핵심적인 제어장치이며 `중앙처리장치`라고도 말한다. 
 컴퓨터에 필수적인 4대 주요기능(`기억`, `해석`, `연산`, `제어`)을 관리하는 가장 중요한 장치이다.
-
+1
 처리기, 프로세서 등 여러 이름이 있으며 컴퓨터에 따라 한개 또는 그 이상의 장치가 들어간다. 일반적으로는 프로세서 칩 한개를 의미 하지만, 엔지니어 입장에서는 몇개가 존재하든 처리를 하는 역할은 변하지 않기에 프로세서라고 그냥 말 할 수 도 있다.  
 
 ![멀티코어 프로세서](/post/computer/multicore-processor.png)

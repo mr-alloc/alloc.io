@@ -5,11 +5,12 @@ categories: [language]
 tags: [OpenJDK, Azul System, Zulu]
 date: 2020-12-02 15:25:00 +0900
 thumbnail: "/post/java/azul-java.webp"
+profile-image: /post/profile/profile1.JPG
 current-company: Cubic INC
 current-position: SI Researcher
 summary: OpenJDK Zulu 설치
 excerpt-separator: <!--more-->
-hide: false
+hide: true
 ---
 
 Zulu는 Azul System에서 제공하는 OpenJDK의 빌드이다.

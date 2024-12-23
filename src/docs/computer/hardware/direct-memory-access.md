@@ -1,7 +1,6 @@
 ---
 layout: wiki
 title: Direct Memory Access (DMA)
-categories: [computer, hardware]
 tags: [Hardware, DMAC, Direct Memory Access Controller]
 summary: DMA란?
 hide: false
