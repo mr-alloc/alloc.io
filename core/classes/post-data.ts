@@ -1,4 +1,4 @@
-import PostHeader from "~/core/classes/PostHeader";
+import PostHeader from "@core/classes/post-header";
 
 export default class PostData {
 

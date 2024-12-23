@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import appCache from "@/store/appCache";
+import appCache from "@/store/app-cache";
 
 const appConfig = useAppConfig();
 </script>

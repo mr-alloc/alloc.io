@@ -5,7 +5,7 @@
 import type {PostMetadata} from "@/classes/implement/PostMetadata";
 import MarkdownIt from "markdown-it";
 import {usePagePrepareStore} from "@/store/prepare-post-store";
-import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
+import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 
 const photoViewStore = usePhotoViewStatusStore();
 const nuxtApp = useNuxtApp();

@@ -31,16 +31,16 @@
 </template>
 <script setup lang="ts">
 import SearchResult from "@/components/layout/header/SearchResult.vue";
-import {useSearchStatusStore} from "@/store/SearchStatusStore";
-import {Key} from "@/classes/implement/Key";
+import {useSearchStatusStore} from "@/store/search-status-store";
+import {Key} from "@/classes/constant/key";
 import {PostMetadata} from "@/classes/implement/PostMetadata";
-import {PostSearchResult} from "@/classes/implement/PostSearchResult";
+import {PostSearchResult} from "@/classes/implement/post-search-result";
 import {useNuxtApp} from "nuxt/app";
 import {usePostContentStore} from "@/store/post-content-store";
-import {PostSearchGroup} from "@/classes/implement/PostSearchGroup";
-import {Pair} from "@/classes/implement/Pair";
-import appCache from "@/store/appCache";
-import {grouping} from "@/utils/CollectionUtil";
+import {PostSearchGroup} from "@/classes/implement/post-search-group";
+import {Pair} from "@/classes/implement/pair";
+import appCache from "@/store/app-cache";
+import {grouping} from "@/utils/collection-util";
 import DocumentType from "@/classes/constant/document-type";
 
 const searchInput = ref<HTMLInputElement | null>(null);
@@ -106,7 +106,7 @@ const methods = {
   },
   deployResult(results: Array<PostSearchResult>) {
     const map: Map<string, PostSearchResult[]> = grouping<string, PostSearchResult>(results, (result)=> {
-      const node = postContentStore.get(result.content.path);
+      const node = postContentStore.get(result.content.path)!;
       return node.group;
     })
 

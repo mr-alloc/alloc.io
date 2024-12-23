@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
-import Image from "@/classes/implement/Image";
-import {toMap} from "@/utils/CollectionUtil";
+import Image from "@/classes/implement/image";
+import {toMap} from "@/utils/collection-util";
 
 export const usePhotoViewStatusStore = defineStore('photoViewStatus', () => {
     const isPhotoView = ref<boolean>(false)

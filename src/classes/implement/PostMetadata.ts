@@ -1,5 +1,5 @@
-import Header from "@/classes/implement/Header";
-import type IPostMetadata from "@/classes/IPostContent";
+import Header from "@/classes/implement/header";
+import type IPostMetadata from "@/classes/i-post-content";
 import DocumentType from "@/classes/constant/document-type";
 
 export class PostMetadata implements IPostMetadata {

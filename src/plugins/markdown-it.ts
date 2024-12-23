@@ -1,5 +1,5 @@
 import MarkdownIt from "markdown-it";
-import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/MarkdownUtils";
+import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/markdown-utils";
 import DecoratorProvider from "@/markup/decorator/decorator-provider";
 import RuleType from "@/markup/constant/rule-type";
 import shiki from "@shikijs/markdown-it";

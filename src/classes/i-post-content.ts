@@ -1,4 +1,4 @@
-import Header from "@/classes/implement/Header";
+import Header from "@/classes/implement/header";
 
 export default interface IPostContent {
 
