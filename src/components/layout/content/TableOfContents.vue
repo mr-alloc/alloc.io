@@ -14,9 +14,9 @@
 </template>
 
 <script lang="ts" setup>
-import TocNode from "@/classes/implement/TocNode";
+import TocNode from "@/classes/implement/toc-node";
 import TableOfContents from "@/components/layout/content/TableOfContents.vue";
-import {useScrollspy} from "@/store/ScrollSpy";
+import {useScrollspy} from "@/store/scroll-spy";
 import {useNuxtApp} from "nuxt/app";
 
 const router = useRouter();

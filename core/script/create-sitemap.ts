@@ -1,7 +1,7 @@
 import { SitemapStream, streamToPromise } from 'sitemap'
 import { Readable } from 'stream'
 import packageJson from '~/package.json'
-import {read} from "@core/util/FileUtil";
+import {read} from "@core/util/file-util";
 
 export default () => {
     const keys: Array<string> = JSON.parse(read('/src/static/keys.json'));

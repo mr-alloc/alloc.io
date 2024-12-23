@@ -22,13 +22,13 @@
 </template>
 <script lang="ts" setup>
 import {useRoute} from "vue-router";
-import appCache from "@/store/appCache";
+import appCache from "@/store/app-cache";
 import TableOfContents from "@/components/layout/content/TableOfContents.vue";
 import {usePostContentStore} from "@/store/post-content-store";
 import PostContentDecorator from "@/components/layout/content/PostContentDecorator.vue";
 import {useCategoriesStore} from "@/store/category-store";
 import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
-import {useScrollspy} from "@/store/ScrollSpy";
+import {useScrollspy} from "@/store/scroll-spy";
 import DocumentType from "@/classes/constant/document-type";
 import MainPageBody from "@/components/layout/content/MainPageBody.vue";
 import MainPage from "@/components/layout/content/MainPage.vue";

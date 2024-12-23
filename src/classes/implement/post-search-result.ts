@@ -1,5 +1,5 @@
 import {PostMetadata} from "@/classes/implement/PostMetadata";
-import {SearchStatus} from "@/classes/implement/SearchStatus";
+import {SearchStatus} from "@/classes/constant/search-status";
 
 export class PostSearchResult {
 

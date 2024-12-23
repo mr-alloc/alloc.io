@@ -3,7 +3,7 @@ import MarkdownIt from "markdown-it";
 import TemplateAttributes from "@/markup/template/TemplateAttributes";
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
-import {countNewline} from "@/utils/MarkdownUtils";
+import {countNewline} from "@/utils/markdown-utils";
 import PromptIcon from "@/markup/constant/prompt-icon";
 import PromptType from "@/markup/constant/prompt-type";
 

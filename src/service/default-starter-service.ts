@@ -1,8 +1,8 @@
-import appCache from "@/store/appCache";
+import appCache from "@/store/app-cache";
 import {PostMetadata} from "@/classes/implement/PostMetadata";
-import Header from "@/classes/implement/Header";
+import Header from "@/classes/implement/header";
 import postJson from '@/static/posts.json';
-import type StarterService from "@/service/StarterService";
+import type StarterService from "@/service/starter-service";
 import {usePostContentStore} from "@/store/post-content-store";
 import {useCategoriesStore} from "@/store/category-store";
 

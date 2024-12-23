@@ -1,4 +1,4 @@
-import Image from "~/core/classes/Image";
+import Image from "@core/classes/image";
 import parser from "jekyll-markdown-parser";
 
 const propertyRE = /src="([^"]+)"(?: alt="([^"]+)")?/

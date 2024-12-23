@@ -1,6 +1,5 @@
-import Image from "@/classes/implement/Image";
-import TocNode from "@/classes/implement/TocNode";
-import FileAlias from "@core/constant/FileAlias";
+import Image from "@/classes/implement/image";
+import TocNode from "@/classes/implement/toc-node";
 
 export default class Header {
     private readonly _layout: string

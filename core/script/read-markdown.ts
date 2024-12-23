@@ -1,8 +1,8 @@
 import { parse } from 'jekyll-markdown-parser';
-import PostData from "@core/classes/PostData";
-import type Path from "@core/classes/Path";
-import {read} from "@core/util/FileUtil";
-import FileAlias from "@core/constant/FileAlias";
+import PostData from "@core/classes/post-data";
+import type Path from "@core/classes/path";
+import {read} from "@core/util/file-util";
+import FileAlias from "@core/constant/file-alias";
 
 export default function (filePath: Path): PostData {
 

@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { fileURLToPath} from "node:url";
 import Keys from './src/static/keys.json';
-import { toValueMap } from './core/util/CollectionUtil'
+import { toValueMap } from './core/util/collection-util.js'
 
 export default defineNuxtConfig({
     build: {

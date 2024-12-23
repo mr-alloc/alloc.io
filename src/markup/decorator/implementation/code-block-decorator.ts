@@ -2,8 +2,8 @@ import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
-import Filename from "@/classes/implement/Filename";
-import {getLanguageCode} from "@/utils/MarkdownUtils";
+import Filename from "@/classes/implement/filename";
+import {getLanguageCode} from "@/utils/markdown-utils";
 
 export default class CodeBlockDecorator implements IMarkdownDecorator {
 

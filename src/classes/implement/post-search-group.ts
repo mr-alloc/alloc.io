@@ -1,6 +1,6 @@
-import {PostSearchResult} from "@/classes/implement/PostSearchResult";
-import {SearchStatus} from "@/classes/implement/SearchStatus";
-import {toMap} from "@/utils/CollectionUtil";
+import {PostSearchResult} from "@/classes/implement/post-search-result";
+import {SearchStatus} from "@/classes/constant/search-status";
+import {toMap} from "@/utils/collection-util";
 
 export class PostSearchGroup {
     private readonly _icon: string

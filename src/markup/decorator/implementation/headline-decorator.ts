@@ -1,7 +1,7 @@
 import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
-import {slugify} from "@/utils/StringUtils";
+import {slugify} from "@/utils/string-utils";
 
 export default class HeadlineDecorator implements IMarkdownDecorator {
 

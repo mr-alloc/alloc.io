@@ -14,8 +14,8 @@
 </template>
 
 <script lang="ts" setup>
-import {callPostFeed} from "@/utils/PostUtil";
-import appCache from '@/store/appCache'
+import {callPostFeed} from "@/utils/post-util";
+import appCache from '@/store/app-cache'
 import PostCard from '@/components/layout/content/post-card/PostCard.vue'
 import {onMounted} from "vue";
 import PostContentLoader from "@/components/layout/content/post-card/PostContentLoader.vue";

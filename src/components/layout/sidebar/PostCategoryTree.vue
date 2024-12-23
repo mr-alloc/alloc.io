@@ -1,10 +1,10 @@
 <script setup lang="ts">
 
-import type ICategoryNode from "@/classes/ICategoryNode";
-import {CategoryAlias} from "@/classes/constant/CategoryAlias";
-import type CategoryGroup from "@/classes/implement/CategoryGroup";
-import type CategoryContent from "@/classes/implement/CategoryContent";
-import {toValueMap} from "@/utils/CollectionUtil";
+import type ICategoryNode from "@/classes/i-category-node";
+import {CategoryAlias} from "@/classes/constant/category-alias";
+import type CategoryGroup from "@/classes/implement/category-group";
+import type CategoryContent from "@/classes/implement/category-content";
+import {toValueMap} from "@/utils/collection-util";
 import {useRouter} from "vue-router";
 
 const ui = {

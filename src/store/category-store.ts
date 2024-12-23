@@ -1,8 +1,8 @@
 import {defineStore} from "pinia";
-import type ICategoryNode from "@/classes/ICategoryNode";
+import type ICategoryNode from "@/classes/i-category-node";
 import type {PostMetadata} from "@/classes/implement/PostMetadata";
-import CategoryGroup from "@/classes/implement/CategoryGroup";
-import CategoryContent from "@/classes/implement/CategoryContent";
+import CategoryGroup from "@/classes/implement/category-group";
+import CategoryContent from "@/classes/implement/category-content";
 
 export const useCategoriesStore = defineStore('categories', () => {
 

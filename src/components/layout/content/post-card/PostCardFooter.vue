@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
 import TagArea from "@/components/layout/content/post-card/TagArea.vue";
-import Header from "@/classes/implement/Header";
+import Header from "@/classes/implement/header";
 
 const props = defineProps<{
   header: Header

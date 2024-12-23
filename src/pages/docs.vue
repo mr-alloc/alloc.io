@@ -13,8 +13,8 @@
 import MainPage from "@/components/layout/content/MainPage.vue";
 import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
 import {usePostContentStore} from "@/store/post-content-store";
-import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
-import {useScrollspy} from "@/store/ScrollSpy";
+import {usePhotoViewStatusStore} from "@/store/photo-view-store";
+import {useScrollspy} from "@/store/scroll-spy";
 import {useThrottleFn} from "@vueuse/shared";
 import {usePagePrepareStore} from "@/store/prepare-post-store";
 

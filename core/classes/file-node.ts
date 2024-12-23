@@ -1,7 +1,7 @@
-import FileType from "@core/constant/FileType";
-import FileAlias from "@core/constant/FileAlias";
-import type Path from "@core/classes/Path";
-import type Filename from "@core/classes/Filename";
+import FileType from "@core/constant/file-type";
+import FileAlias from "@core/constant/file-alias";
+import type Path from "@core/classes/path";
+import type Filename from "@core/classes/filename";
 
 export default class FileNode {
     private readonly _path: string;

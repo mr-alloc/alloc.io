@@ -32,15 +32,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Runner from '@/service/DefaultStarterService'
+import Runner from '@/service/default-starter-service'
 import AppHeader from "@/components/layout/header/AppHeader.vue";
 import PhotoView from "@/components/layout/global/PhotoView.vue";
-import {callPostFeed} from "@/utils/PostUtil";
-import {useSearchStatusStore} from "@/store/SearchStatusStore";
-import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
+import {callPostFeed} from "@/utils/post-util";
+import {useSearchStatusStore} from "@/store/search-status-store";
+import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 import {computed, onMounted} from "vue";
 import SearchView from "@/components/layout/global/SearchView.vue";
-import {usePostCallStore} from "@/store/PostCallStore";
+import {usePostCallStore} from "@/store/post-call-store";
 import BackdropCurtain from "@/components/layout/content/BackdropCurtain.vue";
 import AppMain from "@/components/layout/global/AppMain.vue";
 

@@ -20,7 +20,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {calPostDate} from "@/utils/DateUtils";
+import {calPostDate} from "@/utils/date-utils";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const appConfig = useAppConfig();
