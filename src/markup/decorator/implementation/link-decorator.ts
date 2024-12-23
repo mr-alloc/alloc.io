@@ -1,5 +1,5 @@
 import MarkdownIt from "markdown-it";
-import type IMarkdownDecorator from "@/markup/decorator/IMarkdownDecorator";
+import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
 import {usePostContentStore} from "@/store/post-content-store";
