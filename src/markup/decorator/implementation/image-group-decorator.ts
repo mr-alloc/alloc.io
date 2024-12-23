@@ -2,7 +2,7 @@ import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
-import TokenNesting from "@/markup/constant/TokenNesting";
+import {TokenNesting} from "@/markup/constant/token-nesting";
 
 export default class ImageGroupDecorator implements IMarkdownDecorator {
 
@@ -38,8 +38,8 @@ export default class ImageGroupDecorator implements IMarkdownDecorator {
             }
 
             //인덱스 변경으로 인해 뒤에서 부터 추가
-            tokens.splice(lastParagraphIndex, 0, new Token('', 'div', TokenNesting.CLOSE.value));
-            tokens.splice(firstParagraphIndex, 0, new Token('', 'div', TokenNesting.OPEN.value));
+            tokens.splice(lastParagraphIndex, 0, new Token('', 'div', TokenNesting.CLOSE));
+            tokens.splice(firstParagraphIndex, 0, new Token('', 'div', TokenNesting.OPEN));
 
             return self.renderToken(tokens, index, options);
         }

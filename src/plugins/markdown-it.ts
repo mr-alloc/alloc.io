@@ -1,9 +1,8 @@
 import MarkdownIt from "markdown-it";
 import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/MarkdownUtils";
 import DecoratorProvider from "@/markup/decorator/decorator-provider";
-import RuleType from "@/markup/constant/RuleType";
+import RuleType from "@/markup/constant/rule-type";
 import shiki from "@shikijs/markdown-it";
-import imageGroupParser from "@/plugins/markdown-it/image-group-parser";
 
 export default defineNuxtPlugin(async (nuxtApp) => {
     if (nuxtApp.$md) return;
