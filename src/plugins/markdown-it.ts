@@ -3,9 +3,9 @@ import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/MarkdownUtils";
 import DecoratorProvider from "@/markup/decorator/decorator-provider";
 import RuleType from "@/markup/constant/RuleType";
 import shiki from "@shikijs/markdown-it";
+import imageGroupParser from "@/plugins/markdown-it/image-group-parser";
 
 export default defineNuxtPlugin(async (nuxtApp) => {
-
     if (nuxtApp.$md) return;
     const markdownIt = new MarkdownIt(DEFAULT_MARKDOWN_IT_OPTIONS);
 
@@ -13,9 +13,10 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         RuleType.BLOCK_QUOTE,
         RuleType.HEADLINE,
         RuleType.CODE_BLOCK,
-        RuleType.PARAGRAPH,
+        RuleType.IMAGE,
         RuleType.LINK,
-        RuleType.TABLE
+        RuleType.TABLE,
+        RuleType.IMAGE_GROUP
     ).forEach(decorator => decorator.decorate(markdownIt));
 
     const shikiExtension = await shiki({
