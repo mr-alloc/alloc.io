@@ -1,4 +1,4 @@
-import type IMarkdownDecorator from "@/markup/decorator/IMarkdownDecorator";
+import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
 import TemplateAttributes from "@/markup/template/TemplateAttributes";
@@ -56,7 +56,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
                 wrapperClasses = wrapperClasses.concat(classes);
             } catch (skip) {}
             return `<div class="${wrapperClasses.join(' ')}">
-                            <a href="#" class="my-2 inline-flex">`;
+                       <a href="#" class="my-2 inline-flex">`;
         }
 
         markdownIt.renderer.rules[this.KEY_CLOSE] = (

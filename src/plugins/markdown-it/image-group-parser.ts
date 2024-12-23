@@ -1,10 +1,10 @@
 import MarkdownIt from "markdown-it";
 import StateBlock from "markdown-it/lib/rules_block/state_block";
+import ImageGroupDecorator from "@/markup/decorator/implementation/image-group-decorator";
 
 function imageGroupBlock(state: StateBlock, startLine: number, endLine: number, silent: boolean): boolean {
     const OPEN_MARKER = '::image-group';
-    const CLOSE_MARKER = '::';
-    let nextLine, token;
+    const CLOSE_MARKER = '::';    let nextLine, token;
 
     if (state.sCount[startLine] - state.blkIndent >= 4) {
         return false;
@@ -35,7 +35,7 @@ function imageGroupBlock(state: StateBlock, startLine: number, endLine: number, 
         return false;
     }
 
-    if (!silent) {
+    if (!silent) {1
         state.line = nextLine + 1;
 
         token = state.push('image_group_open', 'div', 1);
@@ -55,11 +55,11 @@ export default (md: MarkdownIt) => {
         alt: ['paragraph', 'reference', 'blockquote', 'list']
     });
 
-    md.renderer.rules.image_group_open = function(tokens, idx) {
-        return `<div class="image-group">\n`;
+    md.renderer.rules[ImageGroupDecorator.KEY_OPEN] = function(tokens, idx) {
+        return `<div>\n`;
     };
 
-    md.renderer.rules.image_group_close = function(tokens, idx) {
+    md.renderer.rules[ImageGroupDecorator.KEY_CLOSE] = function(tokens, idx) {
         return `</div>\n`;
     };
 }

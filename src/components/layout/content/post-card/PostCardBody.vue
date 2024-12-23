@@ -56,7 +56,6 @@ const methods = {
 const html = ref('');
 onMounted(() => {
   const markdownIt: MarkdownIt = nuxtApp.$md as MarkdownIt;
-  console.log('markdownIt: ', markdownIt);
   html.value = markdownIt.render(props.description);
 });
 

@@ -1,12 +1,13 @@
-import type IMarkdownDecorator from "@/markup/decorator/IMarkdownDecorator";
+import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import RuleType from "@/markup/constant/RuleType";
 import BlockquoteDecorator from "@/markup/decorator/implementation/blockquote-decorator";
 import HeadlineDecorator from "@/markup/decorator/implementation/headline-decorator";
-import CodeBlockDecorator from "@/markup/decorator/implementation/CodeBlockDecorator";
+import CodeBlockDecorator from "@/markup/decorator/implementation/code-block-decorator";
 import ImageDecorator from "@/markup/decorator/implementation/image-decorator";
 import LinkDecorator from "@/markup/decorator/implementation/link-decorator";
 import TableDecorator from "@/markup/decorator/implementation/table-decorator";
 import StyleDecorator from "@/markup/decorator/style/style-decorator";
+import ImageGroupDecorator from "@/markup/decorator/implementation/image-group-decorator";
 
 export default class DecoratorProvider {
 
@@ -18,9 +19,10 @@ export default class DecoratorProvider {
             [RuleType.BLOCK_QUOTE, new BlockquoteDecorator()],
             [RuleType.HEADLINE, new HeadlineDecorator()],
             [RuleType.CODE_BLOCK, new CodeBlockDecorator()],
-            [RuleType.PARAGRAPH, new ImageDecorator()],
             [RuleType.LINK, new LinkDecorator()],
-            [RuleType.TABLE, new TableDecorator()]
+            [RuleType.TABLE, new TableDecorator()],
+            [RuleType.IMAGE_GROUP, new ImageGroupDecorator()],
+            [RuleType.IMAGE, new ImageDecorator()]
         ]
 
         this._decorators = new Map<RuleType, IMarkdownDecorator>(entries);

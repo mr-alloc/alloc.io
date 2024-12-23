@@ -1,4 +1,4 @@
-import type IMarkdownDecorator from "@/markup/decorator/IMarkdownDecorator";
+import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import MarkdownIt from "markdown-it";
 import TemplateAttributes from "@/markup/template/TemplateAttributes";
 import Token from "markdown-it/lib/token";
