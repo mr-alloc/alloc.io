@@ -30,7 +30,7 @@ export default class LinkDecorator implements IMarkdownDecorator {
 
             if (notUpdated) {
                 token.attrJoin('class', 'not-prose text-red-500 dark:text-red-700');
-                token.attrJoin('style', 'text-decoration: underline wavy;');
+                token.attrJoin('style', 'text-decoration: underline; text-decoration-style: wavy;');
                 token.attrJoin('href', '#');
             }
 
