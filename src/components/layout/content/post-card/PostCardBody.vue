@@ -32,9 +32,9 @@
 </template>
 
 <script lang="ts" setup>
-import Header from "@/classes/implement/Header";
-import Image from "@/classes/implement/Image";
-import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
+import Header from "@/classes/implement/header";
+import Image from "@/classes/implement/image";
+import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 import MarkdownIt from "markdown-it";
 
 const nuxtApp = useNuxtApp();

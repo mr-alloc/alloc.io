@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
 import {usePostContentStore} from "@/store/post-content-store";
-import type ICategoryNode from "@/classes/ICategoryNode";
-import CategoryContent from "@/classes/implement/CategoryContent";
-import CategoryGroup from "@/classes/implement/CategoryGroup";
+import type ICategoryNode from "@/classes/i-category-node";
+import CategoryContent from "@/classes/implement/category-content";
+import CategoryGroup from "@/classes/implement/category-group";
 import PostCategoryTree from "@/components/layout/sidebar/PostCategoryTree.vue";
 import DocumentType from "@/classes/constant/document-type";
 import {useCategoriesStore} from "@/store/category-store";

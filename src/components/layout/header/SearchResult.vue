@@ -33,9 +33,9 @@
 </template>
 
 <script lang="ts" setup>
-import {PostSearchGroup} from "@/classes/implement/PostSearchGroup";
+import {PostSearchGroup} from "@/classes/implement/post-search-group";
 import {useRouter} from "vue-router";
-import {useSearchStatusStore} from "@/store/SearchStatusStore";
+import {useSearchStatusStore} from "@/store/search-status-store";
 
 const router = useRouter()
 const searchStatus = useSearchStatusStore()

@@ -40,8 +40,8 @@
     </header>
 </template>
 <script lang="ts" setup>
-import {useSearchStatusStore} from "@/store/SearchStatusStore";
-import {usePhotoViewStatusStore} from "@/store/PhotoViewStore";
+import {useSearchStatusStore} from "@/store/search-status-store";
+import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 import {useNuxtApp} from "nuxt/app";
 import packageJson from "~/package.json"
 

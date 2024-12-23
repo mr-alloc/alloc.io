@@ -1,4 +1,4 @@
-import TocNode from "~/core/classes/TocNode";
+import TocNode from "@core/classes/toc-node";
 
 const headlineRE = () => {
     return /^(#{2,3})\s+([^\n]+)/gm;

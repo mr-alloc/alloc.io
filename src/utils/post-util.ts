@@ -1,6 +1,6 @@
 
-import appCache from "@/store/appCache";
-import {usePostCallStore} from "@/store/PostCallStore";
+import appCache from "@/store/app-cache";
+import {usePostCallStore} from "@/store/post-call-store";
 
 
 const DEFAULT_FEED_SIZE = 4

@@ -1,4 +1,4 @@
-import type ICategoryNode from "@/classes/ICategoryNode";
+import type ICategoryNode from "@/classes/i-category-node";
 import {isDirectory} from "path-type";
 
 export default class CategoryGroup implements ICategoryNode {
