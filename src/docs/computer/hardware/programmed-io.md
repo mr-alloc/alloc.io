@@ -1,7 +1,6 @@
 ---
 layout: wiki
 title: Programmed Input/Output (PIO)
-categories: [computer, hardware]
 tags: [Hardware, PIO]
 summary: PIO란?
 hide: false

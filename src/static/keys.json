@@ -1,6 +1,7 @@
 [
   "/wiki/central-processing-unit",
   "/wiki/direct-memory-access",
+  "/wiki/io-manager",
   "/wiki/programmed-io",
   "/docs/life/youth-of-ggomi",
   "/docs/database/mysql-explain",
@@ -13,7 +14,6 @@
   "/docs/algorithm/heap-sort",
   "/docs/algorithm/insertion-sort",
   "/docs/computer/os/operating-system-1",
-  "/wiki/io-manager",
   "/wiki/interrupt",
   "/docs/computer/computer-organization",
   "/docs/language/java/install-zulu-in-mac"

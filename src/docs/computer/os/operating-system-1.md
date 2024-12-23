@@ -1,12 +1,13 @@
 ---
 layout: post
-title: 컴퓨터의 구성요소
-categories: [computer, os]
+title: Operating System (OS)
+categories: [os]
 tags: [Operating System, OS]
 date: 2021-01-20 20:19:30 +0900
 current-company: Cubic INC
 current-position: SI Researcher
-summary: 컴퓨터와 운영체제 1
+profile-image: /post/profile/profile1.JPG
+summary: 컴퓨터와 운영체제
 excerpt-separator: <!--more-->
 hide: false
 ---
