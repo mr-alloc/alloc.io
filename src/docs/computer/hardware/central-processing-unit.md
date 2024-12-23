@@ -33,4 +33,4 @@ CPU의 코어는 실질적으로 연산을 수행하는 장치이다. 코어 내
 | L1 cache | 32KB  | 1ns    | 1TB/s  |
 | L2 cache | 256KB | 4ns    | 1TB/s  |
 | L3 cache | 8MB < | 40ns < | 400GB/s | 
-:{ "align": "center" }
+:{ "align": "center", "description": "인텔 캐시메모리의 성능 비교표" }
