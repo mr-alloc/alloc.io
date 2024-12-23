@@ -2,10 +2,7 @@ import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
 import TemplateAttributes from "@/markup/template/TemplateAttributes";
-import TemplateExpression from "@/markup/template/TemplateExpression";
 import Renderer from "markdown-it/lib/renderer";
-import StateInline from "markdown-it/lib/rules_inline/state_inline";
-import TokenNesting from "@/markup/constant/TokenNesting";
 import StyleDecorator from "@/markup/decorator/style/style-decorator";
 
 
