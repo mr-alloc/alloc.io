@@ -35,7 +35,7 @@ class DefaultStarterService implements StarterService {
         postMetadataList
             .forEach(post => {
                 //피드용
-                post.header?.hide === false && appCache.postContents.push(post);
+                post.header?.hide === false && post.header?.layout === 'post' && appCache.postContents.push(post);
 
                 // 새로고침시 피드용만 초기화
                 if (this.isInitialized) return
