@@ -32,9 +32,12 @@ CPU의 코어는 실질적으로 연산을 수행하는 장치이다. 코어 내
 | L3 cache | 8MB < | 40ns < | 400GB/s | 
 :{ "align": "center", "description": "인텔 캐시메모리의 성능 비교표" }
 
-## CPU의 구조
+## Core의 구조
 
-`캐시메모리` 이외에도 제어장치(`Control Unit`), ALU(`Arithmetic Logic Unit`), [레지스터]()(`Register`) 등이 있다.
+![CPU 코어](/post/computer/cpu-core-structure.png)
+:{ "align": "center", "max-width": "300px", "description": "중앙처리장치의 코어 구조" }
+
+`캐시메모리` 이외에도 제어장치(`Control Unit`), [ALU]()(`Arithmetic Logic Unit`), [레지스터]()(`Register`) 등이 있다.
 
 ### Control Unit
 
