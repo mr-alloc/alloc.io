@@ -1,15 +1,15 @@
 import { Dirent } from 'node:fs';
-import {existsIcon, readDirectory} from "@core/util/FileUtil";
-import type PostData from "@core/classes/PostData";
-import FileNode from "@core/classes/FileNode";
-import Filename from "@core/classes/Filename";
-import readMarkdown from "@core/script/readMarkdown";
-import Path from "@core/classes/Path";
-import exclude from "@core/script/excludeFileName";
-import createSitemap from "@core/script/createSitemap";
+import {existsIcon, readDirectory} from "@core/util/file-util";
+import type PostData from "@core/classes/post-data";
+import FileNode from "@core/classes/file-node";
+import Filename from "@core/classes/filename";
+import readMarkdown from "@core/script/read-markdown";
+import Path from "@core/classes/path";
+import exclude from "@core/script/exclude-file-name";
+import createSitemap from "@core/script/create-sitemap";
 import refresh from "@core/script/refresh";
-import extractImages from "@core/script/extractImages";
-import extractHeadlines from "@core/script/extractHeadlines";
+import extractImages from "@core/script/extract-images";
+import extractHeadlines from "@core/script/extract-headlines";
 
 
 const postDataList = new Array<PostData>();

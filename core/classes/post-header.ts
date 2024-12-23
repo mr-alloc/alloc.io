@@ -1,5 +1,5 @@
-import type Image from "~/core/classes/Image";
-import type TocNode from "~/core/classes/TocNode";
+import type Image from "@core/classes/image";
+import type TocNode from "@core/classes/toc-node";
 
 export default class PostHeader {
 

@@ -1,4 +1,4 @@
-import { toMap } from "@/utils/CollectionUtil";
+import { toMap } from "@/utils/collection-util";
 
 export default class FileAlias {
 

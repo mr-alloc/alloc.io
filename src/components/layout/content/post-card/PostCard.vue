@@ -12,7 +12,7 @@ import { PostMetadata } from "@/classes/implement/PostMetadata";
 import PostCardHeader from '@/components/layout/content/post-card/PostCardHeader.vue';
 import PostCardBody from '@/components/layout/content/post-card/PostCardBody.vue';
 import PostCardFooter from "@/components/layout/content/post-card/PostCardFooter.vue";
-import appCache from "@/store/appCache";
+import appCache from "@/store/app-cache";
 
 const appConfig = useAppConfig();
 const props = defineProps<{

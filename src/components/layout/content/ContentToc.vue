@@ -21,8 +21,8 @@
 </template>
 <script setup lang="ts">
 import TableOfContents from "@/components/layout/content/TableOfContents.vue";
-import {useScrollspy} from "@/store/ScrollSpy";
-import type TocNode from "@/classes/implement/TocNode";
+import {useScrollspy} from "@/store/scroll-spy";
+import type TocNode from "@/classes/implement/toc-node";
 
 const appConfig = useAppConfig();
 const scrollspy = useScrollspy();
