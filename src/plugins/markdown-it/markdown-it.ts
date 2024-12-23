@@ -6,6 +6,7 @@ import shiki from "@shikijs/markdown-it";
 
 export default defineNuxtPlugin(async (nuxtApp) => {
 
+    console.log('$md: ', nuxtApp.$md);
     if (nuxtApp.$md) return;
     const markdownIt = new MarkdownIt(DEFAULT_MARKDOWN_IT_OPTIONS);
 
