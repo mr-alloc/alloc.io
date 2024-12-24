@@ -52,13 +52,14 @@ function collapseCategory(category: CategoryGroup) {
       </div>
       <span class="text-sm/6 relative text-gray-700 dark:text-gray-200">{{ CategoryAlias.find(category.name).alias }}</span>
     </a>
-    <ul v-if="category.isDirectory" class="ml-6 mt-0 text-slate-600 overflow-hidden" :class="{ 'h-0 my-0': collapseGroup.has(category.name) && collapseGroup.get(category.name)! }"
-    >
+    <ul v-if="category.isDirectory" class="ml-6 mt-0 text-slate-600 overflow-hidden"
+        :class="{ 'h-0 my-0': collapseGroup.has(category.name) && collapseGroup.get(category.name)! }">
       <PostCategoryTree :categories="(category as CategoryGroup).children" :groups="groups" :depth="depth +1" :path="path" />
     </ul>
     <a v-else class="ml-1.5 hover:underline cursor-pointer"
+       :class="{ 'font-bold text-primary-500 dark:text-primary-400': path === (category as CategoryContent).path }"
        :href="(category as CategoryContent).path" @click.prevent="moveTo((category as CategoryContent).path)">
-      <span class="text-xs text-gray-500 dark:text-gray-400" :class="{ 'font-bold text-primary-500 dark:text-primary-400': path === (category as CategoryContent).path }">{{ category.name }}</span>
+      <span class="text-xs">{{ category.name }}</span>
     </a>
   </li>
 </template>
