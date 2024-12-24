@@ -54,7 +54,7 @@
 </template>
 <script setup>
 import TagArea from "@/components/layout/content/post-card/TagArea.vue";
-import appCache from "@/store/app-cache.js";
+import appCache from "@/store/app-cache";
 import {useRoute} from "#app";
 import Paginator from 'paginator'
 import {usePostContentStore} from "@/store/post-content-store.ts";
