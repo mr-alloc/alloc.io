@@ -10,7 +10,7 @@ current-company: Cubic INC
 current-position: SI Researcher
 summary: OpenJDK Zulu 설치
 excerpt-separator: <!--more-->
-hide: true
+hide: false
 ---
 
 Zulu는 Azul System에서 제공하는 OpenJDK의 빌드이다.
