@@ -4,13 +4,13 @@ export default class Path {
     private readonly _array: Array<string>;
 
     private constructor(path: string) {
-        this._value = path.replace("/src", "");
+        this._value = path;
         this._array = this._value.split("/").filter(node => node !== '') ?? [];
     }
 
 
     get value(): string {
-        return "/src".concat(this._value);
+        return this._value;
     }
 
     get realValue(): string {
