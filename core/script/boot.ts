@@ -14,7 +14,7 @@ import extractHeadlines from "@core/script/extract-headlines";
 
 const postDataList = new Array<PostData>();
 
-const __DOCS__ = '/src/docs'
+const __DOCS__ = '/docs'
 const __POSTS__ = "/src/static/posts.json";
 const __KEYS__ = "/src/static/keys.json";
 const __SITEMAP__ = "/src/public/sitemap.xml";
