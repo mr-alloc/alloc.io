@@ -34,9 +34,12 @@
     "paginator": "^1.0.0",
     "pinia": "^2.0.33",
     "prismjs": "^1.29.0",
+    "punycode": "^2.3.1",
     "vue-utterances": "^0.3.4"
   },
   "devDependencies": {
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.25.9",
+    "@babel/plugin-transform-optional-chaining": "^7.25.9",
     "@nuxt/ui": "latest",
     "@nuxtjs/color-mode": "latest",
     "@nuxtjs/google-fonts": "3.2.0",
@@ -52,6 +55,9 @@
     "shiki": "^1.21.0",
     "sitemap": "^7.1.1",
     "tsx": "^4.19.2"
+  },
+  "resolutions": {
+    "glob": "^9.0.0"
   },
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }
