@@ -5,10 +5,10 @@ categories: [algorithm]
 tags: [Java, Algorithm, Sort, Heap Sort, Heap]
 date: 2022-05-06 20:53:00 +0900
 profile-image: /post/profile/profile4.jpeg
-thumbnail: /post/algorithm/heap/heap_sort_intro.png
+thumbnail: /post/algorithm/heap/heap-sort-thumbnail.png
 current-company: Herit Corporation
 current-position: Backend Server Developer
-summary: Heap Data Structure
+summary: HEAP 자료구조
 expose-images: true
 excerpt-separator: <!--more-->
 hide: false
