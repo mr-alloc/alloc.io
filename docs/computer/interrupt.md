@@ -6,7 +6,7 @@ tags: [Operating System, Interrupt]
 date: 2021-01-13 22:33:00 +0900
 current-company: Cubic INC
 current-position: SI Researcher
-summary: 인터럽트란?
+summary: 인터럽트 (Interrupt)
 hide: false
 ---
 
@@ -82,3 +82,10 @@ interrupt `[ˌɪntəˈrʌpt]`
 > 이러한 방식은 CPU가 주기적으로 장치의 상태를 확인하기 때문에, CPU의 부하가 높아지고, 실시간 처리에 적합하지 않다. 이때 전송하는 빈도를 폴링 레이트라고한다.  폴링레이트가 높을때 입력이 많은경우 CPU의 부하가 높아지는 이유가 이것 때문이다.  
 :{ "icon": "warning-diamond", "type": "warning" }
 
+## 타이머
+
+타이머는 설정한 시간이 지났을때 인터럽트를 발생시킬수 있는 장치이다. 
+예컨데 사용자 프로그램이 무한루프에 빠지거나, 시스템 서비스 호출에 실패하여, 제어가 운영체제로 복귀하지않는 경우에를 대비해 설정할 수 있다.
+
+대표 적인 예가 [DMA](/wiki/direct-memory-access)이다. DMA는 CPU의 개입없이 메모리와 I/O장치간 데이터를 전송하는 기술이다.
+DMAC이 입출력 장치간 데이터 전송을 관장하는경우 데이터 버스에 대한 제어권를 얻게 되는데, CPU가 제어권을 넘기는 시점에 타이머를 설정하여, 지정된 시간까지 DMA가 모두 이루어지지 않는 경우 인터럽트를 발생시킨다. 
