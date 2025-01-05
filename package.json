@@ -34,7 +34,6 @@
     "paginator": "^1.0.0",
     "pinia": "^2.0.33",
     "prismjs": "^1.29.0",
-    "punycode": "^2.3.1",
     "vue-utterances": "^0.3.4"
   },
   "devDependencies": {
