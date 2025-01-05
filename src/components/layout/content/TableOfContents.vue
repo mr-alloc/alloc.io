@@ -1,14 +1,14 @@
 <template>
   <ul class="space-y-1 hidden lg:block">
-    <li v-for="child in props.headline?.children" :key="child.fragmentId" class="space-y-1 hidden lg:block" :class="{
+    <li v-for="(child, index) in headlines" :key="child.fragment" class="space-y-1 hidden lg:block" :class="{
        'ml-3': props.isInner
     }">
       <a class="block text-sm/6 truncate"
-         :href="`#${child.fragmentId}`"
-         :class="scrollspy.activeHeadings.includes(decodeURIComponent(child.fragmentId)) ? config.active : config.inactive"
-         @click.prevent="scrollToHeading(child.fragmentId)"
+         :href="`#${child.fragment}`"
+         :class="scrollspy.activeHeadings.includes(decodeURIComponent(child.fragment)) ? config.active : config.inactive"
+         @click.prevent="scrollToHeading(child.fragment)"
       > {{ child.title }}</a>
-      <TableOfContents  v-if="child.children.length > 0" :headline="child" :is-inner="true" />
+      <TableOfContents  v-if="props.headline.children.length > 0" :headline="props.headline.children[index]" :is-inner="true" />
     </li>
   </ul>
 </template>
@@ -20,13 +20,12 @@ import {useScrollspy} from "@/store/scroll-spy";
 import {useNuxtApp} from "nuxt/app";
 
 const router = useRouter();
-
 const scrollspy = useScrollspy();
 const props = defineProps<{
   headline: TocNode,
   isInner: boolean,
 }>();
-
+const fragmentRE = /([^:]+)(?:::([\s\S]+))?/mg;
 const config = {
   wrapper: 'space-y-1',
   base: 'block text-sm/6 truncate',
@@ -34,14 +33,28 @@ const config = {
   inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200',
   depth: 'ml-3'
 }
-
+const headlines = computed(() => {
+  return Array.of(...props.headline?.children ?? [])
+      .map(child => methods.parseHeadline(child.title))
+      .map(([title, fragment]) => ({title, fragment}));
+});
 const emit = defineEmits(['move']);
-const nuxtApp = useNuxtApp();
 const scrollToHeading = (id: string) => {
   router.push(`#${id}`)
   emit('move', id)
 };
 
+const methods = {
+  parseHeadline(headline: string): [string, string] {
+    const executed = fragmentRE.exec(headline);
+    fragmentRE.lastIndex = 0;
+
+    const title = executed?.[1] ?? '';
+    const fragment = executed?.[2] ?? '';
+
+    return [title, fragment];
+  }
+}
 </script>
 
 <style lang="scss" scoped>
