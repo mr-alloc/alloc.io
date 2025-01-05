@@ -6,11 +6,11 @@ tags: [Operating System, Interrupt]
 date: 2021-01-13 22:33:00 +0900
 current-company: Cubic INC
 current-position: SI Researcher
-summary: 인터럽트 (Interrupt)
+summary: Interrupt
 hide: false
 ---
 
-## 인터럽트는 무엇인가?
+## 인터럽트는 무엇인가?::what-is-interrupt
 
 interrupt `[ˌɪntəˈrʌpt]`
 1. (말·행동을) 방해하다[중단시키다/가로막다]
@@ -31,7 +31,7 @@ interrupt `[ˌɪntəˈrʌpt]`
 > **I**nterrupt **R**e**Q**uest Line는 인터럽트 요청을 받을수있는 인터럽트 버스이다 이는 하드웨어에서 각 장치까지 물리적으로 연결된 신호선이다.
 :{ "type": "note", "icon": "info"}
 
-## 인터럽트 서비스 루틴
+## 인터럽트 서비스 루틴::interrupt-service-routine
 
 **I**nterrupt **S**ervice **R**outine (이하 ISR)은 다른말로 Interrupt Handler(인터럽트 핸들러)라고도 한다.
 `ISR`은 인터럽트를 처리하기위한 어떤 일련의 프로세스이다. `IRQ`를 통해 `CPU`로 인터럽트 신호를 보내면(CPU의 인터럽트), CPU는 하던 일을 중단하고 ISR이 있는 주소로 실행을 옮긴다.
@@ -69,7 +69,7 @@ interrupt `[ˌɪntəˈrʌpt]`
 : { "type": "note", "icon": "info" }
 
 
-## 인터럽트의 매커니즘
+## 인터럽트의 매커니즘::mechanism-of-interrupt
 
 인터럽트는 CPU연산 중 신호를 받아 `ISR`을 실행한다고 하였다. 하지만 컴퓨터는 동기순차회로이기 때문에 순차적으로 연산이 이루어져야 한다.
 때문에, CPU가 하나의 명령어 실행이 완료될 때마다 IRQ를 감지하여 인터럽트 번호를 읽어 이 번호를 인터럽트 벡터의 인덱스로 사용하고, `ISR`로 점프하여 인덱스와 관련된 주소에서 실행을 시작한다.
@@ -82,7 +82,7 @@ interrupt `[ˌɪntəˈrʌpt]`
 > 이러한 방식은 CPU가 주기적으로 장치의 상태를 확인하기 때문에, CPU의 부하가 높아지고, 실시간 처리에 적합하지 않다. 이때 전송하는 빈도를 폴링 레이트라고한다.  폴링레이트가 높을때 입력이 많은경우 CPU의 부하가 높아지는 이유가 이것 때문이다.  
 :{ "icon": "warning-diamond", "type": "warning" }
 
-## 타이머
+## 타이머::timer
 
 타이머는 설정한 시간이 지났을때 인터럽트를 발생시킬수 있는 장치이다. 
 예컨데 사용자 프로그램이 무한루프에 빠지거나, 시스템 서비스 호출에 실패하여, 제어가 운영체제로 복귀하지않는 경우에를 대비해 설정할 수 있다.

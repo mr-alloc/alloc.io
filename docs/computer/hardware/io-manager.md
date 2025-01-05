@@ -3,7 +3,7 @@ layout: wiki
 title: 입출력 관리자
 tags: [I/O Manager, I/O]
 summary: I/O Manager
-hide: false
+hide: true
 ---
 
 ## I/O Manager란?

@@ -2,11 +2,11 @@
 layout: wiki
 title: Direct Memory Access (DMA)
 tags: [Hardware, DMAC, Direct Memory Access Controller]
-summary: DMA란?
+summary: DMA
 hide: false
 ---
 
-## DMA란 무엇인가?
+## DMA란 무엇인가?::what-is-dma
 
 DMA는 `IO 장치`와 `메모리`간의 데이터 전송을 위한 기술이다.
 
@@ -19,12 +19,12 @@ DMA는 `IO 장치`와 `메모리`간의 데이터 전송을 위한 기술이다.
 ![메모리와 I/O 장치간의 데이터 전송](/post/computer/data-transfer-between-memory-and-io-device.png)
 :{ "max-width": "400px", "align": "center", "wrapper-class": "justify-center", "description": "메모리와 I/O 장치간의 데이터 전송" }
 
-## DMA는 어떻게 사용되는가?
+## DMA는 어떻게 사용되는가?::how-dma-used-for
 
 **D**irect **M**emory **A**cess **C**ontroller (이하 `DMAC`)는 하드웨어 장치로서, [메모리]() 입출력 장치간의 데이터 전송을 DMA 기술로서 관리하는 장치이다.
 
 
-### DMA 동작 순서
+### DMA 동작 순서::sequence-of-dma
 
 장치 A에서 장치 B로 `DMA` 요청이 들어왔다는 가정하에, 순서를 설명하자면 다음과 같다.
 
@@ -47,7 +47,7 @@ DMA는 `IO 장치`와 `메모리`간의 데이터 전송을 위한 기술이다.
    먼저 `CPU`가 디스크 읽기요청을 하드디스크 [드라이버]()로 전송한다. 이때 디스크의 읽을 섹터번호([LBA]()) 와 읽을 양, 쓰기가 필요한 메모리 주소 등을 전달한다.  
 
    * 디스크 드라이버는 전달받은 정보를 이용해 데이터를 읽고, 디스크 컨트롤러 로컬버퍼에 데이터를 임시로 저장한다. 그리고 데이터를 읽을준비가 완료되면, `DMAC`으로 `DMA 요청`을 전송한다.
-   `DMAC`은 시스템 제어를 위해 `CPU`에게 `BR`을 보내고, `CPU`는 `BG`를 보낼어 제어 승인을 하며, 타임아웃을 정하여 [타이머](/wiki/interrupt#타이머)를 설정한다. 
+   `DMAC`은 시스템 제어를 위해 `CPU`에게 `BR`을 보내고, `CPU`는 `BG`를 보낼어 제어 승인을 하며, 타임아웃을 정하여 [타이머](/wiki/interrupt#timer)를 설정한다. 
 
    > 만약 타임아웃이 발생한다면 타이머는 인터럽트를 발생시켜 CPU에게 알린다.
    :{ "type": "caution", "icon": "warning-octagon" }  
@@ -57,7 +57,7 @@ DMA는 `IO 장치`와 `메모리`간의 데이터 전송을 위한 기술이다.
 4. 데이터 전송제어를 모두 마친 `DMAC`은 `CPU`에게 시스템 버스의 소유권을 반환한다.
    * 이 경우 [인터럽트](/wiki/interrupt)를 발생시켜 CPU에 작업완료를 알려 버스소유권을 반납한다. 
 
-### DMA 동작모드
+### DMA 동작모드::mode-of-dma
 
 **사이클 스틸링(Cycle Stealing)**
 

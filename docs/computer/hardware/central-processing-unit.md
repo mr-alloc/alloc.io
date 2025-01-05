@@ -2,11 +2,11 @@
 layout: wiki
 title: 중앙처리장치 (CPU)
 tags: [Hardware, CPU]
-summary: CPU란?
+summary: CPU
 hide: false
 ---
 
-## CPU란?
+## CPU란?::what-is-cpu
 
 **C**entral **P**rocessing **U**nit (이하 `CPU`)는 컴퓨터의 모든 연산을 실행하거나 처리하는 핵심적인 제어장치이며 `중앙처리장치`라고도 말한다. 
 컴퓨터에 필수적인 4대 주요기능(`기억`, `해석`, `연산`, `제어`)을 관리하는 가장 중요한 장치이다.
@@ -31,14 +31,14 @@ CPU의 코어는 실질적으로 연산을 수행하는 장치이다. 코어 내
 | L3 cache | 8MB < | 40ns < | 400GB/s | 
 :{ "align": "center", "description": "인텔 캐시메모리의 성능 비교표" }
 
-## Core의 구조
+## Core의 구조::core-structure
 
 ![CPU 코어](/post/computer/cpu-core-structure.png)
 :{ "align": "center", "max-width": "500px", "description": "중앙처리장치의 코어 구조" }
 
 CPU Core 안에서는 크게 제어장치와 처리장치 두가지로 나뉜다.
 
-### Control Unit (제어장치)
+### Control Unit (제어장치)::control-unit
 
 제어장치는 `CPU`와 다른 주변 장치와의 데이터 흐름을 제어하며, 각 장치로 제어신호를 보내어 명령어를 실행하도록 한다.
 CPU의 [명령어 사이클]()을 제어하며, 명령어를 해독하고 실행하는 역할을 한다.
@@ -58,7 +58,7 @@ CPU의 [명령어 사이클]()을 제어하며, 명령어를 해독하고 실행
 6. [명령어 사이클 제어기 (Instruction Cycle Controller)]()
     * 타이밍 신호를 받아 명령어 실행 순서를 관리한다.
 
-### Data Processing Unit (처리장치)
+### Data Processing Unit (처리장치)::data-processing-unit
 
 처리장치는 제어장치가 명령어를 해독하고, 실행할 작업을 결정하면, 실제로 데이터를 처리하는 장치이다.
 
