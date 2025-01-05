@@ -4,12 +4,10 @@
 <script setup lang="ts">
 import type {PostMetadata} from "@/classes/implement/PostMetadata";
 import MarkdownIt from "markdown-it";
-import {usePagePrepareStore} from "@/store/prepare-post-store";
 import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 
 const photoViewStore = usePhotoViewStatusStore();
 const nuxtApp = useNuxtApp();
-const route = useRoute();
 const props = defineProps<{
   metadata: PostMetadata
 }>();
@@ -19,10 +17,7 @@ const html = computed(() => {
   return md.render(props.metadata.content);
 });
 
-
-
 onMounted(() => {
-
   photoViewStore.load(props.metadata.header.images);
 });
 

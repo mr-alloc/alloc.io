@@ -5,6 +5,11 @@ import RuleType from "@/markup/constant/rule-type";
 import shiki from "@shikijs/markdown-it";
 
 export default defineNuxtPlugin(async (nuxtApp) => {
+<<<<<<< HEAD:src/plugins/markdown-it.ts
+=======
+    console.log('md: ', nuxtApp.$md);
+
+>>>>>>> ca726a4 (debug: markdown-it module undefined):src/plugins/markdown-it/markdown-it.ts
     if (nuxtApp.$md) return;
     const markdownIt = new MarkdownIt(DEFAULT_MARKDOWN_IT_OPTIONS);
 
