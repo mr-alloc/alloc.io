@@ -2,8 +2,8 @@
 layout: wiki
 title: Programmed Input/Output (PIO)
 tags: [Hardware, PIO]
-summary: PIO란?
-hide: false
+summary: PIO
+hide: true
 ---
 
 ## PIO란?
