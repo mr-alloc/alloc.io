@@ -21,7 +21,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     const shikiExtension = await shiki({
         transformers: [
             {
-                code(hast) {
+                code(hast: any) {
                     const original: string = hast.properties['class'] as string;
                     const classes = original?.split(' ');
                     classes.push('text-nowrap');

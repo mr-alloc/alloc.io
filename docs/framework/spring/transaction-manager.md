@@ -4,7 +4,7 @@ title: 스프링의 트랜잭션 관리자
 categories: [framework, spring]
 tags: [Spring,Spring Boot, Transaction, Transaction Manager]
 date: 2024-06-04 18:58:00 +0900
-thumbnail: "/post/framework/spring/spring-transaction-manager.png"
+thumbnail: /post/framework/spring/spring-transaction-manager.webp
 current-company: NEOWIZ
 current-position: Software Engineer
 summary: Transaction Manager
@@ -15,11 +15,20 @@ hide: false
 
 <!--more-->
 
-## AbstractPlatformTransactionManager
+## 트랜잭션 관리자
 
-Spring은 Transaction Manager를 추상화하여 간단하게 사용할수 있다. `DataSourceTransactionManager` 이던 `HibernateSessionMannager` 던 등등 다른 Transaction Manager를 하나로 추상화 되어있는 `AbstractPlatformTransactionManager`를 상황에 맞는 구성을 Spring이 구성해주기때문에 별다른 설정없이 사용하면 된다.
+스프링은 트랜잭션 관리자를 추상화하여, 다양한 데이터 핸들링 프레임워크를 유연하게 사용할 수 있다.
+`@Transactional` 어노테이션을 사용하더라도, 데이터 핸들링 프레임워크 (JPA, JDBC, Hibernate 등)에 따라 다르게 동작한다.
 
+🔷 트랜잭션 관리자의 구현 목록:
 
+- DataSourceTransactionManager
+- HibernateTransactionManager
+- JdbcTransactionManager
+- JpaTransactionManager
+- JtaTransactionManager
+- KafkaTransactionManager
+- ResourcelessTransactionManager
 
 ### 설명
 `org.springframework.transaction.jta.JtaTransactionManager` 같이 실제 플랫폼 트랜잭션매니저의 기반으로 사용되는 Spring의 표준 트랜잭션 작업흐름 구현체, 추상 기본  클래스이다.
