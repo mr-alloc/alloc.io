@@ -1,6 +1,6 @@
 <template>
   <ul class="space-y-1 hidden lg:block">
-    <li v-for="(child, index) in headlines" :key="child.fragment" class="space-y-1 hidden lg:block" :class="{
+    <li v-for="(child, index) in props.headline.children" :key="child.fragment" class="space-y-1 hidden lg:block" :class="{
        'ml-3': props.isInner
     }">
       <a class="block text-sm/6 truncate"
@@ -15,9 +15,7 @@
 
 <script lang="ts" setup>
 import TocNode from "@/classes/implement/toc-node";
-import TableOfContents from "@/components/layout/content/TableOfContents.vue";
 import {useScrollspy} from "@/store/scroll-spy";
-import {useNuxtApp} from "nuxt/app";
 
 const router = useRouter();
 const scrollspy = useScrollspy();
@@ -25,7 +23,6 @@ const props = defineProps<{
   headline: TocNode,
   isInner: boolean,
 }>();
-const fragmentRE = /([^:]+)(?:::([\s\S]+))?/mg;
 const config = {
   wrapper: 'space-y-1',
   base: 'block text-sm/6 truncate',
@@ -33,28 +30,12 @@ const config = {
   inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200',
   depth: 'ml-3'
 }
-const headlines = computed(() => {
-  return Array.of(...props.headline?.children ?? [])
-      .map(child => methods.parseHeadline(child.title))
-      .map(([title, fragment]) => ({title, fragment}));
-});
+
 const emit = defineEmits(['move']);
 const scrollToHeading = (id: string) => {
   router.push(`#${id}`)
-  emit('move', id)
+  emit('move', id);
 };
-
-const methods = {
-  parseHeadline(headline: string): [string, string] {
-    const executed = fragmentRE.exec(headline);
-    fragmentRE.lastIndex = 0;
-
-    const title = executed?.[1] ?? '';
-    const fragment = executed?.[2] ?? '';
-
-    return [title, fragment];
-  }
-}
 </script>
 
 <style lang="scss" scoped>
