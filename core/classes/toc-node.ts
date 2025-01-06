@@ -5,16 +5,18 @@ function slugify(title: string) {
     return encodeURIComponent(slug);
 }
 export default class TocNode {
+    private readonly _fragmentRE = /([^:]+)(?:::([\s\S]+))?/mg;
     private readonly _grade: number;
     private readonly _title: string;
-    private readonly _fragmentId: string;
+    private readonly _fragment: string;
     private readonly _children: Array<TocNode>;
     private readonly _isSelected: boolean;
 
-    constructor(grade: number, title: string) {
+    constructor(grade: number, headline: string) {
+        const [title, fragment] = this.parseHeadline(headline);
         this._grade = grade
         this._title = title
-        this._fragmentId = slugify(title)
+        this._fragment = fragment;
         this._children = []
         this._isSelected = false;
     }
@@ -28,7 +30,7 @@ export default class TocNode {
     }
 
     get fragmentId(): string {
-        return this._fragmentId;
+        return this._fragment;
     }
 
     get isSelected(): boolean {
@@ -51,10 +53,18 @@ export default class TocNode {
         return {
             grade: this._grade,
             title: this._title,
-            fragmentId: this._fragmentId,
+            fragment: this._fragment,
             children: this._children,
             isSelected: this._isSelected
         }
     }
 
+    private readonly parseHeadline = (headline: string): [string, string] => {
+        const executed = this._fragmentRE.exec(headline);
+
+        const title = executed?.[1] ?? '';
+        const fragment = executed?.[2] ?? '';
+
+        return [title, fragment];
+    }
 }

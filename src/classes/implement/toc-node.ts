@@ -2,13 +2,13 @@ export default class TocNode {
 
     private readonly _grade: number;
     private readonly _title: string;
-    private readonly _fragmentId: string;
+    private readonly _fragment: string;
     private readonly _children: Array<TocNode>;
 
-    constructor(node: any) {
+    public constructor(node: any) {
         this._grade = node.grade
         this._title = node.title
-        this._fragmentId = node.fragmentId
+        this._fragment = node.fragment
         this._children = node.children.map(TocNode.createRecursive);
     }
 
@@ -20,8 +20,8 @@ export default class TocNode {
         return this._title;
     }
 
-    get fragmentId(): string {
-        return this._fragmentId;
+    get fragment(): string {
+        return this._fragment;
     }
 
     get children(): TocNode[] {

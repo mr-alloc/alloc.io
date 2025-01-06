@@ -1,5 +1,7 @@
 // https://router.vuejs.org/api/interfaces/routeroptions.html
 
+import type {RouterConfig} from "@nuxt/schema";
+
 export default {
     routes: (_routes) => [
         {
@@ -55,18 +57,22 @@ export default {
     ],
     scrollBehavior: (to, from, savedPosition) => {
         if (to.hash && to.path.match(/\/(docs|wiki).+?/)) {
-            const element = document.querySelector(to.hash);
-            /* header height: 60, offset: 100 */
-            const toBeTop = element.offsetTop - 160
-
-            return {
-                top: toBeTop,
-                left: 0,
+            const element: Element | undefined = document.querySelector(to.hash) as HTMLElement;
+            if (!element) {
+                throw new Error(`Element with id ${to.hash} not found`);
             }
+
+            console.log('scrolling to element: ', element);
+            element.scrollIntoView({
+                behavior: 'smooth',
+            })
+
+            /* header height: 60, offset: 100 */
         }
         return {
+            behavior: 'smooth',
             top: 0,
             left: 0
         }
     }
-}
+} satisfies RouterConfig

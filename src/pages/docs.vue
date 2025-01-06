@@ -13,15 +13,15 @@
 import MainPage from "@/components/layout/content/MainPage.vue";
 import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
 import {usePostContentStore} from "@/store/post-content-store";
+import {usePagePrepareStore} from "@/store/prepare-post-store";
+import {useNuxtApp} from "nuxt/app";
 import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 import {useScrollspy} from "@/store/scroll-spy";
-import {useThrottleFn} from "@vueuse/shared";
-import {usePagePrepareStore} from "@/store/prepare-post-store";
 
 const route = useRoute();
 const nuxtApp = useNuxtApp();
-const postContentStore = usePostContentStore();
 const photoViewStatusStore = usePhotoViewStatusStore();
+const postContentStore = usePostContentStore();
 const prepareStore = usePagePrepareStore();
 const scrollspy = useScrollspy();
 const content = postContentStore.get(route.path);
@@ -31,17 +31,16 @@ if (!content) {
 }
 
 const categories = computed(() => content.header.categories ?? []);
-prepareStore.prepare();
 
 nuxtApp.hook('page:finish', () => {
-  console.log('page:finish');
   if (prepareStore.isPrepare) {
+    console.log('page:finish');
     document.querySelectorAll('.rendered-markdown-wrapper img').forEach((imgTag, index) => {
       imgTag.addEventListener('click', (e) => {
         photoViewStatusStore.open(index +1)
       });
     });
-
+    console.log('scrollspy:', scrollspy);
     scrollspy.updateHeadings([
       ...document.querySelectorAll('h2'),
       ...document.querySelectorAll('h3')
@@ -50,5 +49,5 @@ nuxtApp.hook('page:finish', () => {
   }
 
 });
-
+prepareStore.prepare();
 </script>

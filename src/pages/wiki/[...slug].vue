@@ -22,13 +22,9 @@
 </template>
 <script lang="ts" setup>
 import {useRoute} from "vue-router";
-import appCache from "@/store/app-cache";
-import TableOfContents from "@/components/layout/content/TableOfContents.vue";
 import {usePostContentStore} from "@/store/post-content-store";
 import PostContentDecorator from "@/components/layout/content/PostContentDecorator.vue";
 import {useCategoriesStore} from "@/store/category-store";
-import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
-import {useScrollspy} from "@/store/scroll-spy";
 import DocumentType from "@/classes/constant/document-type";
 import MainPageBody from "@/components/layout/content/MainPageBody.vue";
 import MainPage from "@/components/layout/content/MainPage.vue";
@@ -36,7 +32,6 @@ import MainPageHeader from "@/components/layout/content/MainPageHeader.vue";
 import ContentToc from "@/components/layout/content/ContentToc.vue";
 import Breadcrumb from "@/components/layout/content/Breadcrumb.vue";
 import {useNuxtApp} from "nuxt/app";
-import {useThrottleFn} from "@vueuse/shared";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();

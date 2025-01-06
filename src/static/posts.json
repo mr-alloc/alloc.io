@@ -29,31 +29,31 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
-            "title": "CPU란?::what-is-cpu",
-            "fragmentId": "cpu%EB%9E%80%3F%3A%3Awhat-is-cpu",
+            "title": "CPU란?",
+            "fragment": "what-is-cpu",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
-            "title": "Core의 구조::core-structure",
-            "fragmentId": "core%EC%9D%98-%EA%B5%AC%EC%A1%B0%3A%3Acore-structure",
+            "title": "Core의 구조",
+            "fragment": "core-structure",
             "children": [
               {
                 "grade": 3,
-                "title": "Control Unit (제어장치)::control-unit",
-                "fragmentId": "control-unit-(%EC%A0%9C%EC%96%B4%EC%9E%A5%EC%B9%98)%3A%3Acontrol-unit",
+                "title": "Control Unit (제어장치)",
+                "fragment": "control-unit",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "Data Processing Unit (처리장치)::data-processing-unit",
-                "fragmentId": "data-processing-unit-(%EC%B2%98%EB%A6%AC%EC%9E%A5%EC%B9%98)%3A%3Adata-processing-unit",
+                "title": "Data Processing Unit (처리장치)",
+                "fragment": "data-processing-unit",
                 "children": [],
                 "isSelected": false
               }
@@ -102,31 +102,31 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
-            "title": "DMA란 무엇인가?::what-is-dma",
-            "fragmentId": "dma%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%3F%3A%3Awhat-is-dma",
+            "title": "DMA란 무엇인가?",
+            "fragment": "what-is-dma",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
-            "title": "DMA는 어떻게 사용되는가?::how-dma-used-for",
-            "fragmentId": "dma%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%82%AC%EC%9A%A9%EB%90%98%EB%8A%94%EA%B0%80%3F%3A%3Ahow-dma-used-for",
+            "title": "DMA는 어떻게 사용되는가?",
+            "fragment": "how-dma-used-for",
             "children": [
               {
                 "grade": 3,
-                "title": "DMA 동작 순서::sequence-of-dma",
-                "fragmentId": "dma-%EB%8F%99%EC%9E%91-%EC%88%9C%EC%84%9C%3A%3Asequence-of-dma",
+                "title": "DMA 동작 순서",
+                "fragment": "sequence-of-dma",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "DMA 동작모드::mode-of-dma",
-                "fragmentId": "dma-%EB%8F%99%EC%9E%91%EB%AA%A8%EB%93%9C%3A%3Amode-of-dma",
+                "title": "DMA 동작모드",
+                "fragment": "mode-of-dma",
                 "children": [],
                 "isSelected": false
               }
@@ -161,33 +161,33 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
             "title": "I/O Manager란?",
-            "fragmentId": "i%2Fo-manager%EB%9E%80%3F",
+            "fragment": "",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
             "title": "PCI express",
-            "fragmentId": "pci-express",
+            "fragment": "",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
             "title": "Bridge (North Bridge, South Bridge)",
-            "fragmentId": "bridge-(north-bridge%2C-south-bridge)",
+            "fragment": "",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
             "title": "I/O Manager의 역할",
-            "fragmentId": "i%2Fo-manager%EC%9D%98-%EC%97%AD%ED%95%A0",
+            "fragment": "",
             "children": [],
             "isSelected": false
           }
@@ -219,19 +219,19 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
             "title": "PIO란?",
-            "fragmentId": "pio%EB%9E%80%3F",
+            "fragment": "",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
             "title": "PIO의 데이터 전송방식",
-            "fragmentId": "pio%EC%9D%98-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A0%84%EC%86%A1%EB%B0%A9%EC%8B%9D",
+            "fragment": "",
             "children": [],
             "isSelected": false
           }
@@ -271,7 +271,7 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [],
         "isSelected": false
       }
@@ -308,94 +308,94 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
-            "title": "EXPLAIN 출력 컬럼::explain-output-columns",
-            "fragmentId": "explain-%EC%B6%9C%EB%A0%A5-%EC%BB%AC%EB%9F%BC%3A%3Aexplain-output-columns",
+            "title": "EXPLAIN 출력 컬럼",
+            "fragment": "explain-output-columns",
             "children": [
               {
                 "grade": 3,
-                "title": "id (SELECT 순서)::id",
-                "fragmentId": "id-(select-%EC%88%9C%EC%84%9C)%3A%3Aid",
+                "title": "id (SELECT 순서)",
+                "fragment": "id",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "select_type (SELECT 타입)::select-type",
-                "fragmentId": "select_type-(select-%ED%83%80%EC%9E%85)%3A%3Aselect-type",
+                "title": "select_type (SELECT 타입)",
+                "fragment": "select-type",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "table (참조 테이블)::table",
-                "fragmentId": "table-(%EC%B0%B8%EC%A1%B0-%ED%85%8C%EC%9D%B4%EB%B8%94)%3A%3Atable",
+                "title": "table (참조 테이블)",
+                "fragment": "table",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "partition (파티션)::partition",
-                "fragmentId": "partition-(%ED%8C%8C%ED%8B%B0%EC%85%98)%3A%3Apartition",
+                "title": "partition (파티션)",
+                "fragment": "partition",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "type (조인타입)::type",
-                "fragmentId": "type-(%EC%A1%B0%EC%9D%B8%ED%83%80%EC%9E%85)%3A%3Atype",
+                "title": "type (조인타입)",
+                "fragment": "type",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "possible_keys (사용가능한 인덱스)::possible-keys",
-                "fragmentId": "possible_keys-(%EC%82%AC%EC%9A%A9%EA%B0%80%EB%8A%A5%ED%95%9C-%EC%9D%B8%EB%8D%B1%EC%8A%A4)%3A%3Apossible-keys",
+                "title": "possible_keys (사용가능한 인덱스)",
+                "fragment": "possible-keys",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "key (사용할 인덱스)::key",
-                "fragmentId": "key-(%EC%82%AC%EC%9A%A9%ED%95%A0-%EC%9D%B8%EB%8D%B1%EC%8A%A4)%3A%3Akey",
+                "title": "key (사용할 인덱스)",
+                "fragment": "key",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "key_len (키의 길이)::key-len",
-                "fragmentId": "key_len-(%ED%82%A4%EC%9D%98-%EA%B8%B8%EC%9D%B4)%3A%3Akey-len",
+                "title": "key_len (키의 길이)",
+                "fragment": "key-len",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "ref (참조 값)::ref",
-                "fragmentId": "ref-(%EC%B0%B8%EC%A1%B0-%EA%B0%92)%3A%3Aref",
+                "title": "ref (참조 값)",
+                "fragment": "ref",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "rows (검사 행 개수)::rows",
-                "fragmentId": "rows-(%EA%B2%80%EC%82%AC-%ED%96%89-%EA%B0%9C%EC%88%98)%3A%3Arows",
+                "title": "rows (검사 행 개수)",
+                "fragment": "rows",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "filtered (필터된 수치) ::filtered",
-                "fragmentId": "filtered-(%ED%95%84%ED%84%B0%EB%90%9C-%EC%88%98%EC%B9%98)-%3A%3Afiltered",
+                "title": "filtered (필터된 수치) ",
+                "fragment": "filtered",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
-                "title": "Extra (추가적인 내용)::extra",
-                "fragmentId": "extra-(%EC%B6%94%EA%B0%80%EC%A0%81%EC%9D%B8-%EB%82%B4%EC%9A%A9)%3A%3Aextra",
+                "title": "Extra (추가적인 내용)",
+                "fragment": "extra",
                 "children": [],
                 "isSelected": false
               }
@@ -440,24 +440,24 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
             "title": "트랜잭션 관리자",
-            "fragmentId": "%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98-%EA%B4%80%EB%A6%AC%EC%9E%90",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "설명",
-                "fragmentId": "%EC%84%A4%EB%AA%85",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "필드",
-                "fragmentId": "%ED%95%84%EB%93%9C",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
@@ -467,61 +467,61 @@
           {
             "grade": 2,
             "title": "설정기능",
-            "fragmentId": "%EC%84%A4%EC%A0%95%EA%B8%B0%EB%8A%A5",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "final setTransactionSynchronizationName(String constantName)",
-                "fragmentId": "final-settransactionsynchronizationname(string-constantname)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "final setTransactionSynchronization( int transactionSynchronization)",
-                "fragmentId": "final-settransactionsynchronization(-int-transactionsynchronization)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "final setDefaultTimeout(int defaultTimeout)",
-                "fragmentId": "final-setdefaulttimeout(int-defaulttimeout)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "final setNestedTransactionAllowed(boolean nestedTransactionAllowed)",
-                "fragmentId": "final-setnestedtransactionallowed(boolean-nestedtransactionallowed)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "final setValidateExistingTransaction(boolean validateExistingTransaction)",
-                "fragmentId": "final-setvalidateexistingtransaction(boolean-validateexistingtransaction)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "final setGlobalRollbackOnParticipationFailure(boolean gloabalRollbackOnParticipationFailure)",
-                "fragmentId": "final-setglobalrollbackonparticipationfailure(boolean-gloabalrollbackonparticipationfailure)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "final setFailEarlyOnGlobalRollbackOnly(boolean failEarlyOnGlobalRollbackOnly)",
-                "fragmentId": "final-setfailearlyonglobalrollbackonly(boolean-failearlyonglobalrollbackonly)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "final setRollbackOnCommitFailure(boolean rollbackOnCommitFailure)",
-                "fragmentId": "final-setrollbackoncommitfailure(boolean-rollbackoncommitfailure)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
@@ -531,40 +531,40 @@
           {
             "grade": 2,
             "title": "PlatformTransactionManager 구현체",
-            "fragmentId": "platformtransactionmanager-%EA%B5%AC%ED%98%84%EC%B2%B4",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "final getTransaction(TransactionDefinition definition)",
-                "fragmentId": "final-gettransaction(transactiondefinition-definition)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "doGetTransaction",
-                "fragmentId": "dogettransaction",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "handleExistingTransaction",
-                "fragmentId": "handleexistingtransaction",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "doBegin",
-                "fragmentId": "dobegin",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "final commit(TransactionStatus status)",
-                "fragmentId": "final-commit(transactionstatus-status)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
@@ -616,17 +616,17 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
             "title": "하드디스크의 구성",
-            "fragmentId": "%ED%95%98%EB%93%9C%EB%94%94%EC%8A%A4%ED%81%AC%EC%9D%98-%EA%B5%AC%EC%84%B1",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "Head",
-                "fragmentId": "head",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
@@ -666,7 +666,7 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [],
         "isSelected": false
       }
@@ -702,7 +702,7 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [],
         "isSelected": false
       }
@@ -737,24 +737,24 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
             "title": "개요",
-            "fragmentId": "%EA%B0%9C%EC%9A%94",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "적용 전",
-                "fragmentId": "%EC%A0%81%EC%9A%A9-%EC%A0%84",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "적용 후",
-                "fragmentId": "%EC%A0%81%EC%9A%A9-%ED%9B%84",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
@@ -764,12 +764,12 @@
           {
             "grade": 2,
             "title": "분석",
-            "fragmentId": "%EB%B6%84%EC%84%9D",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "Render Rule (규칙)",
-                "fragmentId": "render-rule-(%EA%B7%9C%EC%B9%99)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
@@ -779,12 +779,12 @@
           {
             "grade": 2,
             "title": "템플릿 규칙 적용",
-            "fragmentId": "%ED%85%9C%ED%94%8C%EB%A6%BF-%EA%B7%9C%EC%B9%99-%EC%A0%81%EC%9A%A9",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "규칙 수정",
-                "fragmentId": "%EA%B7%9C%EC%B9%99-%EC%88%98%EC%A0%95",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
@@ -829,45 +829,45 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
             "title": "우리가 아는 자바스크립트",
-            "fragmentId": "%EC%9A%B0%EB%A6%AC%EA%B0%80-%EC%95%84%EB%8A%94-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8",
+            "fragment": "",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
             "title": "타입스크립트는 무엇인가?",
-            "fragmentId": "%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%3F",
+            "fragment": "",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
             "title": "타입스크립트를 배우기전 ES5 또는 ESNext의 주요 문법을 알아보자",
-            "fragmentId": "%ED%83%80%EC%9E%85%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%EB%A5%BC-%EB%B0%B0%EC%9A%B0%EA%B8%B0%EC%A0%84-es5-%EB%98%90%EB%8A%94-esnext%EC%9D%98-%EC%A3%BC%EC%9A%94-%EB%AC%B8%EB%B2%95%EC%9D%84-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "비구조화 할당",
-                "fragmentId": "%EB%B9%84%EA%B5%AC%EC%A1%B0%ED%99%94-%ED%95%A0%EB%8B%B9",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "화살표 함수 (arrow function)",
-                "fragmentId": "%ED%99%94%EC%82%B4%ED%91%9C-%ED%95%A8%EC%88%98-(arrow-function)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "클래스 (class)",
-                "fragmentId": "%ED%81%B4%EB%9E%98%EC%8A%A4-(class)",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
@@ -908,31 +908,31 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
             "title": "설치",
-            "fragmentId": "%EC%84%A4%EC%B9%98",
+            "fragment": "",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
             "title": "명령어",
-            "fragmentId": "%EB%AA%85%EB%A0%B9%EC%96%B4",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "플러그인",
-                "fragmentId": "%ED%94%8C%EB%9F%AC%EA%B7%B8%EC%9D%B8",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "모듈",
-                "fragmentId": "%EB%AA%A8%EB%93%88",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
@@ -942,7 +942,7 @@
           {
             "grade": 2,
             "title": "설치 순서",
-            "fragmentId": "%EC%84%A4%EC%B9%98-%EC%88%9C%EC%84%9C",
+            "fragment": "",
             "children": [],
             "isSelected": false
           }
@@ -1042,38 +1042,38 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
             "title": "설명",
-            "fragmentId": "%EC%84%A4%EB%AA%85",
+            "fragment": "intro",
             "children": [
               {
                 "grade": 3,
-                "title": "Heap의 속성 (특징)",
-                "fragmentId": "heap%EC%9D%98-%EC%86%8D%EC%84%B1-(%ED%8A%B9%EC%A7%95)",
+                "title": "Heap의 속성 (성질)",
+                "fragment": "temper",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "Heap을 만드는 방법",
-                "fragmentId": "heap%EC%9D%84-%EB%A7%8C%EB%93%9C%EB%8A%94-%EB%B0%A9%EB%B2%95",
+                "fragment": "how-to-make-heap",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "Heap이 우선 값을 유지하는 방법",
-                "fragmentId": "heap%EC%9D%B4-%EC%9A%B0%EC%84%A0-%EA%B0%92%EC%9D%84-%EC%9C%A0%EC%A7%80%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95",
+                "fragment": "how-to-keeping-priority-value",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "Heap을 이용해 정렬을 하는 방법",
-                "fragmentId": "heap%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%B4-%EC%A0%95%EB%A0%AC%EC%9D%84-%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95",
+                "fragment": "how-to-sort-by-heap",
                 "children": [],
                 "isSelected": false
               }
@@ -1083,7 +1083,7 @@
           {
             "grade": 2,
             "title": "구현 코드 (Java)",
-            "fragmentId": "%EA%B5%AC%ED%98%84-%EC%BD%94%EB%93%9C-(java)",
+            "fragment": "implementation-code",
             "children": [],
             "isSelected": false
           }
@@ -1092,7 +1092,7 @@
       }
     },
     "description": "힙의 자료구조와 어떻게 우선순위를 유지하는지 알아보자.\r\n\r\n",
-    "content": "\r\n\r\n## 설명\r\n\r\n간단하게 말하여, 힙은 우선순위 큐 입니다. `JAVA`에서는 `PriorityQueue`라는 구현체를 통해 Heap 자료구조를 사용할 수 있어요.\r\n힙은 두 종류가 있는데 `최대 힙`과 `최소 힙`이 있어요. \r\n최대 Heap(최소 Heap)은 단어와 같이 최대 값(최소 값)을 우선순위로 판단하여, 어떠한 값이 들어와도, 항상 같은 순서의\r\n트리를 유지하며, 언제든지 최고 우선순위의 값을 적은 비용으로 쉽게 얻을수 있는 자료구조 입니다.\r\n\r\n### Heap의 속성 (특징)\r\n\r\n* 최대 힙(**또는 최소 힙**)은 `잎(leaf)`의 계층을 제외한 모든 노드는 자식의 노드 보다 큰(**또는 작은**) 값을 가지고 있어야합니다.\r\n* 왼쪽부터 차례대로 채워져있는 `완전 이진 트리(Complete binary tree)`이어야 합니다.\r\n* 같은 계층의 노드들과는 정렬하지 않습니다.\r\n* 루트(뿌리)노드로 부터 내려오는 위치의 노드들 오름차순(**또는 내림차순**)입니다\r\n\r\n![위 트리중 어떤것이 힙인지 찾아보세요.](/post/algorithm/heap/tree_images.svg)\r\n\r\n* 트리 A: 잎을 제외한 노드는 모두 정렬되었지만, 왼쪽부터 채워지지않아 Heap이 아닙니다.\r\n* 트리 B: 왼쪽부터 채워졌지만, 2번노드의 값은 그 자식에값보다 작습니다. 따라서 Heap이 아닙니다.\r\n* 트리 C: 잎을 제외한 모든 노드가 자식 또는 부모와 정렬 되어있고, 왼쪽부터 채워져있으므로 `Heap`입니다.\r\n\r\n> 이를 정리하면 아래와 같습니다.   \r\n> 1.`𝑛개`의 노드를 가진 힙은 정확히 하나만 있고 그 힙(트리)의 높이(height)는 `⎣log₂𝑛⎦`이다. 트리의 전체 노드의 개수가 `8`일경우 트리(힙)의 높이는 `3`이다. 즉 힢의 높이는 힙의 성질(속성)에 부합되는 노드들만 인정이 된다는 의미이다.  \r\n> 2.힙의 루트 노드는 항상 최댓값(**또는 최솟값**)을 저장한다. 최대 힙(**또는 최소 힙**)은 쵀댓값(**또는 최솟값**)을 효율적으로 관리하기 위한 자료구조이며, 루트에는 항상 가장 큰(**또는 작은**)값을 유지한다.  \r\n> 3.힙의 한 노드와 그 노드의 자손 노드들로 이루어진 부분 트리(subtree)도 힙이다. 힙은 힙으로 이루어져있으며 자식노드도 힙이 될수있지만, 노드의 자식이없다면 힙이될 수없다. 따라서 위 C 트리의 `4, 5, 6`번 노드는 힙이 아니다.  \r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n### Heap을 만드는 방법\r\n\r\n힙을 구성 하기 위해서는 다음의 순서대로 진행됩니다.\r\n\r\n1. 순회를 시작할 힙이되는 마지막 노드`⎣𝑛/₂⎦`를 찾는다.\r\n2. 마지막 노드 i를 이용해 자식노드가 있는지, 또한 있다면 그 중 자신 보다 큰값을 자신과 찾는다.\r\n3. 찾은 값과 자신을 바꾸고 바꾼 자신의 위치는 그값의 자식이 되며, 자신보다 큰값이 나오지 않을때까지 반복한다.\r\n4. 다음 노드(i -1)에서 다시 `3.`을 반복한다.\r\n\r\n> 자식 노드의 위치를 찾을때는 왼쪽`arr[2i]`값과 오른쪽`arr[2i + 1]`로 구할 수 있습니다.\r\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\r\n\r\n위 의 내용을 정리하면 아래와 같습니다.\r\n\r\n\r\n![힙을 만드려면 완전 이진트리가 있어야 해요.](/post/algorithm/heap/first_iteration.svg)\r\n\r\n> 위의 트리는 *완전 이진트리* 입니다. 힙은 완전이진트리에서 만들수 있으므로, 일반 이진트리는 Compact하게 완전이진트리로 바꿔야 힙을 만들수 있습니다.\r\n> 왼쪽 트리의 마지막 힙의 값은 `15` 이며, 이는 자식(`6, 4`) 어느것 보다도 큰값입니다. 따라서 다음 순회로 넘어갑니다.\r\n> 순회는 내부 노드의 마지막 힙의 위치에서 부터 1까지 이어집니다. 따라서 다음 인덱스인 3번 노드(9)로 넘어갑니다.\r\n> 3번노드는 자신의 자식들 중 6번째, 7번째 (7, 12)와 비교하여 더 큰값을 가지는 12와 바꿉니다.\r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n![만약 마지막 내부노드부터 순회할 때, 쵀대힙을 만드려면 위와 같이 만들수 있어요.](/post/algorithm/heap/other_iteration.svg)\r\n\r\n> 이후 과정은 위와 같이 반복됩니다. 내부노드를 순회하며 자신의 자식노드가 있는지 확인하고 있다면, 자신과 비교하여 더큰 값으로 바꿉니다. 이는 바꾼이후에도 `3.`이 반복되게 됩니다. 순회되는 노드가 최상위노드가 되고 모든 내부노드가 힙이 될때, 전체 트리는 힙이 됩니다.   \r\n> 마지막까지 바꾼 최종트리는 아래와 같습니다.\r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n![최대힙을 만들어 이런 형태로 노드를 나눌수 있어요.](/post/algorithm/heap/last_iteration.svg)\r\n\r\n* 최상위 노드(루트)가 가장 큰값이 되며, 위는 최대힙을 만드는 단계였습니다.\r\n* 부모노드와 자식노드끼리는 순서의 값을 가지며, 항상 최대의 값을 가집니다.  \r\n\r\n### Heap이 우선 값을 유지하는 방법\r\n\r\n위에서는 완전이진트리로 힙을 어떻게 만드는지에 대해 알아봤습니다.\r\n하지만, 힙은 언제나 새로운값이 들어와도 항상 우선 순위로 값을 관리합니다. 만약 저기서 더큰값이 추가된다면,\r\n저 힙트리는 어떻게 바뀔까요? 새로운 값들을 추가해서 힙이 다시 어떻게 유지되는지 배워봅니다.\r\n\r\n#### 값추가\r\n\r\n힙트리에서 값을 추가 할때는 마지막 노드로 붙여주고 위에서 했던것과 동일하게 힙을 만들어 줍니다.\r\n만약 새로운 값 17이 힙에 들어온다면 순서는 아래와 같이 바뀝니다.\r\n\r\n![만약 다음의 힙에서 17이라는 값이 추가 된다면](/post/algorithm/heap/add_new_17.svg)\r\n![이런식으로 부모노드와 바꿔가며, 다시 힙을 유지할 수 있어요.](/post/algorithm/heap/add_new_17_2.svg)\r\n\r\n\r\n> A: 새로 들어온 값 17은 트리의 맨뒤인 10번노드로 들어갑니다.     \r\n> 또한 마지막 내부노드이자 자신의 부모인 5번 노드(4)부터 다시 순회를 시작하며,  \r\n> 자신보다 큰 값은 가진 자식 10번 노드(17)과 값을 바꿉니다. \r\n> B: 값이 바뀐 10번 노드(4)는 자식을 가지고있지 않으므로 다음 순회로 넘어갑니다.  \r\n> C: 다음 순회인 4번 노드(6)은 자식들보다 큰값이므로 다음 3번 노드(12)로 이동합니다. 하지만 이또한 자식들보다 값이 크므로, 2번 노드(8)로 이동합니다. 자신보다 큰값을 가지는 5번 자식노드(17)과 바꿉니다.  \r\n> D: 값이 바뀐 5번 노드(8)은 자식들 보다 값이 커, 바꿀 필요가 없으므로 다음 순회인 1번 노드(15)로 이동합니다.  \r\n> E: 현재 순회인 1번 노드(15)는 자신의 2번 노드(17)보다 값이 작으므로 바꿉니다.  \r\n> F: 최종적으로 힙이 완성되었습니다.\r\n:{ \"type\": \"tip\", \"icon\": \"check-circle\" }\r\n\r\n\r\n### Heap을 이용해 정렬을 하는 방법\r\n\r\n힙 정렬을 위해서는 사전에 완전 이진 트리를 힙으로 만들고, 정렬을 수행할 수 있습니다.\r\n위에서 만든 힙을 통해 정렬을 하는 방법을 구현합니다.  \r\n힙 정렬은 간단하게, 아래의 정렬하는 순서를 가지고있습니다.\r\n\r\n1. 최상위 노드 `A`와 가장 끝의 노드 `B`를 바꾼다.\r\n2. 바꿔진 A는 맨뒤로 가며,힙에서 제외한다. \r\n3. 바꾼 값 `B`는, 자신의 자식이 있다면, 두개를 비교하여 가장 큰 값과 맞 바꾼다.\r\n4. `3.`의 내용을 힙이될때까지 반복한다.\r\n\r\n위의 순서를 반복하며, 만든 힙 정렬은 아래와 같습니다.\r\n\r\n![힙 정렬 1](/post/algorithm/heap/heap_sort_1_1.svg)\r\n![힙 정렬 2](/post/algorithm/heap/heap_sort_1_2.svg)\r\n![힙 정렬 3](/post/algorithm/heap/heap_sort_1_3.svg)\r\n![힙 정렬 4](/post/algorithm/heap/heap_sort_1_4.svg)\r\n![힙 정렬 5](/post/algorithm/heap/heap_sort_1_5.svg)\r\n![힙 정렬 6](/post/algorithm/heap/heap_sort_1_6.svg)\r\n![힙 정렬 7](/post/algorithm/heap/heap_sort_1_7.svg)\r\n![힙 정렬 8](/post/algorithm/heap/heap_sort_1_8.svg)\r\n\r\n## 구현 코드 (Java)\r\n\r\n```java\r\nimport java.util.Arrays;\r\n\r\npublic class Heap {\r\n    \r\n    //== 힙(Heap) 을 만드는 메소드 ==//\r\n    public static void makeHeap(int arr[]) {\r\n        // last heap\r\n        int lh = arr.length / 2;\r\n        System.out.println(\"Normal Array = \" + Arrays.toString(arr));\r\n        int eh = arr.length;\r\n        while (lh-- > 0) {\r\n\r\n            System.out.println(\"i: \" + lh);\r\n            pushDown(arr, lh, eh);\r\n        }\r\n\r\n        System.out.println(\"Array as Max Heap = \" + Arrays.toString(arr));\r\n    }\r\n    \r\n    \r\n    //== 노드와 그 자식중에서 더큰(또는 작은) 위치를 찾는 메소드 ==//\r\n    public static int findLargest(int arr[], int node, int eh) {\r\n        // first child\r\n        int fc = (2 * (node + 1)) - 1;\r\n\r\n        if (fc + 1 < eh) {\r\n            if (arr[fc] <= arr[fc + 1]) {\r\n                return arr[fc + 1] <= arr[node] ? node : fc + 1;\r\n            } else {\r\n                return arr[fc] <= arr[node] ? node : fc;\r\n            }\r\n        }\r\n        if (fc < eh && arr[node] < arr[fc]) {\r\n            return fc;\r\n        } else {\r\n            return node;\r\n        }\r\n    }\r\n    //== 값을 아래로 내리는 메소드 ==//\r\n\r\n    /**\r\n     * 간단하게 보면 트리에서 마지막 힙의 위치를 구하고,\r\n     * 루트 노드까지 역순으로 힙을 만들어갑니다.\r\n     * \r\n     * 최대 힙(또는 최소 힙)의 조건에 따라 더큰(또는 더 작은)값을 기준으로,\r\n     * 해당 노드를 위로올리고 변경된 대상은 아래로 내려가며 계속 바꿉니다.\r\n     */\r\n    public static void pushDown(int arr[], int node, int eh) {\r\n        do {\r\n            System.out.println(\"j: \" + node);\r\n            int temp = arr[node];\r\n            int large = findLargest(arr, node, eh);\r\n            System.out.println(drawBinaryTree(arr));\r\n\r\n            if (large == node)\r\n                break;\r\n\r\n            arr[node] = arr[large];\r\n            arr[large] = temp;\r\n\r\n            node = large;\r\n        } while (node <= eh);\r\n    }\r\n\r\n    public static void sort(int arr[]) {\r\n        int last = arr.length;\r\n        makeHeap(arr);\r\n\r\n        while (--last >= 0) {\r\n\r\n            int temp = arr[0];\r\n            arr[0] = arr[last];\r\n            arr[last] = temp;\r\n\r\n            System.out.println(\"last: \" + last);\r\n            pushDown(arr, 0, last);\r\n        }\r\n        ;\r\n    }\r\n\r\n    //== 출력 메소드 ==//\r\n    public static String drawBinaryTree(int arr[]) {\r\n        StringBuilder builder = new StringBuilder();\r\n\r\n        int nol = (int) (Math.log(arr.length) / Math.log(2)) + 1;\r\n        int max = (int) Math.pow(2, nol - 1);\r\n\r\n        int printed = 0;\r\n        for (int i = 0; i < nol; i++) {\r\n            int perFloor = (int) Math.pow(2, i);\r\n            int tab = (max - perFloor) / 2 + (max - perFloor) % 2;\r\n            int last = printed + perFloor;\r\n\r\n            for (int j = 0; j < tab; j++) {\r\n                builder.append(\"  \");\r\n            }\r\n            for (int j = printed; (j < arr.length && j < last); j++) {\r\n                builder.append(String.format(\"(%d)\", arr[j]));\r\n            }\r\n            builder.append(\"\\n\");\r\n            printed += perFloor;\r\n        }\r\n\r\n        return builder.toString();\r\n    }\r\n    \r\n    public static void main(String args []) throws Exception {\r\n        //== 힙 으로 만들기==//\r\n        int arrForMake [] = {1, 5, 8, 2, 74, 9, 12, 104, 87, 43};\r\n        Heap.makeHeap();\r\n        \r\n        //== 힙 + 정렬 ==//\r\n        int arrForSort [] = {1, 8, 9, 15, 4, 7, 12, 6, 4, 17};\r\n        Heap.sort(arr);\r\n        \r\n    }\r\n}\r\n```\r\n\r\n\r\n\r\n"
+    "content": "\r\n\r\n## 설명::intro\r\n\r\n간단하게 말하여, 힙은 우선순위 큐 입니다. `JAVA`에서는 `PriorityQueue`라는 구현체를 통해 Heap 자료구조를 사용할 수 있어요.\r\n힙은 두 종류가 있는데 `최대 힙`과 `최소 힙`이 있어요. \r\n최대 Heap(최소 Heap)은 단어와 같이 최대 값(최소 값)을 우선순위로 판단하여, 어떠한 값이 들어와도, 항상 같은 순서의\r\n트리를 유지하며, 언제든지 최고 우선순위의 값을 적은 비용으로 쉽게 얻을수 있는 자료구조 입니다.\r\n\r\n### Heap의 속성 (성질)::temper\r\n\r\n* 최대 힙(**또는 최소 힙**)은 `잎(leaf)`의 계층을 제외한 모든 노드는 자식의 노드 보다 큰(**또는 작은**) 값을 가지고 있어야합니다.\r\n* 왼쪽부터 차례대로 채워져있는 `완전 이진 트리(Complete binary tree)`이어야 합니다.\r\n* 같은 계층의 노드들과는 정렬하지 않습니다.\r\n* 루트(뿌리)노드로 부터 내려오는 위치의 노드들 오름차순(**또는 내림차순**)입니다\r\n\r\n![위 트리중 어떤것이 힙인지 찾아보세요.](/post/algorithm/heap/tree_images.svg)\r\n\r\n* 트리 A: 잎을 제외한 노드는 모두 정렬되었지만, 왼쪽부터 채워지지않아 Heap이 아닙니다.\r\n* 트리 B: 왼쪽부터 채워졌지만, 2번노드의 값은 그 자식에값보다 작습니다. 따라서 Heap이 아닙니다.\r\n* 트리 C: 잎을 제외한 모든 노드가 자식 또는 부모와 정렬 되어있고, 왼쪽부터 채워져있으므로 `Heap`입니다.\r\n\r\n> 이를 정리하면 아래와 같습니다.   \r\n> 1.`𝑛개`의 노드를 가진 힙은 정확히 하나만 있고 그 힙(트리)의 높이(height)는 `⎣log₂𝑛⎦`이다. 트리의 전체 노드의 개수가 `8`일경우 트리(힙)의 높이는 `3`이다. 즉 힢의 높이는 힙의 성질(속성)에 부합되는 노드들만 인정이 된다는 의미이다.  \r\n> 2.힙의 루트 노드는 항상 최댓값(**또는 최솟값**)을 저장한다. 최대 힙(**또는 최소 힙**)은 쵀댓값(**또는 최솟값**)을 효율적으로 관리하기 위한 자료구조이며, 루트에는 항상 가장 큰(**또는 작은**)값을 유지한다.  \r\n> 3.힙의 한 노드와 그 노드의 자손 노드들로 이루어진 부분 트리(subtree)도 힙이다. 힙은 힙으로 이루어져있으며 자식노드도 힙이 될수있지만, 노드의 자식이없다면 힙이될 수없다. 따라서 위 C 트리의 `4, 5, 6`번 노드는 힙이 아니다.  \r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n### Heap을 만드는 방법::how-to-make-heap\r\n\r\n힙을 구성 하기 위해서는 다음의 순서대로 진행됩니다.\r\n\r\n1. 순회를 시작할 힙이되는 마지막 노드`⎣𝑛/₂⎦`를 찾는다.\r\n2. 마지막 노드 i를 이용해 자식노드가 있는지, 또한 있다면 그 중 자신 보다 큰값을 자신과 찾는다.\r\n3. 찾은 값과 자신을 바꾸고 바꾼 자신의 위치는 그값의 자식이 되며, 자신보다 큰값이 나오지 않을때까지 반복한다.\r\n4. 다음 노드(i -1)에서 다시 `3.`을 반복한다.\r\n\r\n> 자식 노드의 위치를 찾을때는 왼쪽`arr[2i]`값과 오른쪽`arr[2i + 1]`로 구할 수 있습니다.\r\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\r\n\r\n위 의 내용을 정리하면 아래와 같습니다.\r\n\r\n\r\n![힙을 만드려면 완전 이진트리가 있어야 해요.](/post/algorithm/heap/first_iteration.svg)\r\n\r\n> 위의 트리는 *완전 이진트리* 입니다. 힙은 완전이진트리에서 만들수 있으므로, 일반 이진트리는 Compact하게 완전이진트리로 바꿔야 힙을 만들수 있습니다.\r\n> 왼쪽 트리의 마지막 힙의 값은 `15` 이며, 이는 자식(`6, 4`) 어느것 보다도 큰값입니다. 따라서 다음 순회로 넘어갑니다.\r\n> 순회는 내부 노드의 마지막 힙의 위치에서 부터 1까지 이어집니다. 따라서 다음 인덱스인 3번 노드(9)로 넘어갑니다.\r\n> 3번노드는 자신의 자식들 중 6번째, 7번째 (7, 12)와 비교하여 더 큰값을 가지는 12와 바꿉니다.\r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n![만약 마지막 내부노드부터 순회할 때, 쵀대힙을 만드려면 위와 같이 만들수 있어요.](/post/algorithm/heap/other_iteration.svg)\r\n\r\n> 이후 과정은 위와 같이 반복됩니다. 내부노드를 순회하며 자신의 자식노드가 있는지 확인하고 있다면, 자신과 비교하여 더큰 값으로 바꿉니다. 이는 바꾼이후에도 `3.`이 반복되게 됩니다. 순회되는 노드가 최상위노드가 되고 모든 내부노드가 힙이 될때, 전체 트리는 힙이 됩니다.   \r\n> 마지막까지 바꾼 최종트리는 아래와 같습니다.\r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n![최대힙을 만들어 이런 형태로 노드를 나눌수 있어요.](/post/algorithm/heap/last_iteration.svg)\r\n\r\n* 최상위 노드(루트)가 가장 큰값이 되며, 위는 최대힙을 만드는 단계였습니다.\r\n* 부모노드와 자식노드끼리는 순서의 값을 가지며, 항상 최대의 값을 가집니다.  \r\n\r\n### Heap이 우선 값을 유지하는 방법::how-to-keeping-priority-value\r\n\r\n위에서는 완전이진트리로 힙을 어떻게 만드는지에 대해 알아봤습니다.\r\n하지만, 힙은 언제나 새로운값이 들어와도 항상 우선 순위로 값을 관리합니다. 만약 저기서 더큰값이 추가된다면,\r\n저 힙트리는 어떻게 바뀔까요? 새로운 값들을 추가해서 힙이 다시 어떻게 유지되는지 배워봅니다.\r\n\r\n#### 값 추가::add-new-value\r\n\r\n힙트리에서 값을 추가 할때는 마지막 노드로 붙여주고 위에서 했던것과 동일하게 힙을 만들어 줍니다.\r\n만약 새로운 값 17이 힙에 들어온다면 순서는 아래와 같이 바뀝니다.\r\n\r\n![만약 다음의 힙에서 17이라는 값이 추가 된다면](/post/algorithm/heap/add_new_17.svg)\r\n![이런식으로 부모노드와 바꿔가며, 다시 힙을 유지할 수 있어요.](/post/algorithm/heap/add_new_17_2.svg)\r\n\r\n\r\n> A: 새로 들어온 값 17은 트리의 맨뒤인 10번노드로 들어갑니다.     \r\n> 또한 마지막 내부노드이자 자신의 부모인 5번 노드(4)부터 다시 순회를 시작하며,  \r\n> 자신보다 큰 값은 가진 자식 10번 노드(17)과 값을 바꿉니다. \r\n> B: 값이 바뀐 10번 노드(4)는 자식을 가지고있지 않으므로 다음 순회로 넘어갑니다.  \r\n> C: 다음 순회인 4번 노드(6)은 자식들보다 큰값이므로 다음 3번 노드(12)로 이동합니다. 하지만 이또한 자식들보다 값이 크므로, 2번 노드(8)로 이동합니다. 자신보다 큰값을 가지는 5번 자식노드(17)과 바꿉니다.  \r\n> D: 값이 바뀐 5번 노드(8)은 자식들 보다 값이 커, 바꿀 필요가 없으므로 다음 순회인 1번 노드(15)로 이동합니다.  \r\n> E: 현재 순회인 1번 노드(15)는 자신의 2번 노드(17)보다 값이 작으므로 바꿉니다.  \r\n> F: 최종적으로 힙이 완성되었습니다.\r\n:{ \"type\": \"tip\", \"icon\": \"check-circle\" }\r\n\r\n\r\n### Heap을 이용해 정렬을 하는 방법::how-to-sort-by-heap\r\n\r\n힙 정렬을 위해서는 사전에 완전 이진 트리를 힙으로 만들고, 정렬을 수행할 수 있습니다.\r\n위에서 만든 힙을 통해 정렬을 하는 방법을 구현합니다.  \r\n힙 정렬은 간단하게, 아래의 정렬하는 순서를 가지고있습니다.\r\n\r\n1. 최상위 노드 `A`와 가장 끝의 노드 `B`를 바꾼다.\r\n2. 바꿔진 A는 맨뒤로 가며,힙에서 제외한다. \r\n3. 바꾼 값 `B`는, 자신의 자식이 있다면, 두개를 비교하여 가장 큰 값과 맞 바꾼다.\r\n4. `3.`의 내용을 힙이될때까지 반복한다.\r\n\r\n위의 순서를 반복하며, 만든 힙 정렬은 아래와 같습니다.\r\n\r\n![힙 정렬 1](/post/algorithm/heap/heap_sort_1_1.svg)\r\n![힙 정렬 2](/post/algorithm/heap/heap_sort_1_2.svg)\r\n![힙 정렬 3](/post/algorithm/heap/heap_sort_1_3.svg)\r\n![힙 정렬 4](/post/algorithm/heap/heap_sort_1_4.svg)\r\n![힙 정렬 5](/post/algorithm/heap/heap_sort_1_5.svg)\r\n![힙 정렬 6](/post/algorithm/heap/heap_sort_1_6.svg)\r\n![힙 정렬 7](/post/algorithm/heap/heap_sort_1_7.svg)\r\n![힙 정렬 8](/post/algorithm/heap/heap_sort_1_8.svg)\r\n\r\n## 구현 코드 (Java)::implementation-code\r\n\r\n```java\r\nimport java.util.Arrays;\r\n\r\npublic class Heap {\r\n    \r\n    //== 힙(Heap) 을 만드는 메소드 ==//\r\n    public static void makeHeap(int arr[]) {\r\n        // last heap\r\n        int lh = arr.length / 2;\r\n        System.out.println(\"Normal Array = \" + Arrays.toString(arr));\r\n        int eh = arr.length;\r\n        while (lh-- > 0) {\r\n\r\n            System.out.println(\"i: \" + lh);\r\n            pushDown(arr, lh, eh);\r\n        }\r\n\r\n        System.out.println(\"Array as Max Heap = \" + Arrays.toString(arr));\r\n    }\r\n    \r\n    \r\n    //== 노드와 그 자식중에서 더큰(또는 작은) 위치를 찾는 메소드 ==//\r\n    public static int findLargest(int arr[], int node, int eh) {\r\n        // first child\r\n        int fc = (2 * (node + 1)) - 1;\r\n\r\n        if (fc + 1 < eh) {\r\n            if (arr[fc] <= arr[fc + 1]) {\r\n                return arr[fc + 1] <= arr[node] ? node : fc + 1;\r\n            } else {\r\n                return arr[fc] <= arr[node] ? node : fc;\r\n            }\r\n        }\r\n        if (fc < eh && arr[node] < arr[fc]) {\r\n            return fc;\r\n        } else {\r\n            return node;\r\n        }\r\n    }\r\n    //== 값을 아래로 내리는 메소드 ==//\r\n\r\n    /**\r\n     * 간단하게 보면 트리에서 마지막 힙의 위치를 구하고,\r\n     * 루트 노드까지 역순으로 힙을 만들어갑니다.\r\n     * \r\n     * 최대 힙(또는 최소 힙)의 조건에 따라 더큰(또는 더 작은)값을 기준으로,\r\n     * 해당 노드를 위로올리고 변경된 대상은 아래로 내려가며 계속 바꿉니다.\r\n     */\r\n    public static void pushDown(int arr[], int node, int eh) {\r\n        do {\r\n            System.out.println(\"j: \" + node);\r\n            int temp = arr[node];\r\n            int large = findLargest(arr, node, eh);\r\n            System.out.println(drawBinaryTree(arr));\r\n\r\n            if (large == node)\r\n                break;\r\n\r\n            arr[node] = arr[large];\r\n            arr[large] = temp;\r\n\r\n            node = large;\r\n        } while (node <= eh);\r\n    }\r\n\r\n    public static void sort(int arr[]) {\r\n        int last = arr.length;\r\n        makeHeap(arr);\r\n\r\n        while (--last >= 0) {\r\n\r\n            int temp = arr[0];\r\n            arr[0] = arr[last];\r\n            arr[last] = temp;\r\n\r\n            System.out.println(\"last: \" + last);\r\n            pushDown(arr, 0, last);\r\n        }\r\n        ;\r\n    }\r\n\r\n    //== 출력 메소드 ==//\r\n    public static String drawBinaryTree(int arr[]) {\r\n        StringBuilder builder = new StringBuilder();\r\n\r\n        int nol = (int) (Math.log(arr.length) / Math.log(2)) + 1;\r\n        int max = (int) Math.pow(2, nol - 1);\r\n\r\n        int printed = 0;\r\n        for (int i = 0; i < nol; i++) {\r\n            int perFloor = (int) Math.pow(2, i);\r\n            int tab = (max - perFloor) / 2 + (max - perFloor) % 2;\r\n            int last = printed + perFloor;\r\n\r\n            for (int j = 0; j < tab; j++) {\r\n                builder.append(\"  \");\r\n            }\r\n            for (int j = printed; (j < arr.length && j < last); j++) {\r\n                builder.append(String.format(\"(%d)\", arr[j]));\r\n            }\r\n            builder.append(\"\\n\");\r\n            printed += perFloor;\r\n        }\r\n\r\n        return builder.toString();\r\n    }\r\n    \r\n    public static void main(String args []) throws Exception {\r\n        //== 힙 으로 만들기==//\r\n        int arrForMake [] = {1, 5, 8, 2, 74, 9, 12, 104, 87, 43};\r\n        Heap.makeHeap();\r\n        \r\n        //== 힙 + 정렬 ==//\r\n        int arrForSort [] = {1, 8, 9, 15, 4, 7, 12, 6, 4, 17};\r\n        Heap.sort(arr);\r\n        \r\n    }\r\n}\r\n```\r\n\r\n\r\n\r\n"
   },
   {
     "path": "/docs/algorithm/insertion-sort",
@@ -1123,24 +1123,24 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
             "title": "삽입정렬 (Insertion Sort)",
-            "fragmentId": "%EC%82%BD%EC%9E%85%EC%A0%95%EB%A0%AC-(insertion-sort)",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "설명",
-                "fragmentId": "%EC%84%A4%EB%AA%85",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "예제코드",
-                "fragmentId": "%EC%98%88%EC%A0%9C%EC%BD%94%EB%93%9C",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
@@ -1183,26 +1183,26 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
-            "title": "컴퓨터의 구성::computer-structure",
-            "fragmentId": "%EC%BB%B4%ED%93%A8%ED%84%B0%EC%9D%98-%EA%B5%AC%EC%84%B1%3A%3Acomputer-structure",
+            "title": "컴퓨터의 구성",
+            "fragment": "computer-structure",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
-            "title": "운영체제의 동작 순서::sequence-of-os",
-            "fragmentId": "%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EC%9D%98-%EB%8F%99%EC%9E%91-%EC%88%9C%EC%84%9C%3A%3Asequence-of-os",
+            "title": "운영체제의 동작 순서",
+            "fragment": "sequence-of-os",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
-            "title": "운영체제의 역할::role-of-os",
-            "fragmentId": "%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C%EC%9D%98-%EC%97%AD%ED%95%A0%3A%3Arole-of-os",
+            "title": "운영체제의 역할",
+            "fragment": "role-of-os",
             "children": [],
             "isSelected": false
           }
@@ -1244,33 +1244,33 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
-            "title": "인터럽트는 무엇인가?::what-is-interrupt",
-            "fragmentId": "%EC%9D%B8%ED%84%B0%EB%9F%BD%ED%8A%B8%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%3F%3A%3Awhat-is-interrupt",
+            "title": "인터럽트는 무엇인가?",
+            "fragment": "what-is-interrupt",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
-            "title": "인터럽트 서비스 루틴::interrupt-service-routine",
-            "fragmentId": "%EC%9D%B8%ED%84%B0%EB%9F%BD%ED%8A%B8-%EC%84%9C%EB%B9%84%EC%8A%A4-%EB%A3%A8%ED%8B%B4%3A%3Ainterrupt-service-routine",
+            "title": "인터럽트 서비스 루틴",
+            "fragment": "interrupt-service-routine",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
-            "title": "인터럽트의 매커니즘::mechanism-of-interrupt",
-            "fragmentId": "%EC%9D%B8%ED%84%B0%EB%9F%BD%ED%8A%B8%EC%9D%98-%EB%A7%A4%EC%BB%A4%EB%8B%88%EC%A6%98%3A%3Amechanism-of-interrupt",
+            "title": "인터럽트의 매커니즘",
+            "fragment": "mechanism-of-interrupt",
             "children": [],
             "isSelected": false
           },
           {
             "grade": 2,
-            "title": "타이머::timer",
-            "fragmentId": "%ED%83%80%EC%9D%B4%EB%A8%B8%3A%3Atimer",
+            "title": "타이머",
+            "fragment": "timer",
             "children": [],
             "isSelected": false
           }
@@ -1306,7 +1306,7 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [],
         "isSelected": false
       }
@@ -1344,24 +1344,24 @@
       "headlines": {
         "grade": 0,
         "title": "root",
-        "fragmentId": "root",
+        "fragment": "",
         "children": [
           {
             "grade": 2,
             "title": "macOS에서 Open JDK 설치",
-            "fragmentId": "macos%EC%97%90%EC%84%9C-open-jdk-%EC%84%A4%EC%B9%98",
+            "fragment": "",
             "children": [
               {
                 "grade": 3,
                 "title": "DMG Installer를 이용한 설치",
-                "fragmentId": "dmg-installer%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%84%A4%EC%B9%98",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               },
               {
                 "grade": 3,
                 "title": "ZIP 또는 TAR.GZ로 설치",
-                "fragmentId": "zip-%EB%98%90%EB%8A%94-tar.gz%EB%A1%9C-%EC%84%A4%EC%B9%98",
+                "fragment": "",
                 "children": [],
                 "isSelected": false
               }
