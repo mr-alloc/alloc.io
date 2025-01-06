@@ -14,7 +14,7 @@ hide: false
 javascript의 마크다운 파서인 markdown-it 라이브러리를 커스텀해서 사용해보자. 
 <!--more-->
 
-## 개요
+## 개요::overview
 
 `markdown-it`은 대중적으로 많이 알려진 javascript markdown parser library이다.
 
@@ -24,7 +24,7 @@ javascript의 마크다운 파서인 markdown-it 라이브러리를 커스텀해
 
 
 
-### 적용 전
+### 적용 전::before-customize
 
 *Markdown*
 
@@ -42,7 +42,7 @@ javascript의 마크다운 파서인 markdown-it 라이브러리를 커스텀해
 
 
 
-### 적용 후
+### 적용 후::after-customize
 
 *Markdown*
 
@@ -67,9 +67,9 @@ javascript의 마크다운 파서인 markdown-it 라이브러리를 커스텀해
 
 
 
-## 분석
+## 분석::analysis
 
-### Render Rule (규칙)
+### Render Rule (규칙)::renderer-rule
 
 `Renderer Rule(이하 *규칙)` 같은 경우는 `Markdown-it`에서 제공하는 내부적인 규칙의 흐름이다.
 
@@ -226,11 +226,11 @@ const html = md.render(markdownText);
 
 위에서 이미 랜더링된 토큰은 수정할 수 없다고 했다. 그 말은 현재 상황에서 보면 [`blockquote_open` ,`paragraph_open`, `inline`, `paragragh_close`, `blockquote_close`]  순서로 진행될때 `inline`토큰에서 `blockquote_open` 토큰에 `class` 속성을 주입해도 이미 랜더링된 `blockquote_open` 토큰에는 적용이 안된다는 말이다. 따라서 `blockquote_open` 에서 뒤에 랜더링될 `inline` 토큰을 수정해야 정상적으로 노출될 수 있다.
 
-## 템플릿 규칙 적용
+## 템플릿 규칙 적용::apply-template-rule
 
 
 
-### 규칙 수정
+### 규칙 수정::modify-rule
 
 ```typescript
 import MarkdownIt from "markdown-it";

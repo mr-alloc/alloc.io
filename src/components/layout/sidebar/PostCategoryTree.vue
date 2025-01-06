@@ -15,24 +15,25 @@ const ui = {
     inactive: 'bg-gray-100/50 dark:bg-gray-800/50 ring-gray-300 dark:ring-gray-700'
   }
 }
-const router = useRouter();
 const props = defineProps<{
   categories: Array<ICategoryNode>,
   groups: Array<string>,
   depth: number,
   path: string
 }>();
-const isRange = props.groups && props.groups.length > props.depth;
-const group = props.groups[props.depth];
-const collapseGroup = ref((() => {
+const isRange = ref<boolean>(false);
+const group = ref<string>(props.groups[props.depth]);
+const collapseGroup = ref<Map<string, boolean>>(new Map<string, boolean>());
+
+watch(() => props.path, (n, o) => {
+  isRange.value = props.groups && props.groups.length > props.depth;
+  group.value = props.groups[props.depth];
   const directories = props.categories?.filter(cat => cat.isDirectory)
       .map(cat => cat as CategoryGroup);
-  return toValueMap<CategoryGroup, string, boolean>(directories, cat => cat.name, cat => cat.isCollapse);
-})())
+  collapseGroup.value = toValueMap<CategoryGroup, string, boolean>(directories, cat => cat.name, cat => cat.isCollapse);
 
-function moveTo(path: string) {
-  router.push(path);
-}
+}, { immediate: true });
+
 
 function collapseCategory(category: CategoryGroup) {
   if (collapseGroup.value.has(category.name)) {
@@ -56,10 +57,10 @@ function collapseCategory(category: CategoryGroup) {
         :class="{ 'h-0 my-0': collapseGroup.has(category.name) && collapseGroup.get(category.name)! }">
       <PostCategoryTree :categories="(category as CategoryGroup).children" :groups="groups" :depth="depth +1" :path="path" />
     </ul>
-    <a v-else class="ml-1.5 hover:underline cursor-pointer"
-       :class="{ 'font-bold text-primary-500 dark:text-primary-400': path === (category as CategoryContent).path }"
-       :href="(category as CategoryContent).path" @click.prevent="moveTo((category as CategoryContent).path)">
+    <NuxtLink v-else class="ml-1.5 hover:underline cursor-pointer"
+       :class="{ 'font-bold text-primary-500 dark:text-primary-400' :path === (category as CategoryContent).path }"
+       :to="(category as CategoryContent).path">
       <span class="text-xs">{{ category.name }}</span>
-    </a>
+    </NuxtLink>
   </li>
 </template>

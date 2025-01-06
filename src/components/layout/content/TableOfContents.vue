@@ -3,11 +3,9 @@
     <li v-for="(child, index) in props.headline.children" :key="child.fragment" class="space-y-1 hidden lg:block" :class="{
        'ml-3': props.isInner
     }">
-      <a class="block text-sm/6 truncate"
-         :href="`#${child.fragment}`"
+      <a class="block text-sm/6 truncate" :href="`#${child.fragment}`"
          :class="scrollspy.activeHeadings.includes(child.fragment) ? config.active : config.inactive"
-         @click.prevent="scrollToHeading(child.fragment)"
-      > {{ child.title }}</a>
+         @click.prevent="scrollToHeading(child.fragment)"> {{ child.title }}</a>
       <TableOfContents  v-if="props.headline.children.length > 0" :headline="props.headline.children[index]" :is-inner="true" />
     </li>
   </ul>
@@ -39,7 +37,6 @@ const scrollToHeading = (id: string) => {
 </script>
 
 <style lang="scss" scoped>
-
 .outline-link {
   color: #3c3c3cb3;
   transition: color .25s;
@@ -48,7 +45,7 @@ const scrollToHeading = (id: string) => {
     color: #213547;
   }
 }
-$levels : (1, 2, 3, 4, 5);
+
 ul {
   list-style: none;
   padding-left: 1em;
