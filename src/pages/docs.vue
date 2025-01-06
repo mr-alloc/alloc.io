@@ -24,7 +24,7 @@ const postContentStore = usePostContentStore();
 const photoViewStatusStore = usePhotoViewStatusStore();
 const prepareStore = usePagePrepareStore();
 const scrollspy = useScrollspy();
-const content = postContentStore.get(route.fullPath);
+const content = postContentStore.get(route.path);
 
 if (!content) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
@@ -34,9 +34,9 @@ const categories = computed(() => content.header.categories ?? []);
 prepareStore.prepare();
 
 nuxtApp.hook('page:finish', () => {
+  console.log('page:finish');
   if (prepareStore.isPrepare) {
-    const imageTags = document.querySelectorAll('.rendered-markdown-wrapper img');
-    imageTags.forEach((imgTag, index) => {
+    document.querySelectorAll('.rendered-markdown-wrapper img').forEach((imgTag, index) => {
       imgTag.addEventListener('click', (e) => {
         photoViewStatusStore.open(index +1)
       });

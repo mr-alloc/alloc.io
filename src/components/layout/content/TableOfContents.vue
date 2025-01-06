@@ -5,7 +5,7 @@
     }">
       <a class="block text-sm/6 truncate"
          :href="`#${child.fragment}`"
-         :class="scrollspy.activeHeadings.includes(decodeURIComponent(child.fragment)) ? config.active : config.inactive"
+         :class="scrollspy.activeHeadings.includes(child.fragment) ? config.active : config.inactive"
          @click.prevent="scrollToHeading(child.fragment)"
       > {{ child.title }}</a>
       <TableOfContents  v-if="props.headline.children.length > 0" :headline="props.headline.children[index]" :is-inner="true" />

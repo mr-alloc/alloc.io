@@ -13,7 +13,7 @@ export default class BlockquoteDecorator implements IMarkdownDecorator {
 
     public constructor() {}
 
-    public decorate(markdownIt: MarkdownIt): void {
+    public decorate(markdownIt: MarkdownIt, isDebug: boolean = false): void {
         const proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);
         const fallbackRule = markdownIt.renderer.rules[this.KEY_OPEN] || proxy;
 

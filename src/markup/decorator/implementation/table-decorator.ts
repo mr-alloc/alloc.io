@@ -11,7 +11,7 @@ export default class TableDecorator implements IMarkdownDecorator {
     private readonly KEY_OPEN = 'table_open';
     private readonly KEY_CLOSE = 'table_close';
 
-    decorate(markdownIt: MarkdownIt): void {
+    decorate(markdownIt: MarkdownIt, isDebug: boolean = false): void {
         const proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);
         const fallbackRule = markdownIt.renderer.rules[this.KEY_OPEN] || proxy;
 
@@ -58,7 +58,7 @@ export default class TableDecorator implements IMarkdownDecorator {
                 return (
                     this.getFallbackWrapper([...attributes.wrapperClass.split(' '), classes]) + `<caption class="text-gray-300 text-sm">${desc}</caption>`
                 );
-            } catch (skip) {}
+            } catch (skip) { isDebug && console.error('TableDecorator decorate error: ', skip); }
             return this.getFallbackWrapper([]);
         }
 

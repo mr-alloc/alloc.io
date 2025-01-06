@@ -4,5 +4,5 @@ import Renderer from "markdown-it/lib/renderer";
 
 export default interface IMarkdownDecorator {
 
-    decorate(markdownIt: MarkdownIt): void;
+    decorate(markdownIt: MarkdownIt, isDebug?: boolean): void;
 }

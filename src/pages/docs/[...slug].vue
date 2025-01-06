@@ -39,7 +39,7 @@ import SocialLinks from "@/components/layout/content/SocialLinks.vue";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
-const content = postContentStore.get(route.fullPath);
+const content = postContentStore.get(route.path)!;
 
 if (!content) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });

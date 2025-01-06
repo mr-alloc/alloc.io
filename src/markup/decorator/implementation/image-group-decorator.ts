@@ -9,8 +9,13 @@ export default class ImageGroupDecorator implements IMarkdownDecorator {
     public static readonly KEY_OPEN = 'image_group_open';
     public static readonly KEY_CLOSE = 'image_group_close';
 
+<<<<<<< HEAD
     decorate(markdownIt: MarkdownIt): void {
         const proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);
+=======
+    public decorate(markdownIt: MarkdownIt, isDebug: boolean = false): void {
+        const proxy = (tokens: Array<Token>, index: number, options : MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);
+>>>>>>> 13cb34e (fix: exception for image-decorator when need to render <p>.)
         const fallbackRule = markdownIt.renderer.rules[ImageGroupDecorator.KEY_OPEN] || proxy;
 
         markdownIt.renderer.rules[ImageGroupDecorator.KEY_OPEN] = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer): string => {
