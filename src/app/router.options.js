@@ -54,20 +54,17 @@ export default {
         }
     ],
     scrollBehavior: (to, from, savedPosition) => {
-        if (to.hash && to.path.match(/\/docs.+?/)) {
-            const id = to.hash.replace('#', '');
-            const element = document.getElementById(id);
+        if (to.hash && to.path.match(/\/(docs|wiki).+?/)) {
+            const element = document.querySelector(to.hash);
             /* header height: 60, offset: 100 */
             const toBeTop = element.offsetTop - 160
 
             return {
                 top: toBeTop,
                 left: 0,
-                behavior: 'smooth'
             }
         }
         return {
-            behavior: 'smooth',
             top: 0,
             left: 0
         }

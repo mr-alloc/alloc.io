@@ -10,7 +10,7 @@ export default class LinkDecorator implements IMarkdownDecorator {
 
     private readonly KEY_OPEN = 'link_open';
 
-    decorate(markdownIt: MarkdownIt): void {
+    decorate(markdownIt: MarkdownIt, isDebug: boolean = false): void {
         const route = useRoute();
         const proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);
         const fallbackRule = markdownIt.renderer.rules[this.KEY_OPEN] || proxy;

@@ -10,7 +10,7 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
     private readonly _number = /{([\d,-]+)}/;
     private readonly _wrapper = /^<pre .*?><code>/;
 
-    public decorate(markdownIt: MarkdownIt): void {
+    public decorate(markdownIt: MarkdownIt, isDebug: boolean = false): void {
         const proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);
         const defaultFence = markdownIt.renderer.rules.fence || proxy;
         // @ts-ignore

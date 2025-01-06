@@ -14,7 +14,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
     private readonly ATTR_INNER_ALIGN = 'align';
 
 
-    decorate(markdownIt: MarkdownIt): void {
+    public decorate(markdownIt: MarkdownIt, isDebug: boolean = false): void {
         const proxy = (tokens: Array<Token>, index: number, options: MarkdownIt.Options, env: any, self: Renderer) => self.renderToken(tokens, index, options);
         const fallbackRule = markdownIt.renderer.rules[this.KEY_OPEN] || proxy;
 
@@ -31,12 +31,13 @@ export default class ImageDecorator implements IMarkdownDecorator {
                 inline.content = '';
                 const imageToken = this.findChild(inline.children, 'image');
                 if (!imageToken) {
+                    //<p>
                     return fallbackRule(tokens, index, options, env, self);
                 }
 
                 const templateToken = this.findChild(inline.children, 'text');
                 if (!templateToken) {
-                    return fallbackRule(tokens, index, options, env, self);
+                    throw new Error('template token not found with inline children');
                 }
 
                 const attributes = TemplateAttributes.parse(templateToken.content).toMap();
@@ -49,7 +50,9 @@ export default class ImageDecorator implements IMarkdownDecorator {
                 const styleDecorator = StyleDecorator.getInstance();
                 styleDecorator.apply(imageToken, attributes);
                 wrapperClasses.push(imageToken.meta.wrapperClasses);
-            } catch (skip) {}
+            } catch (skip) {
+                isDebug && console.error('[decorator]image:start error: ', skip);
+            }
             return `<div class="${wrapperClasses.join(' ')}">
                        <a href="#" class="my-2 inline-flex">`;
         }
@@ -76,7 +79,9 @@ export default class ImageDecorator implements IMarkdownDecorator {
                    <figcaption class="m-0 text-center text-sm text-gray-600 dark:text-gray-400 w-full">${imageToken.attrGet('data-description')}</figcaption>
                  </div>`
                 );
-            } catch(skip) {}
+            } catch(skip) {
+                isDebug && console.error('[decorator]image:close error: ', skip);
+            }
             return `</a></div>`;
         }
     }

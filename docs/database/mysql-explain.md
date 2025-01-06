@@ -30,7 +30,7 @@ MySQL의 쿼리실행계획에 대해 알아보자.
 
 
 
-## EXPLAIN 출력 컬럼
+## EXPLAIN 출력 컬럼::explain-output-columns
 
 `EXPLAIN`의 각 출력 행은 하나의 테이블에 대한 정보를 제공한다. 각 행은  아래 `표 1.1 EXPLAIN 출력 컬럼들` 에 요약된 값을 포함한다.
 테이블의 첫번째 컬럼에는 컬럼명, 두번째는 `FORMAT=JSON`이 사용될때 출력에서 보여지는 프로퍼티명을 제공한다.
@@ -55,13 +55,13 @@ MySQL의 쿼리실행계획에 대해 알아보자.
 
 
 
-### id (SELECT 순서)
+### id (SELECT 순서)::id
 (JSON: selected_id)  
 SELECT 식별자이다. 쿼리 내에서 SELECT의 순서가 있는 숫자이며,  다른 행의 `UNION` 결과를 행이 참조한다면 값은 null일 수 있다. 
 이 경우 테이블 컬럼은 id 값들의 M과 N인 행의 `UNION`에 행이 참조하는 행을 나타내기 위해, <union**M**,**N**> 같은 값을 보여준다.
   
 
-### select_type (SELECT 타입)   
+### select_type (SELECT 타입)::select-type   
 (JSON: 없음)  
 아래 보여진 테이블중 어떤 `SELECT`의 타입이다. JSON-formatted EXPLAIN은  `SIMPLE`이나 `PRIMARY`가 아닌 한  `query_block`의 프로퍼티로 SELECT 타입을 노출한다.
 
@@ -83,18 +83,18 @@ SELECT 식별자이다. 쿼리 내에서 SELECT의 순서가 있는 숫자이며
 > `DEPENDENT`는 일반적으로 [상관관계 서브쿼리](https://dev.mysql.com/doc/refman/8.4/en/correlated-subqueries.html) 사용을 의미한다.
 :{ "type": "note", "icon": "info"}
 
-### table (참조 테이블)
+### table (참조 테이블)::table
 (JSON: table_name)    
 출력행이 참조하는 테이블명이며, 다음 값중 하나가 될 수도 있다.
 * <union**M**, **N**>:  행은 **M** 과 **N**의 id 값을 갖는 행의 union을 합집합을 참조한다.
 * <deribed**N**>: 행은 **N**의 값을 갖는 행에 대한 파생된 테이블의 결과를 참조한다.  파생된 테이블은 예를들어 `FROM`절 내 서브쿼리에서 생성될 수도 있다.
 * <subquery**N**>: 행은 **N**의 id값을 갖는 행에대해 구체화된 서브쿼리(Materialized Subquery)의 결과를 참조한다.
 
-### partition (파티션)
+### partition (파티션)::partition
 (JSON: partitions)  
   쿼리로부터 매칭될수 있는 레코드에서의 파티션이다. 파티셔닝 되지않은 테이블에 대해서는 `NULL` 이다.
 
-### type (조인타입) 
+### type (조인타입)::type
 (JSON: access_type)
 조인 타입이며, 테이블들을 어떻게 조인하는지 설명을 출력한다. JSON-formatted 출력에서는 acess_type의 속성 값으로 나온다. 다음에 목록은 조인타입을 좋은 케이스부터 안좋은케이스 순으로 설명한다.
 * system  
@@ -185,13 +185,13 @@ MySQL은 쿼리가 단일인덱스의 일부인 컬럼만 사용하는 경우, �
 * ALL  
 풀스캔은 이전 테이블의 행 조합 마다 수행된다. 테이블이 `const`로 표시되지않은 첫번째 테이블인 경우 일반적으로 좋지 않으며, 다른 모든 경우에는 *매우* 나쁘다. 보통은, 이전테이블의 상수값 이나 컬럼값을 기준으로 테이블에서 행을 검색할 수있는 인덱스를 추가하면 `ALL` 타입을 피할 수 있다.
 
-### possible_kyes (사용가능한 인덱스)
+### possible_keys (사용가능한 인덱스)::possible-keys
 (JSON: possible_keys)    
 `possible_keys` 컬럼은 MySQL이 이 테이블에서 행을 찾기위해 선택할 수 있는 인덱스들을 나타낸다. 참고로 이 컬럼은 `EXPLAIN`의 출력에 표시된 테이블들의 순서와 별개입니다. 이 말은 테이블 순서 생성된 실행에서  `possible_keys`에 어떤 키들은 사용될수 없을 수도 있다는 의미이다.
 이 컬럼이 `NULL`이라면, 적절한 인덱스가 없다는 뜻이다. 이 경우 인덱싱에 적합한 컬럼을 참조하는지 확인하기위해 `WHERE` 절을 검사사여 쿼리의 성능을 개선할 수 있다. 적절한 인덱스를 생성하고 `EXPLAIN` 쿼리를 확인해보자.
 SHOW INDEX FROM  *table_name* 으로 테이블 인덱스를 볼수 있다.
 
-### key (사용할 인덱스)
+### key (사용할 인덱스)::key
 (JSON: key)  
 `key`  컬럼은 MySQL이 사용하기로 정한 키(인덱스)를 나타냅니다. MySQL이 행조회에 `possible_keys` 인덱스들중 중 한개를 사용하기로 정했다면, 인덱스는 키값으로 나열된다.
 `key` 는 `possible_keys` 값에 없는 인덱스를 지정할 수도 있다.  이는 `possible_keys` 인덱스중 어느행도 조회되는데 적합하지 않지만, 쿼리의 선택된 모든 컬럼이 다른 인덱스의 컬럼인경우 발생할 수 있다. 즉, 지정된 인덱스가 선택된 컬럼들을 포함하고 있기때문에, 어느행을 검색할지를 결정하는 데는 사용되지 않더라도 인덱스 스캔은 데이터 행 스캔보다 효율적이다. (*이 내용은 "커버링 인덱스"의 효율성에 대한 내용이다.*)
@@ -199,29 +199,29 @@ SHOW INDEX FROM  *table_name* 으로 테이블 인덱스를 볼수 있다.
 
 `MySQL`이 `possible_keys` 컬럼 내 있는 인덱스를 강제로 사용하거나 무시하게 하려면, 쿼리에서 `FORCE_INDEX`, `USE_INDEX` 또는 `IGNORE_INDEX`를 사용하면 된다.
 
-### key_len (키의 길이) 
+### key_len (키의 길이)::key-len
 (JSON: key_length)    
 `key_len` 컬럼은 `MySQL`이 사용하기로 결정한 키의 길이를 나타낸다. `key_len`의 값은 MySQL이 실제로 사용하는 복합키의 일부가 얼마나 되는지 확인 할수 있게 해준다. 
 실제 표시되는 값은 사용된 키의 바이트 길이를 나타내여 사용하는 유니코드마다 다를수 있다. (*실제로 사용하는 복합키의 일부의 의미는 쿼리에 따라 첫번째 컬럼만 사용할 수도 있고, 두번째 컬럼까지 사용할 수 있다는 의미이다.*)
 키 저장 포맷으로 인해, `NULL`이 될수 있는 컬럼의 키 길이는 `NOT NULL`인 컬럼의 길이보다 1이 크다. (*NULL을 구분할 비트가 추가되기 때문에*)
 
-### ref (참조 값)
+### ref (참조 값)::ref
 (JSON: ref)
 `ref`컬럼은 테이블에서 `key` 컬럼 내 어떤 컬럼이나 제약이 지정된 인덱스와 비교되었는지 보여줍니다.
 값이 `func`라면, 사용된 값은 어떤 함수의 결과입니다. 어떤 함수인지 확인하려면, 확장된 `EXPLAIN`결과를 보기위해 `EXPLAIN`뒤에 `SHOW WARNINGS`를 사용하면 된다. 
 함수는 실제로 산술 연산자 같은 연산자 일 수 있다.
 
-### rows (검사 행 개수)
+### rows (검사 행 개수)::rows
 (JSON: rows)    
 `rows`  컬럼은 `MySQL`이 쿼리 실행 검사를 해야만 한다고 여기는 행들의 개수를 나타낸다. `InnoDB` 테이블의 경우, 이 값은 예측치이며, 항상 정확하지 않을 수도 있다.
 
-### filtered (필터된 수치) 
+### filtered (필터된 수치) ::filtered
 (JSON: filtered)
 `filtered` 컬럼은 테이블 조건으로 필터된 테이블 행들의 예상 백분률을 나타낸다. 
 최대 값은 100이며, 이는 행의 필터링이 발생되지않음을 의미한다. 100에서 감소된 값은 필터링 양이 증가함을 나타낸다. 
 `rows` 는 검된 행의 예상치를 보여주고`rows` × `filtered`는 다음 테이블로 조인된 행의 갯수를 보여준다. 예를들어, `rows`가 1000이고 `filtered`가 50.00(50%)라면, 다음 테이블로 조인된 행의 개수는 1000 × 50% = 500이다.
 
-### Extra (추가적인 내용)
+### Extra (추가적인 내용)::extra
 (JSON: 없음)
 이컬럼은  `MySQL`이 쿼리를 어떻게 해결하는지에 대한 추가적인 정보를 포함한다. 다른 값의 설명들은 `EXPLAIN` [Extra 정보]()을 보자.
 

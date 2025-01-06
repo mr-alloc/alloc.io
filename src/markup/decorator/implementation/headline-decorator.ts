@@ -9,7 +9,7 @@ export default class HeadlineDecorator implements IMarkdownDecorator {
     private readonly KEY_CLOSE = 'heading_close';
     private readonly FRAGMENT_EXTRACTOR_RE = /([^:]+)(?:::([\s\S]+))?/mg;
 
-    decorate(markdownIt: MarkdownIt): void {
+    decorate(markdownIt: MarkdownIt, isDebug: boolean = false): void {
         const route = useRoute();
 
         markdownIt.renderer.rules[this.KEY_OPEN] = (tokens: Array<Token>, index: number): string => {
