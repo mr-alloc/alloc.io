@@ -1,6 +1,6 @@
 import type ICategoryNode from "@/classes/i-category-node";
 
-export default class CategoryContent implements ICategoryNode{
+export default class CategoryContent implements ICategoryNode {
 
     private readonly _isDirectory: boolean;
     private readonly _name: string;

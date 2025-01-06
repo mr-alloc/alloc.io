@@ -1,6 +1,7 @@
 // https://router.vuejs.org/api/interfaces/routeroptions.html
 
 import type {RouterConfig} from "@nuxt/schema";
+import {useScrollspy} from "@/store/scroll-spy";
 
 export default {
     routes: (_routes) => [
@@ -57,22 +58,24 @@ export default {
     ],
     scrollBehavior: (to, from, savedPosition) => {
         if (to.hash && to.path.match(/\/(docs|wiki).+?/)) {
-            const element: Element | undefined = document.querySelector(to.hash) as HTMLElement;
-            if (!element) {
-                throw new Error(`Element with id ${to.hash} not found`);
-            }
+            const id = to.hash.replace('#', '');
+            const element = document.getElementById(id)!;
+            /* header height: 60, offset: 100 */
+            const toBeTop = element.offsetTop - 160;
 
-            console.log('scrolling to element: ', element);
-            element.scrollIntoView({
-                behavior: 'smooth',
-            })
+            return {
+                top: toBeTop,
+                left: 0,
+                behavior: 'smooth'
+            }
 
             /* header height: 60, offset: 100 */
         }
+
         return {
             behavior: 'smooth',
             top: 0,
             left: 0
-        }
+        };
     }
 } satisfies RouterConfig

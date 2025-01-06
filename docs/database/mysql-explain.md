@@ -215,7 +215,7 @@ SHOW INDEX FROM  *table_name* 으로 테이블 인덱스를 볼수 있다.
 (JSON: rows)    
 `rows`  컬럼은 `MySQL`이 쿼리 실행 검사를 해야만 한다고 여기는 행들의 개수를 나타낸다. `InnoDB` 테이블의 경우, 이 값은 예측치이며, 항상 정확하지 않을 수도 있다.
 
-### filtered (필터된 수치) ::filtered
+### filtered (필터된 수치)::filtered
 (JSON: filtered)
 `filtered` 컬럼은 테이블 조건으로 필터된 테이블 행들의 예상 백분률을 나타낸다. 
 최대 값은 100이며, 이는 행의 필터링이 발생되지않음을 의미한다. 100에서 감소된 값은 필터링 양이 증가함을 나타낸다. 
