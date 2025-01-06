@@ -27,7 +27,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         RuleType.LINK,
         RuleType.TABLE,
         RuleType.IMAGE_GROUP
-    ).forEach(decorator => decorator.decorate(markdownIt));
+    ).forEach(decorator => decorator.decorate(markdownIt, true));
 
     const shikiExtension = await shiki({
         transformers: [
