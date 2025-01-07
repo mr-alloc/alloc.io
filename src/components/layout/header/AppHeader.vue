@@ -28,13 +28,13 @@
               </button>
             </UTooltip>
           </div>
-          <div :class="ui.header.feature.item.wrapper">
-            <UTooltip :text="$colorMode.preference === 'dark' ? '라이트 모드로' : '다크모드로'">
-              <button type="button" :class="ui.header.feature.item.button" v-on:click="isDark = !isDark">
-                <span :class="[ui.header.feature.item.icon, isDark ? appConfig.ui.icons.dark : appConfig.ui.icons.light]"></span>
-              </button>
-            </UTooltip>
-          </div>
+<!--          <div :class="ui.header.feature.item.wrapper">-->
+<!--            <UTooltip :text="$colorMode.preference === 'dark' ? '라이트 모드로' : '다크모드로'">-->
+<!--              <button type="button" :class="ui.header.feature.item.button" v-on:click="isDark = !isDark">-->
+<!--                <span :class="[ui.header.feature.item.icon, isDark ? appConfig.ui.icons.dark : appConfig.ui.icons.light]"></span>-->
+<!--              </button>-->
+<!--            </UTooltip>-->
+<!--          </div>-->
         </div>
       </div>
     </header>

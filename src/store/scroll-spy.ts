@@ -19,7 +19,6 @@ export const useScrollspy = defineStore('scroll-spy', () => {
     }
 
     const updateHeadings = (headings: Element[]) => {
-        console.log('updateHeadings: ', headings.length);
         headings.forEach((heading) => {
             if (!observer.value) {
                 return;
@@ -34,7 +33,7 @@ export const useScrollspy = defineStore('scroll-spy', () => {
         } else {
             activeHeadings.value = val;
         }
-    })
+    });
 
     // Create intersection observer
     onBeforeMount(() => (observer.value = new IntersectionObserver(observerCallback)));

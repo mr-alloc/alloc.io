@@ -1,6 +1,6 @@
-export class Pair<L,R> {
-    _left: L
-    _right: R
+export default class Pair<L,R> {
+    private readonly _left: L
+    private readonly _right: R
 
     constructor(left: L, right: R) {
         this._left = left

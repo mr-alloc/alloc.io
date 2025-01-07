@@ -3,7 +3,7 @@
       :ui="{
       right: 'sticky top-[--header-height] bg-background/75 backdrop-blur group -mx-4 sm:-mx-6 px-4 sm:px-6 lg:px-4 lg:-mx-4 overflow-y-auto max-h-[calc(100vh-var(--header-height))] z-10'
     }">
-    <MainPageHeader :title="content.header.title">
+    <MainPageHeader :title="title">
       <template #headline>
         <Breadcrumb :breadcrumbs="['위키']" />
       </template>
@@ -14,7 +14,7 @@
     </MainPageBody>
 
     <template v-if="content.header.rootHeadLine" #right>
-      <ContentToc :headline="content.header.rootHeadLine" no-wrapper>
+      <ContentToc :headline="content.header.rootHeadLine" :title="title" no-wrapper>
 
       </ContentToc>
     </template>
@@ -37,7 +37,7 @@ const route = useRoute();
 const postContentStore = usePostContentStore();
 const categoriesStore = useCategoriesStore();
 const paths = route.path.split('/');
-const content = postContentStore.getWiki(paths[paths.length -1]);
+const content = postContentStore.getWiki(paths[paths.length -1])!;
 
 if (!content) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
@@ -46,6 +46,7 @@ if (!content) {
 onMounted(() => {
   categoriesStore.initialize(postContentStore.values(DocumentType.POST));
 });
+
 const titleTemplate = computed(() => {
   return '%s · Alloc Blog'
 });
