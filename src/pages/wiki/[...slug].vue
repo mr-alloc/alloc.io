@@ -32,11 +32,17 @@ import MainPageHeader from "@/components/layout/content/MainPageHeader.vue";
 import ContentToc from "@/components/layout/content/ContentToc.vue";
 import Breadcrumb from "@/components/layout/content/Breadcrumb.vue";
 import {useNuxtApp} from "nuxt/app";
+import {usePagePrepareStore} from "@/store/prepare-post-store";
+import {usePhotoViewStatusStore} from "@/store/photo-view-store";
+import {useScrollspy} from "@/store/scroll-spy";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
 const categoriesStore = useCategoriesStore();
 const paths = route.path.split('/');
+const prepareStore = usePagePrepareStore();
+const photoViewStatusStore = usePhotoViewStatusStore();
+const scrollspy = useScrollspy();
 const content = postContentStore.getWiki(paths[paths.length -1])!;
 
 if (!content) {
@@ -64,5 +70,39 @@ useSeoMeta({
   ogImage: content.header.thumbnail,
   ogUrl: appConfig.domain + route.path,
   ogSiteName: '$ alloc(*io);',
+});
+
+
+
+nuxtApp.hook('page:finish', () => {
+  if (prepareStore.isPrepare) {
+    const imageTags = document.querySelectorAll('.rendered-markdown-wrapper img');
+    imageTags.forEach((imgTag, index) => {
+      imgTag.addEventListener('click', (e) => {
+        photoViewStatusStore.open(index +1)
+      });
+    });
+
+    scrollspy.updateHeadings(content.header.rootHeadLine, [
+      ...document.querySelectorAll('h2'),
+      ...document.querySelectorAll('h3')
+    ]);
+    prepareStore.done();
+  }
+
+});
+
+
+onMounted(() => {
+
+  useRouter().afterEach(() => {
+    setTimeout(() => {
+      scrollspy.reinitializeObserver();
+      scrollspy.updateHeadings(content.header.rootHeadLine, [
+        ...document.querySelectorAll('h2'),
+        ...document.querySelectorAll('h3')
+      ]);
+    }, 100)
+  });
 });
 </script>

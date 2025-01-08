@@ -5,7 +5,7 @@
       <slot name="top" />
 
       <button class="flex items-center gap-1.5 lg:cursor-text lg:select-text w-full group" tabindex="-1">
-        <span class="text-sm/6 truncate sm:block block lg:hidden font-bold">{{ allNodes.get(scrollspy.activeHeadings.sort((a, b) => allNodes.get(a).left - allNodes.get(b).left)[0])?.right.title ?? props.title }}</span>
+        <span class="text-sm/6 truncate sm:block block lg:hidden font-bold">{{ scrollspy.representationTitle ?? props.title }}</span>
 
         <span class="font-semibold text-sm/6 truncate sm:hidden hidden lg:block">Table Of Contents</span>
 
@@ -35,21 +35,6 @@ const props = defineProps<{
   title: string
 }>();
 
-const allNodes = computed(() => {
-  // make toc node Map with key fragment using reduce function with recursive. like: Map<string, TocNode>
-  const nodes = new Map<string, Pair<number, TocNode>>();
-  let no = 0;
-  const reduce = (node: TocNode) => {
-    if (node.fragment !== '') {
-      nodes.set(node.fragment, new Pair<number, TocNode>(no++, node));
-    }
-    node.children.forEach(reduce);
-  };
-  if (props.headline) {
-    reduce(props.headline as TocNode);
-  }
-  return nodes;
-});
 
 const ui = computed(() => ({
   wrapper: 'sticky top-[--header-height] bg-background/75 backdrop-blur -mx-4 sm:-mx-6 px-4 sm:px-6 lg:px-4 lg:-mx-4 overflow-y-auto max-h-[calc(100vh-var(--header-height))]',

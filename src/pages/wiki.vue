@@ -33,36 +33,4 @@ if (!content) {
 
 const categories = computed(() => content.header.categories ?? []);
 prepareStore.prepare();
-
-nuxtApp.hook('page:finish', () => {
-  if (prepareStore.isPrepare) {
-    const imageTags = document.querySelectorAll('.rendered-markdown-wrapper img');
-    imageTags.forEach((imgTag, index) => {
-      imgTag.addEventListener('click', (e) => {
-        photoViewStatusStore.open(index +1)
-      });
-    });
-
-    scrollspy.updateHeadings([
-      ...document.querySelectorAll('h2'),
-      ...document.querySelectorAll('h3')
-    ]);
-    prepareStore.done();
-  }
-
-});
-
-
-onMounted(() => {
-
-  useRouter().afterEach(() => {
-    setTimeout(() => {
-      scrollspy.reinitializeObserver();
-      scrollspy.updateHeadings([
-        ...document.querySelectorAll('h2'),
-        ...document.querySelectorAll('h3')
-      ]);
-    }, 100)
-  });
-});
 </script>
