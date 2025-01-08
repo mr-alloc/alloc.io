@@ -1,7 +1,7 @@
 import Header from "@/classes/implement/header";
 import type IPostMetadata from "@/classes/i-post-content";
 import DocumentType from "@/classes/constant/document-type";
-import {isEmpty} from "lodash";
+import {isEmpty} from "@/utils/string-utils";
 
 export class PostMetadata implements IPostMetadata {
     private readonly _path: string
