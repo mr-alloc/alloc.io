@@ -46,7 +46,9 @@ nuxtApp.hook('page:finish', () => {
 onMounted(() => {
 
   useRouter().afterEach(() => {
+    console.log('after each')
     setTimeout(() => {
+      console.log('after each timeout')
       scrollspy.reinitializeObserver();
       scrollspy.updateHeadings([
         ...document.querySelectorAll('h2'),
@@ -54,6 +56,6 @@ onMounted(() => {
       ]);
     }, 100)
   });
-})
+});
 prepareStore.prepare();
 </script>

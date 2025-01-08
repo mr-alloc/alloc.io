@@ -1,19 +1,27 @@
-export default class TocNode {
+import type {Nested} from "@/utils/collection-util";
 
-    private readonly _grade: number;
+export default class TocNode implements Nested {
+
+    private readonly _rank: number;
+    private readonly _origin: string;
     private readonly _title: string;
     private readonly _fragment: string;
-    private readonly _children: Array<TocNode>;
+    private _children: Array<TocNode>;
 
     public constructor(node: any) {
-        this._grade = node.grade
+        this._rank = node.rank
+        this._origin = node.origin
         this._title = node.title
         this._fragment = node.fragment
-        this._children = node.children.map(TocNode.createRecursive);
+        this._children = node.children.map(TocNode.createRecursive) ?? [];
     }
 
-    get grade(): number {
-        return this._grade;
+    get rank(): number {
+        return this._rank;
+    }
+
+    get origin(): string {
+        return this._origin;
     }
 
     get title(): string {
@@ -26,6 +34,20 @@ export default class TocNode {
 
     get children(): TocNode[] {
         return this._children;
+    }
+
+    public addChild(child: Nested): void {
+        this._children.push(child as TocNode);
+    }
+
+    public serialize(): any {
+        return {
+            rank: this._rank,
+            origin: this._origin,
+            title: this._title,
+            fragment: this._fragment,
+            children: []
+        };
     }
 
     public static createRecursive(node: any): TocNode {

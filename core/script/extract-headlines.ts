@@ -5,32 +5,33 @@ const headlineRE = () => {
 }
 
 
+/**
+ * 자신보다 높은 순위의 자식노드를 찾을 때까지 재귀
+ * @param parent 탐색할 부모노드
+ * @param node 현재노드
+ */
+function findRecursive(parent: TocNode, node: TocNode) {
+    if (node.belongTo(parent)) {
+        //탐색할 부모 노드에 마지막 자식노드의 순위보다 현재노드의 순위[오름차순]가 낮다면 자식노드에 추가
+        if (parent.hasLargestRankChildThen(node)) {
+            findRecursive(parent.children[parent.children.length - 1], node)
+            return
+        }
+
+        parent.addChild(node);
+    }
+}
 
 export default (content: string) =>  {
-    const lines = content.split('\n');
-    const rootNode = new TocNode(0, 'root');
+    const lines = content.split('\n').filter(line => headlineRE().test(line));
+    const rootNode = new TocNode(0, 'root::root');
 
-    function addHeadline(node: TocNode) {
-        initRecursive(rootNode, node)
-    }
-
-    function initRecursive(parent: TocNode, node: TocNode) {
-        if (parent.grade < node.grade) {
-            if (parent.hasChild() && parent.children[parent.children.length - 1].grade < node.grade) {
-                initRecursive(parent.children[parent.children.length - 1], node)
-                return
-            }
-            parent.grade < node.grade && parent.addChild(node)
+    for (let line of lines) {
+        const executed = headlineRE().exec(line)
+        if (executed) {
+            const node = new TocNode(executed[1].length, executed[2].trim())
+            findRecursive(rootNode, node)
         }
     }
-
-    lines.filter(line => headlineRE().test(line))
-        .forEach(line => {
-            const executed = line.match(headlineRE()) &&  headlineRE().exec(line)
-            if (executed) {
-                const node = new TocNode(executed[1].length, executed[2].trim())
-                addHeadline(node)
-            }
-        })
     return rootNode
 }

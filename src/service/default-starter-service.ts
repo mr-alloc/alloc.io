@@ -47,6 +47,8 @@ class DefaultStarterService implements StarterService {
                 }
             });
 
+        postContentStore.completeAddPost();
+
         if (this.isInitialized) {
             return;
         }

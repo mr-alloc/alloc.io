@@ -51,4 +51,20 @@ nuxtApp.hook('page:finish', () => {
   }
 
 });
+
+
+onMounted(() => {
+
+  useRouter().afterEach(() => {
+    console.log('after each')
+    setTimeout(() => {
+      console.log('after each timeout')
+      scrollspy.reinitializeObserver();
+      scrollspy.updateHeadings([
+        ...document.querySelectorAll('h2'),
+        ...document.querySelectorAll('h3')
+      ]);
+    }, 100)
+  });
+});
 </script>
