@@ -22,7 +22,7 @@ export default class Header {
     public constructor(header: any) {
         this._layout = header.layout;
         this._title = header.title;
-        this._categories = header.categories;
+        this._categories = header.categories ?? [];
         this._tags = header.tags;
         this._date = new Date(header.date);
         this._images = header.images.map((img: any) => new Image(img.src, img.alt));

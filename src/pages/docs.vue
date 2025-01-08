@@ -19,41 +19,6 @@ import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 import {useScrollspy} from "@/store/scroll-spy";
 
 const route = useRoute();
-const nuxtApp = useNuxtApp();
-const photoViewStatusStore = usePhotoViewStatusStore();
-const postContentStore = usePostContentStore();
 const prepareStore = usePagePrepareStore();
-const scrollspy = useScrollspy();
-
-nuxtApp.hook('page:finish', () => {
-  if (prepareStore.isPrepare) {
-    document.querySelectorAll('.rendered-markdown-wrapper img').forEach((imgTag, index) => {
-      imgTag.addEventListener('click', (e) => {
-        photoViewStatusStore.open(index +1)
-      });
-    });
-
-    scrollspy.updateHeadings([
-      ...document.querySelectorAll('h2'),
-      ...document.querySelectorAll('h3')
-    ]);
-
-    prepareStore.done();
-  }
-
-});
-
-onMounted(() => {
-
-  useRouter().afterEach(() => {
-    setTimeout(() => {
-      scrollspy.reinitializeObserver();
-      scrollspy.updateHeadings([
-        ...document.querySelectorAll('h2'),
-        ...document.querySelectorAll('h3')
-      ]);
-    }, 100)
-  });
-});
 prepareStore.prepare();
 </script>
