@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 꼬미의 젊은 시절
+description: 이빨로 무는 노루 
 categories: []
 tags: [Life]
 date: 2024-12-19 16:00:00 +0900

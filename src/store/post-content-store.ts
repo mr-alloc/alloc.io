@@ -2,11 +2,14 @@ import {defineStore} from "pinia";
 import {PostMetadata} from "@/classes/implement/PostMetadata";
 import {ref} from "@vue/reactivity";
 import DocumentType from "@/classes/constant/document-type";
+import type TocNode from "@/classes/implement/toc-node";
+import {nestedToArray} from "@/utils/collection-util";
 
 export const usePostContentStore = defineStore("PostMap", () => {
 
 
     const postContents = ref<Map<string, PostMetadata>>(new Map<string, PostMetadata>());
+    const headlineMap = ref<Map<string, Map<string, TocNode>>>(new Map<string, Map<string, TocNode>>());
 
     function add(post: PostMetadata) {
         postContents.value.set(post.path,  post);
@@ -22,7 +25,7 @@ export const usePostContentStore = defineStore("PostMap", () => {
 
     function getWiki(filename: string): PostMetadata | undefined {
         return values(DocumentType.WIKI)
-            .find(post => post.filename === filename);;
+            .find(post => post.filename === filename);
     }
 
     function values(documentType: DocumentType): Array<PostMetadata> {
@@ -38,6 +41,18 @@ export const usePostContentStore = defineStore("PostMap", () => {
         return Array.from(postContents.value.keys());
     }
 
+    function completeAddPost() {
+        headlineMap.value = [...postContents.value.values()].reduce((acc, post) => {
+            const array = nestedToArray(post.header.rootHeadLine) as Array<TocNode>;
+            acc.set(post.path, toMap<string, TocNode>(
+                array,
+                (toc) => toc.origin
+            ));
+            return acc;
+        }, new Map<string, Map<string, TocNode>>());
+    }
+
+
     return {
         add,
         get,
@@ -45,6 +60,8 @@ export const usePostContentStore = defineStore("PostMap", () => {
         allValues,
         getWiki,
         isWiki,
-        keys
+        keys,
+        completeAddPost,
+        headlineMap
     }
 });

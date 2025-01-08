@@ -27,41 +27,41 @@
         }
       ],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "CPU란?::what-is-cpu",
             "title": "CPU란?",
             "fragment": "what-is-cpu",
-            "children": [],
-            "isSelected": false
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "Core의 구조::core-structure",
             "title": "Core의 구조",
             "fragment": "core-structure",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "Control Unit (제어장치)::control-unit",
                 "title": "Control Unit (제어장치)",
                 "fragment": "control-unit",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "Data Processing Unit (처리장치)::data-processing-unit",
                 "title": "Data Processing Unit (처리장치)",
                 "fragment": "data-processing-unit",
-                "children": [],
-                "isSelected": false
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "",
@@ -100,41 +100,41 @@
         }
       ],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "DMA란 무엇인가?::what-is-dma",
             "title": "DMA란 무엇인가?",
             "fragment": "what-is-dma",
-            "children": [],
-            "isSelected": false
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "DMA는 어떻게 사용되는가?::how-dma-used-for",
             "title": "DMA는 어떻게 사용되는가?",
             "fragment": "how-dma-used-for",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "DMA 동작 순서::sequence-of-dma",
                 "title": "DMA 동작 순서",
                 "fragment": "sequence-of-dma",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "DMA 동작모드::mode-of-dma",
                 "title": "DMA 동작모드",
                 "fragment": "mode-of-dma",
-                "children": [],
-                "isSelected": false
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "",
@@ -159,40 +159,40 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "I/O Manager란?",
             "title": "I/O Manager란?",
-            "fragment": "",
-            "children": [],
-            "isSelected": false
+            "fragment": "root-0",
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "PCI express",
             "title": "PCI express",
-            "fragment": "",
-            "children": [],
-            "isSelected": false
+            "fragment": "root-1",
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "Bridge (North Bridge, South Bridge)",
             "title": "Bridge (North Bridge, South Bridge)",
-            "fragment": "",
-            "children": [],
-            "isSelected": false
+            "fragment": "root-2",
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "I/O Manager의 역할",
             "title": "I/O Manager의 역할",
-            "fragment": "",
-            "children": [],
-            "isSelected": false
+            "fragment": "root-3",
+            "children": []
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "",
@@ -217,26 +217,26 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "PIO란?",
             "title": "PIO란?",
-            "fragment": "",
-            "children": [],
-            "isSelected": false
+            "fragment": "root-0",
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "PIO의 데이터 전송방식",
             "title": "PIO의 데이터 전송방식",
-            "fragment": "",
-            "children": [],
-            "isSelected": false
+            "fragment": "root-1",
+            "children": []
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "",
@@ -269,11 +269,11 @@
         }
       ],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
-        "children": [],
-        "isSelected": false
+        "fragment": "root",
+        "children": []
       }
     },
     "description": "\r\n",
@@ -306,104 +306,104 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "EXPLAIN 출력 컬럼::explain-output-columns",
             "title": "EXPLAIN 출력 컬럼",
             "fragment": "explain-output-columns",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "id (SELECT 순서)::id",
                 "title": "id (SELECT 순서)",
                 "fragment": "id",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "select_type (SELECT 타입)::select-type",
                 "title": "select_type (SELECT 타입)",
                 "fragment": "select-type",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "table (참조 테이블)::table",
                 "title": "table (참조 테이블)",
                 "fragment": "table",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "partition (파티션)::partition",
                 "title": "partition (파티션)",
                 "fragment": "partition",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "type (조인타입)::type",
                 "title": "type (조인타입)",
                 "fragment": "type",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "possible_keys (사용가능한 인덱스)::possible-keys",
                 "title": "possible_keys (사용가능한 인덱스)",
                 "fragment": "possible-keys",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "key (사용할 인덱스)::key",
                 "title": "key (사용할 인덱스)",
                 "fragment": "key",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "key_len (키의 길이)::key-len",
                 "title": "key_len (키의 길이)",
                 "fragment": "key-len",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "ref (참조 값)::ref",
                 "title": "ref (참조 값)",
                 "fragment": "ref",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "rows (검사 행 개수)::rows",
                 "title": "rows (검사 행 개수)",
                 "fragment": "rows",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "filtered (필터된 수치)::filtered",
                 "title": "filtered (필터된 수치)",
                 "fragment": "filtered",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "Extra (추가적인 내용)::extra",
                 "title": "Extra (추가적인 내용)",
                 "fragment": "extra",
-                "children": [],
-                "isSelected": false
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "MySQL의 쿼리실행계획에 대해 알아보자.\r\n",
@@ -438,141 +438,141 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "트랜잭션 관리자",
             "title": "트랜잭션 관리자",
-            "fragment": "",
+            "fragment": "root-0",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "설명",
                 "title": "설명",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-0-0",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "필드",
                 "title": "필드",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-0-1",
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "설정기능",
             "title": "설정기능",
-            "fragment": "",
+            "fragment": "root-1",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "final setTransactionSynchronizationName(String constantName)",
                 "title": "final setTransactionSynchronizationName(String constantName)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-1-0",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "final setTransactionSynchronization( int transactionSynchronization)",
                 "title": "final setTransactionSynchronization( int transactionSynchronization)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-1-1",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "final setDefaultTimeout(int defaultTimeout)",
                 "title": "final setDefaultTimeout(int defaultTimeout)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-1-2",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "final setNestedTransactionAllowed(boolean nestedTransactionAllowed)",
                 "title": "final setNestedTransactionAllowed(boolean nestedTransactionAllowed)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-1-3",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "final setValidateExistingTransaction(boolean validateExistingTransaction)",
                 "title": "final setValidateExistingTransaction(boolean validateExistingTransaction)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-1-4",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "final setGlobalRollbackOnParticipationFailure(boolean gloabalRollbackOnParticipationFailure)",
                 "title": "final setGlobalRollbackOnParticipationFailure(boolean gloabalRollbackOnParticipationFailure)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-1-5",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "final setFailEarlyOnGlobalRollbackOnly(boolean failEarlyOnGlobalRollbackOnly)",
                 "title": "final setFailEarlyOnGlobalRollbackOnly(boolean failEarlyOnGlobalRollbackOnly)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-1-6",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "final setRollbackOnCommitFailure(boolean rollbackOnCommitFailure)",
                 "title": "final setRollbackOnCommitFailure(boolean rollbackOnCommitFailure)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-1-7",
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "PlatformTransactionManager 구현체",
             "title": "PlatformTransactionManager 구현체",
-            "fragment": "",
+            "fragment": "root-2",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "final getTransaction(TransactionDefinition definition)",
                 "title": "final getTransaction(TransactionDefinition definition)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-2-0",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "doGetTransaction",
                 "title": "doGetTransaction",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-2-1",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "handleExistingTransaction",
                 "title": "handleExistingTransaction",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-2-2",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "doBegin",
                 "title": "doBegin",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-2-3",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "final commit(TransactionStatus status)",
                 "title": "final commit(TransactionStatus status)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-2-4",
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "트랜잭션 관리자의 공통 처리사항을 알아보자\r\n\r\n",
@@ -614,27 +614,27 @@
         }
       ],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "하드디스크의 구성",
             "title": "하드디스크의 구성",
-            "fragment": "",
+            "fragment": "root-0",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "Head",
                 "title": "Head",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-0-0",
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "대표적인 저장장치 하드디스크는 어떻게 동작할까?\r\n하드디스크의 구성과, 동작원리를 파해쳐보자.\r\n",
@@ -664,11 +664,11 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
-        "children": [],
-        "isSelected": false
+        "fragment": "root",
+        "children": []
       }
     },
     "description": "\r\n",
@@ -700,11 +700,11 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
-        "children": [],
-        "isSelected": false
+        "fragment": "root",
+        "children": []
       }
     },
     "description": "\r\n",
@@ -735,64 +735,64 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "개요::overview",
             "title": "개요",
             "fragment": "overview",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "적용 전::before-customize",
                 "title": "적용 전",
                 "fragment": "before-customize",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "적용 후::after-customize",
                 "title": "적용 후",
                 "fragment": "after-customize",
-                "children": [],
-                "isSelected": false
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "분석::analysis",
             "title": "분석",
             "fragment": "analysis",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "Render Rule (규칙)::renderer-rule",
                 "title": "Render Rule (규칙)",
                 "fragment": "renderer-rule",
-                "children": [],
-                "isSelected": false
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "템플릿 규칙 적용::apply-template-rule",
             "title": "템플릿 규칙 적용",
             "fragment": "apply-template-rule",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "규칙 수정::modify-rule",
                 "title": "규칙 수정",
                 "fragment": "modify-rule",
-                "children": [],
-                "isSelected": false
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "javascript의 마크다운 파서인 markdown-it 라이브러리를 커스텀해서 사용해보자. \r\n",
@@ -827,55 +827,55 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "우리가 아는 자바스크립트",
             "title": "우리가 아는 자바스크립트",
-            "fragment": "",
-            "children": [],
-            "isSelected": false
+            "fragment": "root-0",
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "타입스크립트는 무엇인가?",
             "title": "타입스크립트는 무엇인가?",
-            "fragment": "",
-            "children": [],
-            "isSelected": false
+            "fragment": "root-1",
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "타입스크립트를 배우기전 ES5 또는 ESNext의 주요 문법을 알아보자",
             "title": "타입스크립트를 배우기전 ES5 또는 ESNext의 주요 문법을 알아보자",
-            "fragment": "",
+            "fragment": "root-2",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "비구조화 할당",
                 "title": "비구조화 할당",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-2-0",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "화살표 함수 (arrow function)",
                 "title": "화살표 함수 (arrow function)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-2-1",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "클래스 (class)",
                 "title": "클래스 (class)",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-2-2",
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "타입스크립트 시작하기.\r\n도대체 왜 사용하는거고, 뭐가 좋은걸까?\r\n",
@@ -906,48 +906,48 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "설치",
             "title": "설치",
-            "fragment": "",
-            "children": [],
-            "isSelected": false
+            "fragment": "root-0",
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "명령어",
             "title": "명령어",
-            "fragment": "",
+            "fragment": "root-1",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "플러그인",
                 "title": "플러그인",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-1-0",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "모듈",
                 "title": "모듈",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-1-1",
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "설치 순서",
             "title": "설치 순서",
-            "fragment": "",
-            "children": [],
-            "isSelected": false
+            "fragment": "root-2",
+            "children": []
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "다양한 모듈의 버전을 한번에 관리할 수 있는 asdf \r\n",
@@ -1040,55 +1040,55 @@
         }
       ],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "설명::intro",
             "title": "설명",
             "fragment": "intro",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "Heap의 속성 (성질)::temper",
                 "title": "Heap의 속성 (성질)",
                 "fragment": "temper",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "Heap을 만드는 방법::how-to-make-heap",
                 "title": "Heap을 만드는 방법",
                 "fragment": "how-to-make-heap",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "Heap이 우선 값을 유지하는 방법::how-to-keeping-priority-value",
                 "title": "Heap이 우선 값을 유지하는 방법",
                 "fragment": "how-to-keeping-priority-value",
-                "children": [],
-                "isSelected": false
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "Heap을 이용해 정렬을 하는 방법::how-to-sort-by-heap",
                 "title": "Heap을 이용해 정렬을 하는 방법",
                 "fragment": "how-to-sort-by-heap",
-                "children": [],
-                "isSelected": false
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "구현 코드 (Java)::implementation-code",
             "title": "구현 코드 (Java)",
             "fragment": "implementation-code",
-            "children": [],
-            "isSelected": false
+            "children": []
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "힙의 자료구조와 어떻게 우선순위를 유지하는지 알아보자.\r\n\r\n",
@@ -1121,34 +1121,34 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "삽입정렬 (Insertion Sort)",
             "title": "삽입정렬 (Insertion Sort)",
-            "fragment": "",
+            "fragment": "root-0",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "설명",
                 "title": "설명",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-0-0",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "예제코드",
                 "title": "예제코드",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-0-1",
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "이번 포스팅 순서는, \r\n기본 정렬 알고리즘중 하나인 삽입 정렬(Insertion Sort)입니다.\r\n\r\n이전 포스팅의 선택정렬하고는 또 다른 맛이있네용 ㅋㅋ\r\n\r\n지적 및 조언 댓글 환영입니다. ㅎㅎ\r\n",
@@ -1181,37 +1181,37 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "컴퓨터의 구성::computer-structure",
             "title": "컴퓨터의 구성",
             "fragment": "computer-structure",
-            "children": [],
-            "isSelected": false
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "운영체제의 동작 순서::sequence-of-os",
             "title": "운영체제의 동작 순서",
             "fragment": "sequence-of-os",
-            "children": [],
-            "isSelected": false
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "운영체제의 역할::role-of-os",
             "title": "운영체제의 역할",
             "fragment": "role-of-os",
-            "children": [],
-            "isSelected": false
+            "children": []
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "운영체제가 어떤일을 하는지를 알려면, 컴퓨터가 어떤 요소들로 구성되어 있는지를 이해 해야한다.\r\n각 요소의 구성과 이해관계 그리고 역할을 알아보자.\r\n",
-    "content": "\r\n\r\n## 컴퓨터의 구성::computer-structure\r\n\r\n컴퓨터는 크게 응용프로그램, 운영체제, 하드웨어 계층으로 분류된다.\r\n이 문서에서는 응용프로그램을 제외하고 운영체제와 하드웨어에 대해 논한다.\r\n\r\n[CPU](/wiki/central-processing-unit)와 [입출력 장치]() 그리고 [메모리]()는 [시스템 버스]()를 통해 서로 연결되어 있으며, 버스의 종류에 따라 단방향 또는 양방향으로 신호를 보낸다.\r\n입출력 장치의 경우 메인보드 위에 사전에 만들어진 장치 컨트롤러를 운영체제의 장치 드라이버가 제어하며, 장치드라이버는 운영체제에 일관된 인터페이스를 제공한다.\r\nCPU와 장치컨트롤러는 병렬로 실행되기 떄문에 메모리에 접근하기위해 메모리 사이클을 두고 경쟁한다. 이 메모리에 순차적으로 접근하기 위해 메모리 컨트롤러는 메모리에 대한 액세스를 동기화한다.\r\n\r\n\r\n위에서 간단히 설명한 내용은 OS 내부의 커널과 시스템 프로그램에 의해 제어되며, 하드웨어의 경우 사전에 설계된 회로의 동작을 수행한다.\r\n\r\n## 운영체제의 동작 순서::sequence-of-os\r\n\r\n컴퓨터의 전원을 켤 때 실행되는 부트스트랩 프로그램은 펌웨어이다.  \r\n부트스트랩 프로그램은 하드웨어 위에서 동작하며 `CPU`, `메모리` `저장장치` 등을 초기화 한다. 또한 운영체제를 로드하기 위해 부트로더를 실행하며, 이는 저장장치에서 메모리로 [Kernel]()(`커널`)을 적재한다.\r\n\r\n부트로더는 커널 실행에 필요한 초기설정(예: 커맨드라인 인자 전달 등)을 한뒤, 커널에 제어를 넘긴다. 이후에 커널은 시스템을 초기화하고 사용자 공간(user space)을 준비한다.\r\n각 시스템에서 사용 되는 부트로더는 여러종류가 있다.\r\n\r\n* GRUB (GNU GRUB):\r\n  * 리눅스/유닉스 시스템에서 사용되는 부트로더\r\n* LILO(Linux Loader)\r\n  * 과거 리눅스 시스템에서 사용되는 부트로더\r\n* Windows Boot Manager\r\n  * 윈도우 시스템에서 사용하는 부트로더\r\n* Android Bootloader\r\n  * 안드로이드 기기에서 사용되는 부트로더로, 리커버리모드와 운영체제를 실행한다.\r\n\r\n## 운영체제의 역할::role-of-os\r\n\r\n운영체제는 컴퓨터 시스템의 자원을 효율적으로 관리하고, 사용자와 하드웨어 간의 인터페이스 역할을 한다.\r\n시스템콜과 같은 시스템 프로그램을 통해 사용자와 하드웨어 간의 인터페이스를 제공하며, 이를 통해 사용자는 하드웨어를 사용할 수 있다.\r\n\r\n[시스템콜]()은 사용자 프로그램에서 시스템의 일부를 제어하기 위해 커널에 요청하는 인터페이스이다. \r\n운영 체제는 사용자 프로그램의 잘못된 요청을 실행하지 않기 위해 이를 인터페스로서 사용자에게 제공하고 커널에서는 요청된 시스템콜의 요청 정보를 검증하여 실행한다.\r\n"
+    "content": "\r\n\r\n## 컴퓨터의 구성::computer-structure\r\n\r\n컴퓨터는 크게 응용프로그램, 운영체제, 하드웨어 계층으로 분류된다.\r\n이 문서에서는 응용프로그램을 제외하고 운영체제와 하드웨어에 대해 논한다.\r\n\r\n[CPU](/wiki/central-processing-unit)와 [입출력 장치]() 그리고 [메모리]()는 [시스템 버스]()를 통해 서로 연결되어 있으며, 버스의 종류에 따라 단방향 또는 양방향으로 신호를 보낸다.\r\n입출력 장치의 경우 메인보드 위에 사전에 만들어진 장치 컨트롤러를 운영체제의 장치 드라이버가 제어하며, 장치드라이버는 운영체제에 일관된 인터페이스를 제공한다.\r\nCPU와 장치컨트롤러는 병렬로 실행되기 떄문에 메모리에 접근하기위해 메모리 사이클을 두고 경쟁한다. 이 메모리에 순차적으로 접근하기 위해 메모리 컨트롤러는 메모리에 대한 액세스를 동기화한다.\r\n\r\n\r\n위에서 간단히 설명한 내용은 OS 내부의 커널과 시스템 프로그램에 의해 제어되며, 하드웨어의 경우 사전에 설계된 회로의 동작을 수행한다.\r\n\r\n## 운영체제의 동작 순서::sequence-of-os\r\n\r\n컴퓨터의 전원을 켤 때 실행되는 부트스트랩 프로그램은 펌웨어이다.  \r\n부트스트랩 프로그램은 하드웨어 위에서 동작하며 `CPU`, `메모리` `저장장치` 등을 초기화 한다. 또한 운영체제를 로드하기 위해 부트로더를 실행하며, 이는 저장장치에서 메모리로 [Kernel]()(`커널`)을 적재한다.\r\n\r\n부트로더는 커널 실행에 필요한 초기설정(예: 커맨드라인 인자 전달 등)을 한뒤, 커널에 제어를 넘긴다. 이후에 커널은 시스템을 초기화하고 사용자 공간(user space)을 준비한다.\r\n각 시스템에서 사용 되는 부트로더는 여러종류가 있다.\r\n\r\n* GRUB (GNU GRUB):\r\n  * 리눅스/유닉스 시스템에서 사용되는 부트로더\r\n* LILO(Linux Loader)\r\n  * 과거 리눅스 시스템에서 사용되는 부트로더\r\n* Windows Boot Manager\r\n  * 윈도우 시스템에서 사용하는 부트로더\r\n* Android Bootloader\r\n  * 안드로이드 기기에서 사용되는 부트로더로, 리커버리모드와 운영체제를 실행한다.\r\n\r\n## 운영체제의 역할::role-of-os\r\n\r\n운영체제는 자원을 관리하지만, 아마 그중에서도 가장 중요한건 [프로세스]()에 대한 관리이다. 대표적으로 아래와 같다.\r\n\r\n* 사용자 프로세스와 시스템프로세스의 생성과 제거\r\n* `CPU`에 프로세스와 스레드 스케줄링\r\n* 프로세스의 일시중지(suspend) 와 재수행(resume)\r\n* 프로세스 동기화 기법 제공\r\n* 프로세스 간 통신(IPC) 제공\r\n\r\n위와 같은 처리를 위해 운영체제는 프로세스의 상태를 관리하며, 프로세스의 상태(process stats)는 `생성`, `준비`, `실행`, `대기`, `종료`로 나뉜다.\r\n이러한 상태는 아래처럼 나타낼 수 있다.\r\n```\r\n New\r\n  ↓\r\nReady ←→ Running → Terminated\r\n  ↑        ┆\r\nWaiting ←--╯\r\n```\r\n"
   },
   {
     "path": "/wiki/interrupt",
@@ -1242,40 +1242,40 @@
         }
       ],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "인터럽트는 무엇인가?::what-is-interrupt",
             "title": "인터럽트는 무엇인가?",
             "fragment": "what-is-interrupt",
-            "children": [],
-            "isSelected": false
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "인터럽트 서비스 루틴::interrupt-service-routine",
             "title": "인터럽트 서비스 루틴",
             "fragment": "interrupt-service-routine",
-            "children": [],
-            "isSelected": false
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "인터럽트의 매커니즘::mechanism-of-interrupt",
             "title": "인터럽트의 매커니즘",
             "fragment": "mechanism-of-interrupt",
-            "children": [],
-            "isSelected": false
+            "children": []
           },
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "타이머::timer",
             "title": "타이머",
             "fragment": "timer",
-            "children": [],
-            "isSelected": false
+            "children": []
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "",
@@ -1304,11 +1304,11 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
-        "children": [],
-        "isSelected": false
+        "fragment": "root",
+        "children": []
       }
     },
     "description": "\r\n",
@@ -1342,34 +1342,34 @@
       ],
       "images": [],
       "headlines": {
-        "grade": 0,
+        "rank": 0,
+        "origin": "root::root",
         "title": "root",
-        "fragment": "",
+        "fragment": "root",
         "children": [
           {
-            "grade": 2,
+            "rank": 2,
+            "origin": "macOS에서 Open JDK 설치",
             "title": "macOS에서 Open JDK 설치",
-            "fragment": "",
+            "fragment": "root-0",
             "children": [
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "DMG Installer를 이용한 설치",
                 "title": "DMG Installer를 이용한 설치",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-0-0",
+                "children": []
               },
               {
-                "grade": 3,
+                "rank": 3,
+                "origin": "ZIP 또는 TAR.GZ로 설치",
                 "title": "ZIP 또는 TAR.GZ로 설치",
-                "fragment": "",
-                "children": [],
-                "isSelected": false
+                "fragment": "root-0-1",
+                "children": []
               }
-            ],
-            "isSelected": false
+            ]
           }
-        ],
-        "isSelected": false
+        ]
       }
     },
     "description": "\r\nZulu는 Azul System에서 제공하는 OpenJDK의 빌드이다.\r\nmacOS에서 설치하는 방법을 요약했다.\r\n\r\n",

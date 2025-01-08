@@ -53,3 +53,24 @@ export function toValueMap<T, K, V>(
     }
     return map
 }
+
+export function nestedToArray<T extends Nested>(nested: T): Array<T> {
+    const result: Array<T> = [];
+    nested.children.forEach(child => {
+        //make clone with empty children for Cycle Reference
+
+        const array = nestedToArray<T>(child as T);
+
+        result.push(child.serialize(), ...array);
+    });
+    return result;
+}
+
+export interface Nested {
+
+    children: Array<Nested>;
+
+    addChild(child: Nested): void;
+
+    serialize(): any;
+}

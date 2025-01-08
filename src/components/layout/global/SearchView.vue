@@ -38,10 +38,8 @@ import {PostSearchResult} from "@/classes/implement/post-search-result";
 import {useNuxtApp} from "nuxt/app";
 import {usePostContentStore} from "@/store/post-content-store";
 import {PostSearchGroup} from "@/classes/implement/post-search-group";
-import {Pair} from "@/classes/implement/pair";
-import appCache from "@/store/app-cache";
+import Pair from "@/classes/implement/pair";
 import {grouping} from "@/utils/collection-util";
-import DocumentType from "@/classes/constant/document-type";
 
 const searchInput = ref<HTMLInputElement | null>(null);
 const postContentStore = usePostContentStore();
@@ -51,7 +49,7 @@ const router = useRouter();
 const emitter: any = nuxtApp.$emitter;
 
 const currentLocationIndex = ref(0);
-const groups = ref(new Map<string, PostSearchGroup>());
+const groups = ref<Map<string, PostSearchGroup>>(new Map<string, PostSearchGroup>());
 const searchLocationPair = ref<Pair<string, number>[]>([]);
 
 const methods = {
