@@ -1,6 +1,7 @@
 import Header from "@/classes/implement/header";
 import type IPostMetadata from "@/classes/i-post-content";
 import DocumentType from "@/classes/constant/document-type";
+import {isEmpty} from "lodash";
 
 export class PostMetadata implements IPostMetadata {
     private readonly _path: string
@@ -11,7 +12,7 @@ export class PostMetadata implements IPostMetadata {
     constructor(postContent: IPostMetadata) {
         this._path = postContent.path
         this._header = new Header(postContent.header);
-        this._description = postContent.description;
+        this._description = isEmpty(postContent.description) ? useAppConfig().description : postContent.description;
         this._content = postContent.content;
     }
 
