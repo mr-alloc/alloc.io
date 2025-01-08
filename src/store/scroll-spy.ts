@@ -8,7 +8,7 @@ export const useScrollspy = defineStore('scroll-spy', () => {
     const visibleHeadings = ref<string[]>([]);
     const activeHeadings = ref<string[]>([]);
     const allNodes = ref<Map<string, Pair<number, TocNode>>>(new Map<string, Pair<number, TocNode>>());
-    const representationTitle = ref<string>(null);
+    const representationTitle = ref<string | undefined>();
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
         entries.forEach((entry) => {
@@ -40,9 +40,14 @@ export const useScrollspy = defineStore('scroll-spy', () => {
     }
 
     const refreshRepresentationTitle = () => {
+        console.log('observer is', observer.value);
+        console.log('activeHeadings', activeHeadings.value);
         const ordered = activeHeadings.value.sort((a, b) => {
             const aNode = allNodes.value.get(a)!;
             const bNode = allNodes.value.get(b)!;
+            if (!aNode || !bNode) {
+                console.error(`\n${a}::${aNode}\n${b}::${bNode}\n`);
+            }
 
             //priority ascending
             return aNode.left - bNode.left;
@@ -62,6 +67,7 @@ export const useScrollspy = defineStore('scroll-spy', () => {
 
     // Create intersection observer
     onBeforeMount(() => {
+        console.log('observer is', observer.value);
         (observer.value = new IntersectionObserver(observerCallback))
         console.log('observer connected');
     });
@@ -70,6 +76,7 @@ export const useScrollspy = defineStore('scroll-spy', () => {
     onBeforeUnmount(() => {
         (observer.value?.disconnect())
         console.log('observer disconnected');
+        console.log('observer is', observer.value);
     });
 
     const reinitializeObserver = () => {

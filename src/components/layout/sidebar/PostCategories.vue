@@ -14,7 +14,6 @@ const props = defineProps<{
 }>();
 const findPost = (path: string) => {
   const found = postContentStore.get(path);
-  console.log('found:', found?.filename);
   if (!found) throw createError({ status: 404, message: 'Not Found for post.' });
   return found;
 }
@@ -37,7 +36,6 @@ watch(() => route.path, (n, o) => {
 function findOrCreateGroup(existingGroups: Array<ICategoryNode>, categories: Array<string>, depth: number): CategoryGroup {
   const currentGroup = categories[depth];
   const found = existingGroups.find(exist => exist.isDirectory && exist.name === currentGroup);
-  console.log('currentGroup:', currentGroup);
   //존재하지 않는 경우 생성
   if (!found) {
     const isActive = post.value.header.categories.length > depth && post.value.header.categories[depth] === currentGroup;
