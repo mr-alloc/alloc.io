@@ -1,8 +1,4 @@
 // https://router.vuejs.org/api/interfaces/routeroptions.html
-
-import type {RouterConfig} from "@nuxt/schema";
-import {useScrollspy} from "@/store/scroll-spy";
-
 export default {
     routes: (_routes) => [
         {
@@ -59,7 +55,7 @@ export default {
     scrollBehavior: (to, from, savedPosition) => {
         if (to.hash && to.path.match(/\/(docs|wiki).+?/)) {
             const id = to.hash.replace('#', '');
-            const element = document.getElementById(id)!;
+            const element = document.getElementById(id);
             /* header height: 60, offset: 100 */
             const toBeTop = element.offsetTop - 160;
 
@@ -78,4 +74,4 @@ export default {
             left: 0
         };
     }
-} satisfies RouterConfig
+}

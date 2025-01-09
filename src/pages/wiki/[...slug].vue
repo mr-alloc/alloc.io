@@ -35,23 +35,17 @@ import {useNuxtApp} from "nuxt/app";
 import {usePagePrepareStore} from "@/store/prepare-post-store";
 import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 import {useScrollspy} from "@/store/scroll-spy";
+import {PostMetadata} from "@/classes/implement/PostMetadata";
+import type TocNode from "@/classes/implement/toc-node";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
-const categoriesStore = useCategoriesStore();
 const paths = route.path.split('/');
-const prepareStore = usePagePrepareStore();
-const photoViewStatusStore = usePhotoViewStatusStore();
-const scrollspy = useScrollspy();
-const content = postContentStore.getWiki(paths[paths.length -1])!;
+const content = postContentStore.getWiki(paths[paths.length -1])!
 
 if (!content) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
 }
-
-onMounted(() => {
-  categoriesStore.initialize(postContentStore.values(DocumentType.POST));
-});
 
 const titleTemplate = computed(() => {
   return '%s · Alloc Blog'
@@ -70,39 +64,5 @@ useSeoMeta({
   ogImage: content.header.thumbnail,
   ogUrl: appConfig.domain + route.path,
   ogSiteName: '$ alloc(*io);',
-});
-
-
-
-nuxtApp.hook('page:finish', () => {
-  if (prepareStore.isPrepare) {
-    const imageTags = document.querySelectorAll('.rendered-markdown-wrapper img');
-    imageTags.forEach((imgTag, index) => {
-      imgTag.addEventListener('click', (e) => {
-        photoViewStatusStore.open(index +1)
-      });
-    });
-
-    scrollspy.updateHeadings(content.header.rootHeadLine, [
-      ...document.querySelectorAll('h2'),
-      ...document.querySelectorAll('h3')
-    ]);
-    prepareStore.done();
-  }
-
-});
-
-
-onMounted(() => {
-
-  useRouter().afterEach(() => {
-    setTimeout(() => {
-      scrollspy.reinitializeObserver();
-      scrollspy.updateHeadings(content.header.rootHeadLine, [
-        ...document.querySelectorAll('h2'),
-        ...document.querySelectorAll('h3')
-      ]);
-    }, 100)
-  });
 });
 </script>
