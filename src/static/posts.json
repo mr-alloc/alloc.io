@@ -816,7 +816,7 @@
       "date": 1681552860000,
       "current-company": "NEOWIZ",
       "current-position": "Software Engineer",
-      "profile-image": "/post/profile/profile1.JPG",
+      "profile-image": "/post/profile/profile1.jpg",
       "thumbnail": "/post/typescript/typescript_getting_start.png",
       "summary": "타입스크립트 소개",
       "excerpt-separator": "<!--more-->",
@@ -970,7 +970,7 @@
         "Heap"
       ],
       "date": 1651837980000,
-      "profile-image": "/post/profile/profile4.jpeg",
+      "profile-image": "/post/profile/profile4.jpg",
       "thumbnail": "/post/algorithm/heap/heap-sort-thumbnail.png",
       "current-company": "Herit Corporation",
       "current-position": "Backend Server Developer",
@@ -1171,7 +1171,7 @@
       "thumbnail": "/post/computer/operating-system.webp",
       "current-company": "Cubic INC",
       "current-position": "SI Researcher",
-      "profile-image": "/post/profile/profile1.JPG",
+      "profile-image": "/post/profile/profile1.jpg",
       "summary": "컴퓨터와 운영체제",
       "excerpt-separator": "<!--more-->",
       "hide": false,
@@ -1330,7 +1330,7 @@
       ],
       "date": 1606890300000,
       "thumbnail": "/post/java/azul-java.webp",
-      "profile-image": "/post/profile/profile1.JPG",
+      "profile-image": "/post/profile/profile1.jpg",
       "current-company": "Cubic INC",
       "current-position": "SI Researcher",
       "summary": "OpenJDK Zulu 설치",
@@ -1375,5 +1375,62 @@
     },
     "description": "\r\nZulu는 Azul System에서 제공하는 OpenJDK의 빌드이다.\r\nmacOS에서 설치하는 방법을 요약했다.\r\n\r\n",
     "content": "\r\n\r\n## macOS에서 Open JDK 설치\r\n\r\nMacOS는 일반적으로 `/Library/Java/JavaVirtualMachines` 하위 경로에 jdk를 저장하고 사용한다.\r\n\r\n\r\n### DMG Installer를 이용한 설치\r\n\r\n1. [Azul 다운로드](https://www.azul.com/downloads/?os=macos&_gl=1*dkdl9*_ga*MTQ0NjY0MDg1OS4xNjg4NjM4NTAz*_ga_42DEGWGYD5*MTcwNjc5MTg0NC40LjEuMTcwNjc5MjMwNy4yOC4wLjA.#zulu)에서 Azul Zulu를 위한 DMG Installer 다운로드\r\n2. 설치를 시작하기위해 파일 더블클릭하고, 설치 마법사 명령을 따르기\r\n\r\n기본 설치폴더는 다음과같다.\r\n\r\n```\r\n/Library/Java/JavaVirtualMachines/<zulu_folder>/Contents/Home\r\n```\r\n\r\n`<zulu_folder>` 플레이스 홀더는 그 버전과 Azul Zulu 패키지(JDK or JRE)의 타입을 말한다. \r\n\r\n| 패키지 |      Azul Zulu 폴더명      |     예시      |\r\n| :----: | :------------------------: | :-----------: |\r\n|  JDK   | `zulu-<major_version>.jdk` | `zulu-11.jdk` |\r\n|  JRE   | `zulu-<major_version>.jdk` | `zulu-11.jre` |\r\n:{ \"wrapper-class\": \"items-center\" }\r\n\r\n예를 들어, Azul Zulu JDK11을 위한 기본설치 폴더인경우:\r\n\r\n```\r\n/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home\r\n```\r\n\r\n3. Azul zulu 설치를 확인하기위해 터미널 창에서 `java` 명령어를 실행한다.\r\n\r\n```bash\r\n$ java -version\r\n```\r\n\r\n다음과 같이 출력돼야 한다.  \r\n\r\n```\r\nopenjdk version \"11.0.11\" 2021-04-20 LTS\r\nOpenJDK Runtime Environment Zulu11.48+21-CA (build 11.0.11+9-LTS)\r\nOpenJDK 64-Bit Server VM Zulu11.48+21-CA (build 11.0.11+9-LTS, mixed mode)\r\n```\r\n\r\n### ZIP 또는 TAR.GZ로 설치\r\n\r\n1. [Azul 다운로드](https://www.azul.com/downloads/?os=macos)에서 TAR.GZ 또는 ZIP으로 Azul Zulu 다운로드\r\n\r\n2. **Finder** 실행 후 다운로드 폴더로 이동. 압축을 해제하기위해 더블클릭 한다. **사파리**에서 받았다면 자동으로 압축해제 된다.\r\n\r\n하지만, 압축해제하기 위해 아래처럼 한번의 명령어를 사용할 수도 있다.\r\n\r\nZIP 인 경우\r\n\r\n```bash\r\nunzip <zulu_package>.zip\r\n```\r\n\r\n   TAR.GZ 인 경우\r\n\r\n```\r\ntar -zxvf <zulu_package>.tar.gz\r\n```\r\n\r\n압축 해제한 폴더가 Zulu Azul 설치 폴더 이다.\r\n\r\n3. Azul Zulu 설치를 확인하기 위해, 터미널 창에서 다음의 커맨드를 실행한다.\r\n\r\n```bash\r\n$ <installation_folder>/bin/java -version\r\n```\r\n\r\n4. (선택사항) `<installation_folder>/bin/java` 을 `PATH` 환경변수에 추가하면, 특정한 전체 경로 없이 어디서는 `java` 를 실행할 수 있다.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n"
+  },
+  {
+    "path": "/docs/software-design/class-diagram",
+    "header": {
+      "layout": "post",
+      "title": "클래스 다이어그램",
+      "categories": [
+        "software-design"
+      ],
+      "tags": [
+        "UML",
+        "Class Diagram"
+      ],
+      "date": 1571376300000,
+      "thumbnail": "/post/software-design/uml/class-diagram-intro.png",
+      "profile-image": "/post/profile/profile0.jpg",
+      "current-company": "Computer Academy",
+      "current-position": "Student",
+      "summary": "Class Diagram",
+      "excerpt-separator": "<!--more-->",
+      "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "software-design"
+      ],
+      "images": [
+        {
+          "src": "/post/software-design/uml/relationship-line.png",
+          "alt": "클래스 다이어그램의 관계 선"
+        }
+      ],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "관계를 나타내는 화살표::relationship-line",
+            "title": "관계를 나타내는 화살표",
+            "fragment": "relationship-line",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "Association (연관)::association",
+                "title": "Association (연관)",
+                "fragment": "association",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "description": "\r\n소프트 웨어에서는 각 객체와 객체 간의 관계를 표현하기 위해 클래스 다이어그램을 사용한다. \r\n\r\n클래스 다이어그램은 클래스의 속성과 메서드를 표현하고, 클래스 간의 관계를 표현한다. \r\n클래스 다이어그램은 객체 지향 프로그래밍에서 가장 많이 사용되는 다이어그램 중 하나이다.\r\n\r\n클래스 다이어그램의 구성요소를 알아보자. \r\n\r\n",
+    "content": "\r\n\r\n## 관계를 나타내는 화살표::relationship-line\r\n\r\n![클래스 다이어그램의 관계 선](/post/software-design/uml/relationship-line.png)\r\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"클래스간의 관계를 나타내는 Relationship Line\" }\r\n\r\n클래스 다이어그램에서는 클래스간 관계를 나타내는 화살표를 사용한다.\r\n각 관계를 나타내는 의미를 알아보자.\r\n\r\n### Association (연관)::association\r\n\r\n"
   }
 ]
