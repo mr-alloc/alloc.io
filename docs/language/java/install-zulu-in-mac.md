@@ -5,7 +5,7 @@ categories: [language]
 tags: [OpenJDK, Azul System, Zulu]
 date: 2020-12-02 15:25:00 +0900
 thumbnail: /post/java/azul-java.webp
-profile-image: /post/profile/profile1.JPG
+profile-image: /post/profile/profile1.jpg
 current-company: Cubic INC
 current-position: SI Researcher
 summary: OpenJDK Zulu 설치

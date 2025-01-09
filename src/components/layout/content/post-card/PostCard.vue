@@ -23,7 +23,7 @@ const ui = {
 }
 const header = computed(() => {
   return {
-    image: props.feed.header.profileImage ?? '/post/profile/default.jpeg',
+    image: props.feed.header.profileImage ?? '/post/profile/default.jpg',
     nickname: appConfig.fullName,
     position: props.feed.header.currentPosition,
     company: props.feed.header.currentCompany,
