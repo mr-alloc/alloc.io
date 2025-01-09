@@ -40,13 +40,11 @@ export const useScrollspy = defineStore('scroll-spy', () => {
     }
 
     const refreshRepresentationTitle = () => {
-        console.log('observer is', observer.value);
-        console.log('activeHeadings', activeHeadings.value);
         const ordered = activeHeadings.value.sort((a, b) => {
             const aNode = allNodes.value.get(a)!;
             const bNode = allNodes.value.get(b)!;
             if (!aNode || !bNode) {
-                console.error(`\n${a}::${aNode}\n${b}::${bNode}\n`);
+                console.error(`\n${a}::${JSON.stringify(aNode)}\n${b}::${JSON.stringify(bNode)}\n`);
             }
 
             //priority ascending
@@ -65,22 +63,17 @@ export const useScrollspy = defineStore('scroll-spy', () => {
         refreshRepresentationTitle();
     });
 
+
     // Create intersection observer
-    onBeforeMount(() => {
-        console.log('observer is', observer.value);
-        (observer.value = new IntersectionObserver(observerCallback))
-        console.log('observer connected');
-    });
+    onBeforeMount(() => (observer.value = new IntersectionObserver(observerCallback)));
 
     // Destroy it
-    onBeforeUnmount(() => {
-        (observer.value?.disconnect())
-        console.log('observer disconnected');
-        console.log('observer is', observer.value);
-    });
+    onBeforeUnmount(() => (observer.value?.disconnect()));
 
     const reinitializeObserver = () => {
         observer.value = new IntersectionObserver(observerCallback);
+        visibleHeadings.value = [];
+        activeHeadings.value = [];
     }
 
     return {

@@ -2,7 +2,7 @@
   <UContainer>
     <MainPage class="z-30">
       <template #left>
-        <PostCategories :path="route.path" :groups="categories" />
+        <PostCategories :path="route.path" />
       </template>
 
       <NuxtPage />
@@ -19,18 +19,6 @@ import {useScrollspy} from "@/store/scroll-spy";
 
 
 const route = useRoute();
-const nuxtApp = useNuxtApp();
-const postContentStore = usePostContentStore();
-const photoViewStatusStore = usePhotoViewStatusStore();
 const prepareStore = usePagePrepareStore();
-const scrollspy = useScrollspy();
-const paths = route.path.split('/');
-const content = postContentStore.getWiki(paths[paths.length -1]);
-
-if (!content) {
-  throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
-}
-
-const categories = computed(() => content.header.categories ?? []);
 prepareStore.prepare();
 </script>

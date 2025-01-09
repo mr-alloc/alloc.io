@@ -36,16 +36,9 @@ import MainPageBody from "@/components/layout/content/MainPageBody.vue";
 import ContentToc from "@/components/layout/content/ContentToc.vue";
 import SocialLinks from "@/components/layout/content/SocialLinks.vue";
 import {usePostContentStore} from "@/store/post-content-store";
-import {usePagePrepareStore} from "@/store/prepare-post-store";
-import {usePhotoViewStatusStore} from "@/store/photo-view-store";
-import {useScrollspy} from "@/store/scroll-spy";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
-const nuxtApp = useNuxtApp();
-const prepareStore = usePagePrepareStore();
-const photoViewStatusStore = usePhotoViewStatusStore();
-const scrollspy = useScrollspy();
 const content = postContentStore.get(route.path)!;
 
 if (!content) {
@@ -70,34 +63,4 @@ useSeoMeta({
   ogSiteName: '$ alloc(*io);',
 });
 
-nuxtApp.hook('page:finish', () => {
-  if (prepareStore.isPrepare) {
-    document.querySelectorAll('.rendered-markdown-wrapper img').forEach((imgTag, index) => {
-      imgTag.addEventListener('click', (e) => {
-        photoViewStatusStore.open(index +1)
-      });
-    });
-
-    scrollspy.updateHeadings(content.header.rootHeadLine, [
-      ...document.querySelectorAll('h2'),
-      ...document.querySelectorAll('h3')
-    ]);
-
-    prepareStore.done();
-  }
-
-});
-
-onMounted(() => {
-
-  useRouter().afterEach(() => {
-    setTimeout(() => {
-      scrollspy.reinitializeObserver();
-      scrollspy.updateHeadings(content.header.rootHeadLine, [
-        ...document.querySelectorAll('h2'),
-        ...document.querySelectorAll('h3')
-      ]);
-    }, 100)
-  });
-});
 </script>

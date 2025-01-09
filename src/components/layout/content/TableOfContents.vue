@@ -14,9 +14,14 @@
 <script lang="ts" setup>
 import TocNode from "@/classes/implement/toc-node";
 import {useScrollspy} from "@/store/scroll-spy";
+import {usePagePrepareStore} from "@/store/prepare-post-store";
+import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 
 const router = useRouter();
 const scrollspy = useScrollspy();
+const nuxtApp = useNuxtApp();
+const prepareStore = usePagePrepareStore();
+const photoViewStatusStore = usePhotoViewStatusStore();
 const props = defineProps<{
   headline: TocNode,
   isInner: boolean,
@@ -34,6 +39,23 @@ const scrollToHeading = (id: string) => {
   router.push(`#${id}`)
   emit('move', id);
 };
+
+nuxtApp.hooks.hookOnce('page:finish', () => {
+  if (prepareStore.isPrepare) {
+    const imageTags = document.querySelectorAll('.rendered-markdown-wrapper img');
+    imageTags.forEach((imgTag, index) => {
+      imgTag.addEventListener('click', (e) => {
+        photoViewStatusStore.open(index +1)
+      });
+    });
+    scrollspy.updateHeadings(props.headline, [
+      ...document.querySelectorAll('h2'),
+      ...document.querySelectorAll('h3')
+    ]);
+    prepareStore.done();
+  }
+});
+
 </script>
 
 <style lang="scss" scoped>
