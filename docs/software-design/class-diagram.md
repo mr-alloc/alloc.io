@@ -32,3 +32,16 @@ hide: true
 
 ### Association (연관)::association
 
+```mermaid
+classDiagram
+    class Student {
+        -id: int
+        -name: String
+    }
+    class Teacher {
+        -id: int
+        -name: String
+    }
+    Student --> Teacher
+```
+
