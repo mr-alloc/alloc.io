@@ -3,6 +3,7 @@ import {DEFAULT_MARKDOWN_IT_OPTIONS} from "@/utils/markdown-utils";
 import DecoratorProvider from "@/markup/decorator/decorator-provider";
 import RuleType from "@/markup/constant/rule-type";
 import shiki from "@shikijs/markdown-it";
+import mditMermaid from "md-it-mermaid";
 
 export default defineNuxtPlugin(async (nuxtApp) => {
     if (nuxtApp.$md) return;
@@ -36,6 +37,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         },
     });
     markdownIt.use(shikiExtension);
+    markdownIt.use(mditMermaid);
 
     nuxtApp.provide('md', markdownIt);
 });

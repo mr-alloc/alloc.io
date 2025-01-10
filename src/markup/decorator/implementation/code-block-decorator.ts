@@ -4,6 +4,7 @@ import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
 import Filename from "@/classes/implement/filename";
 import {getLanguageCode} from "@/utils/markdown-utils";
+import mermaid from "mermaid";
 
 export default class CodeBlockDecorator implements IMarkdownDecorator {
 
@@ -26,6 +27,10 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
             self: Renderer
         ): string => {
             const token = tokens[index];
+            const name = token.info;
+            if (name === 'mermaid') {
+                return defaultFence(tokens, index, options, env, self);
+            }
 
             // @ts-ignore
             if (!token.lineNumber) {
@@ -64,7 +69,7 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
         }
     }
 
-    private decorateHighlightLines(token: Token, lang: string, rawCode: string) {
+    private decorateHighlightLines(token: Token, lang: string, rawCode: string): string {
         const highlightLinesCode = rawCode.split('\n').map((split: string, index: number) => {
             const lineNumber = index + 1
             // @ts-ignore
@@ -83,7 +88,7 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
         return `<div class="highlight-lines">${highlightLinesCode}</div>`;
     }
 
-    private decorateLineNumbers(rawCode: string) {
+    private decorateLineNumbers(rawCode: string): string {
         const code = rawCode?.slice(
             rawCode.indexOf('<code>'),
             rawCode.indexOf('</code>')
@@ -127,6 +132,7 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
                     ${options.highlight?.(token.content, lang, '')}
                </div>`
     }
+
 
     get numberRE(): RegExp {
         this._number.lastIndex = 0;

@@ -4,7 +4,7 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "typeRoots": ["./node_modules/@types"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "types": ["paginator"],
     "paths": {
       "@core/*": ["core/*"],

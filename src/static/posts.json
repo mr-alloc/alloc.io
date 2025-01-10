@@ -1395,7 +1395,7 @@
       "current-position": "Student",
       "summary": "Class Diagram",
       "excerpt-separator": "<!--more-->",
-      "hide": false,
+      "hide": true,
       "breadcrumbs": [
         "문서",
         "software-design"
@@ -1431,6 +1431,6 @@
       }
     },
     "description": "\r\n소프트 웨어에서는 각 객체와 객체 간의 관계를 표현하기 위해 클래스 다이어그램을 사용한다. \r\n\r\n클래스 다이어그램은 클래스의 속성과 메서드를 표현하고, 클래스 간의 관계를 표현한다. \r\n클래스 다이어그램은 객체 지향 프로그래밍에서 가장 많이 사용되는 다이어그램 중 하나이다.\r\n\r\n클래스 다이어그램의 구성요소를 알아보자. \r\n\r\n",
-    "content": "\r\n\r\n## 관계를 나타내는 화살표::relationship-line\r\n\r\n![클래스 다이어그램의 관계 선](/post/software-design/uml/relationship-line.png)\r\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"클래스간의 관계를 나타내는 Relationship Line\" }\r\n\r\n클래스 다이어그램에서는 클래스간 관계를 나타내는 화살표를 사용한다.\r\n각 관계를 나타내는 의미를 알아보자.\r\n\r\n### Association (연관)::association\r\n\r\n"
+    "content": "\r\n\r\n## 관계를 나타내는 화살표::relationship-line\r\n\r\n![클래스 다이어그램의 관계 선](/post/software-design/uml/relationship-line.png)\r\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"클래스간의 관계를 나타내는 Relationship Line\" }\r\n\r\n클래스 다이어그램에서는 클래스간 관계를 나타내는 화살표를 사용한다.\r\n각 관계를 나타내는 의미를 알아보자.\r\n\r\n### Association (연관)::association\r\n\r\n```mermaid\r\nclassDiagram\r\n    class Student {\r\n        -id: int\r\n        -name: String\r\n    }\r\n    class Teacher {\r\n        -id: int\r\n        -name: String\r\n    }\r\n    Student --> Teacher\r\n```\r\n\r\n"
   }
 ]
