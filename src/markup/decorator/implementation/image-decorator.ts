@@ -4,7 +4,8 @@ import Token from "markdown-it/lib/token";
 import TemplateAttributes from "@/markup/template/TemplateAttributes";
 import Renderer from "markdown-it/lib/renderer";
 import StyleDecorator from "@/markup/decorator/style/style-decorator";
-import {wrappingTokens} from "@/markup/utils/markdown-it-util";
+import {useImageGroupStore} from "@/store/image-group-store";
+import Image from "@/classes/implement/image";
 
 
 export default class ImageDecorator implements IMarkdownDecorator {
@@ -116,45 +117,60 @@ export default class ImageDecorator implements IMarkdownDecorator {
         const groupNumber = parseInt(imageToken.attrGet('image-number')!, 10);
         //이미지 그룹내 이미지 갯수
         const groupImageCount = parseInt(imageToken.attrGet('group-image-count')!, 10);
-        imageToken.attrJoin('class', 'object-cover m-0');
+        imageToken.attrJoin('class', 'object-cover m-0 w-full h-full');
+        useImageGroupStore().addImage(groupIndex, new Image(imageToken.attrGet('src')!, imageToken.attrGet('alt')!));
 
         switch (groupImageCount) {
             case 1:
             case 2: {
                 //1, 2 시작 각각 wrapper
-                return '<div class="flex w-full flex-col"><div>';
+                return '<div class="flex w-full flex-col"><div class="p-px w-full h-full cursor-pointer">';
             }
             case 3: {
                 //1 시작 wrapper
-                if (groupNumber === 1 || groupNumber === 2) {
-                    return '<div><div>';
+                if (groupNumber === 1) {
+                    return '<div class="w-2/3 h-full"><div class="p-px w-full h-full cursor-pointer">';
                 }
-                //2 시작 wrapper else {
-                return '<div>';
+
+                if (groupNumber === 2) {
+                    return '<div class="w-1/3 h-full"><div class="p-px w-full h-1/2 cursor-pointer">';
+                }
+
+                //2 시작 wrapper else
+                return '<div class="p-px w-full h-1/2 cursor-pointer">';
             }
             case 4: {
                 //1 시작 wrapper
-                if (groupNumber === 1 || groupNumber === 2) {
-                    return '<div><div>';
+                if (groupNumber === 1) {
+                    return '<div class="flex h-3/4"><div class="p-px h-full w-full cursor-pointer">';
                 }
-                return '<div>';
+
+                if (groupNumber === 2) {
+                    return '<div class="flex flex-row h-1/4"><div class="p-px w-1/3 h-full cursor-pointer">';
+                }
+
+                return '<div class="p-px w-1/3 h-full cursor-pointer">';
             }
             default: {
                 //1 시작 wrapper
                 if (groupNumber === 1) {
-                    return `<div class="flex flex-col shrink-0 overflow-hidden w-2/3 h-full"><div class="h-1/2 overflow-hidden">`;
+                    return `<div class="flex flex-col shrink-0 overflow-hidden w-2/3 h-full"><div class="h-1/2 overflow-hidden p-px cursor-pointer">`;
                 }
 
                 if (groupNumber === 2) {
-                    return '<div class="h-1/2 overflow-hidden">'
+                    return '<div class="h-1/2 overflow-hidden p-px cursor-pointer">'
                 }
 
                 if (groupNumber === 3) {
-                    return `<div class="flex flex-col grow overflow-hidden" style="height: 100%;flex: 1 1 30%"><div class="h-1/3 overflow-hidden">`;
+                    return `<div class="flex flex-col grow overflow-hidden h-full"><div class="h-1/3 overflow-hidden p-px cursor-pointer">`;
                 }
 
                 if (groupNumber === 4 || groupNumber === 5) {
-                    return '<div class="h-1/3 overflow-hidden">';
+                    const otherImages = groupImageCount > 5 && groupNumber === 5
+                        ? `<div class="absolute flex w-full h-full justify-center items-center font-bold text-3xl bg-black/40 text-white">+${groupImageCount - 5}</div>`
+                        : '';
+
+                    return '<div class="h-1/3 overflow-hidden relative p-px cursor-pointer">' + otherImages;
                 }
 
                 //5번째 이후 이미지 히든

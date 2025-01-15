@@ -125,8 +125,16 @@ div[class*=language-] .highlight-lines .highlighted {
     height: 33.333333%
   }
 
+  .h-2\/3 {
+    height: 66.666667%;
+  }
+
   .h-1\/4 {
     height: 25%
+  }
+
+  .h-3\/4 {
+    height: 75%;
   }
 
   .h-1\/5 {
@@ -135,6 +143,10 @@ div[class*=language-] .highlight-lines .highlighted {
 
   .h-1\/6 {
     height: 16.666667%
+  }
+
+  .h-5\/6 {
+    height: 83.333333%;
   }
 
   .h-10 {
@@ -252,6 +264,23 @@ div[class*=language-] .highlight-lines .highlighted {
   .h-96 {
     height: 24rem
   }
+
+  .h-112 {
+    height: 28rem
+  }
+
+  .sm\:h-80 {
+    @media (min-width: 640px) {
+      height: 20rem
+    }
+  }
+
+  .md\:h-112 {
+    @media (min-width: 768px) {
+      height: 28rem
+    }
+  }
+
 
   .h-\[1\.375rem\] {
     height: 1.375rem

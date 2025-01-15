@@ -19,21 +19,16 @@ hide: false
 
 ::image-group
 
-![힙 정렬 1](/post/algorithm/heap/heap_sort_1_1.svg)
+![힙 정렬 1](https://picsum.photos/400/300)
 
-![힙 정렬 2](/post/algorithm/heap/heap_sort_1_2.svg)
+![힙 정렬 2](https://picsum.photos/600/400)
 
-![힙 정렬 3](/post/algorithm/heap/heap_sort_1_3.svg)
+![힙 정렬 2](https://picsum.photos/300/200)
 
-![힙 정렬 4](/post/algorithm/heap/heap_sort_1_4.svg)
+![힙 정렬 2](https://picsum.photos/900/450)
 
-![힙 정렬 5](/post/algorithm/heap/heap_sort_1_5.svg)
+![힙 정렬 2](https://picsum.photos/800/350)
 
-![힙 정렬 6](/post/algorithm/heap/heap_sort_1_6.svg)
-
-![힙 정렬 7](/post/algorithm/heap/heap_sort_1_7.svg)
-
-![힙 정렬 8](/post/algorithm/heap/heap_sort_1_8.svg)
-
+![힙 정렬 2](https://picsum.photos/600/550)
 
 ::

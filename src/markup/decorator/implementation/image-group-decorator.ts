@@ -2,8 +2,7 @@ import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
-import {findChildrenIndexes, findCloseIndex, findTokens, wrappingTokens} from "@/markup/utils/markdown-it-util";
-import {arrayCopy, arrayCopyWith} from "@/utils/collection-util";
+import {findChildrenIndexes, findCloseIndex, findTokens} from "@/markup/utils/markdown-it-util";
 
 export default class ImageGroupDecorator implements IMarkdownDecorator {
 
@@ -24,8 +23,8 @@ export default class ImageGroupDecorator implements IMarkdownDecorator {
                token.attrSet('image-number', (index +1).toString());
                token.attrSet('group-image-count', images.length.toString());
             });
-            const direction = images.length === 3 ? 'flex-col' : 'flex-row';
-            return `<div class="h-96 flex border border-gray-200 dark:border-gray-800 ${direction}">`;
+            const direction = images.length === 4 ? 'flex-col' : 'flex-row';
+            return `<div class="flex h-64 sm:h-80 md:h-112 rounded-2xl overflow-hidden shadow-xl ${direction}">`;
         }
     }
 

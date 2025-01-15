@@ -88,8 +88,13 @@ hide: false
 힙트리에서 값을 추가 할때는 마지막 노드로 붙여주고 위에서 했던것과 동일하게 힙을 만들어 줍니다.
 만약 새로운 값 17이 힙에 들어온다면 순서는 아래와 같이 바뀝니다.
 
+::image-group
+
 ![만약 다음의 힙에서 17이라는 값이 추가 된다면](/post/algorithm/heap/add_new_17.svg)
+
 ![이런식으로 부모노드와 바꿔가며, 다시 힙을 유지할 수 있어요.](/post/algorithm/heap/add_new_17_2.svg)
+
+::
 
 
 > A: 새로 들어온 값 17은 트리의 맨뒤인 10번노드로 들어갑니다.     
@@ -139,125 +144,133 @@ hide: false
 
 ## 구현 코드 (Java)::implementation-code
 
-```java
-import java.util.Arrays;
+::code-group
 
-public class Heap {
-    
-    //== 힙(Heap) 을 만드는 메소드 ==//
-    public static void makeHeap(int arr[]) {
-        // last heap
-        int lh = arr.length / 2;
-        System.out.println("Normal Array = " + Arrays.toString(arr));
-        int eh = arr.length;
-        while (lh-- > 0) {
+```java::힙 만들기
+//== 힙(Heap) 을 만드는 메소드 ==//
+public static void makeHeap(int arr[]) {
+    // last heap
+    int lh = arr.length / 2;
+    System.out.println("Normal Array = " + Arrays.toString(arr));
+    int eh = arr.length;
+    while (lh-- > 0) {
 
-            System.out.println("i: " + lh);
-            pushDown(arr, lh, eh);
-        }
-
-        System.out.println("Array as Max Heap = " + Arrays.toString(arr));
+        System.out.println("i: " + lh);
+        pushDown(arr, lh, eh);
     }
-    
-    
-    //== 노드와 그 자식중에서 더큰(또는 작은) 위치를 찾는 메소드 ==//
-    public static int findLargest(int arr[], int node, int eh) {
-        // first child
-        int fc = (2 * (node + 1)) - 1;
 
-        if (fc + 1 < eh) {
-            if (arr[fc] <= arr[fc + 1]) {
-                return arr[fc + 1] <= arr[node] ? node : fc + 1;
-            } else {
-                return arr[fc] <= arr[node] ? node : fc;
-            }
-        }
-        if (fc < eh && arr[node] < arr[fc]) {
-            return fc;
+    System.out.println("Array as Max Heap = " + Arrays.toString(arr));
+}
+```
+
+```java::노드 비교
+//== 노드와 그 자식중에서 더큰(또는 작은) 위치를 찾는 메소드 ==//
+public static int findLargest(int arr[], int node, int eh) {
+    // first child
+    int fc = (2 * (node + 1)) - 1;
+
+    if (fc + 1 < eh) {
+        if (arr[fc] <= arr[fc + 1]) {
+            return arr[fc + 1] <= arr[node] ? node : fc + 1;
         } else {
-            return node;
+            return arr[fc] <= arr[node] ? node : fc;
         }
     }
-    //== 값을 아래로 내리는 메소드 ==//
-
-    /**
-     * 간단하게 보면 트리에서 마지막 힙의 위치를 구하고,
-     * 루트 노드까지 역순으로 힙을 만들어갑니다.
-     * 
-     * 최대 힙(또는 최소 힙)의 조건에 따라 더큰(또는 더 작은)값을 기준으로,
-     * 해당 노드를 위로올리고 변경된 대상은 아래로 내려가며 계속 바꿉니다.
-     */
-    public static void pushDown(int arr[], int node, int eh) {
-        do {
-            System.out.println("j: " + node);
-            int temp = arr[node];
-            int large = findLargest(arr, node, eh);
-            System.out.println(drawBinaryTree(arr));
-
-            if (large == node)
-                break;
-
-            arr[node] = arr[large];
-            arr[large] = temp;
-
-            node = large;
-        } while (node <= eh);
-    }
-
-    public static void sort(int arr[]) {
-        int last = arr.length;
-        makeHeap(arr);
-
-        while (--last >= 0) {
-
-            int temp = arr[0];
-            arr[0] = arr[last];
-            arr[last] = temp;
-
-            System.out.println("last: " + last);
-            pushDown(arr, 0, last);
-        }
-        ;
-    }
-
-    //== 출력 메소드 ==//
-    public static String drawBinaryTree(int arr[]) {
-        StringBuilder builder = new StringBuilder();
-
-        int nol = (int) (Math.log(arr.length) / Math.log(2)) + 1;
-        int max = (int) Math.pow(2, nol - 1);
-
-        int printed = 0;
-        for (int i = 0; i < nol; i++) {
-            int perFloor = (int) Math.pow(2, i);
-            int tab = (max - perFloor) / 2 + (max - perFloor) % 2;
-            int last = printed + perFloor;
-
-            for (int j = 0; j < tab; j++) {
-                builder.append("  ");
-            }
-            for (int j = printed; (j < arr.length && j < last); j++) {
-                builder.append(String.format("(%d)", arr[j]));
-            }
-            builder.append("\n");
-            printed += perFloor;
-        }
-
-        return builder.toString();
-    }
-    
-    public static void main(String args []) throws Exception {
-        //== 힙 으로 만들기==//
-        int arrForMake [] = {1, 5, 8, 2, 74, 9, 12, 104, 87, 43};
-        Heap.makeHeap();
-        
-        //== 힙 + 정렬 ==//
-        int arrForSort [] = {1, 8, 9, 15, 4, 7, 12, 6, 4, 17};
-        Heap.sort(arr);
-        
+    if (fc < eh && arr[node] < arr[fc]) {
+        return fc;
+    } else {
+        return node;
     }
 }
 ```
+
+```java::값 교환
+//== 값을 아래로 내리는 메소드 ==//
+/**
+ * 간단하게 보면 트리에서 마지막 힙의 위치를 구하고,
+ * 루트 노드까지 역순으로 힙을 만들어갑니다.
+ * 
+ * 최대 힙(또는 최소 힙)의 조건에 따라 더큰(또는 더 작은)값을 기준으로,
+ * 해당 노드를 위로올리고 변경된 대상은 아래로 내려가며 계속 바꿉니다.
+ */
+public static void pushDown(int arr[], int node, int eh) {
+    do {
+        System.out.println("j: " + node);
+        int temp = arr[node];
+        int large = findLargest(arr, node, eh);
+        System.out.println(drawBinaryTree(arr));
+
+        if (large == node)
+            break;
+
+        arr[node] = arr[large];
+        arr[large] = temp;
+
+        node = large;
+    } while (node <= eh);
+}
+```
+
+```java::정렬
+public static void sort(int arr[]) {
+    int last = arr.length;
+    makeHeap(arr);
+
+    while (--last >= 0) {
+
+        int temp = arr[0];
+        arr[0] = arr[last];
+        arr[last] = temp;
+
+        System.out.println("last: " + last);
+        pushDown(arr, 0, last);
+    }
+    ;
+}
+```
+
+```java::출력 메소드
+public static String drawBinaryTree(int arr[]) {
+    StringBuilder builder = new StringBuilder();
+
+    int nol = (int) (Math.log(arr.length) / Math.log(2)) + 1;
+    int max = (int) Math.pow(2, nol - 1);
+
+    int printed = 0;
+    for (int i = 0; i < nol; i++) {
+        int perFloor = (int) Math.pow(2, i);
+        int tab = (max - perFloor) / 2 + (max - perFloor) % 2;
+        int last = printed + perFloor;
+
+        for (int j = 0; j < tab; j++) {
+            builder.append("  ");
+        }
+        for (int j = printed; (j < arr.length && j < last); j++) {
+            builder.append(String.format("(%d)", arr[j]));
+        }
+        builder.append("\n");
+        printed += perFloor;
+    }
+
+    return builder.toString();
+}
+```
+
+::
+
+```java::메인 함수
+public static void main(String args []) throws Exception {
+    //== 힙 으로 만들기==//
+    int arrForMake [] = {1, 5, 8, 2, 74, 9, 12, 104, 87, 43};
+    Heap.makeHeap();
+    
+    //== 힙 + 정렬 ==//
+    int arrForSort [] = {1, 8, 9, 15, 4, 7, 12, 6, 4, 17};
+    Heap.sort(arr);
+    
+}
+```
+
 
 
 
