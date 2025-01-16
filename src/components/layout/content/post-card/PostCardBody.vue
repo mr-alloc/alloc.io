@@ -1,16 +1,14 @@
 <template>
   <div class="post-preview-body">
-    <div class="post-contents">
-      <span class="content-text" v-html="html"></span>
-    </div>
+    <div class="post-contents">{{ props.description }}</div>
     <nuxt-link v-bind:to="props.path" v-if="props.header.layout === 'post'">
       <div class="post-default-image">
         <div class="select-none">
           <img class="dark:brightness-75" :src="props.header.thumbnail" alt="profile thumbnail" />
         </div>
         <div class="post-title-box ring-prima">
-          <span class="post-title">{{ props.header.summary }}</span>
-          <span class="post-path">alloc.io</span>
+          <span class="block font-bold">{{ props.header.summary }}</span>
+          <span class="text-xs">alloc.io</span>
         </div>
       </div>
     </nuxt-link>
@@ -107,17 +105,11 @@ onMounted(() => {
     padding: 15px;
     line-height: 1.6;
 
-    .content-text {
+    display: block;
+    font-family: inherit;
+    white-space: break-spaces;
+    word-break: break-all;
 
-      display: block;
-      font-family: inherit;
-      white-space: break-spaces;
-      word-break: break-all;
-
-      img {
-        width: 300px;
-      }
-    }
 
     .show-button {
       display: none;

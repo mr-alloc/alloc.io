@@ -30,20 +30,48 @@ hide: false
 클래스 다이어그램에서는 클래스간 관계를 나타내는 화살표를 사용한다.
 각 관계를 나타내는 의미를 알아보자.
 
-### Association (연관)::association
+### Associations (연관)::associations
+
+*한 모델 요소의 인스턴스들이 다른 모델 요소의 인스턴스들과 연결되었다는 것을 나타낸다.*
+
+**단방향 연관 관계**
 
 ```mermaid
 classDiagram
     direction LR
     class Student {
-        -id: int
         -name: String
     }
     class Teacher {
-        -id: int
         -name: String
-        +attendance(String name): void
+        -children: List~Student~
+        +check(Student student): void
     }
     Teacher --> Student
 ```
+
+**양방향 연관관계**
+
+```mermaid
+classDiagram
+    direction LR
+    class Child {
+        -name: String
+        -parent: Parent
+    }
+    class Parent {
+        -name: String
+        -child: Child
+    }
+    Child <--> Parent
+```
+
+이 다이어 그램은 학생과 선생님의 관계를 나타낸다. 선생님은 학생들을 관리하기 위해 항상 참조한다.
+하지만, 학생은 선생님이 관심 없기 때문에 신경을 안쓰므로 학생은 선생님을 참조하지 않는다.
+이는 단방향 관계이다.
+
+하지만 반대로 자식과 부모의 관계는 양방향 관계이다. 부모는 자식과, 자식은 부모와 가족이기 때문에 서로를 참조한다.
+
+> 이처럼 단방향 또는 양방향으로 어떤 모델의 인스턴스를 참조하는 관계를 `연관관계`라고 한다.
+:{ "type": "tip", "icon": "lightbulb" }
 

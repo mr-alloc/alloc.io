@@ -5,7 +5,7 @@ categories: [algorithm]
 tags: [Java, Algorithm, Sort, Heap Sort, Heap]
 date: 2022-05-06 20:53:00 +0900
 profile-image: /post/profile/profile4.jpg
-thumbnail: /post/algorithm/heap/heap-sort-thumbnail.png
+thumbnail: /post/algorithm/heap/heap-sort-intro.svg
 current-company: Herit Corporation
 current-position: Backend Server Developer
 summary: HEAP 자료구조
@@ -13,8 +13,12 @@ expose-images: true
 excerpt-separator: <!--more-->
 hide: false
 ---
-힙의 자료구조와 어떻게 우선순위를 유지하는지 알아보자.
 
+"heap"이라는 단어는 원래 영어에서 "쌓아올린 더미"또는 "무질서하게 쌓아올린 것"을 의미한다.
+
+데이터 구조로서 Heap이라는 이름이 붙게 된 것은 1964년 J.W.J. Williams가 발표한 논문에서 처음 사용되었다.
+
+윌리엄즈는 이진트리를 배열로 표현하면서 부모-자식 관계가 마치 더미(heap)처럼 쌓여 있는 모양이라고 표현하였다.
 <!--more-->
 
 ## 설명::intro

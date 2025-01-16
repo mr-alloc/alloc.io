@@ -10,7 +10,7 @@ export default class PostData {
     constructor(path: string, header: any, description: string, content: string) {
         this._path = path;
         this._header = PostHeader.of(header);
-        this._description = description
+        this._description = description.trim();
         this._content = content
     }
 

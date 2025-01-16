@@ -15,9 +15,7 @@
 import TocNode from "@/classes/implement/toc-node";
 import {useScrollspy} from "@/store/scroll-spy";
 import {usePagePrepareStore} from "@/store/prepare-post-store";
-import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 import mermaid from "mermaid";
-import {useCodeGroupStore} from "@/store/code-group-store";
 
 const router = useRouter();
 const scrollspy = useScrollspy();
@@ -41,6 +39,14 @@ const scrollToHeading = (id: string) => {
   emit('move', id);
 };
 
+const unescapeHtml = (html: string): string => {
+  return html
+      .replace(/&gt;/g, '>')
+      .replace(/&lt;/g, '<')
+      .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, '&')
+      .replace(/&#39;/g, "'");
+}
 
 nuxtApp.hooks.hookOnce('page:finish', () => {
   if (prepareStore.isPrepare) {
@@ -50,14 +56,12 @@ nuxtApp.hooks.hookOnce('page:finish', () => {
       ...document.querySelectorAll('h3')
     ]);
     //mermaid
-    mermaid.initialize({
-      startOnLoad: false,
-      themeVariables: {
-        // 노드 간격 조절
-        classDiagramNodeSpacing: 100,  // 기본값 50
-        classDiagramRankSpacing: 100,  // 기본값 50
-      }
-    });
+    document.querySelectorAll('pre.mermaid')
+        .forEach(async (element: Element) => {
+          const {svg} = await mermaid.render(`mermaid-${element.id}`, unescapeHtml(element.innerHTML));
+          console.log(`(${element.id})element: ${element}`);
+          element.innerHTML = svg;
+        });
     prepareStore.done();
   }
 });

@@ -12,7 +12,7 @@
         </div>
       <div :class="ui.date.wrapper">
         <span :class="ui.date.icon">
-          <FontAwesomeIcon :icon="['fa', 'clock']"/>
+          <FontAwesomeIcon class="mr-2" :icon="['fa', 'clock']"/>
         </span>
         <span :class="ui.date.value">{{ calPostDate(props.date) }}</span>
       </div>
@@ -34,7 +34,7 @@ const props = defineProps<{
 
 const ui = {
   image: {
-    frame: 'inline-block w-14 h-14 rounded-full overflow-hidden',
+    frame: 'inline-block w-14 h-14 rounded-full overflow-hidden mx-2',
     source: 'bg-contain bg-no-repeat w-full h-full object-cover'
   },
   author: {
@@ -44,7 +44,7 @@ const ui = {
   },
   date: {
     wrapper: 'font-small-medium flex justify-start items-center text-gray-500 dark:text-gray-400',
-    icon: 'px-1.5',
+    icon: '',
     value: 'inline-block'
   }
 }

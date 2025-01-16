@@ -1,5 +1,5 @@
 <template>
-  <div class="post-preview-footer">
+  <div class="post-preview-footer border-none">
     <TagArea :tags="props.header?.tags" />
   </div>
 </template>

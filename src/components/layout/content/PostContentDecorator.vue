@@ -5,7 +5,6 @@
 import type {PostMetadata} from "@/classes/implement/PostMetadata";
 import MarkdownIt from "markdown-it";
 import {usePhotoViewStatusStore} from "@/store/photo-view-store";
-import mermaid from "mermaid";
 import {useCodeGroupStore} from "@/store/code-group-store";
 
 const photoViewStore = usePhotoViewStatusStore();
@@ -19,31 +18,17 @@ const html = computed(() => {
   const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
   return md.render(props.metadata.content);
 });
-const unescapeHtml = (html: string): string => {
-  return html
-      .replace(/&gt;/g, '>')
-      .replace(/&lt;/g, '<')
-      .replace(/&quot;/g, '"')
-      .replace(/&amp;/g, '&')
-      .replace(/&#39;/g, "'");
-};
 
 onMounted(() => {
   photoViewStore.load(props.metadata.header.images);
 
   //photo view
   document.querySelectorAll('.rendered-markdown-wrapper img').forEach((imgTag, index) => {
-    console.log('image', imgTag);
     imgTag.addEventListener('click', (e) => {
       photoViewStore.open(index +1)
     });
   });
 
-  document.querySelectorAll('pre.mermaid')
-      .forEach(async (element: Element) => {
-        const {svg} = await mermaid.render(`mermaid-${element.id}`, unescapeHtml(element.innerHTML));
-        element.innerHTML = svg;
-      });
   //code-group
   const activateClasses = 'bg-gray-100 dark:bg-gray-800'.split(' ');
   const deactivateClasses = 'hover:bg-gray-50 dark:hover:bg-gray-800/50'.split(' ');

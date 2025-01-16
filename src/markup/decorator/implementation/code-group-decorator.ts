@@ -2,10 +2,8 @@ import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import MarkdownIt from "markdown-it";
 import Token from "markdown-it/lib/token";
 import Renderer from "markdown-it/lib/renderer";
-import Filename from "@/classes/implement/filename";
 import {getLanguageCode} from "@/utils/markdown-utils";
 import {findChildrenIndexes, findCloseIndex} from "@/markup/utils/markdown-it-util";
-import FileAlias from "@/classes/implement/file-alias";
 import CodeBlockTitle from "@/classes/implement/code-block-title";
 
 export default class CodeGroupDecorator implements IMarkdownDecorator {
@@ -31,8 +29,6 @@ export default class CodeGroupDecorator implements IMarkdownDecorator {
                 codeBlock.attrSet('code-group-index', idx.toString());
                 codeBlock.attrSet(`code-group-number`, index.toString())
             });
-
-            console.log('end group token:', tokens[endIndex]);
 
             return `<div class="relative [&>div:last-child]:!my-0 [&>div:last-child]:!static my-5">
                         <div class="code-group-${index}-buttons flex items-center gap-1 border border-gray-200 dark:border-gray-700 border-b-0 rounded-t-md overflow-x-auto p-2">

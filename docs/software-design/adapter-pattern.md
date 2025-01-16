@@ -4,7 +4,7 @@ title: 어댑터 패턴
 categories: [software-design]
 tags: [Adapter Pattern, Design Pattern]
 date: 2020-06-12 20:17:00 +0900
-thumbnail: /post/software-design/uml/adapter-pattern-intro.png
+thumbnail: /post/software-design/adapter-pattern-intro.svg
 profile-image: /post/profile/profile0.jpg
 current-company: Cubic INC
 current-position: SI Researcher

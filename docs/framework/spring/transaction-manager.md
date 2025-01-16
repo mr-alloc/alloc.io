@@ -4,7 +4,7 @@ title: 스프링의 트랜잭션 관리자
 categories: [framework, spring]
 tags: [Spring,Spring Boot, Transaction, Transaction Manager]
 date: 2024-06-04 18:58:00 +0900
-thumbnail: /post/framework/spring/spring-transaction-manager.webp
+thumbnail: /post/framework/spring/spring-transaction-manager.svg
 current-company: NEOWIZ
 current-position: Software Engineer
 summary: Transaction Manager

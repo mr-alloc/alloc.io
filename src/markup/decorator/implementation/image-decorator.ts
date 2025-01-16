@@ -106,8 +106,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
     }
 
     private addDefaultImageClass(imageToken: Token) {
-        console.log('image', imageToken);
-        imageToken.attrJoin('class', 'my-0 rounded-md');
+        imageToken.attrJoin('class', 'my-0');
         imageToken.attrJoin('style', 'cursor: zoom-in;');
     }
 
@@ -224,7 +223,5 @@ export default class ImageDecorator implements IMarkdownDecorator {
                 return '</div>';
             }
         }
-
-        return '</div>';
     }
 }
