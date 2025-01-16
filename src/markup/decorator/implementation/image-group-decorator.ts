@@ -24,7 +24,7 @@ export default class ImageGroupDecorator implements IMarkdownDecorator {
                token.attrSet('group-image-count', images.length.toString());
             });
             const direction = images.length === 4 ? 'flex-col' : 'flex-row';
-            return `<div class="flex h-64 sm:h-80 md:h-112 rounded-2xl overflow-hidden shadow-xl ${direction}">`;
+            return `<div class="flex h-64 sm:h-80 md:h-112 rounded-2xl overflow-hidden shadow-xl cursor-zoom-in ${direction}">`;
         }
     }
 

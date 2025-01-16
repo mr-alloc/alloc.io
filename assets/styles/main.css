@@ -6992,46 +6992,6 @@
     accent-color: #8b5cf6
 }
 
-.opacity-0 {
-    opacity: 0
-}
-
-.opacity-10 {
-    opacity: .1
-}
-
-.opacity-100 {
-    opacity: 1
-}
-
-.opacity-20 {
-    opacity: .2
-}
-
-.opacity-25 {
-    opacity: .25
-}
-
-.opacity-5 {
-    opacity: .05
-}
-
-.opacity-50 {
-    opacity: .5
-}
-
-.opacity-70 {
-    opacity: .7
-}
-
-.opacity-75 {
-    opacity: .75
-}
-
-.opacity-\[\.67\] {
-    opacity: .67
-}
-
 .bg-blend-multiply {
     background-blend-mode: multiply
 }

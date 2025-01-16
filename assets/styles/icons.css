@@ -2410,9 +2410,54 @@ dark\:brightness-75:is(.dark *) {
         padding-right: 2rem
     }
 
+    .lg\:px-10 {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem
+    }
+
+    .lg\:px-12 {
+        padding-left: 3rem;
+        padding-right: 3rem;
+    }
+
+    .lg\:px-14 {
+        padding-left: 3.5rem;
+        padding-right: 3.5rem;
+    }
+
+    .lg\:px-16 {
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+
+    .lg\:px-20 {
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+
+    .lg\:px-24 {
+        padding-left: 6rem;
+        padding-right: 6rem;
+    }
+
+    .lg\:px-28 {
+        padding-left: 7rem;
+        padding-right: 7rem;
+    }
+
+    .lg\:px-32 {
+        padding-left: 8rem;
+        padding-right: 8rem;
+    }
+
     .lg\:py-12 {
         padding-bottom: 3rem;
         padding-top: 3rem
+    }
+
+    .lg\:py-16 {
+        padding-bottom: 4rem;
+        padding-top: 4rem;
     }
 
     .lg\:py-4 {
@@ -2461,6 +2506,25 @@ dark\:brightness-75:is(.dark *) {
         font-size: 3rem;
         line-height: 1
     }
+
+    .lg\:w-\[600px\] {
+        @media (max-width: 1024px) {
+            width: 600px;
+        }
+    }
+
+    .lg\:w-\[800px\] {
+        @media (max-width: 1024px) {
+            width: 800px;
+        }
+    }
+
+    .lg\:w-\[1000px\] {
+        @media (max-width: 1024px) {
+            width: 1000px;
+        }
+    }
+
 
     .before\:lg\:block:before {
         content: var(--tw-content);

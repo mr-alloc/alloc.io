@@ -31,7 +31,7 @@ hide: false
 * 같은 계층의 노드들과는 정렬하지 않습니다.
 * 루트(뿌리)노드로 부터 내려오는 위치의 노드들 오름차순(**또는 내림차순**)입니다
 
-![위 트리중 어떤것이 힙인지 찾아보세요.](/post/algorithm/heap/tree_images.svg)
+![위 트리중 어떤것이 힙일까?](/post/algorithm/heap/tree_images.svg)
 
 * 트리 A: 잎을 제외한 노드는 모두 정렬되었지만, 왼쪽부터 채워지지않아 Heap이 아닙니다.
 * 트리 B: 왼쪽부터 채워졌지만, 2번노드의 값은 그 자식에값보다 작습니다. 따라서 Heap이 아닙니다.
@@ -58,7 +58,7 @@ hide: false
 위 의 내용을 정리하면 아래와 같습니다.
 
 
-![힙을 만드려면 완전 이진트리가 있어야 해요.](/post/algorithm/heap/first_iteration.svg)
+![힙을 만드려면 완전 이진트리가 있어야 한다.](/post/algorithm/heap/first_iteration.svg)
 
 > 위의 트리는 *완전 이진트리* 입니다. 힙은 완전이진트리에서 만들수 있으므로, 일반 이진트리는 Compact하게 완전이진트리로 바꿔야 힙을 만들수 있습니다.
 > 왼쪽 트리의 마지막 힙의 값은 `15` 이며, 이는 자식(`6, 4`) 어느것 보다도 큰값입니다. 따라서 다음 순회로 넘어갑니다.
@@ -119,28 +119,29 @@ hide: false
 3. 바꾼 값 `B`는, 자신의 자식이 있다면, 두개를 비교하여 가장 큰 값과 맞 바꾼다.
 4. `3.`의 내용을 힙이될때까지 반복한다.
 
-위의 순서를 반복하며, 만든 힙 정렬은 아래와 같습니다.
+정렬을 할 때는 Heap의 우선값을 이용해 진행하기 때문에 `최대 힙` 으로는 오름차순 정렬, `최소 힙`으로는 내림차순 정렬을 할 수 있다.
 
 ::image-group
 
-![힙 정렬 1](/post/algorithm/heap/heap_sort_1_1.svg)
+![가장 우선순위가 높은 값을 뒤로 이동시키고 다시 루트노드부터 힙을 만든다. 이 때 노드의 범위에서 정렬된 개수 만큼만 제외한다.](/post/algorithm/heap/heap_sort_1_1.svg)
 
-![힙 정렬 2](/post/algorithm/heap/heap_sort_1_2.svg)
+![두번째도 동일하게 루트를 뒤로 보내고 다시 힙을 만든다.](/post/algorithm/heap/heap_sort_1_2.svg)
 
-![힙 정렬 3](/post/algorithm/heap/heap_sort_1_3.svg)
+![이 과정에서 제외된 범위는 오름차순으로 점점 정렬되는 것을 볼 수 있다.](/post/algorithm/heap/heap_sort_1_3.svg)
 
-![힙 정렬 4](/post/algorithm/heap/heap_sort_1_4.svg)
+![정렬되는 요소가 많을 수 록 힙을 만드들기 위해 탐색하는 시간 또한 줄어든다.](/post/algorithm/heap/heap_sort_1_4.svg)
 
-![힙 정렬 5](/post/algorithm/heap/heap_sort_1_5.svg)
+![각 요소마다 정렬되는 시간이 logN이기 때문이다.](/post/algorithm/heap/heap_sort_1_5.svg)
 
-![힙 정렬 6](/post/algorithm/heap/heap_sort_1_6.svg)
+![](/post/algorithm/heap/heap_sort_1_6.svg)
 
-![힙 정렬 7](/post/algorithm/heap/heap_sort_1_7.svg)
+![](/post/algorithm/heap/heap_sort_1_7.svg)
 
-![힙 정렬 8](/post/algorithm/heap/heap_sort_1_8.svg)
-
+![마지막 요소까지 정렬](/post/algorithm/heap/heap_sort_1_8.svg)
 
 ::
+:{ "description": "최대 힙을 이용한 오름차순 정렬" }
+
 
 ## 구현 코드 (Java)::implementation-code
 

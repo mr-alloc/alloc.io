@@ -33,6 +33,7 @@ onMounted(() => {
 
   //photo view
   document.querySelectorAll('.rendered-markdown-wrapper img').forEach((imgTag, index) => {
+    console.log('image', imgTag);
     imgTag.addEventListener('click', (e) => {
       photoViewStore.open(index +1)
     });
@@ -353,6 +354,15 @@ div[class*=language-] .highlight-lines .highlighted {
     }
   }
 
+  .hover\:md\:zoom-image {
+    @media (min-width: 768px) {
+      transition: .3s;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+  }
 
   .h-\[1\.375rem\] {
     height: 1.375rem

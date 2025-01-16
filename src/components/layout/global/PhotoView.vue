@@ -1,6 +1,6 @@
 <template>
   <div class="photo-view-area relative w-screen h-screen flex flex-col" :class="{ 'full-screen': photoViewStore.isFullScreen }">
-    <div class="photo-view-panel flex h-4/5 shrink-0 bg-gray-800 dark:bg-gray-800 overflow-hidden relative" :class="[`photoViewStore.zoom !== 1 && ${`x${photoViewStore.zoom}`}`, { zoom: photoViewStore.zoom !== 1}]">
+    <div class="photo-view-panel flex h-4/5 shrink-0 bg-gray-800 dark:bg-gray-800 overflow-hidden relative justify-center" :class="[`photoViewStore.zoom !== 1 && ${`x${photoViewStore.zoom}`}`, { zoom: photoViewStore.zoom !== 1}]">
       <!-- 이전 버튼 -->
       <button class="before-button" type="button" v-if="photoViewStore.hasBefore()"
               v-on:click="photoViewStore.beforeImage()">
@@ -12,15 +12,18 @@
         </svg>
       </button>
       <!-- 이미지 -->
-      <img id="current-image w-full my-0 mx-auto object-contain origin-top-left" :src="photoViewStore.current()?.src" :alt="photoViewStore.current()?.alt"/>
+      <div class="flex lg:w-[800px] justify-center">
+        <img id="w-full my-0 mx-auto object-contain origin-top-left rounded-md" :src="photoViewStore.current()?.src" :alt="photoViewStore.current()?.alt"/>
+      </div>
       <!-- 자막 -->
-      <span class="image-subtitles">{{ photoViewStore.current()?.alt }}</span>
+      <div class="image-subtitles">
+        <span>{{ photoViewStore.current()?.alt }}</span>
+      </div>
       <!-- 다음 버튼 -->
       <button class="next-button" type="button" v-if="photoViewStore.hasNext()" v-on:click="photoViewStore.nextImage()">
         <svg class="svg-inline--fa fa-chevron-right" aria-hidden="true" focusable="false" data-prefix="fas"
              data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-          <path class="" fill="currentColor"
-                d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
+          <path class="" fill="currentColor" d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
         </svg>
       </button>
       <div class="image-toolbar-wrapper">
@@ -249,16 +252,21 @@ $tool-item-width: 60px;
     .image-subtitles {
       padding: 3px 5px;
       position: fixed;
-      bottom: 200px;
+      bottom: 270px;
       display: flex;
       font-size: 1.5rem;
       font-weight: 500;
       width: 100%;
       justify-content: center;
       color: white;
-      text-shadow: #000000 0 0 5px;
       margin: 0 auto;
       transition: .3s ease-in-out;
+
+      span {
+        padding: 3px 5px;
+        background-color: rgb(0, 0, 0, .3);
+        border-radius: 5px;
+      }
     }
   }
 
@@ -269,6 +277,7 @@ $tool-item-width: 60px;
     overflow-x: scroll;
     transition: .3s ease-in-out;
     user-select: none;
+    background-color: #1E1C1CFF;
 
     .photo-view-list {
       display: flex;
@@ -281,9 +290,11 @@ $tool-item-width: 60px;
         display: flex;
         justify-content: center;
         background-color: #1E1C1CFF;
+        border: 2px solid lightgray;
         margin: 0 10px;
-        border-radius: 5px;
-        transition: .4s;
+        overflow: hidden;
+        border-radius: 15px;
+        transition: .3s;
 
         img {
           height: inherit;
@@ -291,12 +302,13 @@ $tool-item-width: 60px;
         }
 
         &.selected {
-          border: 2px solid $main-light-color;
-          box-shadow: 0 0 10px $main-light-color;
+          border-color: rgb(34 197 94 / var(--tw-bg-opacity, 1));
+          scale: 1.1;
         }
 
         &:hover {
-          box-shadow: 0 0 10px $main-light-color;
+          border-color: rgb(34 197 94 / var(--tw-bg-opacity, 1));
+          scale: 1.1;
         }
       }
     }
@@ -310,7 +322,7 @@ $tool-item-width: 60px;
       }
 
       .image-subtitles {
-        bottom: 80px;
+        bottom: 20px;
       }
 
 

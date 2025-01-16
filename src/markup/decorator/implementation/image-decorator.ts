@@ -37,6 +37,8 @@ export default class ImageDecorator implements IMarkdownDecorator {
                     return fallbackRule(tokens, index, options, env, self);
                 }
 
+                this.addDefaultImageClass(imageToken);
+
                 if (imageToken.attrIndex('group-index') >= 0) {
                     return this.decorateOpenGroupImage(imageToken, tokens[index]);
                 }
@@ -51,11 +53,9 @@ export default class ImageDecorator implements IMarkdownDecorator {
                 imageToken.attrJoin('data-description', attributes.get('description') ?? '');
                 templateToken.content = '';
 
-                this.addDefaultImageClass(imageToken);
-
                 const styleDecorator = StyleDecorator.getInstance();
                 styleDecorator.apply(imageToken, attributes);
-                wrapperClasses.push(imageToken.meta.wrapperClasses);
+                wrapperClasses.push(...imageToken.meta.wrapperClasses);
             } catch (skip) {
                 isDebug && console.error('[decorator]image:start error: ', skip);
             }
@@ -106,6 +106,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
     }
 
     private addDefaultImageClass(imageToken: Token) {
+        console.log('image', imageToken);
         imageToken.attrJoin('class', 'my-0 rounded-md');
         imageToken.attrJoin('style', 'cursor: zoom-in;');
     }
@@ -117,7 +118,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
         const groupNumber = parseInt(imageToken.attrGet('image-number')!, 10);
         //이미지 그룹내 이미지 갯수
         const groupImageCount = parseInt(imageToken.attrGet('group-image-count')!, 10);
-        imageToken.attrJoin('class', 'object-cover m-0 w-full h-full');
+        imageToken.attrJoin('class', 'object-cover m-0 w-full h-full cursor-zoom-in hover:md:zoom-image');
         useImageGroupStore().addImage(groupIndex, new Image(imageToken.attrGet('src')!, imageToken.attrGet('alt')!));
 
         switch (groupImageCount) {

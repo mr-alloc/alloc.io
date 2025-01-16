@@ -37,6 +37,10 @@ export const usePhotoViewStatusStore = defineStore('photoViewStatus', () => {
 
     function close() {
         isPhotoView.value = false
+        isFullScreen.value = false;
+        zoom.value = 1
+        currentIndex.value = 0
+
         const html = document.querySelector('html')!
         html.style.overflow = 'unset'
         document.body.style.overflow = 'unset'
