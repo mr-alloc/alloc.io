@@ -45,15 +45,11 @@ if (!content) {
   throw createError({ statusCode: 404, statusMessage: 'Page not found', fatal: true });
 }
 
-const titleTemplate = computed(() => {
-  return '%s · Alloc Blog'
-});
 
 const appConfig = useAppConfig();
 const title = content.header.title;
 const description = content.description;
 useSeoMeta({
-  titleTemplate,
   title,
   description,
   ogTitle: title,

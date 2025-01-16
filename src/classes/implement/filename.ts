@@ -1,6 +1,7 @@
 export default class Filename {
 
     private static readonly RE = new RegExp('([^.]+)(\\.)([^.]+)', 'g');
+    private static readonly ALIAS_RE = new RegExp('([^:]+)(?:::([\\s\\S]+))', 'mg');
     private readonly _value: string;
     private readonly _ext: string;
 
@@ -34,17 +35,7 @@ export default class Filename {
         return new Filename(executed[1], executed[3]);
     }
 
-    public static ofAlias(name: string): Filename {
-        const aliasRE = /([^:]+)(?:::([\s\S]+))/mg;
-        const isMatch = aliasRE.test(name);
-        if (isMatch) {
-            aliasRE.lastIndex = 0;
-            const [_, ext, alias] = aliasRE.exec(name)!;
-            aliasRE.lastIndex = 0;
-            return new Filename(alias, ext);
-        }
-
-        return Filename.of(name);
+    public toString(): string {
+        return `${this._value}.${this._ext}`;
     }
-
 }

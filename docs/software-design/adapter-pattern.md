@@ -35,8 +35,6 @@ hide: false
 
 ### 구성요소 정의 
 
-```java
-
 ::code-group
 
 ```Payment.java

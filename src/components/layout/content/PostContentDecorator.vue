@@ -5,8 +5,11 @@
 import type {PostMetadata} from "@/classes/implement/PostMetadata";
 import MarkdownIt from "markdown-it";
 import {usePhotoViewStatusStore} from "@/store/photo-view-store";
+import mermaid from "mermaid";
+import {useCodeGroupStore} from "@/store/code-group-store";
 
 const photoViewStore = usePhotoViewStatusStore();
+const codeGroupStore = useCodeGroupStore();
 const nuxtApp = useNuxtApp();
 const props = defineProps<{
   metadata: PostMetadata
@@ -16,9 +19,78 @@ const html = computed(() => {
   const md: MarkdownIt = nuxtApp.$md as MarkdownIt;
   return md.render(props.metadata.content);
 });
+const unescapeHtml = (html: string): string => {
+  return html
+      .replace(/&gt;/g, '>')
+      .replace(/&lt;/g, '<')
+      .replace(/&quot;/g, '"')
+      .replace(/&amp;/g, '&')
+      .replace(/&#39;/g, "'");
+};
 
 onMounted(() => {
   photoViewStore.load(props.metadata.header.images);
+
+  //photo view
+  document.querySelectorAll('.rendered-markdown-wrapper img').forEach((imgTag, index) => {
+    imgTag.addEventListener('click', (e) => {
+      photoViewStore.open(index +1)
+    });
+  });
+
+  document.querySelectorAll('pre.mermaid')
+      .forEach(async (element: Element) => {
+        const {svg} = await mermaid.render(`mermaid-${element.id}`, unescapeHtml(element.innerHTML));
+        element.innerHTML = svg;
+      });
+  //code-group
+  const activateClasses = 'bg-gray-100 dark:bg-gray-800'.split(' ');
+  const deactivateClasses = 'hover:bg-gray-50 dark:hover:bg-gray-800/50'.split(' ');
+
+  document.querySelectorAll('.code-group').forEach((codeWrapper) => {
+    const groupNumber = (codeWrapper as HTMLElement).dataset.groupNumber;
+    const buttons = document.querySelectorAll(`.${codeWrapper.id}-buttons button`);
+    buttons.forEach((element) => {
+      const button = element as HTMLButtonElement;
+      button.addEventListener('click', () => {
+        const codeContent = codeWrapper.querySelector('.code-content') as HTMLPreElement;
+        codeContent.outerHTML = codeGroupStore.getCodeGroup(groupNumber!, button.innerText);
+        //기존 버튼들 버튼 비활성화
+        buttons.forEach((other) => {
+          const otherButton = other as HTMLButtonElement;
+          otherButton.classList.remove(...activateClasses, ...deactivateClasses);
+
+          if (otherButton.innerText === button.innerText) {
+            otherButton.classList.add(...activateClasses);
+          } else {
+            otherButton.classList.add(...deactivateClasses);
+          }
+        });
+      });
+    });
+  });
+  //copy button
+  const buttons = [...document.querySelectorAll('.copy-button').values()];
+
+  buttons.forEach((button) => {
+
+    const div = button.parentNode!;
+
+    button.addEventListener('click', () => {
+      button.innerHTML = '<span class="iconify i-ph:green-circle-check flex-shrink-0 h-4 w-4" aria-hidden="true"></span>';
+
+      setTimeout(async() => {
+        const htmlPreElement = div.querySelector('pre')!;
+        await navigator.clipboard.writeText(htmlPreElement.innerText);
+
+        setTimeout(() => {
+          //revert icon to copy
+          button.innerHTML = '<span class="iconify i-ph:copy flex-shrink-0 h-4 w-4" aria-hidden="true"></span>'
+        }, 2000)
+      });
+
+    });
+  });
 });
 
 </script>

@@ -5,6 +5,7 @@ import RuleType from "@/markup/constant/rule-type";
 import shiki from "@shikijs/markdown-it";
 import codeGroupParser from "@/plugins/markdown-it/code-group-parser";
 import imageGroupParser from "@/plugins/markdown-it/image-group-parser";
+import type {ShikiTransformerContext} from "@shikijs/types";
 
 
 export default defineNuxtPlugin(async (nuxtApp) => {
@@ -28,10 +29,13 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
     nuxtApp.provide('md', markdownIt);
 });
-
 const crateShikiExtension = shiki({
     transformers: [
         {
+            pre(hast: any) {
+                hast.properties['class'] = 'code-content';
+                return hast;
+            },
             code(hast: any) {
                 const original: string = hast.properties['class'] as string;
                 const classes = original?.split(' ');

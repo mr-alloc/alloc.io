@@ -3427,6 +3427,20 @@ dark\:brightness-75:is(.dark *) {
     --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256' width='256' height='256'%3E%3Cpath fill='black' d='M216 32H88a8 8 0 0 0-8 8v40H40a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h128a8 8 0 0 0 8-8v-40h40a8 8 0 0 0 8-8V40a8 8 0 0 0-8-8m-56 176H48V96h112Zm48-48h-32V88a8 8 0 0 0-8-8H96V48h112Z'/%3E%3C/svg%3E")
 }
 
+:where(.i-ph\:green-circle-check) {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: #699f4c;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    --svg: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='800px' height='800px' viewBox='0 0 60 60'%3E%3Cdefs%3E%3Cstyle%3E .cls-1 %7B fill: %23699f4c; fill-rule: evenodd; %7D %3C/style%3E%3C/defs%3E%3Cpath class='cls-1' d='M800,510a30,30,0,1,1,30-30A30,30,0,0,1,800,510Zm-16.986-23.235a3.484,3.484,0,0,1,0-4.9l1.766-1.756a3.185,3.185,0,0,1,4.574.051l3.12,3.237a1.592,1.592,0,0,0,2.311,0l15.9-16.39a3.187,3.187,0,0,1,4.6-.027L817,468.714a3.482,3.482,0,0,1,0,4.846l-21.109,21.451a3.185,3.185,0,0,1-4.552.03Z' id='check' transform='translate(-770 -450)'/%3E%3C/svg%3E")
+}
+
 :where(.i-ph\:database) {
     display: inline-block;
     width: 1em;

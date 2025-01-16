@@ -23,8 +23,6 @@ const router = useRouter();
 const scrollspy = useScrollspy();
 const nuxtApp = useNuxtApp();
 const prepareStore = usePagePrepareStore();
-const photoViewStatusStore = usePhotoViewStatusStore();
-const codeGroupStore = useCodeGroupStore();
 const props = defineProps<{
   headline: TocNode,
   isInner: boolean,
@@ -42,23 +40,10 @@ const scrollToHeading = (id: string) => {
   router.push(`#${id}`)
   emit('move', id);
 };
-const unescapeHtml = (html: string): string => {
-  return html
-      .replace(/&gt;/g, '>')
-      .replace(/&lt;/g, '<')
-      .replace(/&quot;/g, '"')
-      .replace(/&amp;/g, '&')
-      .replace(/&#39;/g, "'");
-};
+
 
 nuxtApp.hooks.hookOnce('page:finish', () => {
   if (prepareStore.isPrepare) {
-    //photo view
-    document.querySelectorAll('.rendered-markdown-wrapper img').forEach((imgTag, index) => {
-      imgTag.addEventListener('click', (e) => {
-        photoViewStatusStore.open(index +1)
-      });
-    });
     //toc
     scrollspy.updateHeadings(props.headline, [
       ...document.querySelectorAll('h2'),
@@ -73,40 +58,9 @@ nuxtApp.hooks.hookOnce('page:finish', () => {
         classDiagramRankSpacing: 100,  // 기본값 50
       }
     });
-    document.querySelectorAll('pre.mermaid')
-        .forEach(async (element: Element) => {
-          const {svg} = await mermaid.render(`mermaid-${element.id}`, unescapeHtml(element.innerHTML));
-          element.innerHTML = svg;
-        });
-    //code-group
-    const activateClasses = 'bg-gray-100 dark:bg-gray-800'.split(' ');
-    const deactivateClasses = 'hover:bg-gray-50 dark:hover:bg-gray-800/50'.split(' ');
-
-    document.querySelectorAll('.code-group').forEach((codeWrapper) => {
-      const groupNumber = (codeWrapper as HTMLElement).dataset.groupNumber;
-      const buttons = document.querySelectorAll(`.${codeWrapper.id}-buttons button`);
-      buttons.forEach((element) => {
-        const button = element as HTMLButtonElement;
-        button.addEventListener('click', () => {
-          codeWrapper.innerHTML = codeGroupStore.getCodeGroup(groupNumber!, button.innerText);
-          //기존 버튼들 버튼 비활성화
-          buttons.forEach((other) => {
-            const otherButton = other as HTMLButtonElement;
-            otherButton.classList.remove(...activateClasses, ...deactivateClasses);
-
-            if (otherButton.innerText === button.innerText) {
-              otherButton.classList.add(...activateClasses);
-            } else {
-              otherButton.classList.add(...deactivateClasses);
-            }
-          });
-        });
-      });
-    });
     prepareStore.done();
   }
 });
-
 </script>
 
 <style lang="scss" scoped>
