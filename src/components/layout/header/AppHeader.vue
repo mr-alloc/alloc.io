@@ -16,7 +16,10 @@
         <ul :class="ui.header.menu.wrapper">
           <li :class="ui.header.menu.item.frame">
             <div :class="ui.header.menu.item.inner">
-              <NuxtLink to="/wikis" :class="ui.header.menu.item.link">나만의 위키</NuxtLink>
+              <NuxtLink to="/wikis" :class="ui.header.menu.item.link">나만의 위키({{
+                  postContentStore.wikiCount
+                }})
+              </NuxtLink>
             </div>
           </li>
         </ul>
@@ -24,7 +27,7 @@
           <div :class="ui.header.feature.item.wrapper" v-for="feature in features">
             <UTooltip :text="feature.label">
               <button type="button" :class="ui.header.feature.item.button" v-on:click="feature.click">
-              <span :class="[ui.header.feature.item.icon, feature.icon]"></span>
+                <span :class="[ui.header.feature.item.icon, feature.icon]"></span>
               </button>
             </UTooltip>
           </div>
@@ -41,17 +44,16 @@
 </template>
 <script lang="ts" setup>
 import {useSearchStatusStore} from "@/store/search-status-store";
-import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 import {useNuxtApp} from "nuxt/app";
 import packageJson from "~/package.json"
+import {usePostContentStore} from "@/store/post-content-store";
 
 const router = useRouter()
 const nuxtApp = useNuxtApp();
 const emitter: any = nuxtApp.$emitter;
 
 const searchStatusStore = useSearchStatusStore();
-const appConfig = useAppConfig();
-const photoViewStatus = usePhotoViewStatusStore();
+const postContentStore = usePostContentStore();
 const colorMode = useColorMode();
 
 const features = [

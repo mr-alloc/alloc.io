@@ -33,7 +33,7 @@ export default class Header {
         this._summary = header.summary;
         this._exposeImages = header["expose-images"];
         this._excerptSeparator = header["excerpt-separator"];
-        this._hide = header.hide;
+        this._hide = header.hide ?? true;
         this._breadcrumbs = header.breadcrumbs;
         this._rootHeadLine = TocNode.createRecursive(header.headlines);
     }

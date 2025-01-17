@@ -1,5 +1,4 @@
 import type ICategoryNode from "@/classes/i-category-node";
-import {isDirectory} from "path-type";
 
 export default class CategoryGroup implements ICategoryNode {
 
@@ -31,12 +30,18 @@ export default class CategoryGroup implements ICategoryNode {
         return this._isCollapse;
     }
 
-    public addChild(child: ICategoryNode): void {
-        this._children.push(child);
+    get childrenCount(): number {
+        return this._children.reduce((acc, pre) => {
+            if (pre.isDirectory) {
+                const group = pre as CategoryGroup;
+                return acc + group.childrenCount;
+            }
+            return acc + 1;
+        }, 0)
     }
 
-    public collapse(): void {
-        this._isCollapse = !this._isCollapse;
+    public addChild(child: ICategoryNode): void {
+        this._children.push(child);
     }
 
     public toJSON() {

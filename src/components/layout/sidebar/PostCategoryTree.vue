@@ -5,7 +5,6 @@ import {CategoryAlias} from "@/classes/constant/category-alias";
 import type CategoryGroup from "@/classes/implement/category-group";
 import type CategoryContent from "@/classes/implement/category-content";
 import {toValueMap} from "@/utils/collection-util";
-import {useRouter} from "vue-router";
 
 const ui = {
   icon: {
@@ -43,7 +42,7 @@ function collapseCategory(category: CategoryGroup) {
 </script>
 <template>
   <li class="space-y-2 mx-1 lg:mx-0 select-none list-none"
-      :class="{ 'mb-2 lg:mb-3': groups.length-1 === depth }"
+      :class="{ 'mb': groups.length -1 === depth }"
       v-for="category in categories as Array<ICategoryNode>"
       :key="category.name">
     <a :class="[ui.icon.wrapper, isRange && group === category.name ? 'text-gray-700 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400']" v-if="category.isDirectory" role="button"
@@ -51,7 +50,9 @@ function collapseCategory(category: CategoryGroup) {
       <div :class="[ui.icon.default, isRange && group === category.name ? ui.icon.active : ui.icon.inactive]">
         <span :class="`iconify i-ph:${CategoryAlias.find(category.name).name} w-4 h-4 flex-shrink-0`" aria-hidden="true"></span>
       </div>
-      <span class="text-sm/6 relative text-gray-700 dark:text-gray-200">{{ CategoryAlias.find(category.name).alias }}</span>
+      <span class="text-sm/6 relative text-gray-700 dark:text-gray-200">{{
+          CategoryAlias.find(category.name).alias
+        }}({{ (category as CategoryGroup).childrenCount }})</span>
     </a>
     <ul v-if="category.isDirectory" class="ml-6 mt-0 text-slate-600 overflow-hidden"
         :class="{ 'h-0 my-0': collapseGroup.has(category.name) && collapseGroup.get(category.name)! }">

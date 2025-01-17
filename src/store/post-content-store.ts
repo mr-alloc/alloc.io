@@ -10,6 +10,7 @@ export const usePostContentStore = defineStore("PostMap", () => {
 
     const postContents = ref<Map<string, PostMetadata>>(new Map<string, PostMetadata>());
     const headlineMap = ref<Map<string, Map<string, TocNode>>>(new Map<string, Map<string, TocNode>>());
+    const wikiCount = ref<number>(0);
 
     function add(post: PostMetadata) {
         postContents.value.set(post.path,  post);
@@ -50,6 +51,8 @@ export const usePostContentStore = defineStore("PostMap", () => {
             ));
             return acc;
         }, new Map<string, Map<string, TocNode>>());
+
+        wikiCount.value = values(DocumentType.WIKI).filter(wiki => wiki.isPublic).length;
     }
 
 
@@ -62,6 +65,7 @@ export const usePostContentStore = defineStore("PostMap", () => {
         isWiki,
         keys,
         completeAddPost,
-        headlineMap
+        headlineMap,
+        wikiCount
     }
 });

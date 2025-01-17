@@ -163,7 +163,8 @@ value IN (SELECT key_column FROM single_table WHERE some_expr)
 * range  
 주어진 범위에 있는 행들만 조회되며, 행 선택에 인덱스를 사용한다. 출력 행의 `key` 컬럼은 해당 인덱스가 사용됨을 나타낸다. `key_len` 컬럼은 사용된 가장긴 키부분을 포함한다. `ref`컬럼은 이 타입에대해 `NULL` 이다.
 `range`는 `key`컬럼이  `=, <>, >, >=, <, <=, IS NULL, <=>, BETWEEN, LIKE` 또는  `IN()` 연산자를 사용하여 비교되는 상수일 때 사용된다.
-```sql 
+
+```sql
 SELECT * FROM tbl_name
   WHERE key_column = 10;
   
@@ -176,6 +177,7 @@ SELECT * FROM tbl_name
 SELECT * FROM tbl_name
   WHERE key_part1 = 10 AND key_part2 IN (10, 20, 30);
 ```
+
 * index   
 `index` 조인 타입은 인덱스 트리 스캔 빼고 `ALL` 하고 같으며, 두가지 상황에서 발생한다.
 * 인덱스가 쿼리에 대한 커버링 인덱스 이고,  테이블에서 필요한 모든 데이터를 충족하는 데 사용할 수 있는 경우 인덱스 트리만 스캔된다. 이 경우 `Extra` 컬럼은 `Using Index`라고 나온다. 보통 인덱스 전용 스캔은 일반적으로 인덱스 사이즈가 테이블 데이터보다 작기떄문에, `ALL`보다 빠르다.
