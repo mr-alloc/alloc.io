@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 어댑터 패턴
+title: 어댑터 패턴 (Adapter Pattern)
 categories: [software-design]
 tags: [Adapter Pattern, Design Pattern]
 date: 2020-06-12 20:17:00 +0900

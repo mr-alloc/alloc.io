@@ -16,15 +16,13 @@
     <ClientOnly>
       <Transition name="fade">
         <div class="background fixed inset-0 overflow-y-auto transition-opacity"
-              v-if="photoViewStatus.isPhotoView || searchStatus.isSearchMode"
+             v-if="photoViewStatus.isPhotoView || searchStatus.isSearchMode"
              :class="[
                photoViewStatus.isPhotoView || searchStatus.isSearchMode
             ? ['z-50', 'bg-gray-200/75', 'dark:bg-gray-800/75'] : ['opacity-0']
             ]"
              v-on:click="($event) => methods.clickBackground($event as PointerEvent)">
-          <div class="flex min-h-full items-end sm:items-center justify-center text-center p-0 sm:p-4" v-show="!photoViewStatus.isPhotoView">
-            <SearchView v-show="searchStatus.isSearchMode" />
-          </div>
+          <SearchView v-show="searchStatus.isSearchMode"/>
           <PhotoView v-if="photoViewStatus.isPhotoView" v-on:click="$event.stopPropagation()" />
         </div>
       </Transition>

@@ -14,13 +14,17 @@
 <script lang="ts" setup>
 import TocNode from "@/classes/implement/toc-node";
 import {useScrollspy} from "@/store/scroll-spy";
-import {usePagePrepareStore} from "@/store/prepare-post-store";
 import mermaid from "mermaid";
+import {useCodeGroupStore} from "@/store/code-group-store";
+import {usePhotoViewStatusStore} from "@/store/photo-view-store";
+import {usePagePrepareStore} from "@/store/prepare-post-store";
 
 const router = useRouter();
 const scrollspy = useScrollspy();
 const nuxtApp = useNuxtApp();
+const codeGroupStore = useCodeGroupStore();
 const prepareStore = usePagePrepareStore();
+const photoViewStore = usePhotoViewStatusStore();
 const props = defineProps<{
   headline: TocNode,
   isInner: boolean,
@@ -50,18 +54,77 @@ const unescapeHtml = (html: string): string => {
 
 nuxtApp.hooks.hookOnce('page:finish', () => {
   if (prepareStore.isPrepare) {
+    console.log('prepare');
     //toc
     scrollspy.updateHeadings(props.headline, [
       ...document.querySelectorAll('h2'),
       ...document.querySelectorAll('h3')
     ]);
+
+    //photo view
+    document.querySelectorAll('.rendered-markdown-wrapper img').forEach((imgTag, index) => {
+      imgTag.addEventListener('click', (e) => {
+        console.log('click');
+        photoViewStore.open(index + 1)
+      });
+    });
+
+    //code-group
+    const activateClasses = 'bg-gray-100 dark:bg-gray-800'.split(' ');
+    const deactivateClasses = 'hover:bg-gray-50 dark:hover:bg-gray-800/50'.split(' ');
+
+    document.querySelectorAll('.code-group').forEach((codeWrapper) => {
+      const groupNumber = (codeWrapper as HTMLElement).dataset.groupNumber;
+      const buttons = document.querySelectorAll(`.${codeWrapper.id}-buttons button`);
+      buttons.forEach((element) => {
+        const button = element as HTMLButtonElement;
+
+        button.addEventListener('click', () => {
+          const codeContent = codeWrapper.querySelector('.code-content') as HTMLPreElement;
+          codeContent.outerHTML = codeGroupStore.getCodeGroup(groupNumber!, button.innerText);
+          //기존 버튼들 버튼 비활성화
+          buttons.forEach((other) => {
+            const otherButton = other as HTMLButtonElement;
+            otherButton.classList.remove(...activateClasses, ...deactivateClasses);
+
+            if (otherButton.innerText === button.innerText) {
+              otherButton.classList.add(...activateClasses);
+            } else {
+              otherButton.classList.add(...deactivateClasses);
+            }
+          });
+        });
+      });
+    });
     //mermaid
     document.querySelectorAll('pre.mermaid')
         .forEach(async (element: Element) => {
           const {svg} = await mermaid.render(`mermaid-${element.id}`, unescapeHtml(element.innerHTML));
-          console.log(`(${element.id})element: ${element}`);
           element.innerHTML = svg;
         });
+
+
+    //copy button
+    const buttons = [...document.querySelectorAll('.copy-button').values()];
+    buttons.forEach((button) => {
+      const div = button.parentNode!;
+
+      button.addEventListener('click', () => {
+        button.innerHTML = '<span class="iconify i-ph:green-circle-check flex-shrink-0 h-4 w-4" aria-hidden="true"></span>';
+
+        setTimeout(async () => {
+          const htmlPreElement = div.querySelector('pre')!;
+          await navigator.clipboard.writeText(htmlPreElement.innerText);
+
+          setTimeout(() => {
+            //revert icon to copy
+            button.innerHTML = '<span class="iconify i-ph:copy flex-shrink-0 h-4 w-4" aria-hidden="true"></span>'
+          }, 2000)
+        });
+
+      });
+    });
+
     prepareStore.done();
   }
 });

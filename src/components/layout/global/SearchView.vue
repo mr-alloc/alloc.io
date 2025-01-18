@@ -1,5 +1,7 @@
 <template>
-  <div v-show="searchStatusStore.isSearchMode" v-if="searchStatusStore.isSearchMode"
+  <div v-if="searchStatusStore.isSearchMode"
+       class="flex min-h-full items-end sm:items-center justify-center text-center p-0 sm:p-4">
+    <div v-show="searchStatusStore.isSearchMode" v-if="searchStatusStore.isSearchMode"
        class="relative text-left rtl:text-right flex flex-col bg-white dark:bg-gray-900 shadow-xl w-full sm:max-w-3xl h-dvh sm:h-[28rem] rounded-none sm:rounded-lg sm:my-8"
        :class="[
            searchStatusStore.isSearchMode ? [] : ['opacity-0', 'duration-200']
@@ -24,8 +26,9 @@
         </button>
       </div>
       <div class="relative flex-1 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-800 scroll-py-10">
-        <SearchResult v-for="group in groups.values()" :key="group" :row="group" />
+        <SearchResult v-for="group in groups.values()" :row="group as PostSearchGroup"/>
       </div>
+    </div>
     </div>
   </div>
 </template>

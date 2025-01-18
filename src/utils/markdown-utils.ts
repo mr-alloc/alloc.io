@@ -19,8 +19,6 @@ function wrap(code: string, lang: string) {
 
 export function getLanguageCode (extension: string): string {
     const extensionMap = new Map<string, string>([
-        ['vue', 'markup'],
-        ['html', 'markup'],
         ['md', 'markdown'],
         ['rb', 'ruby'],
         ['ts', 'typescript'],

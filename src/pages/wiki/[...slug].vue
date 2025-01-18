@@ -24,19 +24,11 @@
 import {useRoute} from "vue-router";
 import {usePostContentStore} from "@/store/post-content-store";
 import PostContentDecorator from "@/components/layout/content/PostContentDecorator.vue";
-import {useCategoriesStore} from "@/store/category-store";
-import DocumentType from "@/classes/constant/document-type";
 import MainPageBody from "@/components/layout/content/MainPageBody.vue";
 import MainPage from "@/components/layout/content/MainPage.vue";
 import MainPageHeader from "@/components/layout/content/MainPageHeader.vue";
 import ContentToc from "@/components/layout/content/ContentToc.vue";
 import Breadcrumb from "@/components/layout/content/Breadcrumb.vue";
-import {useNuxtApp} from "nuxt/app";
-import {usePagePrepareStore} from "@/store/prepare-post-store";
-import {usePhotoViewStatusStore} from "@/store/photo-view-store";
-import {useScrollspy} from "@/store/scroll-spy";
-import {PostMetadata} from "@/classes/implement/PostMetadata";
-import type TocNode from "@/classes/implement/toc-node";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
