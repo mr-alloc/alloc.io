@@ -56,6 +56,7 @@
 import TagArea from "@/components/layout/content/post-card/TagArea.vue";
 import appCache from "@/store/app-cache";
 import {useRoute} from "#app";
+import Paginator from "paginator";
 import {usePostContentStore} from "@/store/post-content-store.ts";
 
 const route = useRoute();
@@ -86,10 +87,6 @@ const data = {
   pagingResult: paginated,
   displayed: displayedPosts,
   cur_page: 0
-}
-
-const components = {
-  TagArea
 }
 
 const methods = {
