@@ -1,8 +1,10 @@
 [
+  "/wiki/interrupt",
   "/wiki/central-processing-unit",
   "/wiki/direct-memory-access",
   "/wiki/io-manager",
   "/wiki/programmed-io",
+  "/wiki/system-call",
   "/docs/life/youth-of-ggomi",
   "/docs/database/mysql-explain",
   "/docs/framework/spring/transaction-manager",
@@ -14,7 +16,6 @@
   "/docs/tool/asdf",
   "/docs/algorithm/heap-sort",
   "/docs/computer/os/operating-system-1",
-  "/wiki/interrupt",
   "/docs/computer/computer-organization",
   "/docs/language/java/install-zulu-in-mac",
   "/docs/software-design/adapter-pattern",

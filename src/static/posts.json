@@ -1,5 +1,67 @@
 [
   {
+    "path": "/wiki/interrupt",
+    "header": {
+      "layout": "wiki",
+      "title": "CPU와 인터럽트",
+      "tags": [
+        "Operating System",
+        "Interrupt"
+      ],
+      "summary": "Interrupt",
+      "hide": false,
+      "date": 1999999999999,
+      "breadcrumbs": [
+        "문서",
+        "컴퓨터"
+      ],
+      "images": [
+        {
+          "src": "/post/computer/move-unit.png",
+          "alt": "캐릭터의 이동"
+        }
+      ],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "인터럽트는 무엇인가?::what-is-interrupt",
+            "title": "인터럽트는 무엇인가?",
+            "fragment": "what-is-interrupt",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "인터럽트 서비스 루틴::interrupt-service-routine",
+            "title": "인터럽트 서비스 루틴",
+            "fragment": "interrupt-service-routine",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "인터럽트의 매커니즘::mechanism-of-interrupt",
+            "title": "인터럽트의 매커니즘",
+            "fragment": "mechanism-of-interrupt",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "타이머::timer",
+            "title": "타이머",
+            "fragment": "timer",
+            "children": []
+          }
+        ]
+      }
+    },
+    "description": "",
+    "content": "\n## 인터럽트는 무엇인가?::what-is-interrupt\n\ninterrupt `[ˌɪntəˈrʌpt]`\n1. (말·행동을) 방해하다[중단시키다/가로막다]\n2. (무엇을 잠깐) 중단시키다\n\n사전 상의 `interrupt`(이하 인터럽트)는 위와 같은 어떤 행동이나 흐름을 중단시키는 의미로 등재 되어있다.\n컴퓨터에서도 인터럽트는 어떤 흐름을 중지하는 역할을 한다.\n\n[CPU](/wiki/central-processing-unit)는 순차적으로 명령어를 처리한다. 하지만 예상치못하거나 긴급한상황에 의도적으로 특별한 처리를 해야한다.\n예를 들어 스타크래프트나 리그오브레전드처럼 3인칭시점에서 마우스로 지면을 클릭하는 경우, 해당위치로 캐릭터가 이동한다.\n이 경우 이동이 끝나지 않아도, 우리는 새로운 위치를 클릭하여 방향을 바꿀수도있다. \n\n![캐릭터의 이동](/post/computer/move-unit.png)\n:{ \"align\": \"center\", \"max-width\": \"300px\", \"description\": \"눈꽃 시비르의 방향을 조작하는 프로겐 선수\" }\n\n이 처럼 CPU가 명령을 실행하는중에도 긴급하거나, 실시간 처리가 필요한경우 IRQ를 통해, CPU에 인터럽트 신호를 보내 우선적으로 처리를 수행할 수 있다.\n\n> **I**nterrupt **R**e**Q**uest Line는 인터럽트 요청을 받을수있는 인터럽트 버스이다 이는 하드웨어에서 각 장치까지 물리적으로 연결된 신호선이다.\n:{ \"type\": \"note\", \"icon\": \"info\"}\n\n## 인터럽트 서비스 루틴::interrupt-service-routine\n\n**I**nterrupt **S**ervice **R**outine (이하 ISR)은 다른말로 Interrupt Handler(인터럽트 핸들러)라고도 한다.\n`ISR`은 인터럽트를 처리하기위한 어떤 일련의 프로세스이다. `IRQ`를 통해 `CPU`로 인터럽트 신호를 보내면(CPU의 인터럽트), CPU는 하던 일을 중단하고 ISR이 있는 주소로 실행을 옮긴다.\n그리고 `ISR`이 실행된후 다시 원래 연산을 재개한다. ISR은 인터럽트 번호 테이블로 구성되어있다. 이는 시스템마다 다를수 있고 콜백루틴 방식으로 처리된다.\n\n인터럽트 원인에 따라 처리되는 ISR이 별도로 있으며,이는 [커널(kernel)]()에 존재한다. \n인터럽트가 발생되는 원인은 일반적으로 `하드웨어 리셋`, `정해진 메모리 외부 참조`, `0으로 나누기` 등 여러 예외가 존재한다.\n\n인터럽트가 발생(*raise*)하면 `ISR`의 주소를 Interrupt Vector(이하 인터럽트 벡터)라고 하는 배열을 인터럽트 요청과 함께 장치 고유번호로 인덱싱한다.\n또한 `CPU`는 인터럽트를 포착(*catch*)하면 현재 실행 중이던 작업을 중단하고 `ISR`로 전송(*dispatch*)하면 루틴을 실행해야하기 때문에 실행중인 작업의 레지스터 값들을 스택에 저장하여 상태를 보존한다.\n이러한 값들에는 [프로그램 카운터(이하 PC)](), [스택 포인터]() 등 범용 레지스터 들이 포함된다. \n\n| 벡터 번호  | 설명                 |\n|--------|--------------------|\n| 0      | 나눗셈 에러             |\n| 1      | 디버그 예외             |\n| 2      | Null 인터럽터          |\n| ...    |\n| 18     | 기기 검사              |\n| 19~31  | (Intel에서 예약, 사용금지) |\n| 32~255 | Maskale 인터럽트       |\n:{ \"description\": \"표 1: Intel Processor 이벤트-벡터\", \"align\": \"center\" }\n\n`ISR`이 실행되는 동안에는 프로세서의 레지스터 값을 변경할수 있기때문에, `ISR`이 끝나기전에 인터럽트를 지우고(*clear*) 스택에 저장해 두었던 레지스터 값들을 다시 복원 하여 CPU가 인터럽트 발생 전 상태로 되돌아 갈수 있게 레지스터 값을 원복한다.\n`ISR`실행 후 인터럽트 요청에서 받았았던 복귀 주소를 `PC`로 적재하여 인터럽트 발생시점부터 실행을 옮겨 중단되었던 연산을 다시 시작한다.\n\n실제로는 인터럽트 벡터의 주소 개수보다 많은 장치가 있기 때문에, `인터럽트 체인` 방식을 사용한다.   \n이는 벡터의 각 요소를 핸들럭 목록을 체인으로 묶어, 처리할수 있는 핸들러를 찾을 떄까지 하나씩 호출하는 방법이다.\n\n위에서 `표1`에서 0~31까지는 각 루틴에 대한 마스킹이 이미 되어있기때문에 `Non Maskable Interrupt`라고 하며 예약된 루틴이고, 32부터는 Maskable 이므로 그외 인터럽트를 처리하기 위해 사용된다.\n\n> 인터럽트 우선순위 레벨 (Interrupt Priority Level *이하 `IPL`)  \n> `IPL`은 인터럽트 별로 우선 순위를 정하여, 인터럽트 처리에도 우선순위를 둘 수 있다.  \n> `IPL`은 순위에 따라 처리를 연기하거나, 순위가 더높은 인터럽트가 실행을 선점 할 수 도있다.  \n: { \"type\": \"note\", \"icon\": \"info\" }\n\n\n## 인터럽트의 매커니즘::mechanism-of-interrupt\n\n인터럽트는 CPU연산 중 신호를 받아 `ISR`을 실행한다고 하였다. 하지만 컴퓨터는 동기순차회로이기 때문에 순차적으로 연산이 이루어져야 한다.\n때문에, CPU가 하나의 명령어 실행이 완료될 때마다 IRQ를 감지하여 인터럽트 번호를 읽어 이 번호를 인터럽트 벡터의 인덱스로 사용하고, `ISR`로 점프하여 인덱스와 관련된 주소에서 실행을 시작한다.\n인터럽트 처리후 복원까지 수행하면 `return_from_interrupt` 명령어로 CPU를 인터럽트 전 실행상태로 되돌린다.\n\n> 폴링 (Polling)  \n> CPU가 주기적으로 장치의 상태를 직접확인하고, 상태에따라 처리하는 방식이다.  \n> 이는 장치컨트롤러와 연관이이 있는데, CPU와 병렬로 실행되는 장치컨트롤러는 내부의 로컬버퍼와 장치간 데이터의 전송을 담당한다.  \n> 장치에서 입력이있다면, 로컬버퍼로 데이터를 이동시키고 상태 레지스터의 값을 변경한다. 여기서 CPU는 장치컨트롤러의 상태 레지스터를 주기적으로 확인하여, 상태가 변경되었는지 확인하며 로컬버퍼의 데이터를 읽어와 처리한다.  \n> 이러한 방식은 CPU가 주기적으로 장치의 상태를 확인하기 때문에, CPU의 부하가 높아지고, 실시간 처리에 적합하지 않다. 이때 전송하는 빈도를 폴링 레이트라고한다.  폴링레이트가 높을때 입력이 많은경우 CPU의 부하가 높아지는 이유가 이것 때문이다.  \n:{ \"icon\": \"warning-diamond\", \"type\": \"warning\" }\n\n## 타이머::timer\n\n타이머는 설정한 시간이 지났을때 인터럽트를 발생시킬수 있는 장치이다. \n예컨데 사용자 프로그램이 무한루프에 빠지거나, 시스템 서비스 호출에 실패하여, 제어가 운영체제로 복귀하지않는 경우에를 대비해 설정할 수 있다.\n\n대표 적인 예가 [DMA](/wiki/direct-memory-access)이다. DMA는 CPU의 개입없이 메모리와 I/O장치간 데이터를 전송하는 기술이다.\nDMAC이 입출력 장치간 데이터 전송을 관장하는경우 데이터 버스에 대한 제어권를 얻게 되는데, CPU가 제어권을 넘기는 시점에 타이머를 설정하여, 지정된 시간까지 DMA가 모두 이루어지지 않는 경우 인터럽트를 발생시킨다. \n"
+  },
+  {
     "path": "/wiki/central-processing-unit",
     "header": {
       "layout": "wiki",
@@ -241,6 +303,89 @@
     },
     "description": "",
     "content": "\n## PIO란?\n\n`Programmed I/O`(이하 PIO)는 말그대로 프로그램 입출력이다. `PIO` 방식은 [네트워크 어댑터]() 또는 [ATA]() 기억장치 같은 주변기기와 [CPU](/wiki/central-processing-unit) 사이에서 데이터를 주고 받는다.\nCPU의 개입으로 처리되므로 성능에 영향을 주며, 이러한 단점을 극복하기 위해 [인터럽트](/wiki/interrupt)나 [DMA](/wiki/direct-memory-access)같은 방식이 고안되었다.\n\n\n## PIO의 데이터 전송방식\n\n`PIO`는 CPU가 데이터를 읽거나 쓸 장치에대해서 주소신호(대상주소)와 제어신호(IOR, IOW)로 I/O 활성화가 이루어지면 데이터버스를 통해 전송된다. \n"
+  },
+  {
+    "path": "/wiki/system-call",
+    "header": {
+      "layout": "wiki",
+      "title": "시스템 콜 (System Call)",
+      "tags": [
+        "Operating System",
+        "System Call"
+      ],
+      "summary": "System Call",
+      "hide": false,
+      "date": 1999999999999,
+      "breadcrumbs": [
+        "문서",
+        "컴퓨터",
+        "운영체제"
+      ],
+      "images": [
+        {
+          "src": "/post/computer/copy-file.png",
+          "alt": "cp 명령으로 파일 복사"
+        },
+        {
+          "src": "/post/computer/system-call-implementation.png",
+          "alt": "시스템 콜 호출"
+        }
+      ],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "시스템 콜이란?::what-is-system-call",
+            "title": "시스템 콜이란?",
+            "fragment": "what-is-system-call",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "예제::example",
+            "title": "예제",
+            "fragment": "example",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "시스템콜의 동작 과정::how-system-call-works",
+            "title": "시스템콜의 동작 과정",
+            "fragment": "how-system-call-works",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "사용자 요청 검증",
+                "title": "사용자 요청 검증",
+                "fragment": "how-system-call-works-0",
+                "children": []
+              }
+            ]
+          },
+          {
+            "rank": 2,
+            "origin": "시스템 콜의 유형::types-of-system-calls",
+            "title": "시스템 콜의 유형",
+            "fragment": "types-of-system-calls",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "프로세스 제어::process-control",
+                "title": "프로세스 제어",
+                "fragment": "process-control",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "description": "",
+    "content": "\n## 시스템 콜이란?::what-is-system-call\n\n시스템 콜(System Call)은 사용자 프로그램 또는 시스템 프로그램이 시스템 자원을 사용하기 위해 커널에게 요청하는 인터페이스이다.\n우리가 흔히 알고있는 표준 라이브러리(`C의 stdio.h: fopen(), fread(), fwrite()`)도 내부적으로는 시스템 콜(`C로 구현`)을 호출하여 커널에게 요청한다.\n\n시스템 자원은 커널에서 관리하기 때문에 외부에서 직접적으로 사용할 수 없어, 이를 위해 커널에서 제공하는 인터페이스를 사용하여 시스템 콜을 호출할 수 있다.\n이러한 호출은 일반적으로 C/C++로 작성된 함수 형태로 제공된다.\n\n## 예제::example\n\n::text-wrapping\n\n![cp 명령으로 파일 복사](/post/computer/copy-file.png)\n\n예를 들어 한 파일로부터 데이터를 읽어서 다른 파일로 복사하는 간단한 프로그램을 작성한다 가정해 보자.\n\n`UNIX`의 CP 명령(`cp in.txt out.txt`)은 두개의 파일 이름을 인자로 받아서 첫번째 파일로부터 데이터를 읽어서 두번째 파일로 데이터를 쓴다.\n먼저 인자를 받고 나면 파일을 열고, 출력파일을 생성하여 출력 파일도 연다. 각각의 연산은 별개의 시스템콜(`open()`)을 호출한다.\n\n하지만 이와 같은 경우는 파일을 복사하기전 모든 검증과정이 끝났을 때의 상황이다.\n만약 입력 파일(`in.txt`)이 존재하지 않거나, 그 파일에 대한 접근이 금지된 경우 프로그램은 에러 메세지를 출력하고 비정삭적으로 종료(또 다른 시스템콜)를 해야한다.\n\n입력 파일에 대한 검증이 완료되어도, 출력파일을 생성할 때, 동일한 이름을 가진 파일이 이미 존재하면 기존 파일을 삭제(delete)/변경(write) 또는 새로운 파일 이름으로 생성(create)할 수 있다.\n이런 복사라는 과정에서도 다양한 시스템콜이 여러번 호출된다.\n\n::\n:{ \"align\": \"left\" }\n\n\n**연속된 시스템 콜의 예**\n1. 입력파일 이름 획득\n   1. 화면에 프롬프트 출력\n   2. 입력파일 받아들임 \n2. 출력파일 이름 획득\n   1. 화면에 프롬프트 출력\n   2. 출력파일 받아들임\n3. 입력파일 열기\n   1. 파일이 존재하지 않을 경우, 비정상적으로 종료\n4. 출력파일 생성\n   1. 파일이 존재할 경우, 비정상적으로 종료\n5. 루프 (읽기가 실패할 때까지 반복)\n   1. 입력파일로 부터 읽어 들임\n   2. 출력파일에 쓰기\n6. 입력파일 닫기\n7. 출력파일 닫기\n8. 화면에 완료 메세지 출력\n9. 종료\n\n## 시스템콜의 동작 과정::how-system-call-works\n\n시스템 콜은 실제 동작이 아니다. 시스템 콜은 커널 수준에서 제공하는 인터페이스이며, 그 구현은 커널함수로 이루어지게 된다.\n따라서 시스템 콜은 c로 만들어지더 라도 커널내에서 제어하려는 자원에 따라 [어셈블리어]() 또는 c로 작성된 함수로 구현된다.\n\nc언어로 작성된 표준 라이브러리(`libc`)에 래핑 API가 제공되는데, 이는 아래와 같다:\n1. glibc: GNU C 라이브러리\n    * [저장소](https://sourceware.org/git/glibc.git)\n    * read()함수 정의: [`/include/unistd.h`](https://sourceware.org/git/?p=glibc.git;a=blob;f=include/unistd.h)\n    * read()함수 구현: [`/sysdeps/unix/sysv/linux/read.c`](https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/read.c)\n    * 특징\n      * Linux 배포판의 표준라이브러리\n      * 가장 광범위하게 사용됨\n      * 가장 완전한 POSIX 구현\n    * 사용되는 시스템: Ubuntu, Fedora, CentOS, Debian 등\n2. musl: musl libc\n    * [저장소](https://git.musl-libc.org/cgit/musl) \n    * read()함수 정의: [`/include/unistd.h`](https://git.musl-libc.org/cgit/musl/tree/include/unistd.h)\n    * read()함수 구현: [`/src/unistd/read.c`](https://git.musl-libc.org/cgit/musl/tree/src/unistd/read.c)\n    * 특징\n      * 경량화된 C표준 라이브러리\n      * 임베디드 시스템과 작은 Linux 배포판에 최적화\n      * 최소한의 리소스 사용\n    * 사용되는 시스템: Alpine Linux, Void Linux 등\n4. BSD libc\n    * [저장소](https://github.com/freebsd/freebsd-src)\n    * read()함수 정의: [`/include/unistd.h`](https://github.com/freebsd/freebsd-src/blob/main/include/unistd.h)\n    * read()함수 구현: [`/lib/libc/sys/read.c`](https://github.com/freebsd/freebsd-src/blob/main/lib/libc/sys/read.c)\n    * 특징\n      * BSD(Berkeley Software Distribution) 계열의 표준 라이브러리\n      * POSIX 표준 준수\n      * Unix 시스템 고유의 확장 기능 제공\n    * 사용되는 시스템: FreeBSD, NetBSD, OpenBSD, MacOS/iOS 등\n\n\n```c\n#include <unistd.h> //unix standard\n\nssize_t read(int fd, void *buf, size_t count) {\n    return syscall_cp(SYS_read, fd, buf, count);\n}\n```\n\n이 코드는 `musl libc`의 read 시스템콜 래핑 API이다. 각 시그니처는 다음을 의미한다:\n\n1. `fd`: 읽으려는 파일 디스크립터\n2. `buf`: 데이터를 읽어들일 버퍼\n3. `count`: 버퍼로 읽어 들일 수 있는 최대 바이트 수\n\n읽기가 성공한 경우 읽어 들인 바이트 수(size_t)를 반환하고, 오류가 발생한 경우 `-1`을 반환한다.\n\n> Unix/Linux 시스템에서는 `man read` 명령어로 man(manual) 페이지에서 시스템의 모든 명령어, 함수, 시스템콜 등에 대한 정보를 확인할 수 있다.\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n![시스템 콜 호출](/post/computer/system-call-implementation.png)\n:{ \"max-width\": \"400px\", \"align\": \"center\", \"description\": \"시스템 콜 호출 과정\" }\n\n시스템 콜 호출은 다음과 같이 처리된다.\n\n1. 사용자 프로그램은 시스템 콜을 호출한다. (syscall_cp()): 운영체제 에서 제공하는 [Wrapping API](https://git.musl-libc.org/cgit/musl/tree/src/unistd/read.c) 호출\n2. 시스템 콜인터페이스는 사용자 요청을 검증(인자 유효성, 권한, 리소스 가용성 등)하고 커널에 전달한다.\n3. 커널로 전달 전 CPU는 커널모드로 전환되고, 사용자 요청을 [시스템 콜 테이블](https://github.com/torvalds/linux/blob/v5.6/arch/x86/entry/syscalls/syscall_64.tbl)을 통해 시스템 콜 번호로 매핑한다.\n4. 연결된 커널함수를 찾아 실행하고, 사용자모드로 전환하고 반환값은 사용자 프로그램으로 전달하며, 제어또한 사용자 프로그램으로 넘어간다.\n\n### 사용자 요청 검증\n\n시스템 콜은 커널에게 요청하는 것이기 때문에, 잘못된 요청을 하지 않도록 검증이 필요하다.\n예를 들어 포인터가 유효한 사용자 공간 주소를 가리키는지, 버퍼의 크기가 적절 한지, 파일 디스크립터가 유효한지 등 여러가지 검증을 수행한다.\n\n\n\n\n## 시스템 콜의 유형::types-of-system-calls\n\n시스템콜은 다섯가지 중요한 유형으로 나눌 수 있다:\n\n1. 프로세스 제어\n2. 파일 조작\n3. 장치 관리\n4. 정보 유지\n5. 통신과 보호\n\n### 프로세스 제어::process-control\n\n중지(abort()), 종료(end())는 프로세스에 대해 비정상 또는 정상적으로 프로세스 수행의 완료를 요청한다.\n"
   },
   {
     "path": "/docs/life/youth-of-ggomi",
@@ -1146,81 +1291,28 @@
             "origin": "운영체제의 역할::role-of-os",
             "title": "운영체제의 역할",
             "fragment": "role-of-os",
-            "children": []
+            "children": [
+              {
+                "rank": 3,
+                "origin": "메모리 관리::memory-management",
+                "title": "메모리 관리",
+                "fragment": "memory-management",
+                "children": []
+              },
+              {
+                "rank": 3,
+                "origin": "프로세스 관리::process-management",
+                "title": "프로세스 관리",
+                "fragment": "process-management",
+                "children": []
+              }
+            ]
           }
         ]
       }
     },
     "description": "운영체제가 어떤일을 하는지를 알려면, 컴퓨터가 어떤 요소들로 구성되어 있는지를 이해 해야한다.\n각 요소의 구성과 이해관계 그리고 역할을 알아보자.",
-    "content": "\n## 컴퓨터의 구성::computer-structure\n\n컴퓨터는 크게 응용프로그램, 운영체제, 하드웨어 계층으로 분류된다.\n이 문서에서는 응용프로그램을 제외하고 운영체제와 하드웨어에 대해 논한다.\n\n[CPU](/wiki/central-processing-unit)와 [입출력 장치]() 그리고 [메모리]()는 [시스템 버스]()를 통해 서로 연결되어 있으며, 버스의 종류에 따라 단방향 또는 양방향으로 신호를 보낸다.\n입출력 장치의 경우 메인보드 위에 사전에 만들어진 장치 컨트롤러를 운영체제의 장치 드라이버가 제어하며, 장치드라이버는 운영체제에 일관된 인터페이스를 제공한다.\nCPU와 장치컨트롤러는 병렬로 실행되기 떄문에 메모리에 접근하기위해 메모리 사이클을 두고 경쟁한다. 이 메모리에 순차적으로 접근하기 위해 메모리 컨트롤러는 메모리에 대한 액세스를 동기화한다.\n\n\n위에서 간단히 설명한 내용은 OS 내부의 커널과 시스템 프로그램에 의해 제어되며, 하드웨어의 경우 사전에 설계된 회로의 동작을 수행한다.\n\n## 운영체제의 동작 순서::sequence-of-os\n\n컴퓨터의 전원을 켤 때 실행되는 부트스트랩 프로그램은 펌웨어이다.  \n부트스트랩 프로그램은 하드웨어 위에서 동작하며 `CPU`, `메모리` `저장장치` 등을 초기화 한다. 또한 운영체제를 로드하기 위해 부트로더를 실행하며, 이는 저장장치에서 메모리로 [Kernel]()(`커널`)을 적재한다.\n\n부트로더는 커널 실행에 필요한 초기설정(예: 커맨드라인 인자 전달 등)을 한뒤, 커널에 제어를 넘긴다. 이후에 커널은 시스템을 초기화하고 사용자 공간(user space)을 준비한다.\n각 시스템에서 사용 되는 부트로더는 여러종류가 있다.\n\n* GRUB (GNU GRUB):\n  * 리눅스/유닉스 시스템에서 사용되는 부트로더\n* LILO(Linux Loader)\n  * 과거 리눅스 시스템에서 사용되는 부트로더\n* Windows Boot Manager\n  * 윈도우 시스템에서 사용하는 부트로더\n* Android Bootloader\n  * 안드로이드 기기에서 사용되는 부트로더로, 리커버리모드와 운영체제를 실행한다.\n\n## 운영체제의 역할::role-of-os\n\n운영체제는 자원을 관리하지만, 아마 그중에서도 가장 중요한건 [프로세스]()에 대한 관리이다. 대표적으로 아래와 같다.\n\n* 사용자 프로세스와 시스템프로세스의 생성과 제거\n* `CPU`에 프로세스와 스레드 스케줄링\n* 프로세스의 일시중지(suspend) 와 재수행(resume)\n* 프로세스 동기화 기법 제공\n* 프로세스 간 통신(IPC) 제공\n\n위와 같은 처리를 위해 운영체제는 프로세스의 상태를 관리하며, 프로세스의 상태(process stats)는 `생성`, `준비`, `실행`, `대기`, `종료`로 나뉜다.\n이러한 상태는 아래처럼 나타낼 수 있다.\n```\n New\n  ↓\nReady ←→ Running → Terminated\n  ↑        ┆\nWaiting ←--╯\n```\n"
-  },
-  {
-    "path": "/wiki/interrupt",
-    "header": {
-      "layout": "wiki",
-      "title": "CPU와 인터럽트",
-      "categories": [
-        "computer",
-        "hardware"
-      ],
-      "tags": [
-        "Operating System",
-        "Interrupt"
-      ],
-      "date": 1610544780000,
-      "current-company": "Cubic INC",
-      "current-position": "SI Researcher",
-      "summary": "Interrupt",
-      "hide": false,
-      "breadcrumbs": [
-        "문서",
-        "컴퓨터"
-      ],
-      "images": [
-        {
-          "src": "/post/computer/move-unit.png",
-          "alt": "캐릭터의 이동"
-        }
-      ],
-      "headlines": {
-        "rank": 0,
-        "origin": "root::root",
-        "title": "root",
-        "fragment": "root",
-        "children": [
-          {
-            "rank": 2,
-            "origin": "인터럽트는 무엇인가?::what-is-interrupt",
-            "title": "인터럽트는 무엇인가?",
-            "fragment": "what-is-interrupt",
-            "children": []
-          },
-          {
-            "rank": 2,
-            "origin": "인터럽트 서비스 루틴::interrupt-service-routine",
-            "title": "인터럽트 서비스 루틴",
-            "fragment": "interrupt-service-routine",
-            "children": []
-          },
-          {
-            "rank": 2,
-            "origin": "인터럽트의 매커니즘::mechanism-of-interrupt",
-            "title": "인터럽트의 매커니즘",
-            "fragment": "mechanism-of-interrupt",
-            "children": []
-          },
-          {
-            "rank": 2,
-            "origin": "타이머::timer",
-            "title": "타이머",
-            "fragment": "timer",
-            "children": []
-          }
-        ]
-      }
-    },
-    "description": "",
-    "content": "\n## 인터럽트는 무엇인가?::what-is-interrupt\n\ninterrupt `[ˌɪntəˈrʌpt]`\n1. (말·행동을) 방해하다[중단시키다/가로막다]\n2. (무엇을 잠깐) 중단시키다\n\n사전 상의 `interrupt`(이하 인터럽트)는 위와 같은 어떤 행동이나 흐름을 중단시키는 의미로 등재 되어있다.\n컴퓨터에서도 인터럽트는 어떤 흐름을 중지하는 역할을 한다.\n\n[CPU](/wiki/central-processing-unit)는 순차적으로 명령어를 처리한다. 하지만 예상치못하거나 긴급한상황에 의도적으로 특별한 처리를 해야한다.\n예를 들어 스타크래프트나 리그오브레전드처럼 3인칭시점에서 마우스로 지면을 클릭하는 경우, 해당위치로 캐릭터가 이동한다.\n이 경우 이동이 끝나지 않아도, 우리는 새로운 위치를 클릭하여 방향을 바꿀수도있다. \n\n![캐릭터의 이동](/post/computer/move-unit.png)\n:{ \"align\": \"center\", \"max-width\": \"300px\", \"description\": \"눈꽃 시비르의 방향을 조작하는 프로겐 선수\" }\n\n이 처럼 CPU가 명령을 실행하는중에도 긴급하거나, 실시간 처리가 필요한경우 IRQ를 통해, CPU에 인터럽트 신호를 보내 우선적으로 처리를 수행할 수 있다.\n\n> **I**nterrupt **R**e**Q**uest Line는 인터럽트 요청을 받을수있는 인터럽트 버스이다 이는 하드웨어에서 각 장치까지 물리적으로 연결된 신호선이다.\n:{ \"type\": \"note\", \"icon\": \"info\"}\n\n## 인터럽트 서비스 루틴::interrupt-service-routine\n\n**I**nterrupt **S**ervice **R**outine (이하 ISR)은 다른말로 Interrupt Handler(인터럽트 핸들러)라고도 한다.\n`ISR`은 인터럽트를 처리하기위한 어떤 일련의 프로세스이다. `IRQ`를 통해 `CPU`로 인터럽트 신호를 보내면(CPU의 인터럽트), CPU는 하던 일을 중단하고 ISR이 있는 주소로 실행을 옮긴다.\n그리고 `ISR`이 실행된후 다시 원래 연산을 재개한다. ISR은 인터럽트 번호 테이블로 구성되어있다. 이는 시스템마다 다를수 있고 콜백루틴 방식으로 처리된다.\n\n인터럽트 원인에 따라 처리되는 ISR이 별도로 있으며,이는 [커널(kernel)]()에 존재한다. \n인터럽트가 발생되는 원인은 일반적으로 `하드웨어 리셋`, `정해진 메모리 외부 참조`, `0으로 나누기` 등 여러 예외가 존재한다.\n\n인터럽트가 발생(*raise*)하면 `ISR`의 주소를 Interrupt Vector(이하 인터럽트 벡터)라고 하는 배열을 인터럽트 요청과 함께 장치 고유번호로 인덱싱한다.\n또한 `CPU`는 인터럽트를 포착(*catch*)하면 현재 실행 중이던 작업을 중단하고 `ISR`로 전송(*dispatch*)하면 루틴을 실행해야하기 때문에 실행중인 작업의 레지스터 값들을 스택에 저장하여 상태를 보존한다.\n이러한 값들에는 [프로그램 카운터(이하 PC)](), [스택 포인터]() 등 범용 레지스터 들이 포함된다. \n\n| 벡터 번호  | 설명                 |\n|--------|--------------------|\n| 0      | 나눗셈 에러             |\n| 1      | 디버그 예외             |\n| 2      | Null 인터럽터          |\n| ...    |\n| 18     | 기기 검사              |\n| 19~31  | (Intel에서 예약, 사용금지) |\n| 32~255 | Maskale 인터럽트       |\n:{ \"description\": \"표 1: Intel Processor 이벤트-벡터\", \"align\": \"center\" }\n\n`ISR`이 실행되는 동안에는 프로세서의 레지스터 값을 변경할수 있기때문에, `ISR`이 끝나기전에 인터럽트를 지우고(*clear*) 스택에 저장해 두었던 레지스터 값들을 다시 복원 하여 CPU가 인터럽트 발생 전 상태로 되돌아 갈수 있게 레지스터 값을 원복한다.\n`ISR`실행 후 인터럽트 요청에서 받았았던 복귀 주소를 `PC`로 적재하여 인터럽트 발생시점부터 실행을 옮겨 중단되었던 연산을 다시 시작한다.\n\n실제로는 인터럽트 벡터의 주소 개수보다 많은 장치가 있기 때문에, `인터럽트 체인` 방식을 사용한다.   \n이는 벡터의 각 요소를 핸들럭 목록을 체인으로 묶어, 처리할수 있는 핸들러를 찾을 떄까지 하나씩 호출하는 방법이다.\n\n위에서 `표1`에서 0~31까지는 각 루틴에 대한 마스킹이 이미 되어있기때문에 `Non Maskable Interrupt`라고 하며 예약된 루틴이고, 32부터는 Maskable 이므로 그외 인터럽트를 처리하기 위해 사용된다.\n\n> 인터럽트 우선순위 레벨 (Interrupt Priority Level *이하 `IPL`)  \n> `IPL`은 인터럽트 별로 우선 순위를 정하여, 인터럽트 처리에도 우선순위를 둘 수 있다.  \n> `IPL`은 순위에 따라 처리를 연기하거나, 순위가 더높은 인터럽트가 실행을 선점 할 수 도있다.  \n: { \"type\": \"note\", \"icon\": \"info\" }\n\n\n## 인터럽트의 매커니즘::mechanism-of-interrupt\n\n인터럽트는 CPU연산 중 신호를 받아 `ISR`을 실행한다고 하였다. 하지만 컴퓨터는 동기순차회로이기 때문에 순차적으로 연산이 이루어져야 한다.\n때문에, CPU가 하나의 명령어 실행이 완료될 때마다 IRQ를 감지하여 인터럽트 번호를 읽어 이 번호를 인터럽트 벡터의 인덱스로 사용하고, `ISR`로 점프하여 인덱스와 관련된 주소에서 실행을 시작한다.\n인터럽트 처리후 복원까지 수행하면 `return_from_interrupt` 명령어로 CPU를 인터럽트 전 실행상태로 되돌린다.\n\n> 폴링 (Polling)  \n> CPU가 주기적으로 장치의 상태를 직접확인하고, 상태에따라 처리하는 방식이다.  \n> 이는 장치컨트롤러와 연관이이 있는데, CPU와 병렬로 실행되는 장치컨트롤러는 내부의 로컬버퍼와 장치간 데이터의 전송을 담당한다.  \n> 장치에서 입력이있다면, 로컬버퍼로 데이터를 이동시키고 상태 레지스터의 값을 변경한다. 여기서 CPU는 장치컨트롤러의 상태 레지스터를 주기적으로 확인하여, 상태가 변경되었는지 확인하며 로컬버퍼의 데이터를 읽어와 처리한다.  \n> 이러한 방식은 CPU가 주기적으로 장치의 상태를 확인하기 때문에, CPU의 부하가 높아지고, 실시간 처리에 적합하지 않다. 이때 전송하는 빈도를 폴링 레이트라고한다.  폴링레이트가 높을때 입력이 많은경우 CPU의 부하가 높아지는 이유가 이것 때문이다.  \n:{ \"icon\": \"warning-diamond\", \"type\": \"warning\" }\n\n## 타이머::timer\n\n타이머는 설정한 시간이 지났을때 인터럽트를 발생시킬수 있는 장치이다. \n예컨데 사용자 프로그램이 무한루프에 빠지거나, 시스템 서비스 호출에 실패하여, 제어가 운영체제로 복귀하지않는 경우에를 대비해 설정할 수 있다.\n\n대표 적인 예가 [DMA](/wiki/direct-memory-access)이다. DMA는 CPU의 개입없이 메모리와 I/O장치간 데이터를 전송하는 기술이다.\nDMAC이 입출력 장치간 데이터 전송을 관장하는경우 데이터 버스에 대한 제어권를 얻게 되는데, CPU가 제어권을 넘기는 시점에 타이머를 설정하여, 지정된 시간까지 DMA가 모두 이루어지지 않는 경우 인터럽트를 발생시킨다. \n"
+    "content": "\n## 컴퓨터의 구성::computer-structure\n\n컴퓨터는 크게 응용프로그램, 운영체제, 하드웨어 계층으로 분류된다.\n이 문서에서는 응용프로그램을 제외하고 운영체제와 하드웨어에 대해 논한다.\n\n[CPU](/wiki/central-processing-unit)와 [입출력 장치]() 그리고 [메모리]()는 [시스템 버스]()를 통해 서로 연결되어 있으며, 버스의 종류에 따라 단방향 또는 양방향으로 신호를 보낸다.\n입출력 장치의 경우 메인보드 위에 사전에 만들어진 장치 컨트롤러를 운영체제의 장치 드라이버가 제어하며, 장치드라이버는 운영체제에 일관된 인터페이스를 제공한다.\nCPU와 장치컨트롤러는 병렬로 실행되기 떄문에 메모리에 접근하기위해 메모리 사이클을 두고 경쟁한다. 이 메모리에 순차적으로 접근하기 위해 메모리 컨트롤러는 메모리에 대한 액세스를 동기화한다.\n\n\n위에서 간단히 설명한 내용은 OS 내부의 커널과 시스템 프로그램에 의해 제어되며, 하드웨어의 경우 사전에 설계된 회로의 동작을 수행한다.\n\n## 운영체제의 동작 순서::sequence-of-os\n\n컴퓨터의 전원을 켤 때 실행되는 부트스트랩 프로그램은 펌웨어이다.  \n부트스트랩 프로그램은 하드웨어 위에서 동작하며 `CPU`, `메모리` `저장장치` 등을 초기화 한다. 또한 운영체제를 로드하기 위해 부트로더를 실행하며, 이는 저장장치에서 메모리로 [Kernel]()(`커널`)을 적재한다.\n\n부트로더는 커널 실행에 필요한 초기설정(예: 커맨드라인 인자 전달 등)을 한뒤, 커널에 제어를 넘긴다. 이후에 커널은 시스템을 초기화하고 사용자 공간(user space)을 준비한다.\n각 시스템에서 사용 되는 부트로더는 여러종류가 있다.\n\n* GRUB (GNU GRUB):\n  * 리눅스/유닉스 시스템에서 사용되는 부트로더\n* LILO(Linux Loader)\n  * 과거 리눅스 시스템에서 사용되는 부트로더\n* Windows Boot Manager\n  * 윈도우 시스템에서 사용하는 부트로더\n* Android Bootloader\n  * 안드로이드 기기에서 사용되는 부트로더로, 리커버리모드와 운영체제를 실행한다.\n\n## 운영체제의 역할::role-of-os\n\n운영체제는 사용자 또는 시스템 프로그램이 올바르게 실행되기 위해 커널에서 다양한 관리를 아래와 같이 제공한다.\n\n* 메모리 관리\n* 프로세스 관리\n* 장치 드라이버\n* 파일 시스템\n* 네트워크 관리\n\n\n### 메모리 관리::memory-management\n\n\n\n### 프로세스 관리::process-management\n\n운영체제는 자원을 관리하지만, 아마 그중에서도 가장 중요한건 [프로세스]()에 대한 관리이다. 대표적으로 아래와 같다.\n\n* 사용자 프로세스와 시스템프로세스의 생성과 제거\n* `CPU`에 프로세스와 스레드 스케줄링\n* 프로세스의 일시중지(suspend) 와 재수행(resume)\n* 프로세스 동기화 기법 제공\n* 프로세스 간 통신(IPC) 제공\n\n위와 같은 처리를 위해 운영체제는 프로세스의 상태를 관리하며, 프로세스의 상태(process stats)는 `생성`, `준비`, `실행`, `대기`, `종료`로 나뉜다.\n이러한 상태는 아래처럼 나타낼 수 있다.\n```\n New\n  ↓\nReady ←→ Running → Terminated\n  ↑        ┆\nWaiting ←--╯\n```\n"
   },
   {
     "path": "/docs/computer/computer-organization",

@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 >
     <url>
+        <loc>https://alloc.io/wiki/interrupt</loc>
+    </url>
+    <url>
         <loc>https://alloc.io/wiki/central-processing-unit</loc>
     </url>
     <url>
@@ -12,6 +15,9 @@
     </url>
     <url>
         <loc>https://alloc.io/wiki/programmed-io</loc>
+    </url>
+    <url>
+        <loc>https://alloc.io/wiki/system-call</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/life/youth-of-ggomi</loc>
@@ -45,9 +51,6 @@
     </url>
     <url>
         <loc>https://alloc.io/docs/computer/os/operating-system-1</loc>
-    </url>
-    <url>
-        <loc>https://alloc.io/wiki/interrupt</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/computer/computer-organization</loc>

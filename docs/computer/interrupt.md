@@ -1,11 +1,7 @@
 ---
 layout: wiki
 title: CPU와 인터럽트
-categories: [computer, hardware]
 tags: [Operating System, Interrupt]
-date: 2021-01-13 22:33:00 +0900
-current-company: Cubic INC
-current-position: SI Researcher
 summary: Interrupt
 hide: false
 ---
