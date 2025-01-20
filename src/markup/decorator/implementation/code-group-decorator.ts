@@ -56,7 +56,7 @@ export default class CodeGroupDecorator implements IMarkdownDecorator {
 
             return `<button tabindex="-1" class="px-2 py-1.5 focus:outline-none text-gray-700 dark:text-gray-200 text-sm rounded-md flex items-center gap-1.5 ${idx === 0 ? activateClasses : deactivateClasses}">
                         <span class="iconify i-vscode-icons:file-type-${getLanguageCode(title.language)} size-4" aria-hidden="true"></span>
-                        <span>${title.value}</span>  
+                        <span class="whitespace-nowrap">${title.value}</span>  
                     </button>`;
         }).join('\n');
     }

@@ -37,6 +37,13 @@ export default class ImageDecorator implements IMarkdownDecorator {
                     return fallbackRule(tokens, index, options, env, self);
                 }
 
+                if (imageToken.attrIndex('data-text-wrapping') >= 0 && imageToken.attrGet('data-text-wrapping') === 'true') {
+                    //text-wrapping 이미지는 래핑하지 않는다.
+                    //sm: width: 100%;
+                    //md: margin: 5px 3px
+                    imageToken.attrJoin('class', 'w-full md:w-1/3 m-0 md:my-1.5 md:mx-2.5')
+                    return '';
+                }
                 this.addDefaultImageClass(imageToken);
 
                 if (imageToken.attrIndex('group-index') >= 0) {
@@ -75,6 +82,11 @@ export default class ImageDecorator implements IMarkdownDecorator {
                 const imageToken = this.findChild(inline.children, 'image');
                 if (!imageToken) {
                     return fallbackRule(tokens, index, options, env, self);
+                }
+
+                if (imageToken.attrIndex('data-text-wrapping') >= 0 && imageToken.attrGet('data-text-wrapping') === 'true') {
+                    //text-wrapping 이미지는 래핑하지 않는다.
+                    return '';
                 }
 
                 if (imageToken.attrIndex('group-index') >= 0) {

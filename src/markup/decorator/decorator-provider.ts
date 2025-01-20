@@ -9,6 +9,7 @@ import TableDecorator from "@/markup/decorator/implementation/table-decorator";
 import StyleDecorator from "@/markup/decorator/style/style-decorator";
 import ImageGroupDecorator from "@/markup/decorator/implementation/image-group-decorator";
 import CodeGroupDecorator from "@/markup/decorator/implementation/code-group-decorator";
+import TextWrappingDecorator from "@/markup/decorator/implementation/text-wrapping-decorator";
 
 export default class DecoratorProvider {
 
@@ -24,7 +25,8 @@ export default class DecoratorProvider {
             [RuleType.TABLE, new TableDecorator()],
             [RuleType.IMAGE_GROUP, new ImageGroupDecorator()],
             [RuleType.IMAGE, new ImageDecorator()],
-            [RuleType.CODE_GROUP, new CodeGroupDecorator()]
+            [RuleType.CODE_GROUP, new CodeGroupDecorator()],
+            [RuleType.TEXT_WRAPPING, new TextWrappingDecorator()]
         ]
 
         this._decorators = new Map<RuleType, IMarkdownDecorator>(entries);

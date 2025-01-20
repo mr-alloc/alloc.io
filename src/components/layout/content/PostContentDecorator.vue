@@ -96,6 +96,13 @@ div[class*=language-] .highlight-lines .highlighted {
 
 
 .rendered-markdown-wrapper {
+  .float-left {
+    float: left;
+  }
+
+  .float-right {
+    float: right;
+  }
 
   .\!h-\[39\.0625rem\] {
   height: 39.0625rem!important
@@ -837,14 +844,6 @@ div[class*=language-] .highlight-lines .highlighted {
 
   .w-\[calc\(0\.5rem\+1px\)\] {
     width: calc(.5rem + 1px)
-  }
-
-  .w-auto {
-    width: auto
-  }
-
-  .w-full {
-    width: 100%
   }
 
   .w-px {

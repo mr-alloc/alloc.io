@@ -5,7 +5,7 @@ import RuleType from "@/markup/constant/rule-type";
 import shiki from "@shikijs/markdown-it";
 import codeGroupParser from "@/plugins/markdown-it/code-group-parser";
 import imageGroupParser from "@/plugins/markdown-it/image-group-parser";
-import type {ShikiTransformerContext} from "@shikijs/types";
+import textWrappingParser from "@/plugins/markdown-it/text-wrapping-parser";
 
 
 export default defineNuxtPlugin(async (nuxtApp) => {
@@ -14,6 +14,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
     markdownIt.use(codeGroupParser);
     markdownIt.use(imageGroupParser);
+    markdownIt.use(textWrappingParser);
     markdownIt.use(await crateShikiExtension);
 
     DecoratorProvider.provides(
@@ -24,7 +25,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
         RuleType.LINK,
         RuleType.TABLE,
         RuleType.IMAGE_GROUP,
-        RuleType.CODE_GROUP
+        RuleType.CODE_GROUP,
+        RuleType.TEXT_WRAPPING
     ).forEach(decorator => decorator.decorate(markdownIt));
 
     nuxtApp.provide('md', markdownIt);
