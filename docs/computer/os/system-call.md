@@ -119,12 +119,24 @@ ssize_t read(int fd, void *buf, size_t count) {
 3. 커널로 전달 전 CPU는 커널모드로 전환되고, 사용자
    요청을 [시스템 콜 테이블](https://github.com/torvalds/linux/blob/v5.6/arch/x86/entry/syscalls/syscall_64.tbl)을 통해 시스템 콜 번호로
    매핑한다.
-4. 연결된 커널함수를 찾아 실행하고, 사용자모드로 전환하고 반환값은 사용자 프로그램으로 전달하며, 제어또한 사용자 프로그램으로 넘어간다.
+4. CPU는 실행전 커널모드로 전환하여 커널 함수를 실행하고, 사용자모드로 전환하고 반환값은 사용자 프로그램으로 전달하며, 제어또한 사용자 프로그램으로 넘어간다.
 
-### 사용자 요청 검증
+### 시스템콜 인터페이스::system-call-interface
 
-시스템 콜은 커널에게 요청하는 것이기 때문에, 잘못된 요청을 하지 않도록 검증이 필요하다.
-예를 들어 포인터가 유효한 사용자 공간 주소를 가리키는지, 버퍼의 크기가 적절 한지, 파일 디스크립터가 유효한지 등 여러가지 검증을 수행한다.
+앞서 시스템 콜 인터페이스는 사용자의 요청을 검증하고 커널 함수로 전달하는 역할을 한다고 했다.
+그렇다면 어떤 방식으로 사용자의 요청을 검증하는 것일까?
+
+시스템에서 제공되는 Wrapping API는 사용자 공간에서 `libc`로 제공된다.  
+사용자가 `read()` API를 사용하는 시점부터 알아보자. 
+
+```c::Wrapping API 호출
+ssize_t bytes = read(fd, buffer, count);
+```
+먼저 API가 호출되면 시스템콜 번호`(__x64_sys_read): 0`와 인자들을 레지스터에 설정한다.
+
+### Wrapping API 호출::wrapping-api
+
+[glibc의 시스템콜 처리](https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/x86_64/sysdep.h;h=1d175dfb1338e77dd02b77ed168bd7b7c395c807;hb=HEAD)
 
 ## 시스템 콜의 유형::types-of-system-calls
 

@@ -17,11 +17,11 @@ hide: false
 <!--more-->
 ## 핵심 구성요소::key-components
 
-- Abstraction: 기능의 구현을 위한 인터페이스를 정의한다.
-- RefinedAbstraction: Abstraction 인터페이스를 구현하여 기능을 확장한다.
-- Implementor: 실제 동작의 구현부를 정의한다.
-- ConcreteImplementor: Implementor 인터페이스를 구현하여 실제 동작을 수행한다.
-- Client: Bridge 패턴을 사용하는 클래스이다.
+- **Abstraction**: 기능의 구현을 위한 인터페이스를 정의한다.
+- **RefinedAbstraction**: Abstraction 인터페이스를 구현하여 기능을 확장한다.
+- **Implementor**: 실제 동작의 구현부를 정의한다.
+- **ConcreteImplementor**: Implementor 인터페이스를 구현하여 실제 동작을 수행한다.
+- **Client**: Bridge 패턴을 사용하는 클래스이다.
 
 먼저 Bridge 패턴을 사용하기 위해 선언한 핵심 구성요소는 아래와 같은 관계로 구성된다.
 
