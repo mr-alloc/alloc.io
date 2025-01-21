@@ -35,7 +35,7 @@ const config = {
   wrapper: 'space-y-1',
   base: 'block text-sm/6 truncate',
   active: 'text-primary',
-  inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200',
+  inactive: 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 duration-300',
   depth: 'ml-3'
 }
 
@@ -82,6 +82,7 @@ nuxtApp.hooks.hookOnce('page:finish', () => {
         button.addEventListener('click', () => {
           const codeContent = codeWrapper.querySelector('.code-content') as HTMLPreElement;
           codeContent.outerHTML = codeGroupStore.getCodeGroup(groupNumber!, button.innerText);
+
           //기존 버튼들 버튼 비활성화
           buttons.forEach((other) => {
             const otherButton = other as HTMLButtonElement;

@@ -2336,10 +2336,6 @@
     border-top-right-radius: 0
 }
 
-.border {
-    border-width: 1px
-}
-
 .border-0 {
     border-width: 0
 }
@@ -3640,14 +3636,6 @@
 
 .rounded-tr-xl {
     border-top-right-radius: .75rem
-}
-
-.border {
-    border-width: 1px
-}
-
-.border-0 {
-    border-width: 0
 }
 
 .border-2 {

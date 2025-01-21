@@ -10,9 +10,9 @@ export const useCodeGroupStore = defineStore('code-group', () => {
     }
 
     function getCodeGroup(index: string, filename: string): string {
-        const key = `${useRoute().path}:${index}:${filename}`;
+        const key = `${useRoute().path}:${index}:${filename}`.trim();
         const code = codeGroups.value.get(key);
-        return code ?? '';
+        return code ?? '<pre><code>Code not found</code></pre>';
     }
 
     function refresh() {
