@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+import * as fs from 'node:fs';
 
 const __ROOT__ = process.platform === 'win32' ? process.cwd() : process.env.PWD;
 export function existsIcon(filename: string): boolean {

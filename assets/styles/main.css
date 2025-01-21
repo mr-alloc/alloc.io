@@ -4787,14 +4787,6 @@
     background-image: radial-gradient(at 25% 25%, #fff, #18181b 75%)
 }
 
-.bg-\[url\(\'\/img\/hero-pattern\.svg\'\)\] {
-    background-image: url(/img/hero-pattern.svg)
-}
-
-.bg-\[url\(\'\/what_a_rush\.png\'\)\] {
-    background-image: url(/what_a_rush.png)
-}
-
 .bg-\[url\(https\:\/\/images\.unsplash\.com\/photo-1554629947-334ff61d85dc\?ixid\=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8\&ixlib\=rb-1\.2\.1\&auto\=format\&fit\=crop\&w\=128\&h\=160\&q\=80\)\] {
     background-image: url(https://images.unsplash.com/photo-1554629947-334ff61d85dc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=160&q=80)
 }

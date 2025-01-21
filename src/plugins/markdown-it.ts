@@ -6,8 +6,6 @@ import shiki from "@shikijs/markdown-it";
 import codeGroupParser from "@/plugins/markdown-it/code-group-parser";
 import imageGroupParser from "@/plugins/markdown-it/image-group-parser";
 import textWrappingParser from "@/plugins/markdown-it/text-wrapping-parser";
-import {fromHighlighter} from "@shikijs/markdown-it/core";
-import {createHighlighterCore} from "shiki";
 
 
 export default defineNuxtPlugin(async (nuxtApp) => {
@@ -17,7 +15,8 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     markdownIt.use(codeGroupParser);
     markdownIt.use(imageGroupParser);
     markdownIt.use(textWrappingParser);
-    markdownIt.use(crateShikiExtension);
+    //Top-level await is not available
+    markdownIt.use(await crateShikiExtension);
 
     DecoratorProvider.provides(
         RuleType.BLOCK_QUOTE,
@@ -34,7 +33,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     nuxtApp.provide('md', markdownIt);
 });
 
-const crateShikiExtension = await shiki({
+const crateShikiExtension = shiki({
     transformers: [
         {
             pre(hast: any) {
