@@ -31,13 +31,13 @@
               </button>
             </UTooltip>
           </div>
-<!--          <div :class="ui.header.feature.item.wrapper">-->
-<!--            <UTooltip :text="$colorMode.preference === 'dark' ? '라이트 모드로' : '다크모드로'">-->
-<!--              <button type="button" :class="ui.header.feature.item.button" v-on:click="isDark = !isDark">-->
-<!--                <span :class="[ui.header.feature.item.icon, isDark ? appConfig.ui.icons.dark : appConfig.ui.icons.light]"></span>-->
-<!--              </button>-->
-<!--            </UTooltip>-->
-<!--          </div>-->
+          <div :class="ui.header.feature.item.wrapper">
+            <UTooltip :text="colorMode.preference === 'dark' ? '라이트 모드로' : '다크모드로'">
+              <button type="button" :class="ui.header.feature.item.button" v-on:click="toggleDarkMode">
+                <span :class="[ui.header.feature.item.icon, colorMode.value === 'dark' ? appConfig.ui.icons.dark : appConfig.ui.icons.light]"></span>
+              </button>
+            </UTooltip>
+          </div>
         </div>
       </div>
     </header>
@@ -54,6 +54,7 @@ const emitter: any = nuxtApp.$emitter;
 
 const searchStatusStore = useSearchStatusStore();
 const postContentStore = usePostContentStore();
+const appConfig = useAppConfig();
 const colorMode = useColorMode();
 
 const features = [
@@ -64,14 +65,11 @@ const features = [
   }
 ]
 
-const isDark = computed({
-  get () {
-    return colorMode.value === 'dark'
-  },
-  set () {
-    colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
-  }
-})
+const toggleDarkMode = () => {
+  const mode = colorMode.value === 'dark' ? 'light' : 'dark';
+  colorMode.preference = mode;
+  colorMode.value = mode;
+}
 
 onMounted(() => {
   emitter.on('initScroll', () => {

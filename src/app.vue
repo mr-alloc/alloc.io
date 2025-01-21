@@ -13,6 +13,8 @@
       />
       <NuxtPage />
     </AppMain>
+
+    <AppFooter />
     <ClientOnly>
       <Transition name="fade">
         <div class="background fixed inset-0 overflow-y-auto transition-opacity"
@@ -41,6 +43,7 @@ import SearchView from "@/components/layout/global/SearchView.vue";
 import {usePostCallStore} from "@/store/post-call-store";
 import BackdropCurtain from "@/components/layout/content/BackdropCurtain.vue";
 import AppMain from "@/components/layout/global/AppMain.vue";
+import AppFooter from "@/components/layout/footer/AppFooter.vue";
 
 Runner.init();
 const route = useRoute();
@@ -88,7 +91,6 @@ onMounted(() => {
 
 const colorMode = useColorMode();
 const color = computed(() => colorMode.value === 'dark' ? '#020420' : 'white');
-
 useHead(() => ({
   htmlAttrs: {
     lang: 'ko-kr',
@@ -104,6 +106,11 @@ useHead(() => ({
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap' },
   ]
 }));
+
+watch(() => colorMode.value, (newValue) => {
+  document.documentElement.classList.remove('dark', 'light');
+  document.documentElement.classList.add(newValue);
+});
 
 const heroBackgroundClass = computed(() => route.meta?.heroBackground || '');
 const { isLoading } = useLoadingIndicator();

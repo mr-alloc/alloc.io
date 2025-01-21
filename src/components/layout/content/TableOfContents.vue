@@ -18,6 +18,7 @@ import mermaid from "mermaid";
 import {useCodeGroupStore} from "@/store/code-group-store";
 import {usePhotoViewStatusStore} from "@/store/photo-view-store";
 import {usePagePrepareStore} from "@/store/prepare-post-store";
+import {useMermaidDiagramStore} from "@/store/mermaid-diagram-store";
 
 const router = useRouter();
 const scrollspy = useScrollspy();
@@ -25,6 +26,7 @@ const nuxtApp = useNuxtApp();
 const codeGroupStore = useCodeGroupStore();
 const prepareStore = usePagePrepareStore();
 const photoViewStore = usePhotoViewStatusStore();
+const mermaidStore = useMermaidDiagramStore();
 const props = defineProps<{
   headline: TocNode,
   isInner: boolean,
@@ -63,7 +65,6 @@ nuxtApp.hooks.hookOnce('page:finish', () => {
     //photo view
     document.querySelectorAll('.rendered-markdown-wrapper img').forEach((imgTag, index) => {
       imgTag.addEventListener('click', (e) => {
-        console.log('click');
         photoViewStore.open(index + 1)
       });
     });
@@ -98,7 +99,17 @@ nuxtApp.hooks.hookOnce('page:finish', () => {
     //mermaid
     document.querySelectorAll('pre.mermaid')
         .forEach(async (element: Element) => {
-          const {svg} = await mermaid.render(`mermaid-${element.id}`, unescapeHtml(element.innerHTML));
+          const html = element as HTMLElement;
+          const mermaidId = html.dataset['mermaidId'];
+
+          if (!mermaidId) {
+            return;
+          }
+          const id = parseInt(mermaidId);
+          const code = mermaidStore.getDiagram(id)!;
+
+          const { svg } = await mermaid.render(`mermaid-${mermaidId}`, code);
+
           element.innerHTML = svg;
         });
 

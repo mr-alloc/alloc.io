@@ -1033,6 +1033,11 @@
     background-color: rgb(232 121 249/var(--tw-bg-opacity))
 }
 
+.dark\:bg-gray-200:is(.dark *) {
+    --tw-bg-opacity: 1;
+    background-color: rgb(var(--color-gray-200)/var(--tw-bg-opacity))
+}
+
 .dark\:bg-gray-400:is(.dark *) {
     --tw-bg-opacity: 1;
     background-color: rgb(var(--color-gray-400)/var(--tw-bg-opacity))

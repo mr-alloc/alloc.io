@@ -4,7 +4,7 @@
     <nuxt-link v-bind:to="props.path" v-if="props.header.layout === 'post'">
       <div class="post-default-image">
         <div class="select-none">
-          <img class="dark:brightness-75" :src="props.header.thumbnail" alt="profile thumbnail" draggable="false"/>
+          <img class="dark:bg-gray-200 dark:brightness-75" :src="props.header.thumbnail" alt="profile thumbnail" draggable="false"/>
         </div>
         <div class="post-title-box ring-prima">
           <span class="block font-bold">{{ props.header.summary }}</span>
@@ -19,7 +19,7 @@
               { 'over-5-images': props.header.images.length > 5 }
               ]">
         <li v-for="(image, index) in props.header.images.slice(1, 6)" @click="methods.openImages(props.header.images, index +1)">
-          <img :src="image.src" :alt="image.alt"/>
+          <img class="dark:bg-gray-400" :src="image.src" :alt="image.alt"/>
           <div class="image-count-overlay">
             <span v-if="props.header.images.length > 5" class="additional-images">+{{ props.header.images.length -5 }}</span>
           </div>

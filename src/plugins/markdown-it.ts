@@ -6,6 +6,8 @@ import shiki from "@shikijs/markdown-it";
 import codeGroupParser from "@/plugins/markdown-it/code-group-parser";
 import imageGroupParser from "@/plugins/markdown-it/image-group-parser";
 import textWrappingParser from "@/plugins/markdown-it/text-wrapping-parser";
+import {fromHighlighter} from "@shikijs/markdown-it/core";
+import {createHighlighterCore} from "shiki";
 
 
 export default defineNuxtPlugin(async (nuxtApp) => {
@@ -15,7 +17,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     markdownIt.use(codeGroupParser);
     markdownIt.use(imageGroupParser);
     markdownIt.use(textWrappingParser);
-    markdownIt.use(await crateShikiExtension);
+    markdownIt.use(crateShikiExtension);
 
     DecoratorProvider.provides(
         RuleType.BLOCK_QUOTE,
@@ -31,18 +33,12 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 
     nuxtApp.provide('md', markdownIt);
 });
-const crateShikiExtension = shiki({
+
+const crateShikiExtension = await shiki({
     transformers: [
         {
             pre(hast: any) {
-                hast.properties['class'] = 'code-content';
-                return hast;
-            },
-            code(hast: any) {
-                const original: string = hast.properties['class'] as string;
-                const classes = original?.split(' ');
-                classes.push('text-nowrap');
-                hast.properties['class'] = classes.join(' ');
+                hast.properties['class'] = 'code-content shiki text-nowrap';
                 return hast;
             }
         }
@@ -51,4 +47,6 @@ const crateShikiExtension = shiki({
         light: 'min-light',
         dark: 'dracula-soft'
     },
+    defaultColor: false,
+    cssVariablePrefix: '--shiki-'
 });

@@ -79,8 +79,6 @@ export default (md: MarkdownIt) => {
         const close = findCloseIndex('text_wrapping_close', tokens, idx);
         const openToken = tokens[idx];
         const closeToken = tokens[close];
-        console.log('openToken', openToken);
-        console.log('closeToken', closeToken);
 
 
         return `<div>\n`;

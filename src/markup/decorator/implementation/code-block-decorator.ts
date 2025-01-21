@@ -8,6 +8,7 @@ import type {RendererRuleArguments} from "@/markup/decorator/rederer-rule";
 import {useCodeGroupStore} from "@/store/code-group-store";
 import CodeBlockTitle from "@/classes/implement/code-block-title";
 import FileAlias from "@/classes/implement/file-alias";
+import {useMermaidDiagramStore} from "@/store/mermaid-diagram-store";
 
 export default class CodeBlockDecorator implements IMarkdownDecorator {
 
@@ -79,7 +80,9 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
 
     private decorateMermaid(token: Token, args: RendererRuleArguments): string {
         //클라이언트에서 처리를 위해 렌더링만 해준다.
-        return `<pre id="mermaid-${args.index}" class="mermaid overflow-auto max-w-full max-h-96">${token.content}</pre>`;
+        const mermaidStore = useMermaidDiagramStore();
+        mermaidStore.addDiagram(args.index, token.content);
+        return `<pre class="mermaid" data-mermaid-id="${args.index}" class="mermaid overflow-auto max-w-full max-h-96">Diagram Loading...</pre>`;
     }
 
     private decorateHighlightLines(token: Token, lang: string, rawCode: string): string {

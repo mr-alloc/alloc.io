@@ -27,7 +27,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
             env: any,
             self: Renderer
         ): string => {
-            const wrapperClasses = ['flex', 'flex-col', 'not-prose', 'w-full'];
+            const wrapperClasses = ['flex', 'flex-col', 'not-prose', 'w-full', 'rounded-md', 'overflow-hidden'];
             try {
                 const inline = tokens[index +1];
                 inline.content = '';
@@ -36,19 +36,21 @@ export default class ImageDecorator implements IMarkdownDecorator {
                     //<p>
                     return fallbackRule(tokens, index, options, env, self);
                 }
+                this.addDefaultImageClass(imageToken);
 
                 if (imageToken.attrIndex('data-text-wrapping') >= 0 && imageToken.attrGet('data-text-wrapping') === 'true') {
                     //text-wrapping 이미지는 래핑하지 않는다.
                     //sm: width: 100%;
                     //md: margin: 5px 3px
-                    imageToken.attrJoin('class', 'w-full md:w-1/3 m-0 md:my-1.5 md:mx-2.5')
+                    imageToken.attrJoin('class', 'w-full md:w-1/3 m-0 md:my-1.5 md:mx-2.5 rounded-md');
                     return '';
                 }
-                this.addDefaultImageClass(imageToken);
 
                 if (imageToken.attrIndex('group-index') >= 0) {
                     return this.decorateOpenGroupImage(imageToken, tokens[index]);
                 }
+                //그룹 이외의 이미지 스타일 적용
+                imageToken.attrJoin('class', 'rounded-md');
 
                 const templateToken = this.findChild(inline.children, 'text');
                 if (!templateToken) {
@@ -118,7 +120,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
     }
 
     private addDefaultImageClass(imageToken: Token) {
-        imageToken.attrJoin('class', 'my-0');
+        imageToken.attrJoin('class', 'my-0 dark:bg-gray-200 p-2');
         imageToken.attrJoin('style', 'cursor: zoom-in;');
     }
 

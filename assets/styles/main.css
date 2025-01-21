@@ -1,7 +1,4 @@
-.dark {
-    --ui-background: var(--color-gray-950);
-    --ui-foreground: var(--color-gray-200);
-}
+
 
 :root {
     --color-primary-50: 239 253 245;
@@ -15011,22 +15008,9 @@ body {
 }
 
 
-
-@media (prefers-color-scheme: dark) {
-
-    body {
-        --tw-bg-opacity: 1;
-        background-color: rgb(var(--ui-background)/var(--tw-bg-opacity));
-        font-family: Inter, "Inter Fallback: Arial",ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
-        --tw-text-opacity: 1;
-        color: rgb(var(--ui-foreground)/var(--tw-text-opacity));
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale
-    }
-    :root {
-        --ui-background: var(--color-gray-950);
-        --ui-foreground: var(--color-gray-200);
-    }
+.dark {
+    --ui-background: var(--color-gray-950);
+    --ui-foreground: var(--color-gray-200);
 }
 
 .fall-fade-enter-active {
