@@ -58,8 +58,8 @@ function collapseCategory(category: CategoryGroup) {
         :class="{ 'h-0 my-0': collapseGroup.has(category.name) && collapseGroup.get(category.name)! }">
       <PostCategoryTree :categories="(category as CategoryGroup).children" :groups="groups" :depth="depth +1" :path="path" />
     </ul>
-    <NuxtLink v-else class="ml-1.5 cursor-pointer hover:text-gray-700 dark:hover:text-gray-200 duration-300"
-       :class="{ 'font-bold text-primary-500 dark:text-primary-400' :path === (category as CategoryContent).path }"
+    <NuxtLink v-else class="ml-1.5 cursor-pointer  hover:text-gray-700 dark:hover:text-gray-200 duration-300"
+       :class="path === (category as CategoryContent).path ? 'font-bold text-primary-500 dark:text-primary-400' : 'text-gray-500 dark:text-gray-400'"
        :to="(category as CategoryContent).path">
       <span class="text-xs">{{ category.name }}</span>
     </NuxtLink>
