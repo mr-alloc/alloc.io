@@ -144,7 +144,7 @@ ssize_t __libc_read (int fd, void *buf, size_t nbytes) {
 
 ::code-group
 
-```c::1. SYSCALL_CANCEL 매크로 
+```c::1. SYSCALL_CANCEL 매크로
 //1. 연결된 인터페이스 매크로는 내부적으로 INLINE_SYSCALL_CALL() 매크로를 호출한다. 
 # define SYSCALL_CANCEL(...) \
   __SYSCALL_CANCEL_CALL (__VA_ARGS__) //(__VA_ARGS__는 가변인자)
@@ -193,7 +193,9 @@ ssize_t __libc_read (int fd, void *buf, size_t nbytes) {
 위에서는 `__SYSCALL_CANCEL3(read, fd, buf, nbytes)` 매크로를 호출하였다.
 이제 해당 매크로를 시점으로 어떻게 이어지는지 알아 보자
 
-```h::1. __SYSCALL_CANCEL3 매크로 호출
+::code-group
+
+```c::1. __SYSCALL_CANCEL3 매크로 호출
 /* sysdeps\unix\sysv\linux\mips\mips64\n32\syscall_types.h */
 typedef long long int __syscall_arg_t;
 //Syscall Safe Convert		    
@@ -215,7 +217,7 @@ long int __syscall_cancel (__syscall_arg_t arg1, __syscall_arg_t arg2,
 		    __SYSCALL_CANCEL7_ARG __NR_##name)
 ```
 
-```c::ntpl/cancellation.c
+```c::2. ntpl/cancellation.c 함수 호출
 //Native POSIX Thread Library (NPTL)의 취소 기능을 위한 코드
 long int
 __syscall_cancel (__syscall_arg_t a1, __syscall_arg_t a2,
@@ -230,11 +232,9 @@ __syscall_cancel (__syscall_arg_t a1, __syscall_arg_t a2,
 	 : r;
 }
 ```
+::
 
-### Wrapping API 호출::wrapping-api
-
-
-
+`__internal_syscall_cancel`함수에서 결과를 받아서 읽은 바이트수의 결과를 반환한다.
 
 
 ## 시스템 콜의 유형::types-of-system-calls
@@ -249,4 +249,36 @@ __syscall_cancel (__syscall_arg_t a1, __syscall_arg_t a2,
 
 ### 프로세스 제어::process-control
 
-중지(abort()), 종료(end())는 프로세스에 대해 비정상 또는 정상적으로 프로세스 수행의 완료를 요청한다.
+* 생성(fork), 중지(abort), 종료(exit)
+* 적재(load), 실행(execute)
+* 프로세스 속성(attributes) 조회, 변경
+* 시간 대기
+* 이벤트 대기(wait event), 알림(signal event)
+* 메모리 할당 및 자유화
+
+### 파일 조작::file-manipulation
+
+* 파일 생성(create file), 삭제(delete file)
+* 열기(open), 닫기(close)
+* 읽기, 쓰기, 위치 변경(reposition)
+* 파일 속성 조회, 변경
+
+### 장치 관리::device-management
+
+* 장치 요청(request devices), 해제(release devices)
+* 읽기, 쓰기, 위치 변경(reposition)
+* 장치 속성(attributes) 조회, 변경
+* 장치의 논리적 부착(attach), 분리(detach)
+
+### 정보 유지::information-maintenance
+
+* 시간, 날짜 조회, 변경
+* 시스템 데이터 조회, 변경
+* 프로세스, 파일, 장치의 속성(attribute) 조회, 변경
+
+### 통신과 보호::communication-and-protection
+* 통신 연결 생성, 제거
+* 메세지 송신, 수신
+* 상태 정보 전달
+* 원격 장치의 부착(attach), 분리(detach)
+* 파일 권한 조회, 변경

@@ -43,7 +43,7 @@ const crateShikiExtension = shiki({
         }
     ],
     themes: {
-        light: 'min-light',
+        light: 'one-light',
         dark: 'dracula-soft'
     },
     defaultColor: false,

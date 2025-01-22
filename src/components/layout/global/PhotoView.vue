@@ -13,7 +13,7 @@
       </button>
       <!-- 이미지 -->
       <div class="flex lg:w-[800px] justify-center">
-        <img id="w-full my-0 mx-auto object-contain origin-top-left rounded-md" :src="photoViewStore.current()?.src" :alt="photoViewStore.current()?.alt"/>
+        <img id="w-full my-0 bg-white dark:bg-gray-200 p-2 mx-auto object-contain origin-top-left rounded-md" style="background-color: white;" :src="photoViewStore.current()?.src" :alt="photoViewStore.current()?.alt"/>
       </div>
       <!-- 자막 -->
       <div class="image-subtitles">
@@ -65,7 +65,7 @@
             v-for="(image, index) in photoViewStore.imageList() as Array<Image>"
             :key="index"
             v-on:click="photoViewStore.open(index +1)">
-          <img class="image-preview object-cover" :src="image.src" :alt="image.alt"/>
+          <img class="image-preview object-cover" style="background-color: white;" :src="image.src" :alt="image.alt"/>
         </li>
       </ol>
     </div>
