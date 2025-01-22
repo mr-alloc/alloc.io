@@ -127,16 +127,115 @@ ssize_t read(int fd, void *buf, size_t count) {
 그렇다면 어떤 방식으로 사용자의 요청을 검증하는 것일까?
 
 시스템에서 제공되는 Wrapping API는 사용자 공간에서 `libc`로 제공된다.  
-사용자가 `read()` API를 사용하는 시점부터 알아보자. 
+사용자가 `read()` API(**glib** 기준)를 사용하는 시점부터 알아보자. 
 
 ```c::Wrapping API 호출
-ssize_t bytes = read(fd, buffer, count);
+// include/unistd.h
+extern ssize_t __libc_read (int __fd, void *__buf, size_t __n);
+
+// sysdeps/unix/sysv/linux/read.c
+ssize_t __libc_read (int fd, void *buf, size_t nbytes) {
+  return SYSCALL_CANCEL (read, fd, buf, nbytes);
+}
 ```
-먼저 API가 호출되면 시스템콜 번호`(__x64_sys_read): 0`와 인자들을 레지스터에 설정한다.
+
+`__libc_read()` 함수는 시스템콜 인터페이스(`SYSCALL_CANCEL`)로 read 시스템콜을 호출한다.
+이 내부적으로 인자값을 어떻게 전달하고 내부적인 시스템콜 매크로를 어떻게 선택하는지 알 수 있다.
+
+::code-group
+
+```c::1. SYSCALL_CANCEL 매크로 
+//1. 연결된 인터페이스 매크로는 내부적으로 INLINE_SYSCALL_CALL() 매크로를 호출한다. 
+# define SYSCALL_CANCEL(...) \
+  __SYSCALL_CANCEL_CALL (__VA_ARGS__) //(__VA_ARGS__는 가변인자)
+```
+
+```c::2. __SYSCALL_CANCEL_CALL 매크로
+#define __SYSCALL_CANCEL_CALL(...) \
+  __SYSCALL_CANCEL_DISP (__SYSCALL_CANCEL, __VA_ARGS__)
+```
+
+```c::3. __INLINE_SYSCALL_DISP 매크로
+//앞서 전달한 __SYSCALL_CANCEL 값을 b로 받는다.
+//요청 당시 매개변수 (read, fd, buf, nbytes)를 __SYSCALL_CANCEL_NARGS()로 전달한다. 
+#define __SYSCALL_CANCEL_DISP(b,...) \
+  __SYSCALL_CANCEL_CONCAT (b,__SYSCALL_CANCEL_NARGS(__VA_ARGS__))(__VA_ARGS__)
+//여기서 중요한점은 __SYSCALL_CANCEL_CONCAT은 매크로 이름을 만드는 매크로이다.
+//즉 b: __SYSCALL_CANCEL 와 __SYSCALL_CANCEL_NARGS(__VA_ARGS__)의 결과값을 인자로 받는다.
+
+//상위에 작성된 매크로 이름 생성 매크로 
+#define __SYSCALL_CANCEL_CONCAT_X(a,b)     a##b //a와 b를 붙인다.
+#define __SYSCALL_CANCEL_CONCAT(a,b)       __SYSCALL_CANCEL_CONCAT_X (a, b)
+```
+
+```c::4. __SYSCALL_CANCEL_NARGS 매크로
+//NARGS는 "Number of Arguments"의 약자로, 가변인자의 개수를 반환한다.
+#define __SYSCALL_CANCEL_NARGS_X(a,b,c,d,e,f,g,h,n,...) n
+#define __SYSCALL_CANCEL_NARGS(...) \
+  __SYSCALL_CANCEL_NARGS_X (__VA_ARGS__,7,6,5,4,3,2,1,0,)
+//위처럼 되면 __SYSCALL_CANCEL_NARGS(read, fd, buf, nbytes)는 3를 반환한다.
+//a=read, b=fd, c=buf, d=nbytes, e=7, f=6, g=5, h=4, n=3
+```
+
+```c::5. 호출할 매크로 선택
+#define __SYSCALL_CANCEL_DISP(b,...) \
+  __SYSCALL_CANCEL_CONCAT (b,__SYSCALL_CANCEL_NARGS(__VA_ARGS__))(__VA_ARGS__)
+//해당 코드의 매크로를 치환하면 아래처럼 된다.
+//b: __SYSCALL_CANCEL
+//__SYSCALL_CANCEL_NARGS(read, fd, buf, nbytes): 3
+//__SYSCALL_CONCAT(__SYSCALL_CANCEL, 3)(read, fd, buf, nbytes): __SYSCALL_CANCEL3(read, fd, buf, nbytes)
+
+//결과적으로 __SYSCALL_CANCEL3(read, fd, buf, nbytes) 매크로를 호출한다.
+```
+
+::
+
+위에서는 `__SYSCALL_CANCEL3(read, fd, buf, nbytes)` 매크로를 호출하였다.
+이제 해당 매크로를 시점으로 어떻게 이어지는지 알아 보자
+
+```h::1. __SYSCALL_CANCEL3 매크로 호출
+/* sysdeps\unix\sysv\linux\mips\mips64\n32\syscall_types.h */
+typedef long long int __syscall_arg_t;
+//Syscall Safe Convert		    
+#define __SSC(__x) ((__syscall_arg_t) (__typeof__ ((__x) - (__x))) (__x))
+
+/* sysdeps\unix\sysdep.h */
+# define __SYSCALL_CANCEL7_ARG_DEF
+# define __SYSCALL_CANCEL7_ARCH_ARG_DEF
+# define __SYSCALL_CANCEL7_ARG
+
+long int __syscall_cancel (__syscall_arg_t arg1, __syscall_arg_t arg2,
+			   __syscall_arg_t arg3, __syscall_arg_t arg4,
+			   __syscall_arg_t arg5, __syscall_arg_t arg6,
+			   __SYSCALL_CANCEL7_ARG_DEF
+			   __syscall_arg_t nr) attribute_hidden;
+			   
+#define __SYSCALL_CANCEL3(name, a1, a2, a3) \
+  __syscall_cancel (__SSC (a1), __SSC (a2), __SSC (a3), 0, 0, 0,	\
+		    __SYSCALL_CANCEL7_ARG __NR_##name)
+```
+
+```c::ntpl/cancellation.c
+//Native POSIX Thread Library (NPTL)의 취소 기능을 위한 코드
+long int
+__syscall_cancel (__syscall_arg_t a1, __syscall_arg_t a2,
+		  __syscall_arg_t a3, __syscall_arg_t a4,
+		  __syscall_arg_t a5, __syscall_arg_t a6,
+		  __SYSCALL_CANCEL7_ARG_DEF __syscall_arg_t nr)
+{
+  int r = __internal_syscall_cancel (a1, a2, a3, a4, a5, a6,
+				     __SYSCALL_CANCEL7_ARG nr);
+  return __glibc_unlikely (INTERNAL_SYSCALL_ERROR_P (r))
+	 ? SYSCALL_ERROR_LABEL (INTERNAL_SYSCALL_ERRNO (r))
+	 : r;
+}
+```
 
 ### Wrapping API 호출::wrapping-api
 
-[glibc의 시스템콜 처리](https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/x86_64/sysdep.h;h=1d175dfb1338e77dd02b77ed168bd7b7c395c807;hb=HEAD)
+
+
+
 
 ## 시스템 콜의 유형::types-of-system-calls
 
