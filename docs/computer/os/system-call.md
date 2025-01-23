@@ -14,6 +14,8 @@ hide: false
 시스템 자원은 커널에서 관리하기 때문에 외부에서 직접적으로 사용할 수 없어, 이를 위해 커널에서 제공하는 인터페이스를 사용하여 시스템 콜을 호출할 수 있다.
 이러한 호출은 일반적으로 C/C++로 작성된 함수 형태로 제공된다.
 
+---
+
 ## 예제::example
 
 ::text-wrapping
@@ -103,7 +105,7 @@ ssize_t read(int fd, void *buf, size_t count) {
 2. `buf`: 데이터를 읽어들일 버퍼
 3. `count`: 버퍼로 읽어 들일 수 있는 최대 바이트 수
 
-읽기가 성공한 경우 읽어 들인 바이트 수(size_t)를 반환하고, 오류가 발생한 경우 `-1`을 반환한다.
+읽기가 성공한 경우 읽어 들인 바이트 수(ssize_t)를 반환하고, 오류가 발생한 경우 `-1`을 반환한다.
 
 > Unix/Linux 시스템에서는 `man read` 명령어로 man(manual) 페이지에서 시스템의 모든 명령어, 함수, 시스템콜 등에 대한 정보를 확인할 수 있다.
 :{ "type": "tip", "icon": "lightbulb" }
@@ -121,13 +123,13 @@ ssize_t read(int fd, void *buf, size_t count) {
    매핑한다.
 4. CPU는 실행전 커널모드로 전환하여 커널 함수를 실행하고, 사용자모드로 전환하고 반환값은 사용자 프로그램으로 전달하며, 제어또한 사용자 프로그램으로 넘어간다.
 
-### 시스템콜 인터페이스::system-call-interface
+### API와 시스템 콜::api-and-system-call
 
 앞서 시스템 콜 인터페이스는 사용자의 요청을 검증하고 커널 함수로 전달하는 역할을 한다고 했다.
 그렇다면 어떤 방식으로 사용자의 요청을 검증하는 것일까?
 
 시스템에서 제공되는 Wrapping API는 사용자 공간에서 `libc`로 제공된다.  
-사용자가 `read()` API(**glib** 기준)를 사용하는 시점부터 알아보자. 
+사용자가 `read()` API(**glibc** 기준)를 사용하는 시점부터 알아보자.
 
 ```c::Wrapping API 호출
 // include/unistd.h
@@ -137,6 +139,13 @@ extern ssize_t __libc_read (int __fd, void *__buf, size_t __n);
 ssize_t __libc_read (int fd, void *buf, size_t nbytes) {
   return SYSCALL_CANCEL (read, fd, buf, nbytes);
 }
+
+libc_hidden_def (__libc_read)
+
+libc_hidden_def (__read)
+weak_alias (__libc_read, __read)
+libc_hidden_def (read)
+weak_alias (__libc_read, read) //외부에서는 read()로 호출하며 alias로 __libc_read()를 호출한다.
 ```
 
 `__libc_read()` 함수는 시스템콜 인터페이스(`SYSCALL_CANCEL`)로 read 시스템콜을 호출한다.
@@ -225,6 +234,7 @@ __syscall_cancel (__syscall_arg_t a1, __syscall_arg_t a2,
 		  __syscall_arg_t a5, __syscall_arg_t a6,
 		  __SYSCALL_CANCEL7_ARG_DEF __syscall_arg_t nr)
 {
+  //__internal_syscall_cancel(fd, buf, nbytes, 0, 0, 0, 0)
   int r = __internal_syscall_cancel (a1, a2, a3, a4, a5, a6,
 				     __SYSCALL_CANCEL7_ARG nr);
   return __glibc_unlikely (INTERNAL_SYSCALL_ERROR_P (r))
@@ -232,9 +242,249 @@ __syscall_cancel (__syscall_arg_t a1, __syscall_arg_t a2,
 	 : r;
 }
 ```
+
+```c::3. ntpl/cancellation.c 함수 호출2
+/* Called by the INTERNAL_SYSCALL_CANCEL macro, check for cancellation and
+   returns the syscall value or its negative error code.  */
+long int
+__internal_syscall_cancel (__syscall_arg_t a1, __syscall_arg_t a2,
+			   __syscall_arg_t a3, __syscall_arg_t a4,
+			   __syscall_arg_t a5, __syscall_arg_t a6,
+			   __SYSCALL_CANCEL7_ARG_DEF
+			   __syscall_arg_t nr)
+{
+  long int result;
+  struct pthread *pd = THREAD_SELF;
+  
+  ...
+
+  /* Call the arch-specific entry points that contains the globals markers
+     to be checked by SIGCANCEL handler.  */
+  //__syscall_cancel_arch(&pd->cancelhandling, __NR_read, fd, buf, nbytes, 0, 0, 0)
+  result = __syscall_cancel_arch (&pd->cancelhandling, nr, a1, a2, a3, a4, a5,
+			          a6 __SYSCALL_CANCEL7_ARCH_ARG7);
+			          
+  ch = atomic_load_relaxed (&pd->cancelhandling);
+  
+  if (result == -EINTR && cancel_enabled_and_canceled (ch))
+    __syscall_do_cancel ();
+
+  return result;
+}
+```
+
+```asm::4. 실제 시스템콜 호출
+#include <sysdep.h>
+#include <descr-const.h>
+/* sysdeps/unix/sysv/linux/mips/x86_64/syscall_cancel.S */
+/* long int [rax] __syscall_cancel_arch (volatile int *cancelhandling [%rdi],
+					 __syscall_arg_t nr   [%rsi],
+					 __syscall_arg_t arg1 [%rdx],
+					 __syscall_arg_t arg2 [%rcx],
+					 __syscall_arg_t arg3 [%r8],
+					 __syscall_arg_t arg4 [%r9],
+					 __syscall_arg_t arg5 [SP+8],
+					 __syscall_arg_t arg6 [SP+16])  */
+
+ENTRY (__syscall_cancel_arch)
+	.globl __syscall_cancel_arch_start
+__syscall_cancel_arch_start:
+
+	/* if (*cancelhandling & CANCELED_BITMASK)
+	     __syscall_do_cancel()  */
+	mov    (%rdi),%eax
+	testb  $TCB_CANCELED_BITMASK, (%rdi)
+	jne    __syscall_do_cancel
+
+	/* Issue a 6 argument syscall, the nr [%rax] being the syscall
+	   number.  */
+	mov    %rdi,%r11
+	mov    %rsi,%rax
+	mov    %rdx,%rdi
+	mov    %rcx,%rsi
+	mov    %r8,%rdx
+	mov    %r9,%r10
+	mov    8(%rsp),%r8
+	mov    16(%rsp),%r9
+	mov    %r11,8(%rsp)
+	syscall
+
+	.globl __syscall_cancel_arch_end
+__syscall_cancel_arch_end:
+	ret
+END (__syscall_cancel_arch)
+```
+
 ::
 
-`__internal_syscall_cancel`함수에서 결과를 받아서 읽은 바이트수의 결과를 반환한다.
+`__syscall_cancel` 함수에서 `__NR_read`값이 0으로 변경되는
+이유는 [x86_64 시스템콜 매크로](https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/x86_64/64/arch-syscall.h;h=dfc10d0c7e8a8f1e3cfc81c00096bec4d016b3f0;hb=HEAD)
+에 0으로 정의 되어있기 때문이다.  
+실제 시스템콜 호출코드를 보면 [레지스터]()에 인자값들을 세팅하고 마지막에 `syscall` 명령어로 시스템 콜을 호출한다.
+위 내용으로 Wrapping API(`glibc`)에서는 호출할 시스템콜 정보를 찾고 인자값을 레지스터에 적재하여 시스템콜을 호출하는 과정을 알 수 있다.
+
+또한 `syscall` 명령은 하드웨어 레벨에서 커널모드로 전환하며, 커널의 시스템콜을 호출하는 역할을 한다.
+
+### 시스템콜 인터페이스::system-call-interface
+
+앞서 `glibc`에서 각 인자 값을 레지스터에 저장하고, `syscall` 명령어로 시스템콜을 호출하기 까지 과정을 보았었다.
+이제 커널모드로 변경된 후 제어는 커널로 넘어가게 되는데, 이때 시스템콜 인터페이스를 통해 시스템콜을 호출한다.
+
+`x86` 아키텍쳐 64비트 리눅스의 시스템콜 인터페이스의 시작점은 `arch/x86/entry/entry_64.S` 파일이다.
+어셈블러로 작성된 이코드는 아래의 순서로 실행된다.
+
+::code-group
+
+```asm::1. entry_SYSCALL_64 레이블
+SYM_CODE_START(entry_SYSCALL_64)
+	UNWIND_HINT_ENTRY
+	ENDBR
+
+	swapgs
+	/* tss.sp2 is scratch space. */
+	movq	%rsp, PER_CPU_VAR(cpu_tss_rw + TSS_sp2)
+	SWITCH_TO_KERNEL_CR3 scratch_reg=%rsp
+	movq	PER_CPU_VAR(pcpu_hot + X86_top_of_stack), %rsp
+```
+
+```asm::2. entry_SYSCALL_64_safe_stack 레이블
+SYM_INNER_LABEL(entry_SYSCALL_64_safe_stack, SYM_L_GLOBAL)
+	ANNOTATE_NOENDBR
+
+	/* Construct struct pt_regs on stack */
+	pushq	$__USER_DS				/* pt_regs->ss */
+	pushq	PER_CPU_VAR(cpu_tss_rw + TSS_sp2)	/* pt_regs->sp */
+	pushq	%r11					/* pt_regs->flags */
+	pushq	$__USER_CS				/* pt_regs->cs */
+	pushq	%rcx					/* pt_regs->ip */
+```
+
+```asm::3. entry_SYSCALL_64_after_hwframe 레이블
+SYM_INNER_LABEL(entry_SYSCALL_64_after_hwframe, SYM_L_GLOBAL)
+	pushq	%rax					/* pt_regs->orig_ax */
+
+	PUSH_AND_CLEAR_REGS rax=$-ENOSYS
+
+	/* IRQs are off. */
+	movq	%rsp, %rdi
+	/* Sign extend the lower 32bit as syscall numbers are treated as int */
+	//시스템콜 번호 검증
+	movslq	%eax, %rsi
+
+	/* clobbers %rax, make sure it is after saving the syscall nr */
+	IBRS_ENTER
+	UNTRAIN_RET
+	CLEAR_BRANCH_HISTORY
+	
+	...
+    //시스템콜 래퍼 함수 호출
+	call	do_syscall_64		/* returns with IRQs disabled */
+
+    ..
+```
+
+::
+
+여기까지는 시스템콜 인터페이스에서 검증하는 코드였고, 이제 시스템콜 레퍼에서 실제 시스템콜을 호출하는 코드를 살펴보자.
+
+::code-group
+
+```c::common.c
+static __always_inline bool do_syscall_x64(struct pt_regs *regs, int nr)
+{
+	/*
+	 * Convert negative numbers to very high and thus out of range
+	 * numbers for comparisons.
+	 */
+	unsigned int unr = nr;
+
+	if (likely(unr < NR_syscalls)) {
+		unr = array_index_nospec(unr, NR_syscalls);
+		regs->ax = x64_sys_call(regs, unr);
+		return true;
+	}
+	return false;
+}
+```
+
+```c::syscall_64.c
+#define __SYSCALL(nr, sym) __x64_##sym,
+const sys_call_ptr_t sys_call_table[] = {
+#include <asm/syscalls_64.h>
+};
+#undef  __SYSCALL
+
+#define __SYSCALL(nr, sym) case nr: return __x64_##sym(regs);
+long x64_sys_call(const struct pt_regs *regs, unsigned int nr)
+{
+	switch (nr) {
+	#include <asm/syscalls_64.h>
+	default: return __x64_sys_ni_syscall(regs);
+	}
+};
+```
+
+::
+
+시스템콜 래퍼이다. 실제로 시스템콜을 매핑하는 코드는 빌드 타임에 동작으로 만들어진다.
+[`Makefile`](https://github.com/torvalds/linux/blob/v5.6/arch/x86/entry/syscalls/Makefile)에는 시스템콜 테이블에 대해 시스템콜로 연결하는 코드를
+생성하는 코드가 있다.
+[시스템 콜 테이블](https://github.com/torvalds/linux/blob/v5.6/arch/x86/entry/syscalls/syscall_64.tbl)에도 아래와 같이 나와있다.
+
+```text::syscall_64.tbl
+
+# The __x64_sys_*() stubs are created on-the-fly for sys_*() system calls
+#
+# The abi is "common", "64" or "x32" for this file.
+#
+0	common	read			sys_read
+1	common	write			sys_write
+2	common	open			sys_open
+...
+```
+
+즉 위에서 호출한 `__x64_sys_ni_syscall()` 함수는 전달하는 시스템 콜 번호로 시스템콜을 찾는다.
+시스템콜 함수이름은 `__x64_sys_*`로 시작하는데, 이는 빌드타임에 생성되는 코드이다. 읽기를 예로 들면 `__x64_sys_read()` 함수를 호출한다.
+
+`__x64_sys_read()` 함수는 실제로 정의되어 있지는 않지만 컴파일타임에 매크로를 통해 `SYSCALL_DEFINE3(read, ...)`으로 확장된다.
+결과적으로 아래의 코드를 호출하게된다.
+
+::code-group
+
+```c::SYSCALL_DEFINE3 함수
+SYSCALL_DEFINE3(read, unsigned int, fd, char __user *, buf, size_t, count)
+{
+	return ksys_read(fd, buf, count);
+}
+```
+
+```c::ksys_read 함수
+ssize_t ksys_read(unsigned int fd, char __user *buf, size_t count)
+{
+	CLASS(fd_pos, f)(fd);
+	ssize_t ret = -EBADF;
+
+	if (!fd_empty(f)) {
+		loff_t pos, *ppos = file_ppos(fd_file(f));
+		if (ppos) {
+			pos = *ppos;
+			ppos = &pos;
+		}
+		ret = vfs_read(fd_file(f), buf, count, ppos);
+		if (ret >= 0 && ppos)
+			fd_file(f)->f_pos = pos;
+	}
+	return ret;
+}
+```
+
+::
+
+여기까지가 커널코드고 `ksys_read` 커널 함수 내부에서 파일을 읽는 실제 로직을 수행한다.
+커널함수의 결과는 시스템콜 인터페이스를 통해 다시 **사용자 프로그램으로 전달**된다.
+
+
+---
 
 
 ## 시스템 콜의 유형::types-of-system-calls
