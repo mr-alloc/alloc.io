@@ -17,6 +17,8 @@ export default class FileAlias {
     private static readonly COMPUTER = new FileAlias("computer", "컴퓨터");
     private static readonly HARDWARE = new FileAlias("hardware", "하드웨어");
     private static readonly SOFTWARE_DESIGN = new FileAlias("software-design", "소프트웨어 설계");
+    private static readonly STRUCTURE = new FileAlias("structure", "구조");
+    private static readonly BEHAVIOR = new FileAlias("behavior", "행동");
     private static readonly LIFE = new FileAlias("life", "일상");
 
     private static readonly CACHED = toMap(FileAlias.values(), (file) => file._value);
@@ -32,7 +34,7 @@ export default class FileAlias {
     public static values(): Array<FileAlias> {
         return [this.DOCS, this.ALGORITHM, this.JAVA, this.JAVASCRIPT, this.TYPESCRIPT,
             this.FRAMEWORK, this.SPRING, this.LANGUAGE, this.SWIFT, this.TOOL, this.DATABASE,
-            this.OS, this.COMPUTER, this.HARDWARE, this.SOFTWARE_DESIGN, this.LIFE];
+            this.OS, this.COMPUTER, this.HARDWARE, this.SOFTWARE_DESIGN, this.BEHAVIOR, this.STRUCTURE, this.LIFE];
     }
 
     get value(): string {

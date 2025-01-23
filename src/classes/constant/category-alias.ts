@@ -12,6 +12,8 @@ export class CategoryAlias {
     private static readonly SPRING = new CategoryAlias('spring', '스프링');
     private static readonly TOOL = new CategoryAlias('tool', '라이브러리/도구');
     private static readonly SOFTWARE_DESIGN = new CategoryAlias('software-design', '소프트웨어 디자인');
+    private static readonly STRUCTURE = new CategoryAlias('structure', '구조');
+    private static readonly BEHAVIOR = new CategoryAlias('behavior', '행동');
     private static readonly ETC = new CategoryAlias('etc', '기타');
 
     private static readonly CACHED = toMap(this.values(), (alias) => alias.name);
@@ -34,7 +36,7 @@ export class CategoryAlias {
 
     private static values(): Array<CategoryAlias> {
         return [this.DEVELOPMENT, this.ALGORITHM, this.LANGUAGE, this.TYPESCRIPT, this.OS, this.DATABASE, this.MYSQL,
-            this.FRAMEWORK, this.SPRING, this.TOOL, this.SOFTWARE_DESIGN, this.ETC];
+            this.FRAMEWORK, this.SPRING, this.TOOL, this.SOFTWARE_DESIGN, this.STRUCTURE, this.BEHAVIOR, this.ETC];
     }
 
 

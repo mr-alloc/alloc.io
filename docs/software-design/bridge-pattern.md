@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 브릿지 패턴 (Bridge Pattern)
-categories: [software-design]
+categories: [software-design, structure]
 tags: [Bridge Pattern, Design Pattern, Software Design, OCP, SRP]
 date: 2020-06-15 12:17:00 +0900
 thumbnail: /post/software-design/bridge-pattern-intro.svg
