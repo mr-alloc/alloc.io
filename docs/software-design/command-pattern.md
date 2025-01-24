@@ -16,6 +16,12 @@ hide: true
 <!--more-->
 ## 핵심 구성요소::key-components
 
+* **Command**: 명령을 나타내는 인터페이스/추상 클래스
+* **ConcreteCommand**: 실제 명령을 나타내는 구상 클래스
+* **Invoker**: 명령을 실행하는 객체
+* **Receiver**: 명령의 수신자
+* **Client**: ConcreteCommand 객체를 생성하고 Invoker 객체에게 전달하는 객체
+
 ## 예제::example
 
 
