@@ -78,10 +78,100 @@ classDiagram
   * **책임**: 실제 명령을 생성하여 `Invoker`와 연결하며, 실행흐름을 제어한다.
 
 
+### 주문 처리 시스템::example-1
 
-## 주문 처리 시스템::example-1
+주문 처리에 대한 시스템을 만들고자 한다.
+구매하는 상품에대한 주문이있고, 해당 주문에 대하여 생성하거나 변경하는 기능을 만들어보자. 
 
+**Command**
 
+수행하려는 주문 행위에 단위의 명령을 구현한다.
+
+::code-group
+
+```java::OrderCommand.java
+public interface OrderCommand {
+
+    void execute();
+
+    void undo();
+}
+```
+
+```java::CreateOrderCommand.java
+public class CreateOrderCommand implements OrderCommand {
+
+    private final OrderManager receiver;
+    private final Order order;
+
+    public CreateOrderCommand(OrderManager receiver, Order order) {
+        this.receiver = receiver;
+        this.order = order;
+    }
+
+    @Override
+    public void execute() {
+        this.receiver.createOrder(order);
+    }
+
+    @Override
+    public void undo() {
+        this.receiver.cancelOrder(order);
+    }
+}
+```
+
+```java::UpdateOrderCommand.java
+public class UpdateOrderCommand implements OrderCommand {
+
+    private OrderManager receiver;
+    private Order order;
+    private OrderStatus previousOrder;
+    private OrderStatus newStatus;
+
+    public UpdateOrderCommand(OrderManager receiver, Order order, OrderStatus newStatus) {
+        this.receiver = receiver;
+        this.order = order;
+        this.newStatus = newStatus;
+        this.previousOrder = order.getStatus();
+    }
+
+    @Override
+    public void execute() {
+        receiver.updateOrderStatus(order, newStatus);
+    }
+
+    @Override
+    public void undo() {
+        receiver.updateOrderStatus(order, previousOrder);
+    }
+}
+```
+
+::
+
+**Invoker**
+
+주문처리 행위에대한 명령들을 관리하며, 실행하거나 취소할 수 있다.
+
+```java::OrderCommandInvoker
+public class OrderCommandInvoker {
+    private final List<OrderCommand> commands = new ArrayList<>();
+
+    public void executeCommand(OrderCommand command) {
+        command.execute();
+        commands.add(command);
+    }
+
+    public void undoLastCommand() {
+        if (!commands.isEmpty()) {
+            OrderCommand lastCommand = commands.remove(commands.size() - 1);
+            lastCommand.undo();
+        }
+    }
+
+}
+```
 
 
 ## 적용::applicability
