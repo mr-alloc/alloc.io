@@ -1502,7 +1502,7 @@
       "current-position": "SI Researcher",
       "summary": "Command Pattern",
       "excerpt-separator": "<!--more-->",
-      "hide": true,
+      "hide": false,
       "breadcrumbs": [
         "문서",
         "소프트웨어 설계"
@@ -1526,7 +1526,15 @@
             "origin": "예제::example",
             "title": "예제",
             "fragment": "example",
-            "children": []
+            "children": [
+              {
+                "rank": 3,
+                "origin": "주문 처리 시스템::example-1",
+                "title": "주문 처리 시스템",
+                "fragment": "example-1",
+                "children": []
+              }
+            ]
           },
           {
             "rank": 2,
@@ -1545,8 +1553,8 @@
         ]
       }
     },
-    "description": "",
-    "content": "## 핵심 구성요소::key-components\n\n* **Command**: 명령을 나타내는 인터페이스/추상 클래스\n* **ConcreteCommand**: 실제 명령을 나타내는 구상 클래스\n* **Invoker**: 명령을 실행하는 객체\n* **Receiver**: 명령의 수신자\n* **Client**: ConcreteCommand 객체를 생성하고 Invoker 객체에게 전달하는 객체\n\n## 예제::example\n\n\n## 적용::applicability\n\n\n## 장단점::pros-and-cons\n\n**장점**\n\n*\n\n**단점**\n\n* \n"
+    "description": "커맨드 패턴은 처리 명령을 독립적인 실행가능 객체로 만들어, 일괄적으로 취소 또는 실행을 할 수 있도록 하는 디자인 패턴이다.\n\n또한, 이 명령의 처리를 지연시키거나, 대기열에 넣을 수 있도록 하여 처리할 수 있다.",
+    "content": "## 핵심 구성요소::key-components\n\n* **Command**: 명령을 나타내는 인터페이스/추상 클래스\n* **ConcreteCommand**: 실제 명령을 나타내는 구상 클래스\n* **Invoker**: 명령을 실행하는 객체\n* **Receiver**: 명령의 수신자\n* **Client**: ConcreteCommand 객체를 생성하고 Invoker 객체에게 전달하는 객체\n\n```mermaid\n---\nconfig:\n    class:\n        hideEmptyMembersBox: true\n---\nclassDiagram\n    class Command {\n        <<interface>>\n        +execute(): void\n        +undo(): void\n    }\n    class ConcreteCommand {\n        -receiver: Receiver\n    }    \n    class Invoker {\n        -commands: List~Command~\n        +executeCommand(Command command): void\n        +undoLastCommand(): void\n    }\n    class Receiver {\n        ...\n        +feature1(): void\n        +feature2(): void\n    }\n    class Client {\n        \n    }\n    ConcreteCommand --|> Command\n    Invoker --> Command\n    Client ..> ConcreteCommand\n    Client --> Receiver\n    Client --> Invoker\n    ConcreteCommand --> Receiver\n```\n\n## 예제::example\n\n예제를 통해 커맨드 패턴을 살펴보기 전에, 다음의 역할과 책임을 명심하자.\n\n* `Invoker`\n  * **역할**: 명령 호출자 객체이며, 명령을 목록을 관리한다.\n  * **책임**: 명령을 실행하거나 취소한다.\n* `Command`\n  * **역할**: 실제 명령을 구현하는 객체는 비즈니스 논리 객체중 하나에게 호출을 전달한다.\n  * **책임**: 명령에 대한 실행과 취소를 `Receiver` 객체를 이용해 수행한다.\n* `Receiver`\n  * **역할**: 외부에서 호출을 전달받는다.\n  * **책임**: 전달 받은 호출에대한 비즈니스 로직을 수행한다.\n* `Client`\n  * **역할**: 실제 명령을 `Invoker`에게 전달한다.\n  * **책임**: 실제 명령을 생성하여 `Invoker`와 연결하며, 실행흐름을 제어한다.\n\n\n### 주문 처리 시스템::example-1\n\n주문 처리에 대한 시스템을 만들고자 한다.\n구매하는 상품에대한 주문이있고, 해당 주문에 대하여 생성하거나 변경하는 기능을 만들어보자. \n\n**Command**\n\n수행하려는 주문 행위에 단위의 명령을 구현한다.\n\n::code-group\n\n```java::OrderCommand.java\npublic interface OrderCommand {\n\n    void execute();\n\n    void undo();\n}\n```\n\n```java::CreateOrderCommand.java\npublic class CreateOrderCommand implements OrderCommand {\n\n    private final OrderManager receiver;\n    private final Order order;\n\n    public CreateOrderCommand(OrderManager receiver, Order order) {\n        this.receiver = receiver;\n        this.order = order;\n    }\n\n    @Override\n    public void execute() {\n        this.receiver.createOrder(order);\n    }\n\n    @Override\n    public void undo() {\n        this.receiver.cancelOrder(order);\n    }\n}\n```\n\n```java::UpdateOrderCommand.java\npublic class UpdateOrderCommand implements OrderCommand {\n\n    private OrderManager receiver;\n    private Order order;\n    private OrderStatus previousOrder;\n    private OrderStatus newStatus;\n\n    public UpdateOrderCommand(OrderManager receiver, Order order, OrderStatus newStatus) {\n        this.receiver = receiver;\n        this.order = order;\n        this.newStatus = newStatus;\n        this.previousOrder = order.getStatus();\n    }\n\n    @Override\n    public void execute() {\n        receiver.updateOrderStatus(order, newStatus);\n    }\n\n    @Override\n    public void undo() {\n        receiver.updateOrderStatus(order, previousOrder);\n    }\n}\n```\n\n::\n\n**Invoker**\n\n주문처리 행위에대한 명령들을 관리하며, 실행하거나 취소할 수 있다.\n\n```java::OrderCommandInvoker\npublic class OrderCommandInvoker {\n    private final List<OrderCommand> commands = new ArrayList<>();\n\n    public void executeCommand(OrderCommand command) {\n        command.execute();\n        commands.add(command);\n    }\n\n    public void undoLastCommand() {\n        if (!commands.isEmpty()) {\n            OrderCommand lastCommand = commands.remove(commands.size() - 1);\n            lastCommand.undo();\n        }\n    }\n\n}\n```\n\n\n## 적용::applicability\n\n\n## 장단점::pros-and-cons\n\n**장점**\n\n*\n\n**단점**\n\n* \n"
   },
   {
     "path": "/docs/software-design/bridge-pattern",

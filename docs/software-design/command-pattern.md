@@ -10,7 +10,7 @@ current-company: Cubic INC
 current-position: SI Researcher
 summary: Command Pattern
 excerpt-separator: <!--more-->
-hide: true
+hide: false
 ---
 커맨드 패턴은 처리 명령을 독립적인 실행가능 객체로 만들어, 일괄적으로 취소 또는 실행을 할 수 있도록 하는 디자인 패턴이다.
 
