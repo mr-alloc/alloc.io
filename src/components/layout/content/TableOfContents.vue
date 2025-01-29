@@ -56,6 +56,7 @@ const unescapeHtml = (html: string): string => {
 
 nuxtApp.hooks.hookOnce('page:finish', () => {
   if (prepareStore.isPrepare) {
+    console.log('page:finish')
     //toc
     scrollspy.updateHeadings(props.headline, [
       ...document.querySelectorAll('h2'),

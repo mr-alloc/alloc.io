@@ -16,5 +16,7 @@ import {usePagePrepareStore} from "@/store/prepare-post-store";
 
 const route = useRoute();
 const prepareStore = usePagePrepareStore();
-prepareStore.prepare();
+watch(() => route.path, (newValue) => {
+  prepareStore.prepare();
+}, { immediate: true })
 </script>

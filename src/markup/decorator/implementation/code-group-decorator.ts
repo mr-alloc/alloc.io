@@ -31,7 +31,7 @@ export default class CodeGroupDecorator implements IMarkdownDecorator {
             });
 
             return `<div class="relative [&>div:last-child]:!my-0 [&>div:last-child]:!static my-5">
-                        <div class="code-group-${index}-buttons flex items-center gap-1 border border-gray-200 dark:border-gray-700 border-b-0 rounded-t-md overflow-x-auto p-2">
+                        <div class="code-group-${index}-buttons flex items-center gap-1 border border-gray-200 dark:border-gray-700 border-b-0 rounded-t-md overflow-x-auto p-2 pr-10">
                             ${buttons}
                         </div>
                         <div class="code-group relative [&>pre]:!rounded-t-none [&>pre]:!my-0 my-5" id="code-group-${index}" data-group-number="${index}">
@@ -54,7 +54,7 @@ export default class CodeGroupDecorator implements IMarkdownDecorator {
             //+ java::출력메소드 에서 출력메소드로 표시
             const title = CodeBlockTitle.of(token.info);
 
-            return `<button tabindex="-1" class="px-2 py-1.5 pr-10 focus:outline-none text-gray-700 dark:text-gray-200 text-sm rounded-md flex items-center gap-1.5 ${idx === 0 ? activateClasses : deactivateClasses}">
+            return `<button tabindex="-1" class="px-2 py-1.5 focus:outline-none text-gray-700 dark:text-gray-200 text-sm rounded-md flex items-center gap-1.5 ${idx === 0 ? activateClasses : deactivateClasses}">
                         <span class="iconify i-vscode-icons:file-type-${getLanguageCode(title.language)} size-4" aria-hidden="true"></span>
                         <span class="whitespace-nowrap">${title.value}</span>  
                     </button>`;

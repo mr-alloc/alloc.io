@@ -1,0 +1,65 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+    <!-- 화살표 정의 -->
+    <defs>
+        <!-- 연관관계 (Association) -->
+        <marker id="association-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+        </marker>
+        <!-- 구현관계 (Implementation) -->
+        <marker id="implementation-arrow" markerWidth="12" markerHeight="12" refX="12" refY="6" orient="auto">
+            <path d="M0,0 L12,6 L0,12 Z" fill="white" stroke="#666" stroke-width="1"/>
+        </marker>
+        <!-- 의존관계 (Dependency) -->
+        <marker id="dependency-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+        </marker>
+    </defs>
+
+    <!-- 배경 -->
+    <rect width="800" height="500" fill="#ffffff"/>
+
+    <!-- Client to Receiver (의존관계) - 가장 먼저 그려서 뒤에 위치하도록 함 -->
+    <path d="M 170 180 Q 410 180 710 350" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#dependency-arrow)"/>
+
+    <!-- 클래스 정의 -->
+    <!-- Client -->
+    <rect x="50" y="150" width="120" height="60" rx="10" fill="#E3F2FD" stroke="#1E88E5" stroke-width="3"/>
+    <text x="110" y="185" text-anchor="middle" font-family="Arial" font-size="20" fill="#1E88E5">Client</text>
+
+    <!-- Invoker -->
+    <rect x="350" y="50" width="120" height="60" rx="10" fill="#E8F5E9" stroke="#4CAF50" stroke-width="3"/>
+    <text x="410" y="85" text-anchor="middle" font-family="Arial" font-size="20" fill="#4CAF50">Invoker</text>
+
+    <!-- Command -->
+    <rect x="350" y="200" width="120" height="80" rx="10" fill="#FFF3E0" stroke="#FF9800" stroke-width="3"/>
+    <text x="410" y="235" text-anchor="middle" font-family="Arial" font-size="20" fill="#FF9800">Command</text>
+    <text x="410" y="260" text-anchor="middle" font-family="Arial" font-size="16" font-style="italic" fill="#FF9800">«interface»</text>
+
+    <!-- ConcreteCommand - 수직 중앙 정렬 조정 -->
+    <rect x="350" y="350" width="120" height="60" rx="10" fill="#FFF3E0" stroke="#FF9800" stroke-width="3"/>
+    <text x="410" y="375" text-anchor="middle" font-family="Arial" font-size="16" fill="#FF9800">Concrete</text>
+    <text x="410" y="395" text-anchor="middle" font-family="Arial" font-size="16" fill="#FF9800">Command</text>
+
+    <!-- Receiver -->
+    <rect x="650" y="350" width="120" height="60" rx="10" fill="#F3E5F5" stroke="#9C27B0" stroke-width="3"/>
+    <text x="710" y="385" text-anchor="middle" font-family="Arial" font-size="20" fill="#9C27B0">Receiver</text>
+
+    <!-- 나머지 관계선들 -->
+    <!-- Client to Invoker (의존관계) -->
+    <path d="M 170 180 Q 260 180 350 80" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#dependency-arrow)"/>
+
+    <!-- Client to ConcreteCommand (의존관계) -->
+    <path d="M 170 180 Q 260 180 350 380" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#dependency-arrow)"/>
+
+    <!-- Invoker to Command (연관관계) -->
+    <path d="M 410 110 L 410 200" fill="none" stroke="#666" stroke-width="2" marker-end="url(#association-arrow)"/>
+
+    <!-- ConcreteCommand to Command (구현관계) -->
+    <path d="M 410 350 L 410 280" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#implementation-arrow)"/>
+
+    <!-- ConcreteCommand to Receiver (연관관계) -->
+    <path d="M 470 380 Q 560 380 650 380" fill="none" stroke="#666" stroke-width="2" marker-end="url(#association-arrow)"/>
+
+    <!-- 하단 제목 -->
+    <text x="400" y="470" text-anchor="middle" font-family="Arial" font-size="44" font-weight="bold">Command Pattern</text>
+</svg>

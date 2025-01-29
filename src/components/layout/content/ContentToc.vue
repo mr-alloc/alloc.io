@@ -9,7 +9,7 @@
 
         <span class="font-semibold text-sm/6 truncate sm:hidden hidden lg:block">Table Of Contents</span>
 
-        <span class="iconify i-ph:caret-down lg:!hidden ms-auto transform transition-transform duration-200 flex-shrink-0 mr-1.5 w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 -rotate-90" aria-hidden="true"></span>
+<!--        <span class="iconify i-ph:caret-down lg:!hidden ms-auto transform transition-transform duration-200 flex-shrink-0 mr-1.5 w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 -rotate-90" aria-hidden="true"></span>-->
       </button>
 
 

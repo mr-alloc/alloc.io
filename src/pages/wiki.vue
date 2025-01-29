@@ -14,8 +14,9 @@ import MainPage from "@/components/layout/content/MainPage.vue";
 import PostCategories from "@/components/layout/sidebar/PostCategories.vue";
 import {usePagePrepareStore} from "@/store/prepare-post-store";
 
-
 const route = useRoute();
 const prepareStore = usePagePrepareStore();
-prepareStore.prepare();
+watch(() => route.path, (newValue) => {
+  prepareStore.prepare();
+}, { immediate: true })
 </script>

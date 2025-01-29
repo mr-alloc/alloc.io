@@ -28,7 +28,7 @@ watch(() => route.path, (n, o) => {
       .filter(post => post.isPublic)
       .reduce((tree, post) => {
         const foundGroup = findOrCreateGroup(tree, post.header.categories, 0);
-        foundGroup.addChild(new CategoryContent(false, post.header.title, post.path));
+        foundGroup.addChild(new CategoryContent(false, post.header.summary, post.path));
         return tree;
       }, new Array<ICategoryNode>());
 }, { immediate: true, deep: true });
