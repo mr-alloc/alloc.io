@@ -98,7 +98,43 @@ classDiagram
         -legs: int
         +bark(): void
     }
+    class BorderCollie {
+        -intelligence: int
+    }
     Animal <|-- Dog
+    Dog <|-- BorderCollie
 ```
 
+이 다이어그램은 `Animal` 클래스가 `Dog` 클래스에 상속되고, `Dog` 클래스가 `BorderCollie` 클래스에 상속되는 상속 관계를 나타낸다.
 
+> 상속은 `interface`가 아닌 `Abstract Class` 또는 일반 `Class` 에서만 사용할 수 있다.
+:{ "type": "note", "icon": "info" }
+
+
+### Realizations (실체화)::realizations
+
+*한 클래스가 인터페이스를 구현했다는 것을 나타낸다.*
+
+다른말로 `implementation` 이라고도 한다. 즉 구현하여 실체화하는 경우를 의미한다.
+
+```mermaid
+classDiagram
+    class Mammal {
+        <<interface>>
+        +breastfeed(): void
+    }
+    class Dog {
+        +breastfeed(): void
+    }
+    class Human {
+        +breastfeed(): void
+    }
+    Mammal <|.. Dog
+    Mammal <|.. Human
+```
+
+포유류는 젖을 먹여 새끼를 키우는 동물을 일컷는 말이다. 포유류는 분류를 하기 위해 나눈 개념이기 때문에 실체가 아니다.
+이를 실체화 하기위해 `Dog`와 `Human` 클래스가 `Mammal` 인터페이스를 구현하고 있다.
+
+> `Realization`/`Implementation` 관계는 `interface`를 구현하는 클래스에 사용된다.
+:{ "type": "note", "icon": "info" }
