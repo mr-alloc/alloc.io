@@ -138,3 +138,79 @@ classDiagram
 
 > `Realization`/`Implementation` 관계는 `interface`를 구현하는 클래스에 사용된다.
 :{ "type": "note", "icon": "info" }
+
+
+### Dependencies (의존)::dependencies
+
+*한 클래스가 다른 클래스에 의존하는것을 의미한다.*
+
+```mermaid
+classDiagram
+    direction LR
+    class A {
+        +use(B b): void
+    }
+    class B {
+        +doSomeThing(): void
+    }
+    A ..> B
+```
+
+> 어떤 행위를 할 때 다른 클래스를 필요로 하는 경우 `의존`관계에 해당된다.
+:{ "type": "note", "icon": "info" }
+
+### Aggregations (집합)::aggregations
+
+*한 클래스가 다른 클래스를 소유하고 있다는 것을 나타낸다.*
+
+> `집합` 관계는 `연관` 관계와 유사하지만, 의미론적으로 다르다.
+:{ "type": "important", "icon": "warning-octagon" }
+
+
+```mermaid
+classDiagram
+    direction LR
+    class Professor {
+        -name: String
+    }
+    class Department {
+        -professors: ~List~ Professor
+    }
+    Department o-- Professor
+```
+
+만약 교수가 학과에 속해있다면, 이러한 관계를 `집합` 관계라고 한다. **필드로 갖고 있다는 개념이 비슷하지만,** 
+연관 관계에서는 **참조**를 의미하고 집합 관계에서는 **소유**를 의미한다.
+
+
+### Compositions (합성)::compositions
+
+*한 클래스가 다른 클래스에 종속하고 있다는 것을 나타낸다.*
+
+> `합성` 관계는 `집합` 관계와 유사하지만, 의미론적으로 다르다. **Aggregation**은 독립적 이지만, **Composition**은 종속적이다.
+:{ "type": "important", "icon": "warning-octagon" }
+
+```mermaid
+classDiagram
+   Human *-- Heart
+   Human *-- Brain
+   Human *-- Organ
+
+   class Human {
+       -Heart heart
+       -Brain brain
+       -List~Organ~ organs
+       +Human()
+   }
+   class Heart {
+   }
+   class Brain {
+   }
+   class Organ {
+   }
+```
+
+만약 사람이 심장, 뇌, 장기를 가지고 있다면, 각각의 구성요소는 사람에 종속적이다. 이러한 관계를 `합성` 관계라고 한다.
+
+> **공유 불가능**: `합성` 관계에서는 한 객체의 부분이 다른객체에 속할 수 없고, 부분 객체가 여러 객체에 동시에 속할 수 없다. 또한 부분 객체의 독립적인 재사용이 불가능하다.
+:{ "type": "caution", "icon": "x-circle" }
