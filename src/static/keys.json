@@ -2,6 +2,8 @@
   "/wiki/io-manager",
   "/wiki/programmed-io",
   "/wiki/register",
+  "/wiki/system-call",
+  "/wiki/system-service",
   "/docs/life/youth-of-ggomi",
   "/docs/database/mysql-explain",
   "/docs/framework/spring/transaction-manager",
