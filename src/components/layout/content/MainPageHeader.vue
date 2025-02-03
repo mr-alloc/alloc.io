@@ -24,6 +24,12 @@
         </div>
       </div>
     </div>
+
+    <div v-if="date || $slots.date" :class="ui.date">
+      <slot name="date">
+        {{ date }}
+      </slot>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -38,7 +44,8 @@ const ui = {
     wrapper: 'flex',
     base: 'w-10 h-10 flex-shrink-0 text-primary'
   },
-  links: 'flex flex-wrap items-center gap-1.5 mt-4 lg:mt-0'
+  links: 'flex flex-wrap items-center gap-1.5 mt-4 lg:mt-0',
+  date: 'flex flex-row'
 }
 
 const props = defineProps({
@@ -58,7 +65,10 @@ const props = defineProps({
     type: String,
     default: undefined
   },
-
+  date: {
+    type: String,
+    default: undefined
+  }
 });
 </script>
 <style scoped lang="scss">

@@ -7,6 +7,13 @@
       <template #headline>
         <Breadcrumb :breadcrumbs="['위키']" />
       </template>
+
+      <template #date>
+        <div class="flex flex-row py-2">
+          <span class="text-gray-500 dark:text-gray-400">마지막 수정일</span>
+          <span class="px-2 text-gray-500 dark:text-gray-400">{{ content.header.date.toLocaleDateString() }}</span>
+        </div>
+      </template>
     </MainPageHeader>
 
     <MainPageBody class="mt-8 pb-24 dark:text-gray-300 dark:prose-pre:!bg-gray-800/60">

@@ -1,5 +1,6 @@
 ---
 layout: wiki
+date: 2020-08-02 13:22:00
 title: Direct Memory Access (DMA)
 tags: [Hardware, DMAC, Direct Memory Access Controller]
 summary: DMA

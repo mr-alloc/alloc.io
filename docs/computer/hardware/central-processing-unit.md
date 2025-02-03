@@ -1,5 +1,6 @@
 ---
 layout: wiki
+date: 2020-08-10 18:34:00
 title: 중앙처리장치 (CPU)
 tags: [Hardware, CPU]
 summary: CPU

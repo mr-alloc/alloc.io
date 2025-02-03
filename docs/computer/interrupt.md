@@ -1,6 +1,7 @@
 ---
 layout: wiki
 title: CPU와 인터럽트
+date: 2020-08-01 08:10:00
 tags: [Operating System, Interrupt]
 summary: Interrupt
 hide: false

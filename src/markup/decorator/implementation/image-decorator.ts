@@ -120,7 +120,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
     }
 
     private addDefaultImageClass(imageToken: Token) {
-        imageToken.attrJoin('class', 'my-0 dark:bg-gray-200 p-2');
+        imageToken.attrJoin('class', 'my-0 bg-gray-800 dark:bg-gray-200 p-2');
         imageToken.attrJoin('style', 'cursor: zoom-in;');
     }
 

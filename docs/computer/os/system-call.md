@@ -1,5 +1,6 @@
 ---
 layout: wiki
+date: 2021-02-27 19:04:00
 title: 시스템 콜 (System Call)
 tags: [ Operating System, System Call ]
 summary: System Call

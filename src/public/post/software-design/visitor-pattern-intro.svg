@@ -1,0 +1,59 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <marker id="implementation-arrow" markerWidth="12" markerHeight="12" refX="12" refY="6" orient="auto">
+            <path d="M0,0 L12,6 L0,12 Z" fill="white" stroke="#666" stroke-width="1"/>
+        </marker>
+        <marker id="dependency-arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#666"/>
+        </marker>
+    </defs>
+
+    <rect width="800" height="500" fill="#ffffff"/>
+
+    <!-- Visitor -->
+    <rect x="150" y="50" width="200" height="100" rx="10" fill="#E3F2FD" stroke="#1E88E5" stroke-width="3"/>
+    <text x="250" y="90" text-anchor="middle" font-family="Arial" font-size="28" font-weight="bold" fill="#1E88E5">
+        Visitor
+    </text>
+    <text x="250" y="120" text-anchor="middle" font-family="Arial" font-size="14">+ visit(ConcreteElement)</text>
+
+    <!-- Element -->
+    <rect x="450" y="50" width="200" height="100" rx="10" fill="#E8F5E9" stroke="#4CAF50" stroke-width="3"/>
+    <text x="550" y="90" text-anchor="middle" font-family="Arial" font-size="28" font-weight="bold" fill="#4CAF50">
+        Element
+    </text>
+    <text x="550" y="120" text-anchor="middle" font-family="Arial" font-size="14">+ accept(Visitor)</text>
+
+    <!-- ConcreteVisitor -->
+    <rect x="150" y="250" width="200" height="100" rx="10" fill="#FFF3E0" stroke="#FF9800" stroke-width="3"/>
+    <text x="250" y="290" text-anchor="middle" font-family="Arial" font-size="28" font-weight="bold" fill="#FF9800">
+        Concrete
+    </text>
+    <text x="250" y="320" text-anchor="middle" font-family="Arial" font-size="28" font-weight="bold" fill="#FF9800">
+        Visitor
+    </text>
+
+    <!-- ConcreteElement -->
+    <rect x="450" y="250" width="200" height="100" rx="10" fill="#F3E5F5" stroke="#9C27B0" stroke-width="3"/>
+    <text x="550" y="290" text-anchor="middle" font-family="Arial" font-size="28" font-weight="bold" fill="#9C27B0">
+        Concrete
+    </text>
+    <text x="550" y="320" text-anchor="middle" font-family="Arial" font-size="28" font-weight="bold" fill="#9C27B0">
+        Element
+    </text>
+
+    <!-- ConcreteVisitor implements Visitor -->
+    <path d="M250,150 L250,250" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="5,5"
+          marker-end="url(#implementation-arrow)"/>
+
+    <!-- ConcreteElement implements Element -->
+    <path d="M550,150 L550,250" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="5,5"
+          marker-end="url(#implementation-arrow)"/>
+
+    <!-- Visitor depends on Element -->
+    <path d="M350,100 L450,100" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="5,5"
+          marker-end="url(#dependency-arrow)"/>
+
+    <text x="400" y="470" text-anchor="middle" font-family="Arial" font-size="44" font-weight="bold">Visitor Pattern
+    </text>
+</svg>
