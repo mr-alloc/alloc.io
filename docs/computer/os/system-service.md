@@ -3,7 +3,7 @@ layout: wiki
 date: 2021-08-14 23:55:00
 title: 시스템 서비스 (System Service)
 tags: [ Operating System, System Service, System Utility, Daemon ]
-summary: System Service
+summary: 시스템 서비스
 hide: false
 ---
 

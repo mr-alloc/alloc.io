@@ -7,7 +7,7 @@ date: 2024-06-04 18:58:00 +0900
 thumbnail: /post/framework/spring/spring-transaction-manager.svg
 current-company: NEOWIZ
 current-position: Software Engineer
-summary: Transaction Manager
+summary: 트랜잭션 관리자
 excerpt_separator: <!--more-->
 hide: false
 ---

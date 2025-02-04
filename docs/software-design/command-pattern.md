@@ -8,7 +8,7 @@ thumbnail: /post/software-design/command-pattern-intro.svg
 profile-image: /post/profile/profile0.jpg
 current-company: Cubic INC
 current-position: SI Researcher
-summary: Command Pattern
+summary: 커맨드 패턴
 excerpt-separator: <!--more-->
 hide: false
 ---

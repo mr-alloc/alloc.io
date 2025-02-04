@@ -7,7 +7,7 @@ date: 2024-08-23 14:27:00 +0900
 thumbnail: /post/database/mysql/mysql-explain-thumbnail.webp
 current-company: NEOWIZ
 current-position: Software Engineer
-summary: MySQL EXPLAIN
+summary: MySQL 실행계획
 excerpt-separator: <!--more-->
 hide: false
 ---

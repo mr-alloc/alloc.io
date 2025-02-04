@@ -8,7 +8,7 @@ thumbnail: /post/software-design/adapter-pattern-intro.svg
 profile-image: /post/profile/profile0.jpg
 current-company: Cubic INC
 current-position: SI Researcher
-summary: Adapter Pattern
+summary: 어댑터 패턴
 excerpt-separator: <!--more-->
 hide: false
 ---

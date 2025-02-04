@@ -8,7 +8,7 @@ thumbnail: /post/software-design/bridge-pattern-intro.svg
 profile-image: /post/profile/profile0.jpg
 current-company: Cubic INC
 current-position: SI Researcher
-summary: Bridge Pattern
+summary: 브릿지 패턴
 excerpt-separator: <!--more-->
 hide: false
 ---

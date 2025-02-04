@@ -8,7 +8,7 @@ thumbnail: /post/software-design/visitor-pattern-intro.svg
 profile-image: /post/profile/profile0.jpg
 current-company: Cubic INC
 current-position: SI Researcher
-summary: Visitor Pattern
+summary: 비지터 패턴
 excerpt-separator: <!--more-->
 hide: false
 ---

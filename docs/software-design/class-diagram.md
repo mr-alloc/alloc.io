@@ -8,7 +8,7 @@ thumbnail: /post/software-design/uml/class-diagram-intro.png
 profile-image: /post/profile/profile0.jpg
 current-company: Computer Academy
 current-position: Student
-summary: Class Diagram
+summary: 클래스 다이어그램
 excerpt-separator: <!--more-->
 hide: false
 ---
