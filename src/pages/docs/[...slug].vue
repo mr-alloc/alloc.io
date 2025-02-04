@@ -11,7 +11,7 @@
       <template #date>
         <div class="flex flex-row py-2">
           <span class="text-gray-500 dark:text-gray-400">작성일</span>
-          <span class="px-2 text-gray-500 dark:text-gray-400">{{ content.header.date.toLocaleDateString() }}</span>
+          <span class="px-2 text-gray-500 dark:text-gray-400">{{ dayjs(content.header.date).format('YYYY-MM-DD') }}</span>
         </div>
       </template>
     </MainPageHeader>
@@ -43,6 +43,7 @@ import MainPageBody from "@/components/layout/content/MainPageBody.vue";
 import ContentToc from "@/components/layout/content/ContentToc.vue";
 import SocialLinks from "@/components/layout/content/SocialLinks.vue";
 import {usePostContentStore} from "@/store/post-content-store";
+import dayjs from "dayjs";
 
 const route = useRoute();
 const postContentStore = usePostContentStore();
