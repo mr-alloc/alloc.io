@@ -82,7 +82,7 @@ export default class CodeBlockDecorator implements IMarkdownDecorator {
         //클라이언트에서 처리를 위해 렌더링만 해준다.
         const mermaidStore = useMermaidDiagramStore();
         mermaidStore.addDiagram(args.index, token.content);
-        return `<pre class="mermaid" data-mermaid-id="${args.index}" class="mermaid overflow-auto max-w-full max-h-96">Diagram Loading...</pre>`;
+        return `<pre class="mermaid flex justify-center items-center overflow-auto max-w-full" data-mermaid-id="${args.index}">Diagram Loading...</pre>`;
     }
 
     private decorateHighlightLines(token: Token, lang: string, rawCode: string): string {
