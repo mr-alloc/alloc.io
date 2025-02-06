@@ -13,7 +13,7 @@ excerpt-separator: <!--more-->
 hide: false
 ---
 
-Visitor Pattern(방문자 패턴)은 공통적인 요소들에대해 각기 다른 작업을 수행하는 기능을 분리하는 디자인 패턴이다.
+Visitor Pattern(방문자 패턴)은 공통적인 요소들에 대해 각기 다른 작업을 수행하는 기능을 분리하는 디자인 패턴이다.
 <!--more-->
 
 ## 핵심 구성요소::key-components
