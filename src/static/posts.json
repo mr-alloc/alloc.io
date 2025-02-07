@@ -1351,9 +1351,31 @@
           },
           {
             "rank": 2,
-            "origin": "운영체제의 동작 순서::sequence-of-os",
+            "origin": "운영체제의 구조::structure-of-os",
+            "title": "운영체제의 구조",
+            "fragment": "structure-of-os",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "모놀리식 구조::monolithic-structure",
+                "title": "모놀리식 구조",
+                "fragment": "monolithic-structure",
+                "children": []
+              },
+              {
+                "rank": 3,
+                "origin": "계층적 접근::layered-approach",
+                "title": "계층적 접근",
+                "fragment": "layered-approach",
+                "children": []
+              }
+            ]
+          },
+          {
+            "rank": 2,
+            "origin": "운영체제의 동작 순서::workflow-of-os",
             "title": "운영체제의 동작 순서",
-            "fragment": "sequence-of-os",
+            "fragment": "workflow-of-os",
             "children": []
           },
           {
@@ -1382,7 +1404,7 @@
       }
     },
     "description": "운영체제가 어떤일을 하는지를 알려면, 컴퓨터가 어떤 요소들로 구성되어 있는지를 이해 해야한다.\n각 요소의 구성과 이해관계 그리고 역할을 알아보자.",
-    "content": "\n## 컴퓨터의 구성::computer-structure\n\n컴퓨터는 크게 응용프로그램, 운영체제, 하드웨어 계층으로 분류된다.\n이 문서에서는 응용프로그램을 제외하고 운영체제와 하드웨어에 대해 논한다.\n\n[CPU](/wiki/central-processing-unit)와 [입출력 장치]() 그리고 [메모리]()는 [시스템 버스]()를 통해 서로 연결되어 있으며, 버스의 종류에 따라 단방향 또는 양방향으로 신호를 보낸다.\n입출력 장치의 경우 메인보드 위에 사전에 만들어진 장치 컨트롤러를 운영체제의 장치 드라이버가 제어하며, 장치드라이버는 운영체제에 일관된 인터페이스를 제공한다.\nCPU와 장치컨트롤러는 병렬로 실행되기 떄문에 메모리에 접근하기위해 메모리 사이클을 두고 경쟁한다. 이 메모리에 순차적으로 접근하기 위해 메모리 컨트롤러는 메모리에 대한 액세스를 동기화한다.\n\n\n위에서 간단히 설명한 내용은 OS 내부의 커널과 시스템 프로그램에 의해 제어되며, 하드웨어의 경우 사전에 설계된 회로의 동작을 수행한다.\n\n## 운영체제의 동작 순서::sequence-of-os\n\n컴퓨터의 전원을 켤 때 실행되는 부트스트랩 프로그램은 펌웨어이다.  \n부트스트랩 프로그램은 하드웨어 위에서 동작하며 `CPU`, `메모리` `저장장치` 등을 초기화 한다. 또한 운영체제를 로드하기 위해 부트로더를 실행하며, 이는 저장장치에서 메모리로 [Kernel]()(`커널`)을 적재한다.\n\n부트로더는 커널 실행에 필요한 초기설정(예: 커맨드라인 인자 전달 등)을 한뒤, 커널에 제어를 넘긴다. 이후에 커널은 시스템을 초기화하고 사용자 공간(user space)을 준비한다.\n각 시스템에서 사용 되는 부트로더는 여러종류가 있다.\n\n* GRUB (GNU GRUB):\n  * 리눅스/유닉스 시스템에서 사용되는 부트로더\n* LILO(Linux Loader)\n  * 과거 리눅스 시스템에서 사용되는 부트로더\n* Windows Boot Manager\n  * 윈도우 시스템에서 사용하는 부트로더\n* Android Bootloader\n  * 안드로이드 기기에서 사용되는 부트로더로, 리커버리모드와 운영체제를 실행한다.\n\n## 운영체제의 역할::role-of-os\n\n운영체제는 사용자 또는 시스템 프로그램이 올바르게 실행되기 위해 커널에서 다양한 관리를 아래와 같이 제공한다.\n\n* 메모리 관리\n* 프로세스 관리\n* 장치 드라이버\n* 파일 시스템\n* 네트워크 관리\n\n### 메모리 관리::memory-management\n\n### 프로세스 관리::process-management\n\n운영체제는 자원을 관리하지만, 아마 그중에서도 가장 중요한건 [프로세스]()에 대한 관리이다. 대표적으로 아래와 같다.\n\n* 사용자 프로세스와 시스템프로세스의 생성과 제거\n* `CPU`에 프로세스와 스레드 스케줄링\n* 프로세스의 일시중지(suspend) 와 재수행(resume)\n* 프로세스 동기화 기법 제공\n* 프로세스 간 통신(IPC) 제공\n\n위와 같은 처리를 위해 운영체제는 프로세스의 상태를 관리하며, 프로세스의 상태(process stats)는 `생성`, `준비`, `실행`, `대기`, `종료`로 나뉜다.\n이러한 상태는 아래처럼 나타낼 수 있다.\n```\n New\n  ↓\nReady ←→ Running → Terminated\n  ↑        ┆\nWaiting ←--╯\n```\n"
+    "content": "\n## 컴퓨터의 구성::computer-structure\n\n컴퓨터는 크게 응용프로그램, 운영체제, 하드웨어 계층으로 분류된다.\n이 문서에서는 응용프로그램을 제외하고 운영체제와 하드웨어에 대해 논한다.\n\n[CPU](/wiki/central-processing-unit)와 [입출력 장치]() 그리고 [메모리]()는 [시스템 버스]()를 통해 서로 연결되어 있으며, 버스의 종류에 따라 단방향 또는 양방향으로 신호를 보낸다.\n입출력 장치의 경우 메인보드 위에 사전에 만들어진 장치 컨트롤러를 운영체제의 장치 드라이버가 제어하며, 장치드라이버는 운영체제에 일관된 인터페이스를 제공한다.\nCPU와 장치컨트롤러는 병렬로 실행되기 떄문에 메모리에 접근하기위해 메모리 사이클을 두고 경쟁한다. 이 메모리에 순차적으로 접근하기 위해 메모리 컨트롤러는 메모리에 대한 액세스를 동기화한다.\n\n\n위에서 간단히 설명한 내용은 OS 내부의 커널과 시스템 프로그램에 의해 제어되며, 하드웨어의 경우 사전에 설계된 회로의 동작을 수행한다.\n\n## 운영체제의 구조::structure-of-os\n\n운영체제 같이 크고 복잡한 시스템은 쉽게 변경할 수 있으면서 올바르게 동작하려면 신중히 제작되어야 한다.\n일반적으로 한 개의 일관된 시스템보다는 작업을 작은 구성요소로 분할 하는 것이다. 각각의 모듈은 신중히 정의된 인터페이스와 기능들을 가지는 시스템의 일부가 되어야 한다.  \n\n예를 들어 `main()` 함수에 모든 코드를 넣는것 보다 필요한 기능을 올바른 인자와 반환값을 명시한 여러 함수로 분리하고 적재적소에 맞게 호출하는 것이다.  \n\n운영체제의 공통적인 구성요소들이 어떻게 연결되어 하나의 커널로 결합하는지 알아보자.\n\n### 모놀리식 구조::monolithic-structure\n\n가장 간단한 방법으로 프로그램을 만드는 방법은 한개의 구조없이 한곳에서 모든 것을 관리하는 것이다.\n\n**monolithic**[mɑ:nə│lɪθɪk]: 하나로된 거대한 덩어리\n이러한 한개의 구조를 `모놀리식 (monolithic)`이라고 한다. 즉 단일 주소 공간에서 실행되는 단일 바이너리 파일에 커널의 모든 기능을 넣는 것이다.\n\n`모놀리식 구조`라고 하는 이방법은 운영체제를 설계하는 일반적인 기법이다. 이러한 제한적인 구조를 가지는 운영체제는 최초의 UNIX 운영체제가 대표적인 예시이다.\n커널과 시스템 프로그램의 두 부분으로 구성된다.\n\n커널은 여러가지 인터페이스아 장치드라이버로 나뉘게 되는데, 이는 `UNIX`가 발전해 오면서 몇십년에 걸쳐 추가되고 확장 되었다.\n계층 별로 이루어져 있는 `UNIX` 운영체제는 [시스템 콜](/wiki/system-call) 인터페이스 아래와 하드웨어 위 모든 것이 커널이다. \n\n![UNIX의 전통적인 시스템 구조(/post/computer/traditional-system-structure-of-unix.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"UNIX의 전통적인 시스템 구조\" }\n\n커널은 시스템 콜을 통해 `파일 시스템`, `CPU 스케줄링`, `메모리 관리` 등의 기능을 제공한다. **이러한 기능은 한나의 주소 공간으로 결합하기에는 너무 많은 기능이다.**\n\n`Linux` 운영체제는  `UNIX`에 기반을 두고 있으며 아래와 같은 유사한 구조로 구성된다.\n\n![Linux의 시스템 구조(/post/computer/system-structure-of-linux.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"Linux의 시스템 구조\" }\n\n응용 프로그램은 일반적으로 커널의 시스템콜 인터페이스와 통신할 때 [`glibc` 표준 C 라이브러리](/wiki/system-call#api-and-system-call)를 사용한다.  \n`Linux` 커널은 단일 주소 공간에서 커널모드로 전부 실행된 다는 점에서 모놀리식이지만, 런타임에 커널을 정할 수 있는 [LKM]() 모듈식 설계를 갖추고 있다.\n\n이러한 단순한 구조라도 확장은 어렵지만 시스템 콜의 오버헤드가 거의 없고 커널안에서의 통신속도가 빠르다는 단점이 있다.\n따라서 모놀리식 커널의 단점에도 불구하고 속도와 효율성은 아직까지도 `UNIX`와 `Linux` 및 `Windows`에서 사용되는 것이 증명해준다.\n\n\n### 계층적 접근::layered-approach\n\n작성중...\n\n\n\n\n## 운영체제의 동작 순서::workflow-of-os\n\n컴퓨터의 전원을 켤 때 실행되는 부트스트랩 프로그램은 펌웨어이다.  \n부트스트랩 프로그램은 하드웨어 위에서 동작하며 `CPU`, `메모리` `저장장치` 등을 초기화 한다. 또한 운영체제를 로드하기 위해 부트로더를 실행하며, 이는 저장장치에서 메모리로 [Kernel]()(`커널`)을 적재한다.\n\n부트로더는 커널 실행에 필요한 초기설정(예: 커맨드라인 인자 전달 등)을 한뒤, 커널에 제어를 넘긴다. 이후에 커널은 시스템을 초기화하고 사용자 공간(user space)을 준비한다.\n각 시스템에서 사용 되는 부트로더는 여러종류가 있다.\n\n* GRUB (GNU GRUB):\n  * 리눅스/유닉스 시스템에서 사용되는 부트로더\n* LILO(Linux Loader)\n  * 과거 리눅스 시스템에서 사용되는 부트로더\n* Windows Boot Manager\n  * 윈도우 시스템에서 사용하는 부트로더\n* Android Bootloader\n  * 안드로이드 기기에서 사용되는 부트로더로, 리커버리모드와 운영체제를 실행한다.\n\n## 운영체제의 역할::role-of-os\n\n운영체제는 사용자 또는 시스템 프로그램이 올바르게 실행되기 위해 커널에서 다양한 관리를 아래와 같이 제공한다.\n\n* 메모리 관리\n* 프로세스 관리\n* 장치 드라이버\n* 파일 시스템\n* 네트워크 관리\n\n### 메모리 관리::memory-management\n\n### 프로세스 관리::process-management\n\n운영체제는 자원을 관리하지만, 아마 그중에서도 가장 중요한건 [프로세스]()에 대한 관리이다. 대표적으로 아래와 같다.\n\n* 사용자 프로세스와 시스템프로세스의 생성과 제거\n* `CPU`에 프로세스와 스레드 스케줄링\n* 프로세스의 일시중지(suspend) 와 재수행(resume)\n* 프로세스 동기화 기법 제공\n* 프로세스 간 통신(IPC) 제공\n\n위와 같은 처리를 위해 운영체제는 프로세스의 상태를 관리하며, 프로세스의 상태(process stats)는 `생성`, `준비`, `실행`, `대기`, `종료`로 나뉜다.\n이러한 상태는 아래처럼 나타낼 수 있다.\n```\n New\n  ↓\nReady ←→ Running → Terminated\n  ↑        ┆\nWaiting ←--╯\n```\n"
   },
   {
     "path": "/docs/computer/computer-organization",
@@ -2153,5 +2175,44 @@
     },
     "description": "소프트 웨어에서는 각 객체와 객체 간의 관계를 표현하기 위해 클래스 다이어그램을 사용한다. \n\n클래스 다이어그램은 클래스의 속성과 메서드를 표현하고, 클래스 간의 관계를 표현한다. \n클래스 다이어그램은 객체 지향 프로그래밍에서 가장 많이 사용되는 다이어그램 중 하나이다.\n\n클래스 다이어그램의 구성요소를 알아보자.",
     "content": "\n## 관계를 나타내는 화살표::relationship-line\n\n![클래스 다이어그램의 관계 선](/post/software-design/uml/relationship-line.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"클래스간의 관계를 나타내는 Relationship Line\" }\n\n클래스 다이어그램에서는 클래스간 관계를 나타내는 화살표를 사용한다.\n각 관계를 나타내는 의미를 알아보자.\n\n### Associations (연관)::associations\n\n*한 모델 요소의 인스턴스들이 다른 모델 요소의 인스턴스들과 연결되었다는 것을 나타낸다.*\n\n**단방향 연관 관계**\n\n```mermaid\nclassDiagram\n    direction LR\n    class Student {\n        -name: String\n    }\n    class Teacher {\n        -name: String\n        -children: List~Student~\n        +check(Student student): void\n    }\n    Teacher --> Student\n```\n\n\n이 다이어 그램은 학생과 선생님의 관계를 나타낸다. 선생님은 학생들을 관리하기 위해 항상 참조한다.\n하지만, 학생은 선생님이 관심 없기 때문에 신경을 안쓰므로 학생은 선생님을 참조하지 않는다.\n이는 단방향 관계이다.\n\n**양방향 연관관계**\n\n```mermaid\nclassDiagram\n    direction LR\n    class Child {\n        -name: String\n        -parent: Parent\n    }\n    class Parent {\n        -name: String\n        -child: Child\n    }\n    Child <--> Parent\n```\n\n하지만 반대로 자식과 부모의 관계는 양방향 관계이다. 부모는 자식과, 자식은 부모와 가족이기 때문에 서로를 참조한다.\n\n> 이처럼 단방향 또는 양방향으로 어떤 모델의 인스턴스를 참조하는 관계를 `연관관계`라고 한다.\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n> 연관 관계는 참조하려는 객체를 내부적으로 갖고 있어야한다.\n:{ \"type\": \"note\", \"icon\": \"info\" }\n\n\n### Inheritances (상속)::inheritances\n\n*한 클래스가 다른 클래스의 특성을 상속받았다는 것을 나타낸다.*\n\n이는 구현과는 다르며, 상속은 클래스 간의 관계를 나타낸다.\n\n```mermaid\nclassDiagram\n    direction LR\n    class Animal {\n        <<abstract>>\n        -name: String\n        +eat(): void\n    }\n    class Dog {\n        -legs: int\n        +bark(): void\n    }\n    class BorderCollie {\n        -intelligence: int\n    }\n    Animal <|-- Dog\n    Dog <|-- BorderCollie\n```\n\n이 다이어그램은 `Animal` 클래스가 `Dog` 클래스에 상속되고, `Dog` 클래스가 `BorderCollie` 클래스에 상속되는 상속 관계를 나타낸다.\n\n> 상속은 `interface`가 아닌 `Abstract Class` 또는 일반 `Class` 에서만 사용할 수 있다.\n:{ \"type\": \"note\", \"icon\": \"info\" }\n\n\n### Realizations (실체화)::realizations\n\n*한 클래스가 인터페이스를 구현했다는 것을 나타낸다.*\n\n다른말로 `implementation` 이라고도 한다. 즉 구현하여 실체화하는 경우를 의미한다.\n\n```mermaid\nclassDiagram\n    class Mammal {\n        <<interface>>\n        +breastfeed(): void\n    }\n    class Dog {\n        +breastfeed(): void\n    }\n    class Human {\n        +breastfeed(): void\n    }\n    Mammal <|.. Dog\n    Mammal <|.. Human\n```\n\n포유류는 젖을 먹여 새끼를 키우는 동물을 일컷는 말이다. 포유류는 분류를 하기 위해 나눈 개념이기 때문에 실체가 아니다.\n이를 실체화 하기위해 `Dog`와 `Human` 클래스가 `Mammal` 인터페이스를 구현하고 있다.\n\n> `Realization`/`Implementation` 관계는 `interface`를 구현하는 클래스에 사용된다.\n:{ \"type\": \"note\", \"icon\": \"info\" }\n\n\n### Dependencies (의존)::dependencies\n\n*한 클래스가 다른 클래스에 의존하는것을 의미한다.*\n\n```mermaid\nclassDiagram\n    direction LR\n    class A {\n        +use(B b): void\n    }\n    class B {\n        +doSomeThing(): void\n    }\n    A ..> B\n```\n\n> 어떤 행위를 할 때 다른 클래스를 필요로 하는 경우 `의존`관계에 해당된다.\n:{ \"type\": \"note\", \"icon\": \"info\" }\n\n### Aggregations (집합)::aggregations\n\n*한 클래스가 다른 클래스를 소유하고 있다는 것을 나타낸다.*\n\n> `집합` 관계는 `연관` 관계와 유사하지만, 의미론적으로 다르다.\n:{ \"type\": \"important\", \"icon\": \"warning-octagon\" }\n\n\n```mermaid\nclassDiagram\n    direction LR\n    class Professor {\n        -name: String\n    }\n    class Department {\n        -professors: ~List~ Professor\n    }\n    Department o-- Professor\n```\n\n만약 교수가 학과에 속해있다면, 이러한 관계를 `집합` 관계라고 한다. **필드로 갖고 있다는 개념이 비슷하지만,** \n연관 관계에서는 **참조**를 의미하고 집합 관계에서는 **소유**를 의미한다.\n\n\n### Compositions (합성)::compositions\n\n*한 클래스가 다른 클래스에 종속하고 있다는 것을 나타낸다.*\n\n> `합성` 관계는 `집합` 관계와 유사하지만, 의미론적으로 다르다. **Aggregation**은 독립적 이지만, **Composition**은 종속적이다.\n:{ \"type\": \"important\", \"icon\": \"warning-octagon\" }\n\n```mermaid\nclassDiagram\n   Human *-- Heart\n   Human *-- Brain\n   Human *-- Organ\n\n   class Human {\n       -Heart heart\n       -Brain brain\n       -List~Organ~ organs\n       +Human()\n   }\n   class Heart {\n   }\n   class Brain {\n   }\n   class Organ {\n   }\n```\n\n만약 사람이 심장, 뇌, 장기를 가지고 있다면, 각각의 구성요소는 사람에 종속적이다. 이러한 종속들의 집합을 `합성` 관계라고 한다.\n또한 집합 관계에선 참조되는 필들에게 일부 작업을 위임한다. \n\n> 집합 관계/합성은 많은 디자인패턴의 핵심 원칙이다.\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n> **공유 불가능**: `합성` 관계에서는 한 객체의 부분이 다른객체에 속할 수 없고, 부분 객체가 여러 객체에 동시에 속할 수 없다. 또한 부분 객체의 독립적인 재사용이 불가능하다.\n:{ \"type\": \"caution\", \"icon\": \"x-circle\" }\n"
+  },
+  {
+    "path": "/wiki/bit",
+    "header": {
+      "layout": "wiki",
+      "title": "비트 (Bit)",
+      "date": 1567671000000,
+      "tags": [
+        "Computer",
+        "Binary",
+        "Digit",
+        "Bit"
+      ],
+      "summary": "비트",
+      "excerpt-separator": "<!--more-->",
+      "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "컴퓨터"
+      ],
+      "images": [],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "Bit란?::what-is-bit",
+            "title": "Bit란?",
+            "fragment": "what-is-bit",
+            "children": []
+          }
+        ]
+      }
+    },
+    "description": "**Bit**는 2진법을 뜻하는 **B**inary 와 숫자를 뜻하는 Dig**it**의 합성어로 2진수를 나타내는 단위이다.  \n예) 1011~2~ = 1x2^3^ + 0x2^2^ + 1x2^1^ + 1x2^0^ = 11~10~",
+    "content": "\n## Bit란?::what-is-bit\n\n**Bit**는 2진법을 뜻하는 **B**inary 와 숫자를 뜻하는 Dig**it**의 합성어로 2진수를 나타내는 단위이다.  \n일상 생활에서는 10진법을 사용한다. 10진법은 0부터 9까지의 숫자로 이루어져 있으며, 10개의 숫자로 표현한다.\n\n\n예) 1011~2~ = 1x2^3^ + 0x2^2^ + 1x2^1^ + 1x2^0^ = 11~10~\n"
   }
 ]

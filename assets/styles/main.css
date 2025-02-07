@@ -15474,3 +15474,12 @@ body {
     opacity: 0;
     filter: blur(1rem);
 }
+
+sub, sup {
+    font-size: 60%;
+}
+
+
+sub {
+    bottom: 0em;
+}
