@@ -9,7 +9,6 @@ import textWrappingParser from "@/plugins/markdown-it/text-wrapping-parser";
 import subParser from "@/plugins/markdown-it/sub-parser";
 import supParser from "@/plugins/markdown-it/sup-parser";
 
-
 export default defineNuxtPlugin(async (nuxtApp) => {
     if (nuxtApp.$md) return;
     const markdownIt = new MarkdownIt(DEFAULT_MARKDOWN_IT_OPTIONS);
@@ -54,3 +53,28 @@ const crateShikiExtension = shiki({
 
     cssVariablePrefix: '--shiki-'
 });
+
+const pseudocodeLang = {
+    name: "pseudocode",
+    scopeName: "source.pseudocode",
+    fileTypes: ["pseudocode", "pseudo"],
+    patterns: [
+        {
+            name: "keyword.control.pseudocode",
+            match: "\\b(method|is|if|then|else|while|for|return|throw)\\b",
+        },
+        {
+            name: "comment.line.pseudocode",
+            match: "//.*$",
+        },
+        {
+            name: "string.quoted.pseudocode",
+            match: '"[^"]*"',
+        },
+        {
+            name: "support.type.exception.pseudocode",
+            match: "\\b(StackOverflowException|Exception)\\b",
+        },
+    ],
+    uuid: "pseudocode-language-definition",
+};

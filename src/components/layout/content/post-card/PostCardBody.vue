@@ -3,7 +3,7 @@
     <div class="post-contents">{{ props.description }}</div>
     <nuxt-link v-bind:to="props.path" v-if="props.header.layout === 'post'">
       <div class="post-default-image">
-        <div class="select-none">
+        <div class="flex justify-center select-none">
           <img class="dark:bg-gray-200 dark:brightness-75" :src="props.header.thumbnail" alt="Post Thumbnail" draggable="false"/>
         </div>
         <div class="post-title-box ring-prima">

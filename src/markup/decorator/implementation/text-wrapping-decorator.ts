@@ -16,9 +16,11 @@ export default class TextWrappingDecorator implements IMarkdownDecorator {
 
             const images = findTokens(rangeTokens, 'image');
             const floatClass = option['align'] === 'left' ? 'float-left' : 'float-right';
+            const maxWidth = option['max-width'] ? `max-width: ${option['max-width']};` : '';
             images.forEach(image => {
                 image.attrSet('data-text-wrapping', 'true');
                 image.attrJoin('class', floatClass);
+                image.attrJoin('style', maxWidth);
             });
 
             return '<div>';
