@@ -55,21 +55,206 @@ class LinkedList<T> is
 ![연결 리스트 추가](/post/algorithm/add-to-linked-list.png)
 :{ "description": "연결 리스트에 새로운 노드를 추가" }
 
-반대로 제거할 때도, `head`를 다음 노드로 설정하고, 제거할 노드를 해제한다.  
+반대로 제거할 때도, `head`를 다음 노드로 설정하고, 제거할 노드를 해제한다.
+
+> 연결 리스트는 여러 종류가 있지만, 단방향의 경우 `head`는 가장 마지막에 들어온 요소를 의미한다.
+:{ "type": "tip", "icon": "lightbulb" }
 
 
 ## 연결 리스트의 필수기능 구현::core-operations
 
 좀 더 다양한 구현을 위해 이중 연결 리스트를 이용하여 앞, 뒤로 추가 및 제거를 구현 해본다.
 
-* 맨 앞에 값 추가 (insert_front)
+* 값 추가 (push_back)
 
 ```text
-method insert_front(Item item) is
-    Node node = new Node(item)
+method push_back(Item item) is
+    Node newNode = new Node(item)
+    newNode.next = head
+    head = newNode
+    
     size++;
-    
-    
 ```
 
+* 값 제거 (pop_back)
+
+```text
+method pop_back(): Item is
+    if is_empty() then
+        throw EmptyListException
+    
+    Node temp = head
+    Item item = temp.data
+    head = temp.next
+    
+    size--;
+    
+    return item
+```
+
+* 공백 확인 (is_empty)
+
+```text
+method is_empty(): boolean is
+    return size == 0
+```
+
+## 연결 리스트의 구현::implementation
+
+**Node Class**
+::code-group
+
+```cpp::c++
+template <typename U>
+struct Node {
+    U data;
+    Node *next;
+
+    explicit Node(const U& data): data(data), next(nullptr) {}
+};
+```
+
+```java::java
+public class Node<T> {
+    public T data;
+    public Node<T> next;
+
+    public Node(T data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+```
+::
+
+**LinkedList Class**
+
+::code-group
+```cpp::c++
+template <typename T>
+class LinkedList {
+private:
+    Node<T>* head;
+    size_t size;
+public:
+    LinkedList(): head(nullptr), size(0) {}
+    ~LinkedList();
+    void push_back(T value);
+    T pop_back();
+    bool is_empty() const;
+    friend ostream& operator<<(ostream& os, const LinkedList<T>& list) {
+        os << "[";
+        Node<T>* current = list.head;
+        while (current != nullptr) {
+            os << current->data;
+            current = current->next;
+            if (current != nullptr) {
+                os << ", ";
+            }
+        }
+        os << "]";
+        return os;
+    }
+};
+```
+```java::java
+public class LinkedList<T> {
+    private Node<T> head;
+    private int size;
+
+    public LinkedList() {
+        head = null;
+        size = 0;
+    }
+
+    ...
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        Node<T> current = head;
+        while (current != null) {
+            sb.append(current.data);
+            current = current.next;
+            if (current != null) {
+                sb.append(", ");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+}
+```
+::
+
+
+**push_back 구현**
+::code-group
+```cpp::c++
+template<typename T>
+void LinkedList<T>::push_back(T value) {
+    auto* newNode = new Node<T>(value);
+    newNode->next = head;
+    head = newNode;
+
+    size ++;
+}
+```
+```java::java
+public void pushBack(T value) {
+    Node<T> newNode = new Node<>(value);
+    newNode.next = head;
+    head = newNode;
+
+    size++;
+}
+```
+::
+
+**pop_back 구현**
+
+::code-group
+```cpp::c++
+template<typename T>
+T LinkedList<T>::pop_back() {
+    if (is_empty()) throw underflow_error("The linked list is empty");
+    auto* current = head;
+    T value = current->data;
+    head = current->next;
+    delete current;
+    size --;
+    return value;
+
+}
+```
+```java::java
+public T popBack() {
+    if (isEmpty()) throw new EmptyListException();
+
+    Node<T> current = head;
+    T value = current.data;
+    head = current.next;
+    size--;
+
+    return value;
+}
+```
+::
+
+**is_empty 구현**
+
+::code-group
+```cpp::c++
+template<typename T>
+bool LinkedList<T>::is_empty() const {
+    return size == 0;
+}
+```
+```java::java
+public boolean isEmpty() {
+    return size == 0;
+}
+```
+::
 
