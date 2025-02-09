@@ -63,8 +63,6 @@ class LinkedList<T> is
 
 ## 연결 리스트의 필수기능 구현::core-operations
 
-좀 더 다양한 구현을 위해 이중 연결 리스트를 이용하여 앞, 뒤로 추가 및 제거를 구현 해본다.
-
 * 값 추가 (push_back)
 
 ```text
@@ -258,3 +256,35 @@ public boolean isEmpty() {
 ```
 ::
 
+**클라이언트 코드**
+
+```cpp
+LinkedList<int> list;
+
+list.push_back(2);
+cout << "add new " << 2 << ": " << list << endl;
+
+list.push_back(7);
+cout << "add new " << 7 << ": " << list << endl;
+
+list.push_back(5);
+cout << "add new " << 5 << ": " << list << endl;
+
+int removed = list.pop_back();
+cout << "remove " << removed << ": " << list << endl;
+list.push_back(4);
+cout << "add " << 4 << ": " << list << endl;
+
+cout << list << endl;
+```
+
+**결과**
+
+```text
+add new 2: [2]
+add new 7: [7, 2]
+add new 5: [5, 7, 2]
+remove 5: [7, 2]
+add 4: [4, 7, 2]
+[4, 7, 2]
+```
