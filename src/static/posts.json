@@ -140,6 +140,66 @@
     "content": "\n## 세그먼트 레지스터 (Segment Register)\n\n세그먼트 레지스터는 메모리 주소를 논리적 단위로 나누어 관리하기 위한 레지스터이다.\n각 구역의 **시작점**을 가리키는 주소이며, 모두 16비트로 구성되어있다:\n\n* CS (Code Segment): 코드 영역\n* DS (Data Segment): 데이터 영역\n* SS (Stack Segment): 스택 영역\n* ES (Extra Segment): 보조 영역\n* FS: 추가 적인 보조영역 1\n* GS: 추가 적인 보조영역 2\n\n`FS`와 `GS`는 메모리 세그먼트의 추가적인 영역을 위해 `i386` 프로세서에서 도입되었지만, 64비트 Linux에서는 [메모리 페이징]() 기법이 추가되면서,\n`FS`와 `GS` 레지스터는 더이상 세그먼트에 사용되지않고, thread-local storage (TLS)또는 per-CPU를 위해 사용된다.\n\n**TLS (Thread Local Storage)와 per-CPU**\n\n| 용도      | 적용범위              | 사용처                           | 예                          |\n|---------|-------------------|-------------------------------|----------------------------|\n| TLS     | 스레드별로 고유한 데이터를 저장 | 사용자 공간에서 스레드기반 어플리케이션이나 라이브러리 | 쓰레드마다 독립적인 전역 변수 사용        |\n| per-CPU | CPU별로 고유한 데이터를 저장 | 운영체제 커널 수준                    | CPU별 통계, 커널 데이터구조, 리소스 사용량 |\n\n\n"
   },
   {
+    "path": "/docs/language/cpp/cpp-convention",
+    "header": {
+      "layout": "post",
+      "title": "c++ 시작하기",
+      "categories": [
+        "algorithm"
+      ],
+      "tags": [
+        "Language",
+        "C++",
+        "C"
+      ],
+      "date": 1738915800000,
+      "profile-image": "/post/profile/profile0.jpg",
+      "thumbnail": "/post/algorithm/cpp-getting-started.png",
+      "current-company": "Computer Academy",
+      "current-position": "Student",
+      "summary": "C++",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "언어",
+        "cpp"
+      ],
+      "images": [],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "문법::grammar",
+            "title": "문법",
+            "fragment": "grammar",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "주요 연산자::operators",
+                "title": "주요 연산자",
+                "fragment": "operators",
+                "children": []
+              }
+            ]
+          },
+          {
+            "rank": 2,
+            "origin": "명명규칙::naming-convention",
+            "title": "명명규칙",
+            "fragment": "naming-convention",
+            "children": []
+          }
+        ]
+      }
+    },
+    "description": "",
+    "content": "\n## 문법::grammar\n\n### 주요 연산자::operators\n\n**포인터 선언**\n```cpp\nint* num = new int[5];\nint* not_init;\n\nint new_num = 10;\nint* ptr = &new_num;\n\nint lazy = 512;\n*ptr = 20; //ptr이 가리키는 주소에 20 저장\nptr = &lazy; //ptr이 lazy의 주소를 가리킴\n```\n포인터 변수의 특징\n* 초기화 필수 아님\n* null 값 불가능\n* 다른변수나 주소로 재할당 가능\n* 더 복잡한 메모리 조작 가능\n* 주소 연산 및 포인터 연산 가능\n\n**참조 선언**\n```cpp\nint num = 10;\nint& a = num; // 참조 연산자, num의 값을 a에 저장\n```\n참조 변수의 특징\n* 선언시 반드시 초기화 해야함\n* null 참조 불가능\n* 재할당 불가능 (한 번 참조한 변수 고정)\n* 문법적으로 더 간결하고 안전\n* 원본 변수에 투명하게 접근 가능\n\n**주소 연산자**\n```cpp\nint num = 10;\n\n//int 인트에 대한 포인터 변수\nint* a = &num; // 주소 연산자, num의 주소를 a에 저장\n```\n주소 연산자의 결과는 변수에대한 물리주소기 때문에 컴퓨터 bit 체계의 따른 메모리크기를 부여받는다.  \n주소 정보이기 때문에 포인터 변수에만 담을 수 있다.\n\n\n\n\n\n## 명명규칙::naming-convention\n\nC++ 프로젝트의 주요 명명 규칙을 설명드리겠습니다:\n\n파일명:\n- 소스 파일: `.cpp`\n- 헤더 파일: `.h` 또는 `.hpp`\n- 파일명은 snake_case 또는 PascalCase 사용\n    - 예: `user_interface.cpp`, `UserInterface.cpp`\n\n클래스/구조체:\n- PascalCase 사용\n- 예: `class UserManager`, `struct PlayerData`\n\n함수/메서드:\n- camelCase 또는 snake_case\n- 예: `void getUserInput()` 또는 `void get_user_input()`\n\n변수:\n- camelCase 또는 snake_case\n- 예: `int playerScore` 또는 `int player_score`\n\n상수/매크로:\n- SCREAMING_SNAKE_CASE\n- 예: `const int MAX_PLAYERS = 10`, `#define PI_VALUE 3.14159`\n\nnamespace:\n- 소문자 snake_case\n- 예: `namespace game_engine`\n\n프로젝트 디렉토리:\n```\nproject_name/\n├── src/            (소스 파일)\n├── include/        (헤더 파일)\n├── lib/           (라이브러리)\n├── test/          (테스트 파일)\n└── docs/          (문서)\n```\n\n\n\n"
+  },
+  {
     "path": "/docs/life/youth-of-ggomi",
     "header": {
       "layout": "post",
@@ -1407,6 +1467,75 @@
     "content": "\n## 컴퓨터의 구성::computer-structure\n\n컴퓨터는 크게 응용프로그램, 운영체제, 하드웨어 계층으로 분류된다.\n이 문서에서는 응용프로그램을 제외하고 운영체제와 하드웨어에 대해 논한다.\n\n[CPU](/wiki/central-processing-unit)와 [입출력 장치]() 그리고 [메모리]()는 [시스템 버스]()를 통해 서로 연결되어 있으며, 버스의 종류에 따라 단방향 또는 양방향으로 신호를 보낸다.\n입출력 장치의 경우 메인보드 위에 사전에 만들어진 장치 컨트롤러를 운영체제의 장치 드라이버가 제어하며, 장치드라이버는 운영체제에 일관된 인터페이스를 제공한다.\nCPU와 장치컨트롤러는 병렬로 실행되기 떄문에 메모리에 접근하기위해 메모리 사이클을 두고 경쟁한다. 이 메모리에 순차적으로 접근하기 위해 메모리 컨트롤러는 메모리에 대한 액세스를 동기화한다.\n\n\n위에서 간단히 설명한 내용은 OS 내부의 커널과 시스템 프로그램에 의해 제어되며, 하드웨어의 경우 사전에 설계된 회로의 동작을 수행한다.\n\n## 운영체제의 구조::structure-of-os\n\n운영체제 같이 크고 복잡한 시스템은 쉽게 변경할 수 있으면서 올바르게 동작하려면 신중히 제작되어야 한다.\n일반적으로 한 개의 일관된 시스템보다는 작업을 작은 구성요소로 분할 하는 것이다. 각각의 모듈은 신중히 정의된 인터페이스와 기능들을 가지는 시스템의 일부가 되어야 한다.  \n\n예를 들어 `main()` 함수에 모든 코드를 넣는것 보다 필요한 기능을 올바른 인자와 반환값을 명시한 여러 함수로 분리하고 적재적소에 맞게 호출하는 것이다.  \n\n운영체제의 공통적인 구성요소들이 어떻게 연결되어 하나의 커널로 결합하는지 알아보자.\n\n### 모놀리식 구조::monolithic-structure\n\n가장 간단한 방법으로 프로그램을 만드는 방법은 한개의 구조없이 한곳에서 모든 것을 관리하는 것이다.\n\n**monolithic**[mɑ:nə│lɪθɪk]: 하나로된 거대한 덩어리\n이러한 한개의 구조를 `모놀리식 (monolithic)`이라고 한다. 즉 단일 주소 공간에서 실행되는 단일 바이너리 파일에 커널의 모든 기능을 넣는 것이다.\n\n`모놀리식 구조`라고 하는 이방법은 운영체제를 설계하는 일반적인 기법이다. 이러한 제한적인 구조를 가지는 운영체제는 최초의 UNIX 운영체제가 대표적인 예시이다.\n커널과 시스템 프로그램의 두 부분으로 구성된다.\n\n커널은 여러가지 인터페이스아 장치드라이버로 나뉘게 되는데, 이는 `UNIX`가 발전해 오면서 몇십년에 걸쳐 추가되고 확장 되었다.\n계층 별로 이루어져 있는 `UNIX` 운영체제는 [시스템 콜](/wiki/system-call) 인터페이스 아래와 하드웨어 위 모든 것이 커널이다. \n\n![UNIX의 전통적인 시스템 구조(/post/computer/traditional-system-structure-of-unix.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"UNIX의 전통적인 시스템 구조\" }\n\n커널은 시스템 콜을 통해 `파일 시스템`, `CPU 스케줄링`, `메모리 관리` 등의 기능을 제공한다. **이러한 기능은 한나의 주소 공간으로 결합하기에는 너무 많은 기능이다.**\n\n`Linux` 운영체제는  `UNIX`에 기반을 두고 있으며 아래와 같은 유사한 구조로 구성된다.\n\n![Linux의 시스템 구조(/post/computer/system-structure-of-linux.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"Linux의 시스템 구조\" }\n\n응용 프로그램은 일반적으로 커널의 시스템콜 인터페이스와 통신할 때 [`glibc` 표준 C 라이브러리](/wiki/system-call#api-and-system-call)를 사용한다.  \n`Linux` 커널은 단일 주소 공간에서 커널모드로 전부 실행된 다는 점에서 모놀리식이지만, 런타임에 커널을 정할 수 있는 [LKM]() 모듈식 설계를 갖추고 있다.\n\n이러한 단순한 구조라도 확장은 어렵지만 시스템 콜의 오버헤드가 거의 없고 커널안에서의 통신속도가 빠르다는 단점이 있다.\n따라서 모놀리식 커널의 단점에도 불구하고 속도와 효율성은 아직까지도 `UNIX`와 `Linux` 및 `Windows`에서 사용되는 것이 증명해준다.\n\n\n### 계층적 접근::layered-approach\n\n작성중...\n\n\n\n\n## 운영체제의 동작 순서::workflow-of-os\n\n컴퓨터의 전원을 켤 때 실행되는 부트스트랩 프로그램은 펌웨어이다.  \n부트스트랩 프로그램은 하드웨어 위에서 동작하며 `CPU`, `메모리` `저장장치` 등을 초기화 한다. 또한 운영체제를 로드하기 위해 부트로더를 실행하며, 이는 저장장치에서 메모리로 [Kernel]()(`커널`)을 적재한다.\n\n부트로더는 커널 실행에 필요한 초기설정(예: 커맨드라인 인자 전달 등)을 한뒤, 커널에 제어를 넘긴다. 이후에 커널은 시스템을 초기화하고 사용자 공간(user space)을 준비한다.\n각 시스템에서 사용 되는 부트로더는 여러종류가 있다.\n\n* GRUB (GNU GRUB):\n  * 리눅스/유닉스 시스템에서 사용되는 부트로더\n* LILO(Linux Loader)\n  * 과거 리눅스 시스템에서 사용되는 부트로더\n* Windows Boot Manager\n  * 윈도우 시스템에서 사용하는 부트로더\n* Android Bootloader\n  * 안드로이드 기기에서 사용되는 부트로더로, 리커버리모드와 운영체제를 실행한다.\n\n## 운영체제의 역할::role-of-os\n\n운영체제는 사용자 또는 시스템 프로그램이 올바르게 실행되기 위해 커널에서 다양한 관리를 아래와 같이 제공한다.\n\n* 메모리 관리\n* 프로세스 관리\n* 장치 드라이버\n* 파일 시스템\n* 네트워크 관리\n\n### 메모리 관리::memory-management\n\n### 프로세스 관리::process-management\n\n운영체제는 자원을 관리하지만, 아마 그중에서도 가장 중요한건 [프로세스]()에 대한 관리이다. 대표적으로 아래와 같다.\n\n* 사용자 프로세스와 시스템프로세스의 생성과 제거\n* `CPU`에 프로세스와 스레드 스케줄링\n* 프로세스의 일시중지(suspend) 와 재수행(resume)\n* 프로세스 동기화 기법 제공\n* 프로세스 간 통신(IPC) 제공\n\n위와 같은 처리를 위해 운영체제는 프로세스의 상태를 관리하며, 프로세스의 상태(process stats)는 `생성`, `준비`, `실행`, `대기`, `종료`로 나뉜다.\n이러한 상태는 아래처럼 나타낼 수 있다.\n```\n New\n  ↓\nReady ←→ Running → Terminated\n  ↑        ┆\nWaiting ←--╯\n```\n"
   },
   {
+    "path": "/docs/algorithm/b-tree",
+    "header": {
+      "layout": "post",
+      "title": "B-tree (Balanced Tree)",
+      "categories": [
+        "algorithm"
+      ],
+      "tags": [
+        "Data Structure",
+        "B-Tree"
+      ],
+      "date": 1609788600000,
+      "profile-image": "/post/profile/profile0.jpg",
+      "thumbnail": "/post/algorithm/b-tree.png",
+      "current-company": "Herit Corporation",
+      "current-position": "Backend Server Developer",
+      "summary": "B-tree",
+      "expose-images": true,
+      "excerpt-separator": "<!--more-->",
+      "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "알고리즘"
+      ],
+      "images": [
+        {
+          "src": "/post/algorithm/b-tree.png",
+          "alt": "B-tree"
+        },
+        {
+          "src": "/post/algorithm/node-of-b-tree.png",
+          "alt": "B-Tree의 노드"
+        }
+      ],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "B-tree란?::what-is-b-tree",
+            "title": "B-tree란?",
+            "fragment": "what-is-b-tree",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "B-tree의 구성요소::components",
+            "title": "B-tree의 구성요소",
+            "fragment": "components",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "노드 (Node)::node",
+                "title": "노드 (Node)",
+                "fragment": "node",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "description": "B-tree는 Balanced Tree의 약자로 균형 트리를 의미한다.\nB-tree는 현재까지도 데이터베이스, 파일 시스템 등 다양한 분야에서 사용되는 자료구조이다.",
+    "content": "## B-tree란?::what-is-b-tree\n\n![B-tree](/post/algorithm/b-tree.png)\n:{ \"description\": \"B-tree 자료구조\" }\n\n**B-tree**는 Balanced Tree의 약자로 컴퓨터 과학에서 정렬된 데이터를 관리하고 `Log` 시간에서 검색, 순차접근, 삽입, 삭제가 가능한 자가균형 트리 자료구조이다.\n대용량 데이터를 다룰 때 사용되며 데이터 베이스, 파일 시스템 등 다양한 분야에서 사용된다.\n\n`B-tree`는 차수(`Degree, Order`)를 가지며 이 값에 따라 구성 정보가 다음과 같이 달라진다:\n\n*degree: 4인 경우*\n\n* 최대 자식 수: 4\n* 최소 자식 수: 4 / 2 = 2\n* 최대 키 개수: 4 - 1 = 3\n\n> B-tree는 차수(m)에 따라 log~m~N의 시간 복잡도를 가진다.\n:{ \"type\": \"important\", \"icon\": \"warning-octagon\" }\n\n## B-tree의 구성요소::components\n\n### 노드 (Node)::node\n\n![B-Tree의 노드](/post/algorithm/node-of-b-tree.png)\n:{ \"align\": \"center\", \"max-width\": \"500px\", \"description\": \"B-Tree의 노드\" }\n"
+  },
+  {
     "path": "/docs/computer/computer-organization",
     "header": {
       "layout": "post",
@@ -2269,7 +2398,7 @@
       }
     },
     "description": "hash는 프랑스어 hacher [aʃe]: 썰다/다지다 에서 유래한 단어로, 잘게 다져서 요리하는 음식을 말한다.  \n\n컴퓨터 과학에서는 잘게 다진 데이터를 저장한다는 의미로 hash라는 용어를 사용한다.",
-    "content": "\n## 해시란?::what-is-hash\n\n[hash](https://en.wikipedia.org/wiki/Hash_(food))는 프랑스어 hacher [aʃe]: 썰다/다지다 에서 유래한 단어로, 잘게 다져서 요리하는 음식을 말한다. \n대표적인 예로 감자를 잘게 다져서 튀김으로 만드는 해시 브라운이 있다. 이러한 문맥으로 컴퓨터 과학에서 잘게 다져 저장하는 의미로 hash라는 용어를 사용한다.\n\n`hash`에서는 빠질 수 없는 `Hash Function`이 있는데, 이는 임의의 길이의 데이터를 고정된 길이의 데이터로 매핑하는 함수이다.  \n예를 들어 Java의 경우 아래와 같은 해시함수가 존재한다.\n\n```java::자바의 해시함수\nstatic final int hash(Object key) {\n    int h;\n    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);\n}\n```\n\nJava의 내용은 관련이 없지만 설명을 위해 hashCode도 같이 보는것이 좋다.  \n먼저 `hashCode`를 얻는 방법은 아래와 같다. `UTF-16`의 경우 `Latin-1`의 상위 집합이지만, 한글과 같은 문자 때문에 필요하고 2byte 처리로 `hashCode`를 만든다. \n\n::code-group\n```java::Latin-1\npublic static int hashCode(byte[] value) {\n    int h = 0;\n    for (byte v : value) {\n        h = 31 * h + (v & 0xff);\n    }\n    return h;\n}\n```\n```java::UTF-16\npublic static int hashCode(byte[] value) {\n    int h = 0;\n    int length = value.length >> 1;\n    for (int i = 0; i < length; i++) {\n        h = 31 * h + getChar(value, i);\n    }\n    return h;\n}\n```\n::\n아무튼 일반적으로 `😂`이나 `앨리스`와 같은 값으로 해싱을 하지는 않으니, 대부분 `Latin-1`을 사용한다는 가정하에 설명한다.  \n여기서 \"Alice\"라는 문자열과 \"Bob\"이라는 문자열이 입력으로 들어온다면 다음의 과정으로 해시값을 얻을 수 있다.\n\n::code-group\n```text::\"Alice\"의 해시코드\n1. 'A' (처음)\nh = 31 * 0 + 65 = 65\n\n2. 'l' (두번째)\nh = 31 * 65 + 108\nh = 2015 + 108 = 2123\n\n3. 'i' (세번째)\nh = 31 * 2123 + 105\nh = 65813 + 105 = 65918\n\n4. 'c' (네번째)\nh = 31 * 65918 + 99\nh = 2043458 + 99 = 2043557\n\n5. 'e' (마지막)\nh = 31 * 2043557 + 101\nh = 63350267 + 101 = 63350368\n```\n```text::\"Bob\"의 해시코드\n1. 'B' (처음)\nh = 31 * 0 + 66 = 66\n\n2. 'o' (두번째)\nh = 31 * 66 + 111\nh = 2046 + 111 = 2157\n\n3. 'b' (마지막)\nh = 31 * 2157 + 98\nh = 66867 + 98 = 66965\n```\n::\n\n결과적으로 `63350368`과 `66965`라는 해시코드가 나온다. 이 값으로 hash function을 돌리면 아래처럼 처리된다.\n\n::code-group\n```text::\"Alice\": hash(63350368)\n1) hashCode를 2진수로 변환\n63350182 = 0000 0011 1110 0011 0110 1011 1000 0110\n\n2) h >>> 16 (상위 16비트를 하위 16비트로)\n0000 0000 0000 0000 0000 0011 1110 0011\n\n3) XOR 연산 (^)\n0000 0011 1110 0011 0110 1011 1000 0110  (원래 해시코드)\n0000 0000 0000 0000 0000 0011 1110 0011  (>>> 16한 값)\n----------------------------------------\n0000 0011 1110 0011 0110 1000 0110 0101  (최종 해시값) 66063397 (십진수)\n```\n```text::\"Bob\": hash(66965)\n1) hashCode를 2진수로 변환\n66965 = 0000 0000 0000 0001 0000 0101 1000 0101\n\n2) h >>> 16 (상위 16비트를 하위 16비트로)\n0000 0000 0000 0000 0000 0000 0000 0001\n\n3) XOR 연산 (^)\n0000 0000 0000 0001 0000 0101 1000 0101  (원래 해시코드)\n0000 0000 0000 0000 0000 0000 0000 0001  (>>> 16한 값)\n----------------------------------------\n0000 0000 0000 0001 0000 0101 1000 0100  (최종 해시값) 66964 (십진수)\n```\n::\n\n최종적으로 `Alice`는 `66063523`, `Bob`은 `66964`라는 해시값을 얻을 수 있다.\n이렇게 얻어진 해시값을 통해 데이터를 저장하거나 검색할 수 있다.\n\n> Hash 값은 데이터를 저장하거나 검색하기 위해 사용되는 인덱스를 만들 수 있다.\n:{ \"type\": \"tip\", \"icon\": \"check-circle\" }\n\n## 해시 충돌::hash-collision\n\n`Java` 에서는 `hash` 값으로 테이블 인덱스를 구할 때 `(n - 1) & hash`로 만든다.\n`n`은 테이블의 크기이며 초기값은 16(`1 << 4`)이다. `Alice`라는 문자열로 인덱스를 계산하면 아래와 같다.\n\n::code-group\n```text::\"Alice\"의 해시 인덱스\n0000 0000 0000 0000 0000 0000 0000 1111 (n - 1 = 15)\n0000 0011 1111 1010 1011 0101 0000 0101 (hash: 66063397\n----------------------------------------\n0000 0000 0000 0000 0000 0000 0000 0101 (최종 인덱스: 5)\n```\n```text::\"Bob\"의 해시 인덱스\n0000 0000 0000 0000 0000 0000 0000 1111 (n - 1 = 15)\n0000 0000 0000 0001 0000 0101 1000 0100 (hash: 66964)\n----------------------------------------\n0000 0000 0000 0000 0000 0000 0000 0100 (최종 인덱스: 4)\n```\n::\n\n![해시 인덱스](/post/algorithm/hash-index.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"Alice와 Bob의 해시 인덱스\" }\n\n이렇게 계산된 인덱스는 현재 테이블의 크기와 해시값에 따라 생성되므로 예측하기 어려우며, 간혹 같은 인덱스를 생성하는 경우가 발생하는데, 이를 **해시 충돌**이라고 한다.\n\n![해시 충돌](/post/algorithm/hash-collision.png)\n:{ \"description\": \"해시 충돌\" }\n\n**해시 충돌**은 해시들이 어떤 계산된 값에 의해 생성된 테이블 인덱스가 같은 경우를 말한다.\n해시 값이 다르더라도, 가리키는 테이블 인덱스가 같은 경우 이미 다름값이 저장이 되어있기 때문에, 충돌이 발생한다.\n\n이런 충돌 문제를 해결하기 위해 여러가지 방법들이 고안 되었다.\n\n## 해시 충돌 해결 방법::how-to-solve-hash-collision\n\n### 1. 체이닝::chaining\n\n![체이닝](/post/algorithm/hash-chaining.png)\n:{ \"description\": \"노드를 연결 리스트로 묶는 체이닝\" }\n\n**체이닝**은 해시 충돌이 발생하면, 같은 테이블에 [연결 리스트](/docs/algorithm/linked-list)로 연결하는 방식이다.\n\n해시 충돌이 자주 발생 하는것은 아니지만, 종종 발생한다. 이렇게 해시 충돌이 발생하면 해당 인덱스로 연결된 연결 리스트에서 데이터를 찾아야 한다.\n같은 해시 인덱스에 대해 데이터가 저장된곳을 `버킷(Bucket)`이라고 하는데, 이 버킷에는 데이터가 많아질수록 성능이 저하된다.\n\n`Java`의 경우 체이닝 방식을 쓰지만, 버킷의 성능을 개선하기 위해 8(`threshold`)개 까지는 선형 탐색을 하지만, \n그 이상은 트리(`Red Black`) 구조로 변경하여 이진 탐색으로 성능을 향상시키며 개수가 줄어들면 다시 연결 리스트로 바꿔 선형 탐색을 한다.\n\n> `Java` 이외에도 `C++`, `C#`등 다양한 언어에서도 체이닝 방식을 사용한다.\n:{ \"type\": \"tip\", \"icon\": \"check-circle\" }\n\n### 2. 개방 주소법::open-addressing\n\n개방 주소법은 해시 충돌이 발생할 때, 비어있는 다른 버킷을 찾아 데이터를 저장하는 방식이다.\n여기서 **비어있는 다른 주소**에 대해 접근하는 것이기 때문에 `개방 주소법`이라고 하며 이 주소를 찾는 것을, `탐사(probing)`이라고 한다.\n\n개방 주소법은 [체이닝](#chaining)과 다르게, 버킷에 한개의 정보만 저장할수 있다.\n따라서 버킷이 꽉 차게 되면, 다른 버킷을 찾아 저장해야 한다. 이때 버킷은 현재 해시 인덱스와 관련이 없는 다른 버킷을 찾게된다.\n\n개방 주소법에는 세가지 방법이 있다.\n\n#### 2-1. 선형 탐사\n\n![선형 탐사](/post/algorithm/hash-linear-probing.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"선형 탐사로 새로운 정보를 테이블에 추가\" }\n\n첫 번째로 **선형 탐사**는 해시로 계산된 인덱스가 이미 사용중이라면, 다음 인덱스로 이동하여 저장하는 방식이다.\n이러한 방식은 지속적으로 다음 버킷을 찾기 때문에, 실제 해당 인덱스에 연결되어야 하는 데이터가 또 다른 버킷을 탐사해야하므로 한곳에 데이터가 모이게 된다.\n\n이렇게 데이터가 모이는 현상을 군집화(`clustering`)라고 하며, \n해시충돌로 다음 버킷을 계속 찾아다니는 선형 탐사는 군집화가 발생할 가능성이 높다.\n\n#### 2-2. 제곱 탐사 (이차 탐사)\n\n![제곱 탐사](/post/algorithm/hash-quadratic-probing.png)\n:{ \"align\": \"center\", \"max-width\": \"250px\", \"description\": \"제곱 탐사로 새로운 정보를 테이블에 추가\" }\n\n두 번째로 **제곱 탐사**는 `선형 탐사`의 군집화를 보완하기 위해 나온 기법이다.\n이 기법은 **N + M^2^**(`N: 원본 인덱스`, `M: 탐색 차수`)로 다음 버킷을 찾는다. \n\n예를 들어 다음과 위 이미지와 같이 계산된 인덱스가 5인 경우, 5번 버킷에는 이미 데이터가 있기 때문에 첫번째 탐사 인덱스로 (**5 + 1^2^** = 6)으로 이동한다.\n\n지속적으로 버킷이 사용중이라면 아래처럼 인덱스가 계산된다.\n\n1. 5 + 1^2^ = 6\n2. 5 + 2^2^ = 9\n3. 5 + 3^2^ = 14\n4. 5 + 4^2^ = 21\n\n이러한 제곱탐사는 선형탐사보다는 군집화가 적게 발생하지만, 여전히 군집화가 발생할 수 있다.\n\n#### 2-3. 이중 해싱\n\n세 번째로 **이중 해싱**은 해싱 인덱스를 구하는 해시 함수에서 두번의 해싱으로 연산한다.\n앞서 `해시 함수`는 해시 값을 구하는 함수라고 설명하였지만, 여기서는 해시 인덱스를 구하는 함수도 `해시 함수`라고 칭할 수 있다.\n\n이중 해싱에서 해시 함수는 다음과 같다.\n\n전체 해시 함수: **h(k, i) = (h~1~(k) + i * h~2~(k)) % m**\n* h~1~(k) = k % m\n* h~2~(k) = PRIME - (k % PRIME)\n\n> k: 키값, i: 충돌 횟수 (0, 1, 2, ...), m: 테이블 크기, PRIME: 소수\n:{ \"type\": \"tip\", \"icon\": \"check-circle\" }\n\n> `PRIME`은  h~2~(k)가 0이 되는 것을 방지하고, 모든 버킷을 골고루 방문하기 위해 사용한다.\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n예를 들어 키값(해시 값)이 `14`, 테이블의 크기가 `13` 그리고 `PRIME`이 7이라고 가정한다면 아래와 같은 과정으로 인덱스를 구할 수 있다.\n\n```text\nh~1~(14) = 14 % 13 = 1\nh~2~(14) = 7 - (14 % 7) = 7 - 0 = 7\n\n// h(14, i) = (h~1~(14) + i * h~2~(14)) % 13\ni=0: (1 + 0 * 7) % 13 = 1 //첫 번째 위치\ni=1: (1 + 1 * 7) % 13 = 8 //두 번째 위치\ni=2: (1 + 2 * 7) % 13 = 2 //세 번째 위치\n```\n이런 식으로 테이블 크기에 맞게 적잘한 분포를 할수 있다. 하지만, 이중 해싱은 선형 탐사나 제곱 탐사보다는 성능이 좋지만, PRIME을 찾는 것이 어렵다.\n만약 키값(해시 값)이 `23`, 테이블의 크기가 `10` 그리고 `PRIME`이 7이라고 가정한다면 아래와 같은 과정으로 순환이 발생한다.\n\n```text\nh₁(23) = 23 % 10 = 3\nh₂(23) = 7 - (23 % 7) = 7 - 2 = 5\n\n// h(23, i) = (h₁(23) + i * h₂(23)) % 10 \ni=0: (3 + 0 * 5) % 10 = 3 //첫 번째 위치\ni=1: (3 + 1 * 5) % 10 = 8 //두 번째 위치\ni=2: (3 + 2 * 5) % 10 = 3 //세 번째 위치\n```\n\n`3`과 `8`인덱스에 대해 순환이 발생하며, 올바른 처리를 하지못한다. 이중해싱은 균등분포에 가장 적합하지만,\n이중 해싱은 항상 두번의 해싱이 필요하며, 적절한 PRIME을 찾는 것이 어렵기 떄문에 **선현 탐사**나 **제곱 탐사**보다는 자주 사용되지 않는다.\n\n> 이외에도 해시충돌 해결 방법은 `로빈 후드 해싱`, `분리 연결법`, `동적 해시`등이 있다.\n:{ \"type\": \"note\", \"icon\": \"info\" }\n"
+    "content": "\n## 해시란?::what-is-hash\n\n[hash](https://en.wikipedia.org/wiki/Hash_(food))는 프랑스어 hacher [aʃe]: 썰다/다지다 에서 유래한 단어로, 잘게 다져서 요리하는 음식을 말한다. \n대표적인 예로 감자를 잘게 다져서 튀김으로 만드는 해시 브라운이 있다. 이러한 문맥으로 컴퓨터 과학에서 잘게 다져 저장하는 의미로 hash라는 용어를 사용한다.\n\n`hash`에서는 빠질 수 없는 `Hash Function`이 있는데, 이는 임의의 길이의 데이터를 고정된 길이의 데이터로 매핑하는 함수이다.  \n예를 들어 Java의 경우 아래와 같은 해시함수가 존재한다.\n\n```java::자바의 해시함수\nstatic final int hash(Object key) {\n    int h;\n    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);\n}\n```\n\nJava의 내용은 관련이 없지만 설명을 위해 hashCode도 같이 보는것이 좋다.  \n먼저 `hashCode`를 얻는 방법은 아래와 같다. `UTF-16`의 경우 `Latin-1`의 상위 집합이지만, 한글과 같은 문자 때문에 필요하고 2byte 처리로 `hashCode`를 만든다. \n\n::code-group\n```java::Latin-1\npublic static int hashCode(byte[] value) {\n    int h = 0;\n    for (byte v : value) {\n        h = 31 * h + (v & 0xff);\n    }\n    return h;\n}\n```\n```java::UTF-16\npublic static int hashCode(byte[] value) {\n    int h = 0;\n    int length = value.length >> 1;\n    for (int i = 0; i < length; i++) {\n        h = 31 * h + getChar(value, i);\n    }\n    return h;\n}\n```\n::\n아무튼 일반적으로 `😂`이나 `앨리스`와 같은 값으로 해싱을 하지는 않으니, 대부분 `Latin-1`을 사용한다는 가정하에 설명한다.  \n여기서 \"Alice\"라는 문자열과 \"Bob\"이라는 문자열이 입력으로 들어온다면 다음의 과정으로 해시값을 얻을 수 있다.\n\n::code-group\n```text::\"Alice\"의 해시코드\n1. 'A' (처음)\nh = 31 * 0 + 65 = 65\n\n2. 'l' (두번째)\nh = 31 * 65 + 108\nh = 2015 + 108 = 2123\n\n3. 'i' (세번째)\nh = 31 * 2123 + 105\nh = 65813 + 105 = 65918\n\n4. 'c' (네번째)\nh = 31 * 65918 + 99\nh = 2043458 + 99 = 2043557\n\n5. 'e' (마지막)\nh = 31 * 2043557 + 101\nh = 63350267 + 101 = 63350368\n```\n```text::\"Bob\"의 해시코드\n1. 'B' (처음)\nh = 31 * 0 + 66 = 66\n\n2. 'o' (두번째)\nh = 31 * 66 + 111\nh = 2046 + 111 = 2157\n\n3. 'b' (마지막)\nh = 31 * 2157 + 98\nh = 66867 + 98 = 66965\n```\n::\n\n결과적으로 `63350368`과 `66965`라는 해시코드가 나온다. 이 값으로 hash function을 돌리면 아래처럼 처리된다.\n\n::code-group\n```text::\"Alice\": hash(63350368)\n1) hashCode를 2진수로 변환\n63350182 = 0000 0011 1110 0011 0110 1011 1000 0110\n\n2) h >>> 16 (상위 16비트를 하위 16비트로)\n0000 0000 0000 0000 0000 0011 1110 0011\n\n3) XOR 연산 (^)\n0000 0011 1110 0011 0110 1011 1000 0110  (원래 해시코드)\n0000 0000 0000 0000 0000 0011 1110 0011  (>>> 16한 값)\n----------------------------------------\n0000 0011 1110 0011 0110 1000 0110 0101  (최종 해시값) 66063397 (십진수)\n```\n```text::\"Bob\": hash(66965)\n1) hashCode를 2진수로 변환\n66965 = 0000 0000 0000 0001 0000 0101 1000 0101\n\n2) h >>> 16 (상위 16비트를 하위 16비트로)\n0000 0000 0000 0000 0000 0000 0000 0001\n\n3) XOR 연산 (^)\n0000 0000 0000 0001 0000 0101 1000 0101  (원래 해시코드)\n0000 0000 0000 0000 0000 0000 0000 0001  (>>> 16한 값)\n----------------------------------------\n0000 0000 0000 0001 0000 0101 1000 0100  (최종 해시값) 66964 (십진수)\n```\n::\n\n최종적으로 `Alice`는 `66063523`, `Bob`은 `66964`라는 해시값을 얻을 수 있다.\n이렇게 얻어진 해시값을 통해 데이터를 저장하거나 검색할 수 있다.\n\n> Hash 값은 데이터를 저장하거나 검색하기 위해 사용되는 인덱스를 만들 수 있다.\n:{ \"type\": \"tip\", \"icon\": \"check-circle\" }\n\n## 해시 충돌::hash-collision\n\n`Java` 에서는 `hash` 값으로 테이블 인덱스를 구할 때 `(n - 1) & hash`로 만든다.\n`n`은 테이블의 크기이며 초기값은 16(`1 << 4`)이다. `Alice`라는 문자열로 인덱스를 계산하면 아래와 같다.\n\n::code-group\n```text::\"Alice\"의 해시 인덱스\n0000 0000 0000 0000 0000 0000 0000 1111 (n - 1 = 15)\n0000 0011 1111 1010 1011 0101 0000 0101 (hash: 66063397\n----------------------------------------\n0000 0000 0000 0000 0000 0000 0000 0101 (최종 인덱스: 5)\n```\n```text::\"Bob\"의 해시 인덱스\n0000 0000 0000 0000 0000 0000 0000 1111 (n - 1 = 15)\n0000 0000 0000 0001 0000 0101 1000 0100 (hash: 66964)\n----------------------------------------\n0000 0000 0000 0000 0000 0000 0000 0100 (최종 인덱스: 4)\n```\n::\n\n![해시 인덱스](/post/algorithm/hash-index.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"Alice와 Bob의 해시 인덱스\" }\n\n이렇게 계산된 인덱스는 현재 테이블의 크기와 해시값에 따라 생성되므로 예측하기 어려우며, 간혹 같은 인덱스를 생성하는 경우가 발생하는데, 이를 **해시 충돌**이라고 한다.\n\n![해시 충돌](/post/algorithm/hash-collision.png)\n:{ \"description\": \"해시 충돌\" }\n\n**해시 충돌**은 해시들이 어떤 계산된 값에 의해 생성된 테이블 인덱스가 같은 경우를 말한다.\n해시 값이 다르더라도, 가리키는 테이블 인덱스가 같은 경우 이미 다름값이 저장이 되어있기 때문에, 충돌이 발생한다.\n\n이런 충돌 문제를 해결하기 위해 여러가지 방법들이 고안 되었다.\n\n## 해시 충돌 해결 방법::how-to-solve-hash-collision\n\n### 1. 체이닝::chaining\n\n![체이닝](/post/algorithm/hash-chaining.png)\n:{ \"description\": \"노드를 연결 리스트로 묶는 체이닝\" }\n\n**체이닝**은 해시 충돌이 발생하면, 같은 테이블에 [연결 리스트](/docs/algorithm/linked-list)로 연결하는 방식이다.\n\n해시 충돌이 자주 발생 하는것은 아니지만, 종종 발생한다. 이렇게 해시 충돌이 발생하면 해당 인덱스로 연결된 연결 리스트에서 데이터를 찾아야 한다.\n같은 해시 인덱스에 대해 데이터가 저장된곳을 `버킷(Bucket)`이라고 하는데, 이 버킷에는 데이터가 많아질수록 성능이 저하된다.\n\n`Java`의 경우 체이닝 방식을 쓰지만, 버킷의 성능을 개선하기 위해 8(`threshold`)개 까지는 선형 탐색을 하지만, \n그 이상은 트리(`Red Black`) 구조로 변경하여 이진 탐색으로 성능을 향상시키며 개수가 줄어들면 다시 연결 리스트로 바꿔 선형 탐색을 한다.\n\n> `Java` 이외에도 `C++`, `C#`등 다양한 언어에서도 체이닝 방식을 사용한다.\n:{ \"type\": \"tip\", \"icon\": \"check-circle\" }\n\n### 2. 개방 주소법::open-addressing\n\n개방 주소법은 해시 충돌이 발생할 때, 비어있는 다른 버킷을 찾아 데이터를 저장하는 방식이다.\n여기서 **비어있는 다른 주소**에 대해 접근하는 것이기 때문에 `개방 주소법`이라고 하며 이 주소를 찾는 것을, `탐사(probing)`이라고 한다.\n\n개방 주소법은 [체이닝](#chaining)과 다르게, 버킷에 한개의 정보만 저장할수 있다.\n따라서 버킷이 차게 되면, 다른 버킷을 찾아 저장해야 한다. 이때 버킷은 현재 해시 인덱스와 관련이 없는 다른 버킷을 찾게된다.\n\n개방 주소법에는 세가지 방법이 있다.\n\n#### 2-1. 선형 탐사\n\n![선형 탐사](/post/algorithm/hash-linear-probing.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"선형 탐사로 새로운 정보를 테이블에 추가\" }\n\n첫 번째로 **선형 탐사**는 해시로 계산된 인덱스가 이미 사용중이라면, 다음 인덱스로 이동하여 저장하는 방식이다.\n이러한 방식은 지속적으로 다음 버킷을 찾기 때문에, 실제 해당 인덱스에 연결되어야 하는 데이터가 또 다른 버킷을 탐사해야하므로 한곳에 데이터가 모이게 된다.\n\n이렇게 데이터가 모이는 현상을 군집화(`clustering`)라고 하며, \n해시충돌로 다음 버킷을 계속 찾아다니는 선형 탐사는 군집화가 발생할 가능성이 높다.\n\n#### 2-2. 제곱 탐사 (이차 탐사)\n\n![제곱 탐사](/post/algorithm/hash-quadratic-probing.png)\n:{ \"align\": \"center\", \"max-width\": \"250px\", \"description\": \"제곱 탐사로 새로운 정보를 테이블에 추가\" }\n\n두 번째로 **제곱 탐사**는 `선형 탐사`의 군집화를 보완하기 위해 나온 기법이다.\n이 기법은 **N + M^2^**(`N: 원본 인덱스`, `M: 탐색 차수`)로 다음 버킷을 찾는다. \n\n예를 들어 다음과 위 이미지와 같이 계산된 인덱스가 5인 경우, 5번 버킷에는 이미 데이터가 있기 때문에 첫번째 탐사 인덱스로 (**5 + 1^2^** = 6)으로 이동한다.\n\n지속적으로 버킷이 사용중이라면 아래처럼 인덱스가 계산된다.\n\n1. 5 + 1^2^ = 6\n2. 5 + 2^2^ = 9\n3. 5 + 3^2^ = 14\n4. 5 + 4^2^ = 21\n\n이러한 제곱탐사는 선형탐사보다는 군집화가 적게 발생하지만, 여전히 군집화가 발생할 수 있다.\n\n#### 2-3. 이중 해싱\n\n세 번째로 **이중 해싱**은 해싱 인덱스를 구하는 해시 함수에서 두번의 해싱으로 연산한다.\n앞서 `해시 함수`는 해시 값을 구하는 함수라고 설명하였지만, 여기서는 해시 인덱스를 구하는 함수도 `해시 함수`라고 칭할 수 있다.\n\n이중 해싱에서 해시 함수는 다음과 같다.\n\n전체 해시 함수: **h(k, i) = (h~1~(k) + i * h~2~(k)) % m**\n* h~1~(k) = k % m\n* h~2~(k) = PRIME - (k % PRIME)\n\n> k: 키값, i: 충돌 횟수 (0, 1, 2, ...), m: 테이블 크기, PRIME: 소수\n:{ \"type\": \"tip\", \"icon\": \"check-circle\" }\n\n> `PRIME`은  h~2~(k)가 0이 되는 것을 방지하고, 모든 버킷을 골고루 방문하기 위해 사용한다.\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n예를 들어 키값(해시 값)이 `14`, 테이블의 크기가 `13` 그리고 `PRIME`이 7이라고 가정한다면 아래와 같은 과정으로 인덱스를 구할 수 있다.\n\n```text\nh~1~(14) = 14 % 13 = 1\nh~2~(14) = 7 - (14 % 7) = 7 - 0 = 7\n\n// h(14, i) = (h~1~(14) + i * h~2~(14)) % 13\ni=0: (1 + 0 * 7) % 13 = 1 //첫 번째 위치\ni=1: (1 + 1 * 7) % 13 = 8 //두 번째 위치\ni=2: (1 + 2 * 7) % 13 = 2 //세 번째 위치\n```\n이런 식으로 테이블 크기에 맞게 적절한 분포를 할수 있다. 하지만, 이중 해싱은 선형 탐사나 제곱 탐사보다는 성능이 좋지만, PRIME을 찾는 것이 어렵다.\n만약 키값(해시 값)이 `23`, 테이블의 크기가 `10` 그리고 `PRIME`이 7이라고 가정한다면 아래와 같은 과정으로 순환이 발생한다.\n\n```text\nh₁(23) = 23 % 10 = 3\nh₂(23) = 7 - (23 % 7) = 7 - 2 = 5\n\n// h(23, i) = (h₁(23) + i * h₂(23)) % 10 \ni=0: (3 + 0 * 5) % 10 = 3 //첫 번째 위치\ni=1: (3 + 1 * 5) % 10 = 8 //두 번째 위치\ni=2: (3 + 2 * 5) % 10 = 3 //세 번째 위치\n```\n\n`3`과 `8`인덱스에 대해 순환이 발생하며, 올바른 처리를 하지못한다. 이중해싱은 균등분포에 가장 적합하지만,\n이중 해싱은 항상 두번의 해싱이 필요하며, 적절한 PRIME을 찾는 것이 어렵기 떄문에 **선현 탐사**나 **제곱 탐사**보다는 자주 사용되지 않는다.\n\n> 이외에도 해시충돌 해결 방법은 `로빈 후드 해싱`, `분리 연결법`, `동적 해시`등이 있다.\n:{ \"type\": \"note\", \"icon\": \"info\" }\n"
   },
   {
     "path": "/docs/algorithm/queue",
@@ -2522,44 +2651,6 @@
     },
     "description": "",
     "content": "\n## Bit란?::what-is-bit\n\n**Bit**는 2진법을 뜻하는 **B**inary 와 숫자를 뜻하는 Dig**it**의 합성어로 2진수를 나타내는 단위이다.  \n일상 생활에서는 10진법을 사용한다. 10진법은 0부터 9까지의 숫자로 이루어져 있으며, 10개의 숫자로 표현한다.\n\n하지만, 컴퓨터 체계에서는 2진법을 사용하며, 실제로 컴퓨터 상에서 우리가 다루는 10진수는 실제로 2진수로 변환되어 처리된다.\n\n예를 들어 10진수 **11**을 2진수로 변환하면 **1011**이 된다. 이렇게 2진법 체계로 변환된 숫자를 2진수(**Bit**)라고 한다.\n\n## 2진수 변환::convert-binary\n\n예) 1011~2~ = 1x2^3^ + 0x2^2^ + 1x2^1^ + 1x2^0^ = 11~10~\n\n\n\n\n\n"
-  },
-  {
-    "path": "/wiki/cpp-convention",
-    "header": {
-      "layout": "wiki",
-      "title": "비트 (Bit)",
-      "date": 1567671000000,
-      "tags": [
-        "Language",
-        "C++",
-        "C"
-      ],
-      "summary": "C++ 시작하기",
-      "hide": false,
-      "breadcrumbs": [
-        "문서",
-        "언어",
-        "cpp"
-      ],
-      "images": [],
-      "headlines": {
-        "rank": 0,
-        "origin": "root::root",
-        "title": "root",
-        "fragment": "root",
-        "children": [
-          {
-            "rank": 2,
-            "origin": "명명규칙::naming-convention",
-            "title": "명명규칙",
-            "fragment": "naming-convention",
-            "children": []
-          }
-        ]
-      }
-    },
-    "description": "",
-    "content": "\n## 명명규칙::naming-convention\n\nC++ 프로젝트의 주요 명명 규칙을 설명드리겠습니다:\n\n파일명:\n- 소스 파일: `.cpp`\n- 헤더 파일: `.h` 또는 `.hpp`\n- 파일명은 snake_case 또는 PascalCase 사용\n    - 예: `user_interface.cpp`, `UserInterface.cpp`\n\n클래스/구조체:\n- PascalCase 사용\n- 예: `class UserManager`, `struct PlayerData`\n\n함수/메서드:\n- camelCase 또는 snake_case\n- 예: `void getUserInput()` 또는 `void get_user_input()`\n\n변수:\n- camelCase 또는 snake_case\n- 예: `int playerScore` 또는 `int player_score`\n\n상수/매크로:\n- SCREAMING_SNAKE_CASE\n- 예: `const int MAX_PLAYERS = 10`, `#define PI_VALUE 3.14159`\n\nnamespace:\n- 소문자 snake_case\n- 예: `namespace game_engine`\n\n프로젝트 디렉토리:\n```\nproject_name/\n├── src/            (소스 파일)\n├── include/        (헤더 파일)\n├── lib/           (라이브러리)\n├── test/          (테스트 파일)\n└── docs/          (문서)\n```\n\n\n\n"
   },
   {
     "path": "/docs/algorithm/array",

@@ -2,6 +2,7 @@
   "/wiki/io-manager",
   "/wiki/programmed-io",
   "/wiki/register",
+  "/docs/language/cpp/cpp-convention",
   "/docs/life/youth-of-ggomi",
   "/docs/database/mysql-explain",
   "/docs/framework/spring/transaction-manager",
@@ -17,6 +18,7 @@
   "/wiki/system-service",
   "/wiki/system-call",
   "/docs/computer/os/operating-system",
+  "/docs/algorithm/b-tree",
   "/docs/computer/computer-organization",
   "/docs/language/java/install-zulu-in-mac",
   "/wiki/central-processing-unit",
@@ -33,6 +35,5 @@
   "/docs/algorithm/linked-list",
   "/docs/algorithm/stack",
   "/wiki/bit",
-  "/wiki/cpp-convention",
   "/docs/algorithm/array"
 ]
