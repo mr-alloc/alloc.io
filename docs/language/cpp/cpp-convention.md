@@ -1,11 +1,65 @@
 ---
-layout: wiki
-title: 비트 (Bit)
-date: 2019-09-05 08:10:00
+layout: post
+title: c++ 시작하기
+categories: [algorithm]
 tags: [Language, C++, C]
-summary: C++ 시작하기
-hide: false
+date: 2025-02-07 08:10:00
+profile-image: /post/profile/profile0.jpg
+thumbnail: /post/algorithm/cpp-getting-started.png
+current-company: Computer Academy
+current-position: Student
+summary: C++
+hide: true
 ---
+
+## 문법::grammar
+
+### 주요 연산자::operators
+
+**포인터 선언**
+```cpp
+int* num = new int[5];
+int* not_init;
+
+int new_num = 10;
+int* ptr = &new_num;
+
+int lazy = 512;
+*ptr = 20; //ptr이 가리키는 주소에 20 저장
+ptr = &lazy; //ptr이 lazy의 주소를 가리킴
+```
+포인터 변수의 특징
+* 초기화 필수 아님
+* null 값 불가능
+* 다른변수나 주소로 재할당 가능
+* 더 복잡한 메모리 조작 가능
+* 주소 연산 및 포인터 연산 가능
+
+**참조 선언**
+```cpp
+int num = 10;
+int& a = num; // 참조 연산자, num의 값을 a에 저장
+```
+참조 변수의 특징
+* 선언시 반드시 초기화 해야함
+* null 참조 불가능
+* 재할당 불가능 (한 번 참조한 변수 고정)
+* 문법적으로 더 간결하고 안전
+* 원본 변수에 투명하게 접근 가능
+
+**주소 연산자**
+```cpp
+int num = 10;
+
+//int 인트에 대한 포인터 변수
+int* a = &num; // 주소 연산자, num의 주소를 a에 저장
+```
+주소 연산자의 결과는 변수에대한 물리주소기 때문에 컴퓨터 bit 체계의 따른 메모리크기를 부여받는다.  
+주소 정보이기 때문에 포인터 변수에만 담을 수 있다.
+
+
+
+
 
 ## 명명규칙::naming-convention
 
