@@ -138,32 +138,32 @@ export default class ImageDecorator implements IMarkdownDecorator {
             case 1:
             case 2: {
                 //1, 2 시작 각각 wrapper
-                return '<div class="flex w-full flex-col"><div class="p-px w-full h-full cursor-pointer">';
+                return '<div class="flex w-full flex-col"><div class="p-px w-full h-full overflow-hidden cursor-pointer">';
             }
             case 3: {
                 //1 시작 wrapper
                 if (groupNumber === 1) {
-                    return '<div class="w-2/3 h-full"><div class="p-px w-full h-full cursor-pointer">';
+                    return '<div class="w-2/3 h-full"><div class="p-px w-full h-full overflow-hidden cursor-pointer">';
                 }
 
                 if (groupNumber === 2) {
-                    return '<div class="w-1/3 h-full"><div class="p-px w-full h-1/2 cursor-pointer">';
+                    return '<div class="w-1/3 h-full"><div class="p-px w-full h-1/2 overflow-hidden cursor-pointer">';
                 }
 
                 //2 시작 wrapper else
-                return '<div class="p-px w-full h-1/2 cursor-pointer">';
+                return '<div class="p-px w-full h-1/2 overflow-hidden cursor-pointer">';
             }
             case 4: {
                 //1 시작 wrapper
                 if (groupNumber === 1) {
-                    return '<div class="flex h-3/4"><div class="p-px h-full w-full cursor-pointer">';
+                    return '<div class="flex h-3/4"><div class="p-px h-full w-full overflow-hidden cursor-pointer">';
                 }
 
                 if (groupNumber === 2) {
-                    return '<div class="flex flex-row h-1/4"><div class="p-px w-1/3 h-full cursor-pointer">';
+                    return '<div class="flex flex-row h-1/4"><div class="p-px w-1/3 h-full overflow-hidden cursor-pointer">';
                 }
 
-                return '<div class="p-px w-1/3 h-full cursor-pointer">';
+                return '<div class="p-px w-1/3 h-full overflow-hidden cursor-pointer">';
             }
             default: {
                 //1 시작 wrapper
