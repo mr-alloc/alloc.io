@@ -56,7 +56,7 @@ export default class TableDecorator implements IMarkdownDecorator {
 
                 const classes = tableOpenToken.meta.wrapperClasses;
                 return (
-                    this.getFallbackWrapper([...attributes.wrapperClass.split(' '), classes]) + `<caption class="text-gray-300 text-sm">${desc}</caption>`
+                    this.getFallbackWrapper([...attributes.wrapperClass.split(' '), classes], attributes.type) + `<caption class="text-gray-600 dark:text-gray-400 text-sm">${desc}</caption>`
                 );
             } catch (skip) { isDebug && console.error('TableDecorator decorate error: ', skip); }
             return this.getFallbackWrapper([]);
@@ -79,8 +79,8 @@ export default class TableDecorator implements IMarkdownDecorator {
         return tokens.slice(openIndex, tokens.length).findIndex(token => token.type === (closeType + '_close')) + openIndex;
     }
 
-    private getFallbackWrapper(additionalWrapperClasses: Array<string>) {
+    private getFallbackWrapper(additionalWrapperClasses: Array<string>, type: string = '') {
         const wrapperClasses = ['flex', 'flex-col', 'overflow-x-auto'].concat(additionalWrapperClasses).join(' ');
-        return `<div class="${wrapperClasses}"><table class="table-fixed w-max">`;
+        return `<div class="${wrapperClasses}"><table class="table-fixed w-max ${type}">`;
     }
 }

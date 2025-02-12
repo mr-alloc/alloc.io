@@ -15475,11 +15475,11 @@ body {
     filter: blur(1rem);
 }
 
-sub, sup {
-    font-size: 60%;
-}
+/*sub, sup {*/
+/*    font-size: 60%;*/
+/*}*/
 
 
-sub {
-    bottom: 0em;
-}
+/*sub {*/
+/*    bottom: 0em;*/
+/*}*/

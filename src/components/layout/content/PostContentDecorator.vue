@@ -571,6 +571,20 @@ div[class*=language-] .highlight-lines .highlighted {
   }
 
 
+  table.filled {
+    border-top-width: 1px;
 
+    thead {
+
+      tr > th {
+        border-left-width: 1px;
+        padding: 0 .5rem .5rem .5rem;
+      }
+
+      tr:last-child > th {
+        border-right-width: 1px;
+      }
+    }
+  }
 }
 </style>
