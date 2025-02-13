@@ -1,9 +1,8 @@
 ---
 layout: post
 title: Azul System의 OpenJDK Zulu 설치하기
-categories: [language]
 tags: [OpenJDK, Azul System, Zulu]
-date: 2020-12-02 15:25:00 +0900
+date: 2020-12-02 15:25:00
 thumbnail: /post/java/azul-java.webp
 profile-image: /post/profile/profile1.jpg
 current-company: Cubic INC

@@ -1,7 +1,6 @@
 ---
 layout: post
 title: 스택 (Stack)
-categories: [data-structure]
 tags: [Data Structure, Array]
 date: 2019-09-09 13:53:00
 profile-image: /post/profile/profile0.jpg

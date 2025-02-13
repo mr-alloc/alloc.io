@@ -1,7 +1,6 @@
 ---
 layout: post
 title: markdown-it의 Renderer Rule
-categories: [tool]
 tags: [markdown-it, typescript]
 date: 2023-07-14 19:17:00 +0900
 thumbnail: "/post/tool/customize-markdown-it.webp"

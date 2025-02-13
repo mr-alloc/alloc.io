@@ -144,9 +144,6 @@
     "header": {
       "layout": "post",
       "title": "c++ 시작하기",
-      "categories": [
-        "algorithm"
-      ],
       "tags": [
         "Language",
         "C++",
@@ -158,7 +155,7 @@
       "current-company": "Computer Academy",
       "current-position": "Student",
       "summary": "C++",
-      "hide": true,
+      "hide": false,
       "breadcrumbs": [
         "문서",
         "언어",
@@ -205,7 +202,6 @@
       "layout": "post",
       "title": "꼬미의 젊은 시절",
       "description": "이빨로 무는 노루",
-      "categories": [],
       "tags": [
         "Life"
       ],
@@ -242,10 +238,6 @@
     "header": {
       "layout": "post",
       "title": "MySQL의 EXPLAIN을 알아보자",
-      "categories": [
-        "database",
-        "mysql"
-      ],
       "tags": [
         "Database",
         "MySQL",
@@ -667,9 +659,6 @@
     "header": {
       "layout": "post",
       "title": "markdown-it의 Renderer Rule",
-      "categories": [
-        "tool"
-      ],
       "tags": [
         "markdown-it",
         "typescript"
@@ -755,10 +744,6 @@
     "header": {
       "layout": "post",
       "title": "타입스크립트 시작하기 1 (소개)",
-      "categories": [
-        "language",
-        "typescript"
-      ],
       "tags": [
         "Typescript",
         "Javascript",
@@ -838,9 +823,6 @@
     "header": {
       "layout": "post",
       "title": "다중모듈 관리툴 asdf",
-      "categories": [
-        "tool"
-      ],
       "tags": [
         "Module",
         "Multi Module"
@@ -1233,10 +1215,6 @@
     "header": {
       "layout": "post",
       "title": "데코레이터 패턴 (Decorator Pattern)",
-      "categories": [
-        "software-design",
-        "structure"
-      ],
       "tags": [
         "Visitor Pattern",
         "Design Pattern",
@@ -1547,6 +1525,145 @@
     "content": "\n## 시스템 콜이란?::what-is-system-call\n\n시스템 콜(System Call)은 사용자 프로그램 또는 시스템 프로그램이 시스템 자원을 사용하기 위해 커널에게 요청하는 인터페이스이다.\n우리가 흔히 알고있는 표준 라이브러리(`C의 stdio.h: fopen(), fread(), fwrite()`)도 내부적으로는 시스템 콜(`C로 구현`)을 호출하여 커널에게 요청한다.\n\n시스템 자원은 커널에서 관리하기 때문에 외부에서 직접적으로 사용할 수 없어, 이를 위해 커널에서 제공하는 인터페이스를 사용하여 시스템 콜을 호출할 수 있다.\n이러한 호출은 일반적으로 C/C++로 작성된 함수 형태로 제공된다.\n\n---\n\n## 예제::example\n\n::text-wrapping\n\n![cp 명령으로 파일 복사](/post/computer/copy-file.png)\n\n예를 들어 한 파일로부터 데이터를 읽어서 다른 파일로 복사하는 간단한 프로그램을 작성한다 가정해 보자.\n\n`UNIX`의 CP 명령(`cp in.txt out.txt`)은 두개의 파일 이름을 인자로 받아서 첫번째 파일로부터 데이터를 읽어서 두번째 파일로 데이터를 쓴다.\n먼저 인자를 받고 나면 파일을 열고, 출력파일을 생성하여 출력 파일도 연다. 각각의 연산은 별개의 시스템콜(`open()`)을 호출한다.\n\n하지만 이와 같은 경우는 파일을 복사하기전 모든 검증과정이 끝났을 때의 상황이다.\n만약 입력 파일(`in.txt`)이 존재하지 않거나, 그 파일에 대한 접근이 금지된 경우 프로그램은 에러 메세지를 출력하고 비정삭적으로 종료(또 다른 시스템콜)를 해야한다.\n\n입력 파일에 대한 검증이 완료되어도, 출력파일을 생성할 때, 동일한 이름을 가진 파일이 이미 존재하면 기존 파일을 삭제(delete)/변경(write) 또는 새로운 파일 이름으로 생성(create)할 수 있다.\n이런 복사라는 과정에서도 다양한 시스템콜이 여러번 호출된다.\n\n::{ \"align\": \"right\" }\n\n**연속된 시스템 콜의 예**\n\n1. 입력파일 이름 획득\n    1. 화면에 프롬프트 출력\n    2. 입력파일 받아들임\n2. 출력파일 이름 획득\n    1. 화면에 프롬프트 출력\n    2. 출력파일 받아들임\n3. 입력파일 열기\n    1. 파일이 존재하지 않을 경우, 비정상적으로 종료\n4. 출력파일 생성\n    1. 파일이 존재할 경우, 비정상적으로 종료\n5. 루프 (읽기가 실패할 때까지 반복)\n    1. 입력파일로 부터 읽어 들임\n    2. 출력파일에 쓰기\n6. 입력파일 닫기\n7. 출력파일 닫기\n8. 화면에 완료 메세지 출력\n9. 종료\n\n## 시스템콜의 동작 과정::how-system-call-works\n\n시스템 콜은 실제 동작이 아니다. 시스템 콜은 커널 수준에서 제공하는 인터페이스이며, 그 구현은 커널함수로 이루어지게 된다.\n따라서 시스템 콜은 c로 만들어지더 라도 커널내에서 제어하려는 자원에 따라 [어셈블리어]() 또는 c로 작성된 함수로 구현된다.\n\nc언어로 작성된 표준 라이브러리(`libc`)에 래핑 API가 제공되는데, 이는 아래와 같다:\n\n1. glibc: GNU C 라이브러리\n    * [저장소](https://sourceware.org/git/glibc.git)\n    * read()함수 정의: [`/include/unistd.h`](https://sourceware.org/git/?p=glibc.git;a=blob;f=include/unistd.h)\n    * read()함수 구현: [\n      `/sysdeps/unix/sysv/linux/read.c`](https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/read.c)\n    * 특징\n        * Linux 배포판의 표준라이브러리\n        * 가장 광범위하게 사용됨\n        * 가장 완전한 POSIX 구현\n    * 사용되는 시스템: Ubuntu, Fedora, CentOS, Debian 등\n2. musl: musl libc\n    * [저장소](https://git.musl-libc.org/cgit/musl)\n    * read()함수 정의: [`/include/unistd.h`](https://git.musl-libc.org/cgit/musl/tree/include/unistd.h)\n    * read()함수 구현: [`/src/unistd/read.c`](https://git.musl-libc.org/cgit/musl/tree/src/unistd/read.c)\n    * 특징\n        * 경량화된 C표준 라이브러리\n        * 임베디드 시스템과 작은 Linux 배포판에 최적화\n        * 최소한의 리소스 사용\n    * 사용되는 시스템: Alpine Linux, Void Linux 등\n4. BSD libc\n    * [저장소](https://github.com/freebsd/freebsd-src)\n    * read()함수 정의: [`/include/unistd.h`](https://github.com/freebsd/freebsd-src/blob/main/include/unistd.h)\n    * read()함수 구현: [`/lib/libc/sys/read.c`](https://github.com/freebsd/freebsd-src/blob/main/lib/libc/sys/read.c)\n    * 특징\n        * BSD(Berkeley Software Distribution) 계열의 표준 라이브러리\n        * POSIX 표준 준수\n        * Unix 시스템 고유의 확장 기능 제공\n    * 사용되는 시스템: FreeBSD, NetBSD, OpenBSD, MacOS/iOS 등\n\n```c\n#include <unistd.h> //unix standard\n\nssize_t read(int fd, void *buf, size_t count) {\n    return syscall_cp(SYS_read, fd, buf, count);\n}\n```\n\n이 코드는 `musl libc`의 read 시스템콜 래핑 API이다. 각 시그니처는 다음을 의미한다:\n\n1. `fd`: 읽으려는 파일 디스크립터\n2. `buf`: 데이터를 읽어들일 버퍼\n3. `count`: 버퍼로 읽어 들일 수 있는 최대 바이트 수\n\n읽기가 성공한 경우 읽어 들인 바이트 수(ssize_t)를 반환하고, 오류가 발생한 경우 `-1`을 반환한다.\n\n> Unix/Linux 시스템에서는 `man read` 명령어로 man(manual) 페이지에서 시스템의 모든 명령어, 함수, 시스템콜 등에 대한 정보를 확인할 수 있다.\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n![시스템 콜 호출](/post/computer/system-call-implementation.png)\n:{ \"max-width\": \"400px\", \"align\": \"center\", \"description\": \"시스템 콜 호출 과정\" }\n\n시스템 콜 호출은 다음과 같이 처리된다.\n\n1. 사용자 프로그램은 시스템 콜을 호출한다. (syscall_cp()): 운영체제 에서\n   제공하는 [Wrapping API](https://git.musl-libc.org/cgit/musl/tree/src/unistd/read.c) 호출\n2. 시스템 콜인터페이스는 사용자 요청을 검증(인자 유효성, 권한, 리소스 가용성 등)하고 커널에 전달한다.\n3. 커널로 전달 전 CPU는 커널모드로 전환되고, 사용자\n   요청을 [시스템 콜 테이블](https://github.com/torvalds/linux/blob/v5.6/arch/x86/entry/syscalls/syscall_64.tbl)을 통해 시스템 콜 번호로\n   매핑한다.\n4. CPU는 실행전 커널모드로 전환하여 커널 함수를 실행하고, 사용자모드로 전환하고 반환값은 사용자 프로그램으로 전달하며, 제어또한 사용자 프로그램으로 넘어간다.\n\n### API와 시스템 콜::api-and-system-call\n\n앞서 시스템 콜 인터페이스는 사용자의 요청을 검증하고 커널 함수로 전달하는 역할을 한다고 했다.\n그렇다면 어떤 방식으로 사용자의 요청을 검증하는 것일까?\n\n시스템에서 제공되는 Wrapping API는 사용자 공간에서 `libc`로 제공된다.  \n사용자가 `read()` API(**glibc** 기준)를 사용하는 시점부터 알아보자.\n\n```c::Wrapping API 호출\n// include/unistd.h\nextern ssize_t __libc_read (int __fd, void *__buf, size_t __n);\n\n// sysdeps/unix/sysv/linux/read.c\nssize_t __libc_read (int fd, void *buf, size_t nbytes) {\n  return SYSCALL_CANCEL (read, fd, buf, nbytes);\n}\n\nlibc_hidden_def (__libc_read)\n\nlibc_hidden_def (__read)\nweak_alias (__libc_read, __read)\nlibc_hidden_def (read)\nweak_alias (__libc_read, read) //외부에서는 read()로 호출하며 alias로 __libc_read()를 호출한다.\n```\n\n`__libc_read()` 함수는 시스템콜 인터페이스(`SYSCALL_CANCEL`)로 read 시스템콜을 호출한다.\n이 내부적으로 인자값을 어떻게 전달하고 내부적인 시스템콜 매크로를 어떻게 선택하는지 알 수 있다.\n\n::code-group\n\n```c::1. SYSCALL_CANCEL 매크로\n//1. 연결된 인터페이스 매크로는 내부적으로 INLINE_SYSCALL_CALL() 매크로를 호출한다. \n# define SYSCALL_CANCEL(...) \\\n  __SYSCALL_CANCEL_CALL (__VA_ARGS__) //(__VA_ARGS__는 가변인자)\n```\n\n```c::2. __SYSCALL_CANCEL_CALL 매크로\n#define __SYSCALL_CANCEL_CALL(...) \\\n  __SYSCALL_CANCEL_DISP (__SYSCALL_CANCEL, __VA_ARGS__)\n```\n\n```c::3. __INLINE_SYSCALL_DISP 매크로\n//앞서 전달한 __SYSCALL_CANCEL 값을 b로 받는다.\n//요청 당시 매개변수 (read, fd, buf, nbytes)를 __SYSCALL_CANCEL_NARGS()로 전달한다. \n#define __SYSCALL_CANCEL_DISP(b,...) \\\n  __SYSCALL_CANCEL_CONCAT (b,__SYSCALL_CANCEL_NARGS(__VA_ARGS__))(__VA_ARGS__)\n//여기서 중요한점은 __SYSCALL_CANCEL_CONCAT은 매크로 이름을 만드는 매크로이다.\n//즉 b: __SYSCALL_CANCEL 와 __SYSCALL_CANCEL_NARGS(__VA_ARGS__)의 결과값을 인자로 받는다.\n\n//상위에 작성된 매크로 이름 생성 매크로 \n#define __SYSCALL_CANCEL_CONCAT_X(a,b)     a##b //a와 b를 붙인다.\n#define __SYSCALL_CANCEL_CONCAT(a,b)       __SYSCALL_CANCEL_CONCAT_X (a, b)\n```\n\n```c::4. __SYSCALL_CANCEL_NARGS 매크로\n//NARGS는 \"Number of Arguments\"의 약자로, 가변인자의 개수를 반환한다.\n#define __SYSCALL_CANCEL_NARGS_X(a,b,c,d,e,f,g,h,n,...) n\n#define __SYSCALL_CANCEL_NARGS(...) \\\n  __SYSCALL_CANCEL_NARGS_X (__VA_ARGS__,7,6,5,4,3,2,1,0,)\n//위처럼 되면 __SYSCALL_CANCEL_NARGS(read, fd, buf, nbytes)는 3를 반환한다.\n//a=read, b=fd, c=buf, d=nbytes, e=7, f=6, g=5, h=4, n=3\n```\n\n```c::5. 호출할 매크로 선택\n#define __SYSCALL_CANCEL_DISP(b,...) \\\n  __SYSCALL_CANCEL_CONCAT (b,__SYSCALL_CANCEL_NARGS(__VA_ARGS__))(__VA_ARGS__)\n//해당 코드의 매크로를 치환하면 아래처럼 된다.\n//b: __SYSCALL_CANCEL\n//__SYSCALL_CANCEL_NARGS(read, fd, buf, nbytes): 3\n//__SYSCALL_CONCAT(__SYSCALL_CANCEL, 3)(read, fd, buf, nbytes): __SYSCALL_CANCEL3(read, fd, buf, nbytes)\n\n//결과적으로 __SYSCALL_CANCEL3(read, fd, buf, nbytes) 매크로를 호출한다.\n```\n\n::\n\n위에서는 `__SYSCALL_CANCEL3(read, fd, buf, nbytes)` 매크로를 호출하였다.\n이제 해당 매크로를 시점으로 어떻게 이어지는지 알아 보자\n\n::code-group\n\n```c::1. __SYSCALL_CANCEL3 매크로 호출\n/* sysdeps\\unix\\sysv\\linux\\mips\\mips64\\n32\\syscall_types.h */\ntypedef long long int __syscall_arg_t;\n//Syscall Safe Convert\t\t    \n#define __SSC(__x) ((__syscall_arg_t) (__typeof__ ((__x) - (__x))) (__x))\n\n/* sysdeps\\unix\\sysdep.h */\n# define __SYSCALL_CANCEL7_ARG_DEF\n# define __SYSCALL_CANCEL7_ARCH_ARG_DEF\n# define __SYSCALL_CANCEL7_ARG\n\nlong int __syscall_cancel (__syscall_arg_t arg1, __syscall_arg_t arg2,\n\t\t\t   __syscall_arg_t arg3, __syscall_arg_t arg4,\n\t\t\t   __syscall_arg_t arg5, __syscall_arg_t arg6,\n\t\t\t   __SYSCALL_CANCEL7_ARG_DEF\n\t\t\t   __syscall_arg_t nr) attribute_hidden;\n\t\t\t   \n#define __SYSCALL_CANCEL3(name, a1, a2, a3) \\\n  __syscall_cancel (__SSC (a1), __SSC (a2), __SSC (a3), 0, 0, 0,\t\\\n\t\t    __SYSCALL_CANCEL7_ARG __NR_##name)\n```\n\n```c::2. ntpl/cancellation.c 함수 호출\n//Native POSIX Thread Library (NPTL)의 취소 기능을 위한 코드\nlong int\n__syscall_cancel (__syscall_arg_t a1, __syscall_arg_t a2,\n\t\t  __syscall_arg_t a3, __syscall_arg_t a4,\n\t\t  __syscall_arg_t a5, __syscall_arg_t a6,\n\t\t  __SYSCALL_CANCEL7_ARG_DEF __syscall_arg_t nr)\n{\n  //__internal_syscall_cancel(fd, buf, nbytes, 0, 0, 0, 0)\n  int r = __internal_syscall_cancel (a1, a2, a3, a4, a5, a6,\n\t\t\t\t     __SYSCALL_CANCEL7_ARG nr);\n  return __glibc_unlikely (INTERNAL_SYSCALL_ERROR_P (r))\n\t ? SYSCALL_ERROR_LABEL (INTERNAL_SYSCALL_ERRNO (r))\n\t : r;\n}\n```\n\n```c::3. ntpl/cancellation.c 함수 호출2\n/* Called by the INTERNAL_SYSCALL_CANCEL macro, check for cancellation and\n   returns the syscall value or its negative error code.  */\nlong int\n__internal_syscall_cancel (__syscall_arg_t a1, __syscall_arg_t a2,\n\t\t\t   __syscall_arg_t a3, __syscall_arg_t a4,\n\t\t\t   __syscall_arg_t a5, __syscall_arg_t a6,\n\t\t\t   __SYSCALL_CANCEL7_ARG_DEF\n\t\t\t   __syscall_arg_t nr)\n{\n  long int result;\n  struct pthread *pd = THREAD_SELF;\n  \n  ...\n\n  /* Call the arch-specific entry points that contains the globals markers\n     to be checked by SIGCANCEL handler.  */\n  //__syscall_cancel_arch(&pd->cancelhandling, __NR_read, fd, buf, nbytes, 0, 0, 0)\n  result = __syscall_cancel_arch (&pd->cancelhandling, nr, a1, a2, a3, a4, a5,\n\t\t\t          a6 __SYSCALL_CANCEL7_ARCH_ARG7);\n\t\t\t          \n  ch = atomic_load_relaxed (&pd->cancelhandling);\n  \n  if (result == -EINTR && cancel_enabled_and_canceled (ch))\n    __syscall_do_cancel ();\n\n  return result;\n}\n```\n\n```asm::4. 실제 시스템콜 호출\n#include <sysdep.h>\n#include <descr-const.h>\n/* sysdeps/unix/sysv/linux/mips/x86_64/syscall_cancel.S */\n/* long int [rax] __syscall_cancel_arch (volatile int *cancelhandling [%rdi],\n\t\t\t\t\t __syscall_arg_t nr   [%rsi],\n\t\t\t\t\t __syscall_arg_t arg1 [%rdx],\n\t\t\t\t\t __syscall_arg_t arg2 [%rcx],\n\t\t\t\t\t __syscall_arg_t arg3 [%r8],\n\t\t\t\t\t __syscall_arg_t arg4 [%r9],\n\t\t\t\t\t __syscall_arg_t arg5 [SP+8],\n\t\t\t\t\t __syscall_arg_t arg6 [SP+16])  */\n\nENTRY (__syscall_cancel_arch)\n\t.globl __syscall_cancel_arch_start\n__syscall_cancel_arch_start:\n\n\t/* if (*cancelhandling & CANCELED_BITMASK)\n\t     __syscall_do_cancel()  */\n\tmov    (%rdi),%eax\n\ttestb  $TCB_CANCELED_BITMASK, (%rdi)\n\tjne    __syscall_do_cancel\n\n\t/* Issue a 6 argument syscall, the nr [%rax] being the syscall\n\t   number.  */\n\tmov    %rdi,%r11\n\tmov    %rsi,%rax\n\tmov    %rdx,%rdi\n\tmov    %rcx,%rsi\n\tmov    %r8,%rdx\n\tmov    %r9,%r10\n\tmov    8(%rsp),%r8\n\tmov    16(%rsp),%r9\n\tmov    %r11,8(%rsp)\n\tsyscall\n\n\t.globl __syscall_cancel_arch_end\n__syscall_cancel_arch_end:\n\tret\nEND (__syscall_cancel_arch)\n```\n\n::\n\n`__syscall_cancel` 함수에서 `__NR_read`값이 0으로 변경되는\n이유는 [x86_64 시스템콜 매크로](https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/x86_64/64/arch-syscall.h;h=dfc10d0c7e8a8f1e3cfc81c00096bec4d016b3f0;hb=HEAD)\n에 0으로 정의 되어있기 때문이다.  \n실제 시스템콜 호출코드를 보면 [레지스터]()에 인자값들을 세팅하고 마지막에 `syscall` 명령어로 시스템 콜을 호출한다.\n위 내용으로 Wrapping API(`glibc`)에서는 호출할 시스템콜 정보를 찾고 인자값을 레지스터에 적재하여 시스템콜을 호출하는 과정을 알 수 있다.\n\n또한 `syscall` 명령은 하드웨어 레벨에서 커널모드로 전환하며, 커널의 시스템콜을 호출하는 역할을 한다.\n\n### 시스템콜 인터페이스::system-call-interface\n\n앞서 `glibc`에서 각 인자 값을 레지스터에 저장하고, `syscall` 명령어로 시스템콜을 호출하기 까지 과정을 보았었다.\n이제 커널모드로 변경된 후 제어는 커널로 넘어가게 되는데, 이때 시스템콜 인터페이스를 통해 시스템콜을 호출한다.\n\n`x86` 아키텍쳐 64비트 리눅스의 시스템콜 인터페이스의 시작점은 `arch/x86/entry/entry_64.S` 파일이다.\n어셈블러로 작성된 이코드는 아래의 순서로 실행된다.\n\n::code-group\n\n```asm::1. entry_SYSCALL_64 레이블\nSYM_CODE_START(entry_SYSCALL_64)\n\tUNWIND_HINT_ENTRY\n\tENDBR\n\n\tswapgs\n\t/* tss.sp2 is scratch space. */\n\tmovq\t%rsp, PER_CPU_VAR(cpu_tss_rw + TSS_sp2)\n\tSWITCH_TO_KERNEL_CR3 scratch_reg=%rsp\n\tmovq\tPER_CPU_VAR(pcpu_hot + X86_top_of_stack), %rsp\n```\n\n```asm::2. entry_SYSCALL_64_safe_stack 레이블\nSYM_INNER_LABEL(entry_SYSCALL_64_safe_stack, SYM_L_GLOBAL)\n\tANNOTATE_NOENDBR\n\n\t/* Construct struct pt_regs on stack */\n\tpushq\t$__USER_DS\t\t\t\t/* pt_regs->ss */\n\tpushq\tPER_CPU_VAR(cpu_tss_rw + TSS_sp2)\t/* pt_regs->sp */\n\tpushq\t%r11\t\t\t\t\t/* pt_regs->flags */\n\tpushq\t$__USER_CS\t\t\t\t/* pt_regs->cs */\n\tpushq\t%rcx\t\t\t\t\t/* pt_regs->ip */\n```\n\n```asm::3. entry_SYSCALL_64_after_hwframe 레이블\nSYM_INNER_LABEL(entry_SYSCALL_64_after_hwframe, SYM_L_GLOBAL)\n\tpushq\t%rax\t\t\t\t\t/* pt_regs->orig_ax */\n\n\tPUSH_AND_CLEAR_REGS rax=$-ENOSYS\n\n\t/* IRQs are off. */\n\tmovq\t%rsp, %rdi\n\t/* Sign extend the lower 32bit as syscall numbers are treated as int */\n\t//시스템콜 번호 검증\n\tmovslq\t%eax, %rsi\n\n\t/* clobbers %rax, make sure it is after saving the syscall nr */\n\tIBRS_ENTER\n\tUNTRAIN_RET\n\tCLEAR_BRANCH_HISTORY\n\t\n\t...\n    //시스템콜 래퍼 함수 호출\n\tcall\tdo_syscall_64\t\t/* returns with IRQs disabled */\n\n    ..\n```\n\n::\n\n여기까지는 시스템콜 인터페이스에서 검증하는 코드였고, 이제 시스템콜 레퍼에서 실제 시스템콜을 호출하는 코드를 살펴보자.\n\n::code-group\n\n```c::common.c\nstatic __always_inline bool do_syscall_x64(struct pt_regs *regs, int nr)\n{\n\t/*\n\t * Convert negative numbers to very high and thus out of range\n\t * numbers for comparisons.\n\t */\n\tunsigned int unr = nr;\n\n\tif (likely(unr < NR_syscalls)) {\n\t\tunr = array_index_nospec(unr, NR_syscalls);\n\t\tregs->ax = x64_sys_call(regs, unr);\n\t\treturn true;\n\t}\n\treturn false;\n}\n```\n\n```c::syscall_64.c\n#define __SYSCALL(nr, sym) __x64_##sym,\nconst sys_call_ptr_t sys_call_table[] = {\n#include <asm/syscalls_64.h>\n};\n#undef  __SYSCALL\n\n#define __SYSCALL(nr, sym) case nr: return __x64_##sym(regs);\nlong x64_sys_call(const struct pt_regs *regs, unsigned int nr)\n{\n\tswitch (nr) {\n\t#include <asm/syscalls_64.h>\n\tdefault: return __x64_sys_ni_syscall(regs);\n\t}\n};\n```\n\n::\n\n시스템콜 래퍼이다. 실제로 시스템콜을 매핑하는 코드는 빌드 타임에 동작으로 만들어진다.\n[`Makefile`](https://github.com/torvalds/linux/blob/v5.6/arch/x86/entry/syscalls/Makefile)에는 시스템콜 테이블에 대해 시스템콜로 연결하는 코드를\n생성하는 코드가 있다.\n[시스템 콜 테이블](https://github.com/torvalds/linux/blob/v5.6/arch/x86/entry/syscalls/syscall_64.tbl)에도 아래와 같이 나와있다.\n\n```text::syscall_64.tbl\n\n# The __x64_sys_*() stubs are created on-the-fly for sys_*() system calls\n#\n# The abi is \"common\", \"64\" or \"x32\" for this file.\n#\n0\tcommon\tread\t\t\tsys_read\n1\tcommon\twrite\t\t\tsys_write\n2\tcommon\topen\t\t\tsys_open\n...\n```\n\n즉 위에서 호출한 `__x64_sys_ni_syscall()` 함수는 전달하는 시스템 콜 번호로 시스템콜을 찾는다.\n시스템콜 함수이름은 `__x64_sys_*`로 시작하는데, 이는 빌드타임에 생성되는 코드이다. 읽기를 예로 들면 `__x64_sys_read()` 함수를 호출한다.\n\n`__x64_sys_read()` 함수는 실제로 정의되어 있지는 않지만 컴파일타임에 매크로를 통해 `SYSCALL_DEFINE3(read, ...)`으로 확장된다.\n결과적으로 아래의 코드를 호출하게된다.\n\n::code-group\n\n```c::SYSCALL_DEFINE3 함수\nSYSCALL_DEFINE3(read, unsigned int, fd, char __user *, buf, size_t, count)\n{\n\treturn ksys_read(fd, buf, count);\n}\n```\n\n```c::ksys_read 함수\nssize_t ksys_read(unsigned int fd, char __user *buf, size_t count)\n{\n\tCLASS(fd_pos, f)(fd);\n\tssize_t ret = -EBADF;\n\n\tif (!fd_empty(f)) {\n\t\tloff_t pos, *ppos = file_ppos(fd_file(f));\n\t\tif (ppos) {\n\t\t\tpos = *ppos;\n\t\t\tppos = &pos;\n\t\t}\n\t\tret = vfs_read(fd_file(f), buf, count, ppos);\n\t\tif (ret >= 0 && ppos)\n\t\t\tfd_file(f)->f_pos = pos;\n\t}\n\treturn ret;\n}\n```\n\n::\n\n여기까지가 커널코드고 `ksys_read` 커널 함수 내부에서 파일을 읽는 실제 로직을 수행한다.\n커널함수의 결과는 시스템콜 인터페이스를 통해 다시 **사용자 프로그램으로 전달**된다.\n\n\n---\n\n\n## 시스템 콜의 유형::types-of-system-calls\n\n시스템콜은 다섯가지 중요한 유형으로 나눌 수 있다:\n\n1. 프로세스 제어\n2. 파일 조작\n3. 장치 관리\n4. 정보 유지\n5. 통신과 보호\n\n### 프로세스 제어::process-control\n\n* 생성(fork), 중지(abort), 종료(exit)\n* 적재(load), 실행(execute)\n* 프로세스 속성(attributes) 조회, 변경\n* 시간 대기\n* 이벤트 대기(wait event), 알림(signal event)\n* 메모리 할당 및 자유화\n\n### 파일 조작::file-manipulation\n\n* 파일 생성(create file), 삭제(delete file)\n* 열기(open), 닫기(close)\n* 읽기, 쓰기, 위치 변경(reposition)\n* 파일 속성 조회, 변경\n\n### 장치 관리::device-management\n\n* 장치 요청(request devices), 해제(release devices)\n* 읽기, 쓰기, 위치 변경(reposition)\n* 장치 속성(attributes) 조회, 변경\n* 장치의 논리적 부착(attach), 분리(detach)\n\n### 정보 유지::information-maintenance\n\n* 시간, 날짜 조회, 변경\n* 시스템 데이터 조회, 변경\n* 프로세스, 파일, 장치의 속성(attribute) 조회, 변경\n\n### 통신과 보호::communication-and-protection\n* 통신 연결 생성, 제거\n* 메세지 송신, 수신\n* 상태 정보 전달\n* 원격 장치의 부착(attach), 분리(detach)\n* 파일 권한 조회, 변경\n"
   },
   {
+    "path": "/docs/network/data-link",
+    "header": {
+      "layout": "post",
+      "title": "데이터 링크 계층 (Data Link Layer)",
+      "tags": [
+        "Network",
+        "Data Link Layer",
+        "OSI",
+        "OSI 7 Layer"
+      ],
+      "date": 1612531320000,
+      "thumbnail": "/post/network/data-link-layer/index.png",
+      "profile-image": "/post/profile/profile1.jpg",
+      "current-company": "Cubic INC",
+      "current-position": "SI Researcher",
+      "summary": "데이터 링크 계층",
+      "excerpt-separator": "<!--more-->",
+      "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "네트워크"
+      ],
+      "images": [
+        {
+          "src": "/post/network/data-link-layer/network-interface-card.png",
+          "alt": "NIC"
+        }
+      ],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "데이터 링크 계층이란?::what-is-data-link-layer",
+            "title": "데이터 링크 계층이란?",
+            "fragment": "what-is-data-link-layer",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "NIC::network-interface-card",
+            "title": "NIC",
+            "fragment": "network-interface-card",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "프레임 구조::frame-structure",
+            "title": "프레임 구조",
+            "fragment": "frame-structure",
+            "children": []
+          }
+        ]
+      }
+    },
+    "description": "데이터 링크는 물리계층 상위에 있고, 네트워크 프로토콜 관점에서 가장 기본이 되는 계층이다.\n데이터는 \"프레임\"으로 다루며 MAC 주소 체계를 사용하여 통신한다.",
+    "content": "## 데이터 링크 계층이란?::what-is-data-link-layer\n\n**데이터 링크 계층**은 OSI 7 계층 중 두 번째 계층으로, [물리 계층](/docs/network/physical-layer)에 데이터 전송을 지시할 수 있다.\n흔히 **L2**(Layer 2)라고도 불리며 L2에서는 MAC 주소를 기반으로 주소지정을 사용한다.  \n\nL2는 프레임 단위의 데이터를 전송하며, 신뢰성 있는 전송을 보장하기 위해 오류제어 및 흐름 제어를 수행한다.  \n대표적인 프로토콜 기술로는 `Ethernet`, `PPP(Point-to-Point Protocol)`, `HDLC(High-Level Data Link Control)` 등이 있다.  \n\nL2에는 Mac 주소 테이블이 있으며, 출발지 MAC을 테이블에 학습한다.\n\n## NIC::network-interface-card\n\n**NIC**(**N**etwork **I**nterface **C**ard)은 네트워크 장치로, 컴퓨터와 네트워크 간의 통신을 위한 하드웨어 장치이다.\n컴퓨터에서는 `NIC`이 L2 계층의 역할로 여러가지 처리를 수행한다.\n\n![NIC](/post/network/data-link-layer/network-interface-card.png)\n\n**NIC의 주요 특징**\n\n* 각 랜카드는 고유한 MAC 주소(48 Bit)를 가지고있다. (실제로 이 처리를 위해 [IEEE]()에서 관리한다.)\n* 데이터를 프레임 단위로 전송하고 수신\n* L1에서 받은 바이트 스트림을 검사하고 정상 적인 프레임이면 처리, 오류가 있으면 폐기한다.\n\n## 프레임 구조::frame-structure\n\n| Preamble |  SFD   | Destination MAC | Source MAC |  Type  |     Data     |  FCS   |\n|:--------:|:------:|:---------------:|:----------:|:------:|:------------:|:------:|\n| 7 Bytes  | 1Bytes |     6Bytes      |   6Bytes   | 2Bytes | 46~1500Bytes | 4Bytes |\n:{ \"type\": \"filled\" }\n\nL2에서는 각 데이터를 프레임으로 전송하며, 프레임은 위와 같은 구조로 이루어져있다.\n\n* **Preamble**: 수신측의 클록 동기화를 위해 사용 되며, 7번 반복된 byte로 구성된다. (예: 10101010(AA) * 7)\n* **SFD**(**S**tart **F**rame **D**elimiter): 프레임의 시작을 알리는 구분 값, 1byte로 구성된다. (예: 10101011(AB))\n* **Destination MAC**: 목적지 MAC 주소, 6byte로 구성된다.\n* **Source MAC**: 출발지 MAC 주소, 6byte로 구성된다.\n* **Type**: 데이터의 종류를 나타내는 값 이며, IPv4는 `0x0800`, IPv6은 `0x86DD`, ARP는 `0x0806`으로 구성된다.\n* **Data**: 실제 전송할 데이터, 최소 46byte에서 최대 1500bytes 까지 전송 가능하다.\n* **FCS**(**F**rame **C**heck **S**equence): 오류 검출을 위한 값으로, 4byte로 구성된다. 이 값은 프레임이 손상되었는지 아닌 지를 판단하는 체크섬으로 사용한다.\n  * 송신 장치(Sender Device)는 이 필드를 제외한 프레임의 포든 필드를 가져와 **CRC**(Cyclic Redundancy Check)라는 알고리즘으로 실행하고 결과로 FCS로 사용할 4byte 값을 생성하여 이 필드에 담는다.\n\nL2에서는 Data를 제외 한 모든 필드를 프레임 헤더라고 하며 `NIC`에서는 이 헤더를 분석하고, Data를 추출하여 상위 계층으로 전달한다.\n\n\n\n"
+  },
+  {
+    "path": "/docs/network/physical-layer",
+    "header": {
+      "layout": "post",
+      "title": "물리 계층 (Physical Layer)",
+      "tags": [
+        "Network",
+        "Physical Layer",
+        "OSI",
+        "OSI 7 Layer"
+      ],
+      "date": 1612468440000,
+      "thumbnail": "/post/network/physical-layer/index.png",
+      "profile-image": "/post/profile/profile1.jpg",
+      "current-company": "Cubic INC",
+      "current-position": "SI Researcher",
+      "summary": "물리 계층",
+      "excerpt-separator": "<!--more-->",
+      "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "네트워크"
+      ],
+      "images": [
+        {
+          "src": "/post/network/physical-layer/utp-cable.png",
+          "alt": "UTP 케이블"
+        },
+        {
+          "src": "/post/network/physical-layer/pin-map-of-cable.png",
+          "alt": "UTP 케이블 핀맵"
+        },
+        {
+          "src": "/post/network/physical-layer/pin-map-of-cable.png",
+          "alt": "케이블 핀맵"
+        }
+      ],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "물리계층은 무엇인가?::what-is-physical-layer",
+            "title": "물리계층은 무엇인가?",
+            "fragment": "what-is-physical-layer",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "데이터 전송 방식::data-transfer-method",
+            "title": "데이터 전송 방식",
+            "fragment": "data-transfer-method",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "전송 매체별 역할::role-of-transmission-media",
+            "title": "전송 매체별 역할",
+            "fragment": "role-of-transmission-media",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "데이터 처리::data-processing",
+            "title": "데이터 처리",
+            "fragment": "data-processing",
+            "children": []
+          }
+        ]
+      }
+    },
+    "description": "네트워크 통신에서 물리 계층은 데이터를 전송하는 데 사용되는 하드웨어 장치와 전송 매체를 다룬다.\n흔히 이더넷, Wi-Fi, 블루투스, 광섬유 케이블 등이 있고 일반적으로 우리가 접하는 랜선(UTP)이다.",
+    "content": "## 물리계층은 무엇인가?::what-is-physical-layer\n\n물리 계층은 OSI 7계층 중 가장 하위 계층으로, 데이터를 전송하는 데 사용되는 하드웨어 장치와 전송 매체를 다룬다.\n양끝 장치에서 전기 또는 빛을 이용해 데이터를 전달하며 데이터 전송의 물리적인 부분을 담당한다.\n\n## 데이터 전송 방식::data-transfer-method\n\n일반적으로 물리 계층은 이진 데이터를 전기신호 또는 빛 신호로 전달한다. 각 전송매체 마다 다르며 이는 아래와 같다:\n\n* **유선 매체**: 전기 신호를 사용하는 유선 매체로는 전화선, 케이블, 광섬유 케이블 등이 있다.\n* **무선 매체**: 무선 매체로는 라디오파, 마이크로파, 적외선, 블루투스, Wi-Fi 등이 있다.\n\n이더넷을 기준으로 예를 들면, 이더넷은 랜선(UTP)위에서 전달되며, 전기신호를 사용한다.\n전기신호는 [Bit](/wiki/bit)로 표현되며, 0과 1로 이루어진 데이터를 전달한다.\n\n![UTP 케이블](/post/network/physical-layer/utp-cable.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"UTP 케이블\" }\n\n>UTP는 **U**nshielded **T**wisted **P**air의 약자로, 피복이 있는 작은 구리선들이 두 개씩 묶여 있는 케이블이다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n\n각 페어로 데이터를 전송하거나 수신할 수 있는데 이는 아래와 같다:\n\n![UTP 케이블 핀맵](/post/network/physical-layer/pin-map-of-cable.png)\n\n## 전송 매체별 역할::role-of-transmission-media\n\n[LAN]() 케이블은 총 8개의 회선이며,  4개의 페어로 구성되어 있다.\n\n이더넷 규격별 특징은 아래와 같다:\n\n1. 10BASE-T\n   * 속도: 각 페어당 10Mbps\n   * 변조방식: 멘체스터 인코딩(Manchester Encoding)\n   * 사용페어: 2쌍만 사용\n     * 1,2번 페어: 데이터 전송(TX)\n     * 3,6번 페어: 데이터 수신(RX)\n     * 4, 5번 & 7,8번 페어: 미사용\n2. 100BASE-TX\n   * 속도: 각 페어당 100Mbps\n   * 변조방식: MLT-3(4B/5B 인코딩 포함) \n   * 사용페어: 2쌍만 사용\n     * 1,2번 페어: 데이터 전송(TX)\n     * 3,6번 페어: 데이터 수신(RX)\n     * 4, 5번 & 7,8번 페어: 미사용\n3. 1000BASE-T\n   * 속도: 각 페어당 250Mbps *4 = 총 1Gbps\n   * 변조방식: PAM-5(4B/5B 인코딩 포함)\n   * 사용페어: 4쌍 모두 사용\n     * 모든 페어가 양방향 통신\n     * 각 페어가 송수신 동시 수행\n\n![케이블 핀맵](/post/network/physical-layer/pin-map-of-cable.png)\n: { \"align\": \"center\", \"max-width\": \"600px\", \"description\": \"케이블 핀맵\" }\n\n## 데이터 처리::data-processing\n\n물리 계층은 [데이터 계층]()으로 받은 프레임을 트랜시버(Transceiver)를 이용해 비트 스트림으로 변환 및 직렬화하여 순차적으로 데이터를 전송한다.  \n예: 10101110(1바이트) -> 1, 0, 1, 0, 1, 1, 1, 0(8비트)\n\n이렇게 받은 비트들은 각 변조 방식으로 비트단위로 변조되어 전송된다.\n\n\n\n"
+  },
+  {
     "path": "/docs/computer-science/operating-system/operating-system",
     "header": {
       "layout": "post",
@@ -1644,15 +1761,12 @@
     "header": {
       "layout": "post",
       "title": "Azul System의 OpenJDK Zulu 설치하기",
-      "categories": [
-        "language"
-      ],
       "tags": [
         "OpenJDK",
         "Azul System",
         "Zulu"
       ],
-      "date": 1606890300000,
+      "date": 1606922700000,
       "thumbnail": "/post/java/azul-java.webp",
       "profile-image": "/post/profile/profile1.jpg",
       "current-company": "Cubic INC",
@@ -1909,10 +2023,6 @@
     "header": {
       "layout": "post",
       "title": "비지터 패턴 (Visitor Pattern)",
-      "categories": [
-        "software-design",
-        "behavior"
-      ],
       "tags": [
         "Visitor Pattern",
         "Design Pattern",
@@ -1991,10 +2101,6 @@
     "header": {
       "layout": "post",
       "title": "커맨드 패턴 (Command Pattern)",
-      "categories": [
-        "software-design",
-        "behavior"
-      ],
       "tags": [
         "Command Pattern",
         "Design Pattern",
@@ -2073,10 +2179,6 @@
     "header": {
       "layout": "post",
       "title": "브릿지 패턴 (Bridge Pattern)",
-      "categories": [
-        "software-design",
-        "structure"
-      ],
       "tags": [
         "Bridge Pattern",
         "Design Pattern",
@@ -2157,10 +2259,6 @@
     "header": {
       "layout": "post",
       "title": "어댑터 패턴 (Adapter Pattern)",
-      "categories": [
-        "software-design",
-        "structure"
-      ],
       "tags": [
         "Adapter Pattern",
         "Design Pattern"
@@ -2287,9 +2385,6 @@
     "header": {
       "layout": "post",
       "title": "클래스 다이어그램",
-      "categories": [
-        "software-design"
-      ],
       "tags": [
         "UML",
         "Class Diagram"
@@ -2601,9 +2696,6 @@
     "header": {
       "layout": "post",
       "title": "스택 (Stack)",
-      "categories": [
-        "data-structure"
-      ],
       "tags": [
         "Data Structure",
         "Array"

@@ -1,7 +1,6 @@
 ---
 layout: post
 title: 비지터 패턴 (Visitor Pattern)
-categories: [ software-design, behavior ]
 tags: [ Visitor Pattern, Design Pattern, Software Design ]
 date: 2020-07-04 19:04:00 +0900
 thumbnail: /post/software-design/visitor-pattern-intro.svg

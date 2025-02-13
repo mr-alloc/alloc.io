@@ -12,6 +12,7 @@ export default function (filePath: Path): PostData {
     const contentRegex = new RegExp("([\\s\\S]*?)<!--more-->\\n?([\\s\\S]*)", 'gm')
 
     const header = Object.assign({}, md.parsedYaml);
+
     header.date = header.date ? Date.parse(header.date) : 1999999999999;
     header.breadcrumbs = filePath.array.slice(0, filePath.array.length -1)
         .map(node => FileAlias.toNameIfAbsent(node));

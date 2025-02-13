@@ -1,7 +1,6 @@
 ---
 layout: post
 title: 다중모듈 관리툴 asdf
-categories: [tool]
 tags: [Module, Multi Module]
 date: 2023-02-14 22:14:00 +0900
 thumbnail: /post/tool/asdf.png

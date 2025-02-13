@@ -1,7 +1,6 @@
 ---
 layout: post
 title: c++ 시작하기
-categories: [algorithm]
 tags: [Language, C++, C]
 date: 2025-02-07 08:10:00
 profile-image: /post/profile/profile0.jpg
@@ -9,7 +8,7 @@ thumbnail: /post/algorithm/cpp-getting-started.png
 current-company: Computer Academy
 current-position: Student
 summary: C++
-hide: true
+hide: false
 ---
 
 ## 문법::grammar

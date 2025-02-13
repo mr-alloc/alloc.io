@@ -1,7 +1,6 @@
 ---
 layout: post
 title: 데코레이터 패턴 (Decorator Pattern)
-categories: [ software-design, structure ]
 tags: [ Visitor Pattern, Design Pattern, Software Design ]
 date: 2021-09-12 13:22:00
 thumbnail: /post/software-design/decorator-pattern-intro.png

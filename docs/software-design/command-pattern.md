@@ -1,7 +1,6 @@
 ---
 layout: post
 title: 커맨드 패턴 (Command Pattern)
-categories: [software-design, behavior]
 tags: [Command Pattern, Design Pattern, Software Design]
 date: 2020-06-17 18:34:00 +0900
 thumbnail: /post/software-design/command-pattern-intro.svg
