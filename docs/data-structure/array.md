@@ -1,11 +1,10 @@
 ---
 layout: post
 title: 배열 (Array)
-categories: [algorithm]
 tags: [Data Structure, Array]
 date: 2019-09-04 20:53:00
 profile-image: /post/profile/profile0.jpg
-thumbnail: /post/algorithm/array.png
+thumbnail: /post/data-structure/array/index.png
 current-company: Computer Academy
 current-position: Student
 summary: 배열
@@ -48,7 +47,7 @@ var arr: number[] = [1, 2, 3, 4, 5];
 
 ## 배열의 특징::features
 
-![배열의 주소](/post/algorithm/array.png)
+![배열의 주소](/post/data-structure/array/index.png)
 :{ "align": "center", "max-width": "300px", "description": "배열의 요소" }
 
 배열은 선언시 위와같이 할당된다. 왼쪽의 메모리 주소는 배열에 저장되는 타입의 크기에 따라 다르개 할당된다.

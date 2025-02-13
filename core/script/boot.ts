@@ -34,7 +34,7 @@ function explore(path: string ) {
  *
  * @param wholePath
  * - /docs/algorithm
- * - /docs/algorithm/heap-sort.md
+ * - /docs/algorithm/heap-sort-sort.md
  * @param file
  */
 function toFile (wholePath: Path, file: Dirent) {
@@ -77,6 +77,7 @@ const posts = postDataList
             const paths = post.path.split('/');
             routePaths.push(`/wiki/${paths[paths.length -1]}`)
         }
+
         post.header.images = extractImages(post.content);
         post.header.headlines = extractHeadlines(post.content);
         return post

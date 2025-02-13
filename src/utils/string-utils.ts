@@ -9,3 +9,5 @@ export function slugify(target: string, forUrlEncode: boolean): string {
         ? encodeURIComponent(slug)
         : slug
 }
+
+

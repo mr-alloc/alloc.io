@@ -43,7 +43,7 @@ class DefaultStarterService implements StarterService {
                 postContentStore.add(post)
 
                 if(post.header) {
-                    this.setTags(post.header, post.path)
+                    this.setTags(post.header, post.path.value)
                 }
             });
 

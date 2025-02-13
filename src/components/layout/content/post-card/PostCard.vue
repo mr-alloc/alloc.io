@@ -2,7 +2,7 @@
   <div :class="ui.wrapper">
     <PostCardHeader :image="header.image" :nickname="header.nickname"
                     :position="header.position" :company="header.company" :date="header.date"/>
-    <PostCardBody :header="feed.header" :description="feed.description" :path="feed.path" />
+    <PostCardBody :header="feed.header" :description="feed.description" :path="feed.path.value" />
     <PostCardFooter :header="feed.header" />
   </div>
 </template>

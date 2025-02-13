@@ -19,13 +19,15 @@ export default function (filePath: Path): PostData {
     const body: Array<string> = contentRegex.exec(md.markdown) ?? ['', '',md.markdown];
 
 
-    let path = '/unknown';
-    if (header.layout === 'post') {
-        path = filePath.realValue.replace('.md', '').toLowerCase();
-    } else if (header.layout === 'wiki') {
-        const paths = filePath.realValue.replace('.md', '').toLowerCase().split('/');
-        path = `/wiki/${paths[paths.length -1]}`;
-    }
+    // let path = '/unknown';
+    // if (header.layout === 'post') {
+    //     path = filePath.realValue.replace('.md', '').toLowerCase();
+    // } else if (header.layout === 'wiki') {
+    //     const paths = filePath.realValue.replace('.md', '').toLowerCase().split('/');
+    //     path = `/wiki/${paths[paths.length -1]}`;
+    // }
+
+    const path = filePath.realValue.replace('.md', '').toLowerCase();
 
     return new PostData(
         path,

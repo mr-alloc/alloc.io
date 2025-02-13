@@ -21,24 +21,30 @@ const route = useRoute()
 const postContentStore = usePostContentStore();
 const post = ref<PostMetadata>(findPost(route.path));
 const categoryTree = ref<Array<ICategoryNode>>([]);
+const totalCount = ref(0);
 watch(() => route.path, (n, o) => {
   post.value = findPost(n);
-  categoryTree.value = postContentStore.values(DocumentType.POST)
-      .filter(post => post.hasCategories)
-      .filter(post => post.isPublic)
+  const allCategories = postContentStore.allValues()
+      .filter(post => post.isPublic);
+  totalCount.value = allCategories.length;
+  categoryTree.value = allCategories
       .reduce((tree, post) => {
-        const foundGroup = findOrCreateGroup(tree, post.header.categories, 0);
-        foundGroup.addChild(new CategoryContent(false, post.header.summary, post.path));
+        const array = post.path.array;
+        const foundGroup = findOrCreateGroup(tree, array.slice(1, array.length -1), 0);
+        const path = post.header.layout === DocumentType.WIKI.name ? `/wiki/${post.path.array[post.path.array.length -1]}` : post.path.value;
+        foundGroup.addChild(new CategoryContent(false, post.header.summary, path));
         return tree;
       }, new Array<ICategoryNode>());
 }, { immediate: true, deep: true });
 
 function findOrCreateGroup(existingGroups: Array<ICategoryNode>, categories: Array<string>, depth: number): CategoryGroup {
+  const currentPathArray = post.value.path.array.slice(1, post.value.path.array.length -1);
   const currentGroup = categories[depth];
   const found = existingGroups.find(exist => exist.isDirectory && exist.name === currentGroup);
+
   //존재하지 않는 경우 생성
   if (!found) {
-    const isActive = post.value.header.categories.length > depth && post.value.header.categories[depth] === currentGroup;
+    const isActive = currentPathArray.length > depth && currentPathArray[depth] === currentGroup;
     const newGroup = new CategoryGroup(true, currentGroup, !isActive);
     existingGroups.push(newGroup);
     if (categories.length -1 === depth) {
@@ -67,8 +73,9 @@ const ui = {
 <template>
   <aside class="hidden overflow-y-auto lg:block lg:max-h-[calc(100vh-var(--header-height))] lg:sticky lg:top-[--header-height] py-8 lg:px-4 lg:-mx-4">
     <div class="relative">
+      <div class="my-2 select-none">전체 <strong>{{ totalCount }}</strong></div>
       <ul class="m-0">
-        <PostCategoryTree :categories="categoryTree" :groups="post.header.categories" :depth="0" :path="post.path"/>
+        <PostCategoryTree :categories="categoryTree" :groups="post.path.array.slice(1)" :depth="0" :path="post.path.value"/>
       </ul>
     </div>
   </aside>

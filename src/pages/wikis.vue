@@ -2,8 +2,8 @@
   <UContainer>
     <MainPage
         :ui="{
-      right: 'sticky top-[--header-height] bg-background/75 backdrop-blur group -mx-4 sm:-mx-6 px-4 sm:px-6 lg:px-4 lg:-mx-4 overflow-y-auto max-h-[calc(100vh-var(--header-height))] z-10'
-    }">
+          right: 'sticky top-[--header-height] bg-background/75 backdrop-blur group -mx-4 sm:-mx-6 px-4 sm:px-6 lg:px-4 lg:-mx-4 overflow-y-auto max-h-[calc(100vh-var(--header-height))] z-10'
+        }">
 
 
       <MainPageHeader title="위키">
@@ -13,7 +13,7 @@
       <MainPageBody class="mt-8 pb-24 dark:text-gray-300 dark:prose-pre:!bg-gray-800/60">
         <ul class="flex flex-wrap">
           <li class="inline-block" v-for="wiki in allWikis">
-            <NuxtLink :class="ui.button.wrapper" :to="wiki.path">
+            <NuxtLink :class="ui.button.wrapper" :to="`/wiki/${wiki.path.last}`">
               <span :class="ui.button.name">{{ wiki.header.summary }}</span>
             </NuxtLink>
           </li>

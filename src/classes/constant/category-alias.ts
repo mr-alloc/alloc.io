@@ -3,12 +3,16 @@ export class CategoryAlias {
 
     private static readonly DEVELOPMENT = new CategoryAlias('development', '개발');
     private static readonly ALGORITHM = new CategoryAlias('algorithm', '알고리즘');
+    private static readonly DATA_STRUCTURE = new CategoryAlias('data-structure', '자료구조');
     private static readonly TYPESCRIPT = new CategoryAlias('typescript', '타입스크립트');
     private static readonly LANGUAGE = new CategoryAlias('language', '언어');
-    private static readonly OS = new CategoryAlias('os', '운영체제');
+    private static readonly JAVA = new CategoryAlias('java', '자바');
+    private static readonly COMPUTER_SCIENCE = new CategoryAlias('computer-science', '컴퓨터 공학');
+    private static readonly COMPUTER_STRUCTURE = new CategoryAlias('computer-structure', '컴퓨터 구조');
+    private static readonly OPERATING_SYSTEM = new CategoryAlias('operating-system', '운영체제');
     private static readonly DATABASE = new CategoryAlias('database', '데이터베이스');
     private static readonly MYSQL = new CategoryAlias('mysql', 'MySQL');
-    private static readonly FRAMEWORK = new CategoryAlias('framework', '프레임워크');
+    private static readonly BACK_END = new CategoryAlias('back-end', '서버/백엔드');
     private static readonly SPRING = new CategoryAlias('spring', '스프링');
     private static readonly TOOL = new CategoryAlias('tool', '라이브러리/도구');
     private static readonly SOFTWARE_DESIGN = new CategoryAlias('software-design', '소프트웨어 디자인');
@@ -35,8 +39,9 @@ export class CategoryAlias {
     }
 
     private static values(): Array<CategoryAlias> {
-        return [this.DEVELOPMENT, this.ALGORITHM, this.LANGUAGE, this.TYPESCRIPT, this.OS, this.DATABASE, this.MYSQL,
-            this.FRAMEWORK, this.SPRING, this.TOOL, this.SOFTWARE_DESIGN, this.STRUCTURE, this.BEHAVIOR, this.ETC];
+        return [this.DEVELOPMENT, this.ALGORITHM, this.DATA_STRUCTURE, this.LANGUAGE, this.JAVA, this.TYPESCRIPT,
+            this.COMPUTER_STRUCTURE, this.OPERATING_SYSTEM, this.COMPUTER_SCIENCE, this.DATABASE, this.MYSQL,
+            this.BACK_END, this.SPRING, this.TOOL, this.SOFTWARE_DESIGN, this.STRUCTURE, this.BEHAVIOR, this.ETC];
     }
 
 

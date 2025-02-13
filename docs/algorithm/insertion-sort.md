@@ -1,10 +1,9 @@
 ---
 layout: post
 title: Insertion Sort (삽입 정렬)
-categories: [algorithm]
 tags: [Java, Algorithm, Sort, Insertion Sort]
 date: 2019-11-05 18:25:00 +0900
-thumbnail: /post/algorithm/insertion-sort-intro.png
+thumbnail: /post/algorithm/insertion-sort/intro.png
 current-company: Computer Academy
 current-position: Student
 summary: 삽입 정렬

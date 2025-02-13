@@ -1,11 +1,10 @@
 ---
 layout: post
 title: 연결 리스트 (Linked List)
-categories: [algorithm]
 tags: [Data Structure, Linked List]
 date: 2019-09-24 20:53:00
 profile-image: /post/profile/profile0.jpg
-thumbnail: /post/algorithm/linked-list.png
+thumbnail: /post/data-structure/linked-list/index.png
 current-company: Computer Academy
 current-position: Student
 summary: 연결 리스트
@@ -20,7 +19,7 @@ hide: false
 ## 연결리스트란?::what-is-linked-list
 
 ::text-wrapping
-![노드](/post/algorithm/node.png)
+![노드](/post/data-structure/linked-list/node.png)
 
 연결 리스트는 노드를 사용하여 구현하는데, 노드란 어떤 자료구조를 구성하기 위해 사용되는 각 요소를 의미한다. 값을 래핑하는 역할을 한다.  
 
@@ -30,7 +29,7 @@ hide: false
 
 일반적으로 연결 리스트에서는 노드에 `next` 포인터(다른 노드를 참조)를 추가하여 구현한다.
 
-![연결 리스트](/post/algorithm/linked-list.png)
+![연결 리스트](/post/data-structure/linked-list/index.png)
 :{ "description": "연결 리스트" }
 
 연결 리스트는 이미지처럼 노드의 `next` 필드가 다음 노드를 참조하고 있다. 
@@ -52,7 +51,7 @@ class LinkedList<T> is
 
 연결 리스트에 새로운 값을 추가하려면 새로운 노드의 `next`를 `head`로 설정하고, `head`를 새로운 노드로 설정한다.
 
-![연결 리스트 추가](/post/algorithm/add-to-linked-list.png)
+![연결 리스트 추가](/post/data-structure/linked-list/add-to-linked-list.png)
 :{ "description": "연결 리스트에 새로운 노드를 추가" }
 
 반대로 제거할 때도, `head`를 다음 노드로 설정하고, 제거할 노드를 해제한다.

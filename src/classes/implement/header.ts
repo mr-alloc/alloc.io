@@ -4,7 +4,6 @@ import TocNode from "@/classes/implement/toc-node";
 export default class Header {
     private readonly _layout: string
     private readonly _title: string
-    private readonly _categories: string[]
     private readonly _tags: string[]
     private readonly _date: Date
     private readonly _images: Image []
@@ -22,7 +21,6 @@ export default class Header {
     public constructor(header: any) {
         this._layout = header.layout;
         this._title = header.title;
-        this._categories = header.categories ?? [];
         this._tags = header.tags;
         this._date = new Date(header.date);
         this._images = header.images.map((img: any) => new Image(img.src, img.alt));
@@ -43,10 +41,6 @@ export default class Header {
 
     get title(): string {
         return this._title;
-    }
-
-    get categories(): string[] {
-        return this._categories;
     }
 
     get tags(): string[] {

@@ -24,9 +24,11 @@ const isRange = ref<boolean>(false);
 const group = ref<string>(props.groups[props.depth]);
 const collapseGroup = ref<Map<string, boolean>>(new Map<string, boolean>());
 
+
 watch(() => props.path, (n, o) => {
   isRange.value = props.groups && props.groups.length > props.depth;
   group.value = props.groups[props.depth];
+
   const directories = props.categories?.filter(cat => cat.isDirectory)
       .map(cat => cat as CategoryGroup);
   collapseGroup.value = toValueMap<CategoryGroup, string, boolean>(directories, cat => cat.name, cat => cat.isCollapse);
@@ -42,11 +44,9 @@ function collapseCategory(category: CategoryGroup) {
 </script>
 <template>
   <li class="space-y-2 mx-1 lg:mx-0 select-none list-none"
-      :class="{ 'mb': groups.length -1 === depth }"
-      v-for="category in categories as Array<ICategoryNode>"
-      :key="category.name">
-    <a :class="[ui.icon.wrapper, isRange && group === category.name ? 'text-gray-700 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400']" v-if="category.isDirectory" role="button"
-       @click.prevent="collapseCategory(category as CategoryGroup)">
+      :class="{ 'mb': groups.length -1 === depth }" v-for="category in categories as Array<ICategoryNode>" :key="category.name">
+    <a :class="[ui.icon.wrapper, isRange && group === category.name ? 'text-gray-700 dark:text-gray-200' : 'text-gray-500 dark:text-gray-400']"
+       v-if="category.isDirectory" role="button" @click.prevent="collapseCategory(category as CategoryGroup)">
       <div :class="[ui.icon.default, isRange && group === category.name ? ui.icon.active : ui.icon.inactive]">
         <span :class="`iconify i-ph:${CategoryAlias.find(category.name).name} w-4 h-4 flex-shrink-0`" aria-hidden="true"></span>
       </div>

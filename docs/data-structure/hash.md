@@ -1,11 +1,10 @@
 ---
 layout: post
 title: 해시 (Hash)
-categories: [algorithm]
 tags: [Data Structure, Hash]
 date: 2019-10-04 19:30:00
 profile-image: /post/profile/profile0.jpg
-thumbnail: /post/algorithm/hash.png
+thumbnail: /post/data-structure/hash/index.png
 current-company: Computer Academy
 current-position: Student
 summary: 해시
@@ -152,12 +151,12 @@ h = 66867 + 98 = 66965
 ```
 ::
 
-![해시 인덱스](/post/algorithm/hash-index.png)
+![해시 인덱스](/post/data-structure/hash/hash-index.png)
 :{ "align": "center", "max-width": "400px", "description": "Alice와 Bob의 해시 인덱스" }
 
 이렇게 계산된 인덱스는 현재 테이블의 크기와 해시값에 따라 생성되므로 예측하기 어려우며, 간혹 같은 인덱스를 생성하는 경우가 발생하는데, 이를 **해시 충돌**이라고 한다.
 
-![해시 충돌](/post/algorithm/hash-collision.png)
+![해시 충돌](/post/data-structure/hash/hash-collision.png)
 :{ "description": "해시 충돌" }
 
 **해시 충돌**은 해시들이 어떤 계산된 값에 의해 생성된 테이블 인덱스가 같은 경우를 말한다.
@@ -169,10 +168,10 @@ h = 66867 + 98 = 66965
 
 ### 1. 체이닝::chaining
 
-![체이닝](/post/algorithm/hash-chaining.png)
+![체이닝](/post/data-structure/hash/hash-chaining.png)
 :{ "description": "노드를 연결 리스트로 묶는 체이닝" }
 
-**체이닝**은 해시 충돌이 발생하면, 같은 테이블에 [연결 리스트](/docs/algorithm/linked-list)로 연결하는 방식이다.
+**체이닝**은 해시 충돌이 발생하면, 같은 테이블에 [연결 리스트](/docs/data-structure/linked-list)로 연결하는 방식이다.
 
 해시 충돌이 자주 발생 하는것은 아니지만, 종종 발생한다. 이렇게 해시 충돌이 발생하면 해당 인덱스로 연결된 연결 리스트에서 데이터를 찾아야 한다.
 같은 해시 인덱스에 대해 데이터가 저장된곳을 `버킷(Bucket)`이라고 하는데, 이 버킷에는 데이터가 많아질수록 성능이 저하된다.
@@ -195,7 +194,7 @@ h = 66867 + 98 = 66965
 
 #### 2-1. 선형 탐사
 
-![선형 탐사](/post/algorithm/hash-linear-probing.png)
+![선형 탐사](/post/data-structure/hash/hash-linear-probing.png)
 :{ "align": "center", "max-width": "400px", "description": "선형 탐사로 새로운 정보를 테이블에 추가" }
 
 첫 번째로 **선형 탐사**는 해시로 계산된 인덱스가 이미 사용중이라면, 다음 인덱스로 이동하여 저장하는 방식이다.
@@ -206,7 +205,7 @@ h = 66867 + 98 = 66965
 
 #### 2-2. 제곱 탐사 (이차 탐사)
 
-![제곱 탐사](/post/algorithm/hash-quadratic-probing.png)
+![제곱 탐사](/post/data-structure/hash/hash-quadratic-probing.png)
 :{ "align": "center", "max-width": "250px", "description": "제곱 탐사로 새로운 정보를 테이블에 추가" }
 
 두 번째로 **제곱 탐사**는 `선형 탐사`의 군집화를 보완하기 위해 나온 기법이다.

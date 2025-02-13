@@ -1,11 +1,10 @@
 ---
 layout: post
 title: 큐 (Queue)
-categories: [algorithm]
 tags: [Data Structure, Queue]
 date: 2019-10-04 19:30:00
 profile-image: /post/profile/profile0.jpg
-thumbnail: /post/algorithm/queue.png
+thumbnail: /post/data-structure/queue/index.png
 current-company: Computer Academy
 current-position: Student
 summary: 큐
@@ -19,10 +18,10 @@ Queue는 무엇인가 기다리는 행렬을 의미한다.
 
 ## 큐란?::what-is-queue
 
-![큐](/post/algorithm/queue.png)
+![큐](/post/data-structure/queue/index.png)
 :{ "description": "큐의 enqueue 와 dequeue" }
 
-**Queue** 자료구조는 [배열](/docs/algorithm/array)로도 구현할 수 있고, [연결 리스트](/docs/algorithm/linked-list)로도 간단하게 구현할 수 있다.
+**Queue** 자료구조는 [배열](/docs/data-structure/array)로도 구현할 수 있고, [연결 리스트](/docs/data-structure/linked-list)로도 간단하게 구현할 수 있다.
 위 이미지와 같이 `Queue`는 먼저 들어온 요소가 먼저 나올 수 있는 선입선출(FIFO, First In First Out)의 자료구조이다.
 
 `Queue`에는 값을 넣을수 있는 `enqueue`와 값을 꺼낼 수 있는 `dequeue`를 구현한다.

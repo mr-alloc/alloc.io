@@ -13,7 +13,8 @@ export const usePostContentStore = defineStore("PostMap", () => {
     const wikiCount = ref<number>(0);
 
     function add(post: PostMetadata) {
-        postContents.value.set(post.path,  post);
+        const path = post.header.layout === DocumentType.WIKI.name ? `/wiki/${post.path.array[post.path.array.length - 1]}` : post.path.value;
+        postContents.value.set(path,  post);
     }
 
     function get(path: string): PostMetadata | undefined {
@@ -25,8 +26,7 @@ export const usePostContentStore = defineStore("PostMap", () => {
     }
 
     function getWiki(filename: string): PostMetadata | undefined {
-        return values(DocumentType.WIKI)
-            .find(post => post.filename === filename);
+        return postContents.value.get(`/wiki/${filename}`) as PostMetadata;
     }
 
     function values(documentType: DocumentType): Array<PostMetadata> {
@@ -45,7 +45,7 @@ export const usePostContentStore = defineStore("PostMap", () => {
     function completeAddPost() {
         headlineMap.value = [...postContents.value.values()].reduce((acc, post) => {
             const array = nestedToArray(post.header.rootHeadLine) as Array<TocNode>;
-            acc.set(post.path, toMap<string, TocNode>(
+            acc.set(post.path.value, toMap<string, TocNode>(
                 array,
                 (toc) => toc.origin
             ));

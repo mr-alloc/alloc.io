@@ -1,11 +1,11 @@
 ---
 layout: post
 title: 스택 (Stack)
-categories: [algorithm]
+categories: [data-structure]
 tags: [Data Structure, Array]
 date: 2019-09-09 13:53:00
 profile-image: /post/profile/profile0.jpg
-thumbnail: /post/algorithm/stack.png
+thumbnail: /post/data-structure/stack/index.png
 current-company: Computer Academy
 current-position: Student
 summary: 스택
@@ -18,7 +18,7 @@ hide: false
 
 ## 스택이란?::what-is-stack
 
-![스택](/post/algorithm/stack.png)
+![스택](/post/data-structure/stack/index.png)
 :{ "description": "스택" }
 
 스택은 후입선출(LIFO, Last In First Out)의 자료구조로, 데이터를 쌓아 올리는 방식으로 저장한다.
@@ -28,7 +28,7 @@ hide: false
 이 자료구조는 컴퓨터의 메모리 구조에서 함수 호출과 복귀 주소를 저장하는데 사용된다.
 
 프로세스가 메모리에 올라가서 함수의 호출을 받으면, 함수의 호출 정보를 스택에 저장하고 함수가 종료되면 스택에서 꺼내어 복귀 주소로 사용한다.
-스택은 [배열](/docs/algorithm/array)이나 [연결 리스트](/docs/algorithm/linked-list)로 구현할 수 있다.
+스택은 [배열](/docs/data-structure/array)이나 [연결 리스트](/docs/data-structure/linked-list)로 구현할 수 있다.
 
 ## 스택의 필수기능 구현::core-operations
 

@@ -1,27 +1,27 @@
 import Header from "@/classes/implement/header";
-import type IPostMetadata from "@/classes/i-post-content";
 import DocumentType from "@/classes/constant/document-type";
 import {isEmpty} from "@/utils/string-utils";
+import Path from "@/classes/implement/path";
 
-export class PostMetadata implements IPostMetadata {
-    private readonly _path: string
+export class PostMetadata {
+    private readonly _path: Path
     private readonly _header: Header
     private readonly _description: string
     private readonly _content: string
 
-    constructor(postContent: IPostMetadata) {
-        this._path = postContent.path
-        this._header = new Header(postContent.header);
-        this._description = isEmpty(postContent.description) ? useAppConfig().description : postContent.description;
-        this._content = postContent.content;
+    constructor(path: Path, header: Header, description: string, content: string) {
+        this._path = path;
+        this._header = header;
+        this._description = description;
+        this._content = content;
     }
 
     get filename(): string {
-        const each = this._path.split('/');
+        const each = this._path.array;
         return each[each.length - 1];
     }
 
-    get path(): string {
+    get path(): Path {
         return this._path;
     }
 
@@ -41,19 +41,20 @@ export class PostMetadata implements IPostMetadata {
         if (this._header.layout === DocumentType.WIKI.name) {
             return 'wiki';
         }
-        return this._path.split('/').slice(2, 3)[0] ?? 'etc';
+        return this._path.array.slice(2, 3)[0] ?? 'etc';
     }
 
-    static toPostContent (value: IPostMetadata): PostMetadata {
-        return new PostMetadata(value);
+    static fromJson (json: any): PostMetadata {
+        return new PostMetadata(
+            Path.from(json.path),
+            new Header(json.header),
+            isEmpty(json.description) ? useAppConfig().description : json.description,
+            json.content
+        );
     }
 
-    static toPosts (posts: IPostMetadata[]): PostMetadata[] {
-        return posts.map(PostMetadata.toPostContent)
-    }
-
-    get hasCategories() {
-        return this._header.categories.length > 0;
+    static toPosts (arrays: any[]): PostMetadata[] {
+        return arrays.map(PostMetadata.fromJson)
     }
 
     get isPublic(): boolean {
