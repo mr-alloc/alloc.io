@@ -30,6 +30,7 @@ L2에는 Mac 주소 테이블이 있으며, 출발지 MAC을 테이블에 학습
 컴퓨터에서는 `NIC`이 L2 계층의 역할로 여러가지 처리를 수행한다.
 
 ![NIC](/post/network/data-link-layer/network-interface-card.png)
+:{ "align": "center", "max-width": "400px", "description": "L2 계층을 수행하는 랜카드(NIC)" }
 
 **NIC의 주요 특징**
 
