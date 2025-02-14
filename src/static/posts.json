@@ -1526,7 +1526,7 @@
     "content": "\n## 세그먼트 레지스터 (Segment Register)\n\n세그먼트 레지스터는 메모리 주소를 논리적 단위로 나누어 관리하기 위한 레지스터이다.\n각 구역의 **시작점**을 가리키는 주소이며, 모두 16비트로 구성되어있다:\n\n* CS (Code Segment): 코드 영역\n* DS (Data Segment): 데이터 영역\n* SS (Stack Segment): 스택 영역\n* ES (Extra Segment): 보조 영역\n* FS: 추가 적인 보조영역 1\n* GS: 추가 적인 보조영역 2\n\n`FS`와 `GS`는 메모리 세그먼트의 추가적인 영역을 위해 `i386` 프로세서에서 도입되었지만, 64비트 Linux에서는 [메모리 페이징]() 기법이 추가되면서,\n`FS`와 `GS` 레지스터는 더이상 세그먼트에 사용되지않고, thread-local storage (TLS)또는 per-CPU를 위해 사용된다.\n\n**TLS (Thread Local Storage)와 per-CPU**\n\n| 용도      | 적용범위              | 사용처                           | 예                          |\n|---------|-------------------|-------------------------------|----------------------------|\n| TLS     | 스레드별로 고유한 데이터를 저장 | 사용자 공간에서 스레드기반 어플리케이션이나 라이브러리 | 쓰레드마다 독립적인 전역 변수 사용        |\n| per-CPU | CPU별로 고유한 데이터를 저장 | 운영체제 커널 수준                    | CPU별 통계, 커널 데이터구조, 리소스 사용량 |\n\n\n(작성중)\n"
   },
   {
-    "path": "/docs/network/data-link",
+    "path": "/docs/network/data-link-layer",
     "header": {
       "layout": "post",
       "title": "데이터 링크 계층 (Data Link Layer)",
@@ -1537,7 +1537,7 @@
         "OSI 7 Layer"
       ],
       "date": 1612531320000,
-      "thumbnail": "/post/network/data-link-layer/index.png",
+      "thumbnail": "/post/network/data-link-layer/network-interface-card.png",
       "profile-image": "/post/profile/profile1.jpg",
       "current-company": "Cubic INC",
       "current-position": "SI Researcher",
@@ -1599,7 +1599,7 @@
         "OSI 7 Layer"
       ],
       "date": 1612468440000,
-      "thumbnail": "/post/network/physical-layer/index.png",
+      "thumbnail": "/post/network/physical-layer/pin-map-of-cable.png",
       "profile-image": "/post/profile/profile1.jpg",
       "current-company": "Cubic INC",
       "current-position": "SI Researcher",

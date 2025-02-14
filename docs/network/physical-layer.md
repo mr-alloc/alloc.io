@@ -3,7 +3,7 @@ layout: post
 title: 물리 계층 (Physical Layer)
 tags: [Network, Physical Layer, OSI, OSI 7 Layer]
 date: 2021-02-04 19:54:00
-thumbnail: /post/network/physical-layer/index.png
+thumbnail: /post/network/physical-layer/pin-map-of-cable.png
 profile-image: /post/profile/profile1.jpg
 current-company: Cubic INC
 current-position: SI Researcher

@@ -3,7 +3,7 @@ layout: post
 title: 데이터 링크 계층 (Data Link Layer)
 tags: [Network, Data Link Layer, OSI, OSI 7 Layer]
 date: 2021-02-05 13:22:00
-thumbnail: /post/network/data-link-layer/index.png
+thumbnail: /post/network/data-link-layer/network-interface-card.png
 profile-image: /post/profile/profile1.jpg
 current-company: Cubic INC
 current-position: SI Researcher
