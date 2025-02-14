@@ -2,13 +2,13 @@
 layout: post
 title: c++ 시작하기
 tags: [Language, C++, C]
-date: 2025-02-07 08:10:00
+date: 2022-02-07 08:10:00
 profile-image: /post/profile/profile-2024-06-07.jpg
 thumbnail: /post/language/cpp/cpp-grammar.png
 current-company: NEOWIZ
-current-position: Student
+current-position: Software Engineer
 excerpt-separator: <!--more-->
-summary: C++
+summary: C++ 문법
 hide: false
 ---
 C++의 기본 문법을 배워보자
@@ -98,4 +98,4 @@ project_name/
 ```
 
 
-
+(작성중)
