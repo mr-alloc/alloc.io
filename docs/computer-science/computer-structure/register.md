@@ -1,9 +1,10 @@
 ---
 layout: wiki
+date: 2021-02-16 13:14:00
 title: 레지스터 (Register)
 tags: [ Hardware, CPU, Register ]
 summary: Register
-hide: true
+hide: false
 ---
 
 ## 세그먼트 레지스터 (Segment Register)
@@ -29,3 +30,4 @@ hide: true
 | per-CPU | CPU별로 고유한 데이터를 저장 | 운영체제 커널 수준                    | CPU별 통계, 커널 데이터구조, 리소스 사용량 |
 
 
+(작성중)

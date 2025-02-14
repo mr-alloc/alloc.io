@@ -35,7 +35,7 @@ export default class CodeGroupDecorator implements IMarkdownDecorator {
                             ${buttons}
                         </div>
                         <div class="code-group relative [&>pre]:!rounded-t-none [&>pre]:!my-0 my-5" id="code-group-${index}" data-group-number="${index}">
-                            <button type="button" aria-label="Copy code to clipbloard" tabindex="-1" class="copy-button focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 flex-shrink-0 font-medium rounded-md text-xs gap-x-1.5 p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline-offset-4 hover:underline focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center absolute top-2.5 right-2.5">
+                            <button type="button" aria-label="Copy code to clipbloard" tabindex="-1" class="copy-button focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:cursor-not-allowed aria-disabled:opacity-75 flex-shrink-0 font-medium rounded-md text-xs gap-x-1.5 p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 underline-offset-4 hover:underline focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center absolute top-2.5 right-2.5 bg-white dark:bg-gray-950">
                                 <span class="iconify i-ph:copy flex-shrink-0 h-4 w-4" aria-hidden="true"></span>
                             </button>`;
         }

@@ -7,6 +7,7 @@ export class CategoryAlias {
     private static readonly TYPESCRIPT = new CategoryAlias('typescript', '타입스크립트');
     private static readonly LANGUAGE = new CategoryAlias('language', '언어');
     private static readonly JAVA = new CategoryAlias('java', '자바');
+    private static readonly CPP = new CategoryAlias('cpp', 'C++');
     private static readonly COMPUTER_SCIENCE = new CategoryAlias('computer-science', '컴퓨터 공학');
     private static readonly COMPUTER_STRUCTURE = new CategoryAlias('computer-structure', '컴퓨터 구조');
     private static readonly OPERATING_SYSTEM = new CategoryAlias('operating-system', '운영체제');
@@ -40,7 +41,7 @@ export class CategoryAlias {
     }
 
     private static values(): Array<CategoryAlias> {
-        return [this.DEVELOPMENT, this.ALGORITHM, this.DATA_STRUCTURE, this.LANGUAGE, this.JAVA, this.TYPESCRIPT,
+        return [this.DEVELOPMENT, this.ALGORITHM, this.DATA_STRUCTURE, this.LANGUAGE, this.JAVA, this.TYPESCRIPT, this.CPP,
             this.COMPUTER_STRUCTURE, this.OPERATING_SYSTEM, this.COMPUTER_SCIENCE, this.DATABASE, this.MYSQL, this.NETWORK,
             this.BACK_END, this.SPRING, this.TOOL, this.SOFTWARE_DESIGN, this.STRUCTURE, this.BEHAVIOR, this.ETC];
     }

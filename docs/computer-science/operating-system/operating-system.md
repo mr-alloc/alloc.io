@@ -49,14 +49,14 @@ CPU와 장치컨트롤러는 병렬로 실행되기 떄문에 메모리에 접�
 커널은 여러가지 인터페이스아 장치드라이버로 나뉘게 되는데, 이는 `UNIX`가 발전해 오면서 몇십년에 걸쳐 추가되고 확장 되었다.
 계층 별로 이루어져 있는 `UNIX` 운영체제는 [시스템 콜](/wiki/system-call) 인터페이스 아래와 하드웨어 위 모든 것이 커널이다. 
 
-![UNIX의 전통적인 시스템 구조(/post/computer/traditional-system-structure-of-unix.png)
+![UNIX의 전통적인 시스템 구조](/post/computer/traditional-system-structure-of-unix.png)
 :{ "align": "center", "max-width": "400px", "description": "UNIX의 전통적인 시스템 구조" }
 
 커널은 시스템 콜을 통해 `파일 시스템`, `CPU 스케줄링`, `메모리 관리` 등의 기능을 제공한다. **이러한 기능은 한나의 주소 공간으로 결합하기에는 너무 많은 기능이다.**
 
 `Linux` 운영체제는  `UNIX`에 기반을 두고 있으며 아래와 같은 유사한 구조로 구성된다.
 
-![Linux의 시스템 구조(/post/computer/system-structure-of-linux.png)
+![Linux의 시스템 구조](/post/computer/system-structure-of-linux.png)
 :{ "align": "center", "max-width": "400px", "description": "Linux의 시스템 구조" }
 
 응용 프로그램은 일반적으로 커널의 시스템콜 인터페이스와 통신할 때 [`glibc` 표준 C 라이브러리](/wiki/system-call#api-and-system-call)를 사용한다.  

@@ -6,6 +6,7 @@ import type CategoryGroup from "@/classes/implement/category-group";
 import type CategoryContent from "@/classes/implement/category-content";
 import {toValueMap} from "@/utils/collection-util";
 
+const route = useRoute();
 const ui = {
   icon: {
     default: 'rounded-md p-1 inline-flex ring-inset ring-1 group-hover:bg-primary group-hover:ring-primary',
@@ -59,7 +60,7 @@ function collapseCategory(category: CategoryGroup) {
       <PostCategoryTree :categories="(category as CategoryGroup).children" :groups="groups" :depth="depth +1" :path="path" />
     </ul>
     <NuxtLink v-else class="ml-1.5 cursor-pointer  hover:text-gray-700 dark:hover:text-gray-200 duration-300"
-       :class="path === (category as CategoryContent).path ? 'font-bold text-primary-500 dark:text-primary-400' : 'text-gray-500 dark:text-gray-400'"
+       :class="path === (category as CategoryContent).path || route.path === (category as CategoryContent).path ? 'font-bold text-primary-500 dark:text-primary-400' : 'text-gray-500 dark:text-gray-400'"
        :to="(category as CategoryContent).path">
       <span class="text-xs">{{ category.name }}</span>
     </NuxtLink>

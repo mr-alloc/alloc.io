@@ -3,9 +3,9 @@
     <!--  Nuxt에서는 연결경로는 모두 prerender항목으로 포함시키므로 client rendering으로 해줘야 SSG처리를 하지 않는다.  -->
     <client-only>
       <FontAwesomeIcon class="tag-icon" :icon="['fa', 'tags']"/>
-      <a :href="methods.getTagPath(tag)" v-for="tag in props.tags" v-bind:key="tag" >
+      <span v-for="tag in props.tags">
         <span :class="{ current: data.booked && data.booked === tag}">{{ tag }}</span>
-      </a>
+      </span>
     </client-only>
   </div>
 </template>
@@ -45,7 +45,7 @@ const methods = {
     margin-right: 7px;
     padding: 2px 1px;
   }
-  a {
+  span {
 
     span {
       margin: 3px 2px;
@@ -54,15 +54,15 @@ const methods = {
       padding: 2px 10px;
       background-color: #2855ab;
       display: inline-block;
-      cursor: pointer;
       color: #fff;
+      user-select: none;
 
 
-      &:hover,:active {
-        transition: 0.1s;
-        background-color: white;
-        color: black
-      }
+      //&:hover,:active {
+      //  transition: 0.1s;
+      //  background-color: white;
+      //  color: black
+      //}
 
       &.current {
         background-color: firebrick;

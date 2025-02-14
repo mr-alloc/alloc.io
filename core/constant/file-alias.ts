@@ -9,6 +9,7 @@ export default class FileAlias {
     private static readonly JAVA = new FileAlias("java", "자바");
     private static readonly JAVASCRIPT = new FileAlias("javascript", "자바스크립트");
     private static readonly TYPESCRIPT = new FileAlias("typescript", "타입스크립트");
+    private static readonly CPP = new FileAlias("cpp", "C++");
     private static readonly FRAMEWORK = new FileAlias("framework", "프레임워크");
     private static readonly LANGUAGE = new FileAlias("language", "언어");
     private static readonly SPRING = new FileAlias("spring", "스프링");
@@ -36,7 +37,7 @@ export default class FileAlias {
 
     public static values(): Array<FileAlias> {
         return [this.DOCS, this.ALGORITHM, this.DATA_STRUCTURE, this.JAVA, this.JAVASCRIPT, this.TYPESCRIPT,
-            this.BACK_END, this.NETWORK,
+            this.BACK_END, this.NETWORK, this.CPP,
             this.FRAMEWORK, this.SPRING, this.LANGUAGE, this.SWIFT, this.TOOL, this.DATABASE,
             this.OS, this.COMPUTER, this.HARDWARE, this.SOFTWARE_DESIGN, this.BEHAVIOR, this.STRUCTURE, this.LIFE];
     }

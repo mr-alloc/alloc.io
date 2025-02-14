@@ -1,7 +1,7 @@
 <template>
   <div class="post-preview-header flex pt-4 px-3 mb-2">
     <div :class="ui.image.frame">
-      <img :class="ui.image.source" :src="props.image" alt="Profile Image" />
+      <img :class="ui.image.source" style="backface-visibility: hidden; filter: blur(0.3px)" :src="props.image" alt="Profile Image" />
     </div>
     <div :class="ui.author.wrapper">
       <a :href="`https://github.com/${props.nickname}`" target="_blank">
@@ -35,7 +35,7 @@ const props = defineProps<{
 const ui = {
   image: {
     frame: 'inline-block w-14 h-14 rounded-full overflow-hidden mx-2',
-    source: 'bg-contain bg-no-repeat w-full h-full object-cover'
+    source: 'bg-contain bg-no-repeat w-full h-full object-cover transform-gpu'
   },
   author: {
     wrapper: 'px-2.5 w-4/5',

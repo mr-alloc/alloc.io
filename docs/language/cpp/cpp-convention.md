@@ -3,14 +3,16 @@ layout: post
 title: c++ 시작하기
 tags: [Language, C++, C]
 date: 2025-02-07 08:10:00
-profile-image: /post/profile/profile0.jpg
-thumbnail: /post/algorithm/cpp-getting-started.png
-current-company: Computer Academy
+profile-image: /post/profile/profile-2024-06-07.jpg
+thumbnail: /post/language/cpp/cpp-grammar.png
+current-company: NEOWIZ
 current-position: Student
+excerpt-separator: <!--more-->
 summary: C++
 hide: false
 ---
-
+C++의 기본 문법을 배워보자
+<!--more-->
 ## 문법::grammar
 
 ### 주요 연산자::operators
@@ -57,40 +59,35 @@ int* a = &num; // 주소 연산자, num의 주소를 a에 저장
 주소 정보이기 때문에 포인터 변수에만 담을 수 있다.
 
 
-
-
-
 ## 명명규칙::naming-convention
 
-C++ 프로젝트의 주요 명명 규칙을 설명드리겠습니다:
-
-파일명:
+**파일명**:
 - 소스 파일: `.cpp`
 - 헤더 파일: `.h` 또는 `.hpp`
 - 파일명은 snake_case 또는 PascalCase 사용
     - 예: `user_interface.cpp`, `UserInterface.cpp`
 
-클래스/구조체:
+**클래스/구조체**:
 - PascalCase 사용
 - 예: `class UserManager`, `struct PlayerData`
 
-함수/메서드:
+**함수/메서드**:
 - camelCase 또는 snake_case
 - 예: `void getUserInput()` 또는 `void get_user_input()`
 
-변수:
+**변수**:
 - camelCase 또는 snake_case
 - 예: `int playerScore` 또는 `int player_score`
 
-상수/매크로:
+**상수/매크로**:
 - SCREAMING_SNAKE_CASE
 - 예: `const int MAX_PLAYERS = 10`, `#define PI_VALUE 3.14159`
 
-namespace:
+**namespace**:
 - 소문자 snake_case
 - 예: `namespace game_engine`
 
-프로젝트 디렉토리:
+**프로젝트 디렉토리**:
 ```
 project_name/
 ├── src/            (소스 파일)

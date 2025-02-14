@@ -1,7 +1,6 @@
 [
   "/wiki/io-manager",
   "/wiki/programmed-io",
-  "/wiki/register",
   "/docs/language/cpp/cpp-convention",
   "/docs/life/youth-of-ggomi",
   "/docs/database/mysql-explain",
@@ -19,6 +18,7 @@
   "/wiki/linkers-and-loaders",
   "/wiki/system-service",
   "/wiki/system-call",
+  "/wiki/register",
   "/docs/network/data-link",
   "/docs/network/physical-layer",
   "/docs/computer-science/operating-system/operating-system",

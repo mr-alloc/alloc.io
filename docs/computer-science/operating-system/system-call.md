@@ -21,7 +21,7 @@ hide: false
 
 ::text-wrapping
 
-![cp 명령으로 파일 복사](/post/computer/copy-file.png)
+![cp 명령으로 파일 복사](/post/computer-science/operating-system/system-call/copy-file.png)
 
 예를 들어 한 파일로부터 데이터를 읽어서 다른 파일로 복사하는 간단한 프로그램을 작성한다 가정해 보자.
 
@@ -66,8 +66,7 @@ c언어로 작성된 표준 라이브러리(`libc`)에 래핑 API가 제공되�
 1. glibc: GNU C 라이브러리
     * [저장소](https://sourceware.org/git/glibc.git)
     * read()함수 정의: [`/include/unistd.h`](https://sourceware.org/git/?p=glibc.git;a=blob;f=include/unistd.h)
-    * read()함수 구현: [
-      `/sysdeps/unix/sysv/linux/read.c`](https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/read.c)
+    * read()함수 구현: [`/sysdeps/unix/sysv/linux/read.c`](https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/read.c)
     * 특징
         * Linux 배포판의 표준라이브러리
         * 가장 광범위하게 사용됨
@@ -111,7 +110,7 @@ ssize_t read(int fd, void *buf, size_t count) {
 > Unix/Linux 시스템에서는 `man read` 명령어로 man(manual) 페이지에서 시스템의 모든 명령어, 함수, 시스템콜 등에 대한 정보를 확인할 수 있다.
 :{ "type": "tip", "icon": "lightbulb" }
 
-![시스템 콜 호출](/post/computer/system-call-implementation.png)
+![시스템 콜 호출](/post/computer-science/operating-system/system-call/process-of-system-call.png)
 :{ "max-width": "400px", "align": "center", "description": "시스템 콜 호출 과정" }
 
 시스템 콜 호출은 다음과 같이 처리된다.
@@ -321,7 +320,7 @@ END (__syscall_cancel_arch)
 `__syscall_cancel` 함수에서 `__NR_read`값이 0으로 변경되는
 이유는 [x86_64 시스템콜 매크로](https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/unix/sysv/linux/x86_64/64/arch-syscall.h;h=dfc10d0c7e8a8f1e3cfc81c00096bec4d016b3f0;hb=HEAD)
 에 0으로 정의 되어있기 때문이다.  
-실제 시스템콜 호출코드를 보면 [레지스터]()에 인자값들을 세팅하고 마지막에 `syscall` 명령어로 시스템 콜을 호출한다.
+실제 시스템콜 호출코드를 보면 [레지스터](/wiki/register)에 인자값들을 세팅하고 마지막에 `syscall` 명령어로 시스템 콜을 호출한다.
 위 내용으로 Wrapping API(`glibc`)에서는 호출할 시스템콜 정보를 찾고 인자값을 레지스터에 적재하여 시스템콜을 호출하는 과정을 알 수 있다.
 
 또한 `syscall` 명령은 하드웨어 레벨에서 커널모드로 전환하며, 커널의 시스템콜을 호출하는 역할을 한다.
