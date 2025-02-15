@@ -35,6 +35,13 @@ watch(() => route.path, (n, o) => {
         foundGroup.addChild(new CategoryContent(false, post.header.summary, path));
         return tree;
       }, new Array<ICategoryNode>());
+
+  categoryTree.value.forEach(group => {
+    if (group.isDirectory) {
+      const child = group as CategoryGroup;
+      child.sortChildren();
+    }
+  });
 }, { immediate: true, deep: true });
 
 function findOrCreateGroup(existingGroups: Array<ICategoryNode>, categories: Array<string>, depth: number): CategoryGroup {

@@ -6,7 +6,7 @@ export default class FileAlias {
     private static readonly ALGORITHM = new FileAlias("algorithm", "알고리즘");
     private static readonly DATA_STRUCTURE = new FileAlias("data-structure", "자료구조");
     private static readonly BACK_END = new FileAlias("back-end", "서버/백엔드");
-    private static readonly JAVA = new FileAlias("java", "자바");
+    private static readonly JAVA = new FileAlias("java", "Java");
     private static readonly JAVASCRIPT = new FileAlias("javascript", "자바스크립트");
     private static readonly TYPESCRIPT = new FileAlias("typescript", "타입스크립트");
     private static readonly CPP = new FileAlias("cpp", "C++");

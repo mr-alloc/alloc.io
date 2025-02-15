@@ -6,7 +6,7 @@ export class CategoryAlias {
     private static readonly DATA_STRUCTURE = new CategoryAlias('data-structure', '자료구조');
     private static readonly TYPESCRIPT = new CategoryAlias('typescript', '타입스크립트');
     private static readonly LANGUAGE = new CategoryAlias('language', '언어');
-    private static readonly JAVA = new CategoryAlias('java', '자바');
+    private static readonly JAVA = new CategoryAlias('java', 'Java');
     private static readonly CPP = new CategoryAlias('cpp', 'C++');
     private static readonly COMPUTER_SCIENCE = new CategoryAlias('computer-science', '컴퓨터 공학');
     private static readonly COMPUTER_STRUCTURE = new CategoryAlias('computer-structure', '컴퓨터 구조');

@@ -1,4 +1,5 @@
 import type ICategoryNode from "@/classes/i-category-node";
+import {CategoryAlias} from "@/classes/constant/category-alias";
 
 export default class CategoryGroup implements ICategoryNode {
 
@@ -50,5 +51,28 @@ export default class CategoryGroup implements ICategoryNode {
             "name": this._name,
             "children": this._children
         }
+    }
+
+    public sortChildren() {
+        this._children.sort((a, b) => {
+            if (a.isDirectory !== b.isDirectory) {
+                return a.isDirectory ? -1 : 1;
+            }
+
+
+            const aName = a.isDirectory ? CategoryAlias.find(a.name).alias : a.name;
+            const bName = b.isDirectory ? CategoryAlias.find(b.name).alias : b.name;
+            return aName.localeCompare(bName, undefined, {
+                numeric: true,
+                sensitivity: 'base'
+            });
+        })
+
+        this._children.forEach(child => {
+            if (child.isDirectory) {
+                const group = child as CategoryGroup;
+                group.sortChildren();
+            }
+        })
     }
 }
