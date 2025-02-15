@@ -51,9 +51,12 @@ function collapseCategory(category: CategoryGroup) {
       <div :class="[ui.icon.default, isRange && group === category.name ? ui.icon.active : ui.icon.inactive]">
         <span :class="`iconify i-ph:${CategoryAlias.find(category.name).name} w-4 h-4 flex-shrink-0`" aria-hidden="true"></span>
       </div>
-      <span class="text-sm/6 relative text-gray-700 dark:text-gray-200">{{
-          CategoryAlias.find(category.name).alias
-        }} ({{ (category as CategoryGroup).childrenCount }})</span>
+      <div class="flex text-sm/6 relative text-gray-700 dark:text-gray-200 justify-center items-center">
+        {{ CategoryAlias.find(category.name).alias }}
+        <span class="h-4 px-1 ml-1 bg-gray-400 dark:bg-white text-white dark:text-gray-950 text-sm/none rounded-md">
+          {{ (category as CategoryGroup).childrenCount }}
+        </span>
+      </div>
     </a>
     <ul v-if="category.isDirectory" class="ml-6 mt-0 text-slate-600 overflow-hidden"
         :class="{ 'h-0 my-0': collapseGroup.has(category.name) && collapseGroup.get(category.name)! }">

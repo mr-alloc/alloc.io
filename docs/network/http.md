@@ -137,3 +137,6 @@ Keep-Alive: timeout=60, max=1000
 
 예를 들어 위와 같이 `Connection`은 `Keep-Alive`로 설정되어 있고, `Keep-Alive` 헤더에는 `timeout`과 `max`를 설정하였다.
 이 경우 60초 동안 세션을 유지하고, 최대 1000개의 요청을 처리할 수 있으며 둘 중 하나가 먼저 도달하면 세션을 종료한다.
+
+> 이렇게 지원되는 `Keep-Alive`는 세션 계층으로서의 구현이다.
+: { "type": "note", "icon": "info" }

@@ -27,7 +27,7 @@ watch(() => route.path, (n, o) => {
   const allCategories = postContentStore.allValues()
       .filter(post => post.isPublic);
   totalCount.value = allCategories.length;
-  categoryTree.value = allCategories
+  const sortedCategories = allCategories
       .reduce((tree, post) => {
         const array = post.path.array;
         const foundGroup = findOrCreateGroup(tree, array.slice(1, array.length -1), 0);
@@ -36,12 +36,14 @@ watch(() => route.path, (n, o) => {
         return tree;
       }, new Array<ICategoryNode>());
 
-  categoryTree.value.forEach(group => {
-    if (group.isDirectory) {
-      const child = group as CategoryGroup;
-      child.sortChildren();
-    }
+  const categoryGroup = new CategoryGroup(true, 'root', false);
+  sortedCategories.forEach(group => {
+    categoryGroup.addChild(group);
   });
+
+  categoryGroup.sortChildren();
+  categoryTree.value = categoryGroup.children;
+
 }, { immediate: true, deep: true });
 
 function findOrCreateGroup(existingGroups: Array<ICategoryNode>, categories: Array<string>, depth: number): CategoryGroup {

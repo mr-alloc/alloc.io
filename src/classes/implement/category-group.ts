@@ -62,7 +62,7 @@ export default class CategoryGroup implements ICategoryNode {
 
             const aName = a.isDirectory ? CategoryAlias.find(a.name).alias : a.name;
             const bName = b.isDirectory ? CategoryAlias.find(b.name).alias : b.name;
-            return aName.localeCompare(bName, undefined, {
+            return aName.localeCompare(bName, 'ko', {
                 numeric: true,
                 sensitivity: 'base'
             });

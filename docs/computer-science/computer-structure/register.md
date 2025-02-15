@@ -3,7 +3,7 @@ layout: wiki
 date: 2021-02-16 13:14:00
 title: 레지스터 (Register)
 tags: [ Hardware, CPU, Register ]
-summary: Register
+summary: 레지스터
 hide: false
 ---
 
