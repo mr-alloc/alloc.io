@@ -141,6 +141,7 @@ L4는 운영체제 커널에 구현되며 네트워크 통신의 핵심으로서
 
 ### FIN::finish
 
+연결 종료를 위한 통신과정은 `4-way Handshake`로 이루어 지며, `FIN`, `ACK`, `FIN`, `ACK` 세그먼트를 통해 처리된다.
 `FIN`은 세션을 종료하기 위헤 보내는 세그먼트이다.
 
 ![클라이언트와 서버는 세션을 종료하기위해 FIN을 보낸다.](/post/network/tcp-ip/transport-layer/fin-diagram-in-tcp.png)

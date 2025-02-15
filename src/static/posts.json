@@ -1370,6 +1370,113 @@
     "content": "\n## 시스템 서비스란?::what-is-system-service\n\n![macOS 운영체제의 시스템 서비스(활성 상태 보기)](/post/computer/macos-activity-monitor.png)\n:{ \"description\": \"macOS 운영체제의 시스템 서비스(활성 상태 보기)\" }\n\n시스템 서비스(System Service)는 시스템 유틸리티(System Utility)로도 알려진 시스템 프로그램(System Program)이다.\n시스템 사용을 위해 편리하게 제공되며 내부 구현은 복잡한 프로그램이다. 일부는 우리가 알고 있는 [시스템 API](/wiki/system-call#api-and-system-call)이다.\n\n사용자는 **노래를 들으며**, 게임을 어떻게 할 수 있는지 알 필요가 없다. 사용자가 원하는 것을 쉽게 사용할 수 있도록 운영체제가 시스템 서비스를 제공한다.\n예를 들어 크롬 브라우저에서 유튜브 뮤직을 재생하고 Stream 앱으로 게임을 실행하고 있어도 노래가 정지되지 않는다.\n\n근본적으로는 노래가 재생되고 있는 `Chrome` 앱이 백그라운드로 전환 될때 오디오 시스템과 통신하는 데몬을 실행하기 때문에 사용자는 눈치채지 못한다.\n\n> macOS의 경우 Chrome 앱이 백그라운드로 전환되면 `coreaudiod` 데몬이 실행되며 하드웨어 드라이버를 제어한다.\n: { \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n## 시스템 서비스의 종류::types-of-system-service\n\n시스템 서비스는 포그라운드 서비스(Foreground Service)와 백그라운드 서비스(Background Service)로 나뉜다.\n`Foreground`는 현재 사용자와 직접적인 상호작용을 하는 서비스를 말하고, `Background`는 프로세스의 상태로 사용자와 직접적인 상호작용을 하지 않는 서비스를 말한다.\n\n각 운영체제별 시스템 서비스의 종류는 다음과 같다:\n\n| 운영체제 |          포그라운드 서비스           |                   백그라운드 서비스                    |\n|:---:|:----------------------------:|:----------------------------------------------:|\n| Windows |        `작업 관리자`, `엣지`        |      `작업 스케줄러`, `윈도우 디펜더`, `윈도우 업데이트 서비스`      |\n| macOS   |    `활성 상태 보기`, `시스템 환경설정`    | `coreaudiod`, `알림 센터`, `bird (iCloud 데이터 동기화)` |\n| Linux   | `vim 에디터`, `top (프로세스 관리도구)` |           `systemd`, `cron`, `sshd (SSH 데몬)`           |\n\n### 포그라운드 서비스::foreground-service\n\n**파일 관리**\n\n파일과 디렉토리를 생성하며, 삭제, 복사, 명명, 출력, 목록화 및 일반적인 조작을 수행한다.\n\n**상태 정보**\n\n시스템의 상태정보를 제공한다. 예를들어 날짜, 시간, 가용 메모리 및 디스크, 사용자 수 등과 같은 상태정보를 제공한다. 이러한 기능을 제공하는 서비스들은 환경설정 정보를 저장하고 검색할 수 있는 등록(registry) 기능을 지원하기도 한다.\n\n**파일 변경**\n\n앞서 설명한 파일관리와 비슷하지만, 기능을 연계하여 파일을 변경(예: `text editor`)하거나 파일의 속성을 변경하는 기능을 제공한다.\n\n**프로그래밍 언어 지원**\n\n일반적인 프로그래밍 언어를 지원하기 위해 컴파일러, 링커, 디버거, 런타임 라이브러리 등을 제공한다. 예를들어 리눅스의 경우 기본적으로 `gcc` 컴파일러를 제공한다.\n\n**프로그램 적재와 수행**\n\n컴파일 된 프로그램을 링크하는 `링키지 에디터`(linkage editor)와 실행가능한 바이너리를 메모리에 적재하는 로더(loader)를 제공한다.\n* 로더는 메모리의 절대 주소에 로드하는 `절대 로더`(Absolute Loader)와 동적인 주소에 로드하는 `재배치 가능 로더`(Relocatable Loader)로 나뉘며, 큰 프로그램을 부분적으로 메모리에 로드하는 `중첩 로더`(Overlay Loader)도 있다.\n\n**통신**\n\n사용자 와 다른 시스템 간에 가상접속을 구현하는 통신 서비스를 제공한다. 예를 들어 리눅스의 `ls | grep text`와 같은 명령어는 `|`를 통해 두 프로그램을 연결한다.\n\n\n### 백그라운드 서비스::background-service\n\n프로그램은 자신의 할일을 완수하면 종료되는 프로그램도 있는 반면에, 시스템이 종료될 때 까지 계속 실행되는 프로그램도 있다.\n이러한 프로그램을 **백그라운드 서비스(Background Service)** 또는 **데몬(Daemon)** 이라고 한다.\n\n앞서 `coreaudiod` 데몬은 `macOS`에서 오디오 시스템을 제어한다고 했었다. 이외에도 네트워크 연결을 청취(Listen)하는 네트워크 데몬이 있고, \n시스템 연결요청을 올바른 프로세스에 연결해주는 역할을 수행한다. \n\n또 다른 예로 프로세스를 시작시키는 프로세스 스케줄러, 시스템 오류 감시 서비스 및 출력서버 등이 있다. \n또한 OS가 중요한 활동을 커널 컨텍스트(Kernel Context)에서가 아니라 사용자 컨텍스트(User Context)에서 수행 해야하는 경우, 데몬을 이용해서 이 작업을 수행할 수 있다.\n\n\n## 서브 시스템::sub-system\n\nOS의 핵심 기능을 놀리적으로 분할한 작은 단위의 시스템이고 서비스와는 다른 개념이다.  \n예를 들어 계층으로 분류를 하면 아래와 같다:\n\n```\n운영체제\n├── 파일시스템 서브시스템 (File System Subsystem)\n│   └── VFS → 실제 파일시스템 → 블록 디바이스 드라이버 → 물리장치\n├── 메모리 관리 서브시스템 (Memory Management Subsystem)\n│   └── 가상메모리 → 페이지테이블 → 물리메모리\n├── 프로세스 관리 서브시스템 (Process Management Subsystem)\n│   └── 스케줄러 → 프로세스/스레드 관리 → CPU\n└── I/O 서브시스템 (I/O Subsystem)\n    └── I/O 스케줄러 → 디바이스 드라이버 → 물리장치\n```\n이는 특정 기능 역역 전체를 관리하는 상위 개념이며, 그 아래 있는 여러 계층 구조와 구성요소들을 포함한다.\n\n> `서브 시스템`은 시스템의 핵심 기능을 제공하기 위해 존재하는 작은 단위의 시스템이다.\n: { \"type\": \"tip\", \"icon\": \"lightbulb\" }\n"
   },
   {
+    "path": "/docs/network/http",
+    "header": {
+      "layout": "post",
+      "title": "HTTP (HyperText Transfer Protocol)",
+      "tags": [
+        "Network",
+        "TCP/IP",
+        "HTTP"
+      ],
+      "date": 1616160120000,
+      "thumbnail": "/post/network/http/index.png",
+      "profile-image": "/post/profile/profile1.jpg",
+      "current-company": "Cubic INC",
+      "current-position": "SI Researcher",
+      "summary": "HTTP",
+      "excerpt-separator": "<!--more-->",
+      "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "네트워크"
+      ],
+      "images": [
+        {
+          "src": "/post/network/http/index.png",
+          "alt": "HTTP 통신"
+        },
+        {
+          "src": "/post/network/http/request-format.png",
+          "alt": "HTTP 요청 메세지"
+        },
+        {
+          "src": "/post/network/http/response-format.png",
+          "alt": "HTTP 응답 메세지"
+        },
+        {
+          "src": "/post/network/http/http-message.png",
+          "alt": "HTTP 메세지 전문"
+        },
+        {
+          "src": "/post/network/http/keep-alive.png",
+          "alt": "Keep-Alive"
+        }
+      ],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "HTTP란?::what-is-http",
+            "title": "HTTP란?",
+            "fragment": "what-is-http",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "HTTP 메세지 구조::message-structure",
+            "title": "HTTP 메세지 구조",
+            "fragment": "message-structure",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "요청 메세지::request-message",
+                "title": "요청 메세지",
+                "fragment": "request-message",
+                "children": []
+              },
+              {
+                "rank": 3,
+                "origin": "응답 메세지::response-message",
+                "title": "응답 메세지",
+                "fragment": "response-message",
+                "children": []
+              }
+            ]
+          },
+          {
+            "rank": 2,
+            "origin": "메세지 본문::message-body",
+            "title": "메세지 본문",
+            "fragment": "message-body",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "HTTP Header Options::header-options",
+            "title": "HTTP Header Options",
+            "fragment": "header-options",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "Keep-Alive::keep-alive",
+                "title": "Keep-Alive",
+                "fragment": "keep-alive",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "description": "HTTP는 HyperText Transfer Protocol의 약자로, 웹 서버와 웹 클라이언트 간의 통신을 위한 프로토콜이다.\nTCP 위에서, 요청/응답 방식으로 동작한다.",
+    "content": "## HTTP란?::what-is-http\n\n**HTTP**(HyperText Transfer Protocol)는 웹 서버와 웹 클라이언트 간의 통신을 위한 프로토콜이다.\n기본적으로 클라이언트가 서버에 요청을 보내고, 서버는 요청에 대한 응답을 보내는 방식으로 동작한다.\n\n![HTTP 통신](/post/network/http/index.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"HTTP 통신\" }\n\nHTTP의 일반적인 동작은 이미지처럼  [TCP](/docs/network/tcp-ip/transport-layer#tcp-3-way-handshake) 위에서 수행된다.\n이미 연결이 맺어졌다는 가정하에, 메세지를 교환하는 방식이다.\n\n각 장치에서는 TCP 세그먼트의 페이로드를 HTTP 메세지로, 표준화된 규격에 맞게 해석하여 처리한다.\n[HTTP/1.1](https://www.rfc-editor.org/info/rfc2616)은 1999년에 표준화되었으며, 현재는 [HTTP/2](https://www.rfc-editor.org/info/rfc7540) 등 상위 버전도 나와있다.\n\n## HTTP 메세지 구조::message-structure\n\nHTTP는 상태가 없는(Stateless) 프로토콜이기 떄문에 서버에서 이전 요청들의 상태를 저장하지 않는다. \n메세지는 크게 요청(Request) 메세지와 응답(Response) 메세지로 나뉘며 각 메세지는 표준 규격을 따른다.\n\n### 요청 메세지::request-message\n\n![HTTP 요청 메세지](/post/network/http/request-format.png)\n:{ \"align\": \"center\", \"max-width\": \"600px\", \"description\": \"HTTP 요청 메세지\" }\n\nHTTP 메세지는 요청 라인, 헤더, 본문으로 구성된다. 예제에서는 이해를 위해 요청 라인과 헤더를 알아보자.\n\n*Request Line*\n\n* **Method**: 요청 방식을 나타낸다. (GET, POST, PUT, DELETE 등)\n* **Request-URI**: 요청 대상의 리소스를 나타낸다.\n* **Protocol**: HTTP 프로토콜의 버전을 나타낸다.\n\n요청 라인에서는 클라이언트가 요청하는 리소스에 대하여 어떤 방식으로 요청하는지 와 어떤 프로토콜의 버전으로 처리에 대해 요청하는지를 나타낸다. \n\n*Header*\n\n* **Host**: 요청 대상의 호스트를 나타낸다.\n* **User-Agent**: 요청을 보내는 클라이언트의 정보를 나타낸다.\n* **Accept**: 클라이언트가 받아들일 수 있는 컨텐츠 타입을 나타낸다.\n* **Content-Type**: 요청 본문의 타입을 나타낸다.\n* **Content-Length**: 요청 본문의 길이를 나타낸다.\n\n헤더에서는 클라이언트가 요청하는 리소스에 대하여 추가적인 정보를 담고 있다. \n이미지에서는 일부 헤더가 생략 되었지만, 실제로 Content-Length 같이 요청의 끝을 알 수 없어 메세지 해석이 어려운 경우 TCP 연결종료 끝을 판단한다.\n따라서 대부분은 HTTP 클라이언트는 기본적인 헤더를 포함되게 되어있다.\n\n\n### 응답 메세지::response-message\n\n![HTTP 응답 메세지](/post/network/http/response-format.png)\n:{ \"align\": \"center\", \"max-width\": \"600px\", \"description\": \"HTTP 응답 메세지\" }\n\nHTTP 응답 메세지는 상태 라인, 헤더, 본문으로 구성된다. 예제에서는 이해를 위해 상태 라인과 헤더를 알아보자.\n\n*Status Line*\n\n* **Protocol**: HTTP 프로토콜의 버전을 나타낸다.\n* **Status-Code**: 요청에 대한 응답 상태 코드를 나타낸다.\n  * | 전체 범위 | 정의된 범위 | 분류 |\n    |:---:|:---:|:---:|\n    | 1xx | 100 ~ 101 | 정보 |\n    | 2xx | 200 ~ 206 | 성공 |\n    | 3xx | 300 ~ 305 | 리다이렉션 |\n    | 4xx | 400 ~ 415 | 클라이언트 에러 |\n    | 5xx | 500 ~ 505 | 서버 에러 |\n* **Reason-Phrase**: 상태 코드에 대한 설명을 나타낸다.\n  * | 상태 코드 | 사유 구절 | 의미 |\n    |:---:|:---:|:---:|\n    | 200 | OK | 요청이 성공적으로 처리되었음 |\n    | 404 | Not Found | 요청한 리소스를 찾을 수 없음 |\n    | 500 | Internal Server Error | 서버 내부 에러로 요청을 처리할 수 없음 |\n\n상태 라인에서는 서버가 클라이언트에게 응답하는 상태 코드와 그에 대한 설명을 나타낸다.  \n\n상태 코드는 [RFC9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes)에 정의되어 있으며, 상태 코드에 따라 클라이언트는 어떻게 처리해야 하는지 알 수 있다.\n이는 사유구절과 한개의 상태 정보로 사용된다. \n\n*Header*\n\n* **Server**: 서버의 정보를 나타낸다.\n* **Content-Type**: 응답 본문의 타입을 나타낸다.\n* **Content-Length**: 응답 본문의 길이를 나타낸다.\n* **Date**: 응답을 보낸 시간을 나타낸다.\n* **Connection**: 클라이언트와 서버의 연결 상태를 나타낸다.\n\n## 메세지 본문::message-body\n\n![HTTP 메세지 전문](/post/network/http/http-message.png)\n:{ \"align\": \"center\", \"max-width\": \"600px\", \"description\": \"HTTP 메세지 전문\" }\n\n`HTTP` 메세지의 **요청라인과 상태라인 그리고 헤더**가 메세지에 대한 설정 정보라면 본문은 실제 데이터를 담고 있는 부분이다.\n\nHTTP 메세지 해석시 본문을 알기 위해서는, 메세지 전체를 볼 필요가있다. \n먼저 메세지 시작을 알기위해 `Header`와 `Body`를 구분하는 개행이 필요하다. http 메세지는 표준 스트림으로 읽기 때문에 끝을 알수가 없다.\n\n따라서 메세지 헤더의 `Content-Length`를 통해 본문의 길이를 알 수 있으며, 이를 통해 본문의 끝을 알 수 있다.\n\n이미지에는 요청 본문이 `application/x-www-form-urlencoded`형식으로 되어있고, 응답 본문에는 `application/html`형식으로 되어있는걸 알 수 있다.\n메세지를 받는 대상이 올바르게 해석할 수 있도록 `Content-Type`을 통해 본문의 타입을 알려준다.\n\n\n## HTTP Header Options::header-options\n\nHTTP는 TCP 위에서 동작하기 때문에, HTTP 헤더 옵션으로 TCP의 기능을 사용할 수 있다.\n예를 들어 `Keep-Alive` 헤더는 특정 시간동안 요청의 세션을 재사용할 수 있도록 지원한다.  \n\n### Keep-Alive::keep-alive\n\n`Keep-Alive`는 TCP 스펙의 지속 연결(`Persistent Connection`)을 이용하여, 클라이언트와 서버간의 연결을 유지하는 기능이다.\n\n```http\nGET /index.html HTTP/1.1\nHost: www.example.com\nConnection: Keep-Alive\nKeep-Alive: timeout=60, max=1000\n...\n```\n\n![Keep-Alive](/post/network/http/keep-alive.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"Keep-Alive를 1분으로 설정\" }\n\n예를 들어 위와 같이 `Connection`은 `Keep-Alive`로 설정되어 있고, `Keep-Alive` 헤더에는 `timeout`과 `max`를 설정하였다.\n이 경우 60초 동안 세션을 유지하고, 최대 1000개의 요청을 처리할 수 있으며 둘 중 하나가 먼저 도달하면 세션을 종료한다.\n"
+  },
+  {
     "path": "/docs/network/tcp-ip/transport-layer",
     "header": {
       "layout": "post",
@@ -1514,7 +1621,7 @@
       }
     },
     "description": "전송 계층은 OSI 7 Layer 모델에서 L4에 구현되며, TCP와 UDP 프로토콜을 사용하며, 각 프로토콜에 맞게 필요한 처리를 제공한다.",
-    "content": "## 전송 계층이란?::what-is-transport-layer\n\nL4는 송신자와 수신자 간의 데이터 전송을 관리하며, 종단 간(End-to-End) 통신을 제공한다.\n포트번호를 이욜하기 때문에, 특정 어플리케이션이나 프로세스를 식별 할 수 있다.\n\n여러 프로토콜중에는 `QUIC`, `RUDP`, `DCCP`, `SCTP` 등이 있지만, 대표적으로는 `TCP`와 `UDP`가 있다. \nL4는 운영체제 커널에 구현되며 네트워크 통신의 핵심으로서 데이터의 신뢰성, 전송 속도, 어플리케이션 식별을 담당한다.\n\n## UDP 데이터그램 구조::datagram-structure\n\n![UDP 데이터그램 구조](/post/network/tcp-ip/transport-layer/udp-datagram-structure.png)\n: { \"align\": \"center\", \"max-width\": \"700px\", \"description\": \"UDP 데이터그램 구조\" }\n\n**UDP**(User Datagram Protocol)는 전송 계층 프로토콜로, 데이터그램 방식으로 데이터를 전송한다.\n\n비연결형 데이터그램 프로토콜로 간단하고 빠른 데이터 전송을 위한 프로토콜이다.\n연결에 대한 설정과 TCP 3way handshake 과정이 없기 때문에 오버헤드 없이 빠른 전송이 가능하다.\n\n때문에, 데이터 전송의 신뢰성은 보장하지 않지만, 실시간 스트리밍이나 DNS 등에서 사용된다.\n\n\n## TCP 세그먼트 구조::segment-structure\n\n![TCP 세그먼트 구조](/post/network/tcp-ip/transport-layer/tcp-segment-structure.png)\n: { \"align\": \"center\", \"max-width\": \"700px\", \"description\": \"TCP의 세그먼트 구조\" }\n\n**TCP**(Transmission Control Protocol)는 전송 계층 프로토콜로, 연결형 프로토콜로 데이터를 전송한다.\n\n각 필드는 다음을 의미한다:\n\n* **Source Port**: 송신지의 포트 번호\n* **Destination Port**: 수신지의 포트 번호\n* **Initial Sequence Number**: TCP 연결의 첫번째 패킷에 할당된 시퀀스 번호를 의미 (SYN)\n* **Acknowledgment Number**: 연결시에는 ISN +1, 실제 데이터 수신시에는 + 데이터 크기 (Bytes Size)\n* **Data Offset**: TCP 헤더의 길이를 4바이트 단위로 표현한 값\n  * 이 필드는 Option 필드를 포함한 헤더의 길이를 계산하기 위해 사용된다. \n  * 32비트 체계에서 1 word는 4바이트이므로 4비트로 표현할 수 있는 값인 0000 ~ 1111은 0 ~ 15를 의미하고 이에 *4를 하여 0 ~ 60바이트라는 의미이다.\n  * 하지만 TCP 헤더의 필수 표현 값이 20바이트이므로 최소 20(01000) ~ 최대 60(1111)이다.\n*  **Reserved**: 예약된 필드로, 사용되지 않는다.\n* **Flags**: TCP 제어플레그이다. (여기서는 필수 플래그만 다룬다.)\n    * **SYN**(Synchronize Sequence Number): 세션 생성시 시퀀스 번호 동기화를 위한 세그먼트를 의미한다.\n    * **ACK**(Acknowledgment): Acknowledgment Number 필드가 유효한 값을 가지고 있음을 의미한다.\n    * **FIN**(Finish): 세션 종료 요청의 세그먼트를 의미한다.\n* **Window Size**: 수신자가 수신할 수 있는 데이터의 양을 의미한다. (수신측, 발신측 모두 다음에 받게될 세그먼트에 대하여 자신의 버퍼상태를 포함한다.)\n* **Checksum**: TCP 세그먼트의 오류 검출을 위한 필드로, 세그먼트의 데이터를 포함한 모든 필드의 체크섬을 계산하여 저장한다.\n* **Urgent Pointer**: 긴급 데이터의 마지막 바이트를 가리키는 포인터이다.\n\n\n## TCP 3-way Handshake::tcp-3-way-handshake\n\n`TCP`는 연결 지향형 프로토콜이기 때문에, 연결에 대한 신뢰성을 보장하기위해 핸드쉐이크(악수)라는 개념을 사용한다.\n핸드쉐이크는 말그대로 세션 연결을 하기전에, 상대방과의 연결을 확인하는 과정이다.\n\n핸드쉐이크는 `SYN`, `SYN + ACK`, `ACK` 세그먼트를 통해 3가지의 과정으로 이루어져서 `3-way Handshake`라고 불린다.\n\n### SYN::synchronize\n\n![클라이언트에서 연결을 맺기위해 SYN을 보낸다.](/post/network/tcp-ip/transport-layer/syn-diagram-in-tcp.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"SYN 전송\" }\n\n예를 들어 `:58660` **클라이언트**에서 `:8955` **서버**로 세션을 맺기 위해 다음과같이 요청을 보낸다.\n\n기본적으로 아무 연결을 맺지 않은 상태는 `Closed` 상태이다. 서버는 요청을 수신하기위해 `Listen` 상태로 대기한다. \n제일 먼저 발신지에서는 목적지로 세션을 맺기위해 `SYN` 세그먼트를 전송한다.\n\n![WireShark로 캡쳐된 SYN 세그먼트](/post/network/tcp-ip/transport-layer/captured-segment-of-syn.png)\n: { \"description\": \"WireShark로 캡쳐된 SYN 세그먼트\" }\n\n위 이미지는 `WireShark`로 캡쳐된 `SYN` 세그먼트이다.\n클라이언트에서 서버로 `4248590219`라는 임의의 시퀀스 번호를 가진 `SYN` 세그먼트를 전송 하는 모습을 볼 수 있다.\n\n이때 서버의 상태는 `SYN_SENT` 상태이다.\n\n### SYN + ACK::synchronize-acknowledgment\n\n![서버에서는 연결을 수락하기 위해 SYN+ACK를 보낸다.](/post/network/tcp-ip/transport-layer/syn+ack-diagram-in-tcp.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"SYN + ACK 전송\" }\n\n서버는 클라이언트로부터 `SYN` 세그먼트를 받으면, 세션을 맺기위해 `SYN + ACK` 세그먼트를 전송한다.\n이는 연결수락을 의미하는 세그먼트이다.\n\n![WireShark로 캡쳐된 SYN + ACK 세그먼트](/post/network/tcp-ip/transport-layer/captured-segment-of-syn+ack.png)\n: { \"description\": \"WireShark로 캡쳐된 SYN + ACK 세그먼트\" }\n\n서버는 정확하게 `SYN`의 ISN +1을 `ACK`로 전송을 한것이 보인다. \n서버는 `1595116508`이라는 SYN을 보내며, 이때 서버의 상태는 `SYN_RECV` 상태이다.\n\n>클라이언트의 ISN인 `4248590219`에 `1`을 더한 `4248590220`을 `ACK`로 전송한것을 확인할 수 있다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n\n### ACK::acknowledgment\n\n![클라이언트에서는 서버의 응답을 확인하기 위해 ACK를 보낸다.](/post/network/tcp-ip/transport-layer/ack-diagram-in-tcp.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"ACK 전송\" }\n\n클라이언트는 SYN + ACK 세그먼트를 받으면, 세션을 맺기위해 `ACK` 세그먼트를 전송한다.\n\n![WireShark로 캡쳐된 ACK 세그먼트](/post/network/tcp-ip/transport-layer/captured-segment-of-ack.png)\n: { \"description\": \"WireShark로 캡쳐된 ACK 세그먼트\" }\n\n클라이언트는 서버의 ISN +1을 `ACK`로 전송하며, 이때 클라이언트의 상태는 `ESTABLISHED` 상태이다.\n\n>서버의 ISN인 `1595116508`에 `1`을 더한 `1595116509`을 `ACK`로 전송한것을 확인할 수 있다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n\n### 데이터 전송::data-send\n\n![서버와 클라이언트는 데이터를 전송한다.](/post/network/tcp-ip/transport-layer/data-send-diagram-in-tcp.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"데이터 전송\" }\n\n`ACK`로 세션이 맺어지는 순간부터 데이터를 전송할 수 있고, 데이터를 전송할 때마다 `ACK`를 받아야 한다.\n이는 수신측과 발신측 모두에 해당되는 내용이다.\n\n![WireShark로 캡쳐된 데이터 전송 세그먼트](/post/network/tcp-ip/transport-layer/captured-segment-of-data.png)\n: { \"description\": \"WireShark로 캡쳐된 데이터 전송 세그먼트\" }\n\n위 네 개의 각 세그먼트는 클라이언트와 서버가 데이터를 주고받는 과정을 보여준다.\n[HTTP]()는 `요청/응답` 방식이기 때문에 위처럼 클라이언트가 요청을 보내고, 서버가 응답을 보내는 방식으로 동작한다.\n\n그렇기 때문에 `1`번에서 클라이언트가 `GET /greeting`을 요철 했을 때 `2`번 서버가 ACK를 보내는 것을 볼 수 있다.\n반대로 서버가 `3`번에서 `200 OK`를 응답하면, 클라이언트가 `4`번에서 ACK를 보내는 것을 확인할 수 있다.\n\n>요청/응답 구조는 HTTP 스펙이므로 TCP 기준으로만 봤을때는 데이터 전송에대한 응답으로 ACK를 보내는 것이다.\n:{ \"type\": \"important\", \"icon\": \"warning-octagon\" }\n\n\n### FIN::finish\n\n`FIN`은 세션을 종료하기 위헤 보내는 세그먼트이다.\n\n![클라이언트와 서버는 세션을 종료하기위해 FIN을 보낸다.](/post/network/tcp-ip/transport-layer/fin-diagram-in-tcp.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"FIN 전송\" }\n\n위의 이미지와 보는 보와 같이 세션이 연결 중인 상태(`ESTABLISHED`)에서 연결을 종료가 필요한 장치에서 `FIN` 세그먼트를 전송한다.\n실제로는 서버와 클라이언트 어디쪽에서든지 먼저 연결종료 요청을 할수 있지만, 여기서는 클라이언트가 먼저 `FIN` 세그먼트를 전송하였다.\n\n1. 클라이언트에서 연결종료를 위해 서버로 `FIN` 세그먼트로 전송하며, 이때 클라이언트의 상태는 `FIN_WAIT_1` 상태이다.\n2. 서버는 `FIN` 세그먼트를 받으면, `ACK` 세그먼트로 응답을 전송하며, 이때 서버의 상태는 `CLOSE_WAIT` 상태이다.\n3. 서버가 연결종료에 대한 준비를 모두 끝낸후 클라이언트에게 `FIN` 세그먼트를 전송하며, 이때 서버의 상태는 `LAST_ACK` 상태이다.\n4. 클라이언트는 `FIN` 세그먼트를 받으면, `ACK` 세그먼트로 응답을 전송하며, 이때 클라이언트의 상태는 `TIME_WAIT` 상태이다.\n5. 클라이언트는 `TIME_WAIT` 상태에서 `2MSL(Maximum Segment Lifetime)` 시간동안 대기하고, 이후에 연결이 종료되며, 이때 클라이언트의 상태는 `CLOSED` 상태이다.\n\n\n>TCP는 연결의 신뢰성을 보장하기 위해서는 많은 네트워크 비용이 필요하다.\n: { \"type\": \"important\", \"icon\": \"warning-octagon\" }\n"
+    "content": "## 전송 계층이란?::what-is-transport-layer\n\nL4는 송신자와 수신자 간의 데이터 전송을 관리하며, 종단 간(End-to-End) 통신을 제공한다.\n포트번호를 이욜하기 때문에, 특정 어플리케이션이나 프로세스를 식별 할 수 있다.\n\n여러 프로토콜중에는 `QUIC`, `RUDP`, `DCCP`, `SCTP` 등이 있지만, 대표적으로는 `TCP`와 `UDP`가 있다. \nL4는 운영체제 커널에 구현되며 네트워크 통신의 핵심으로서 데이터의 신뢰성, 전송 속도, 어플리케이션 식별을 담당한다.\n\n## UDP 데이터그램 구조::datagram-structure\n\n![UDP 데이터그램 구조](/post/network/tcp-ip/transport-layer/udp-datagram-structure.png)\n: { \"align\": \"center\", \"max-width\": \"700px\", \"description\": \"UDP 데이터그램 구조\" }\n\n**UDP**(User Datagram Protocol)는 전송 계층 프로토콜로, 데이터그램 방식으로 데이터를 전송한다.\n\n비연결형 데이터그램 프로토콜로 간단하고 빠른 데이터 전송을 위한 프로토콜이다.\n연결에 대한 설정과 TCP 3way handshake 과정이 없기 때문에 오버헤드 없이 빠른 전송이 가능하다.\n\n때문에, 데이터 전송의 신뢰성은 보장하지 않지만, 실시간 스트리밍이나 DNS 등에서 사용된다.\n\n\n## TCP 세그먼트 구조::segment-structure\n\n![TCP 세그먼트 구조](/post/network/tcp-ip/transport-layer/tcp-segment-structure.png)\n: { \"align\": \"center\", \"max-width\": \"700px\", \"description\": \"TCP의 세그먼트 구조\" }\n\n**TCP**(Transmission Control Protocol)는 전송 계층 프로토콜로, 연결형 프로토콜로 데이터를 전송한다.\n\n각 필드는 다음을 의미한다:\n\n* **Source Port**: 송신지의 포트 번호\n* **Destination Port**: 수신지의 포트 번호\n* **Initial Sequence Number**: TCP 연결의 첫번째 패킷에 할당된 시퀀스 번호를 의미 (SYN)\n* **Acknowledgment Number**: 연결시에는 ISN +1, 실제 데이터 수신시에는 + 데이터 크기 (Bytes Size)\n* **Data Offset**: TCP 헤더의 길이를 4바이트 단위로 표현한 값\n  * 이 필드는 Option 필드를 포함한 헤더의 길이를 계산하기 위해 사용된다. \n  * 32비트 체계에서 1 word는 4바이트이므로 4비트로 표현할 수 있는 값인 0000 ~ 1111은 0 ~ 15를 의미하고 이에 *4를 하여 0 ~ 60바이트라는 의미이다.\n  * 하지만 TCP 헤더의 필수 표현 값이 20바이트이므로 최소 20(01000) ~ 최대 60(1111)이다.\n*  **Reserved**: 예약된 필드로, 사용되지 않는다.\n* **Flags**: TCP 제어플레그이다. (여기서는 필수 플래그만 다룬다.)\n    * **SYN**(Synchronize Sequence Number): 세션 생성시 시퀀스 번호 동기화를 위한 세그먼트를 의미한다.\n    * **ACK**(Acknowledgment): Acknowledgment Number 필드가 유효한 값을 가지고 있음을 의미한다.\n    * **FIN**(Finish): 세션 종료 요청의 세그먼트를 의미한다.\n* **Window Size**: 수신자가 수신할 수 있는 데이터의 양을 의미한다. (수신측, 발신측 모두 다음에 받게될 세그먼트에 대하여 자신의 버퍼상태를 포함한다.)\n* **Checksum**: TCP 세그먼트의 오류 검출을 위한 필드로, 세그먼트의 데이터를 포함한 모든 필드의 체크섬을 계산하여 저장한다.\n* **Urgent Pointer**: 긴급 데이터의 마지막 바이트를 가리키는 포인터이다.\n\n\n## TCP 3-way Handshake::tcp-3-way-handshake\n\n`TCP`는 연결 지향형 프로토콜이기 때문에, 연결에 대한 신뢰성을 보장하기위해 핸드쉐이크(악수)라는 개념을 사용한다.\n핸드쉐이크는 말그대로 세션 연결을 하기전에, 상대방과의 연결을 확인하는 과정이다.\n\n핸드쉐이크는 `SYN`, `SYN + ACK`, `ACK` 세그먼트를 통해 3가지의 과정으로 이루어져서 `3-way Handshake`라고 불린다.\n\n### SYN::synchronize\n\n![클라이언트에서 연결을 맺기위해 SYN을 보낸다.](/post/network/tcp-ip/transport-layer/syn-diagram-in-tcp.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"SYN 전송\" }\n\n예를 들어 `:58660` **클라이언트**에서 `:8955` **서버**로 세션을 맺기 위해 다음과같이 요청을 보낸다.\n\n기본적으로 아무 연결을 맺지 않은 상태는 `Closed` 상태이다. 서버는 요청을 수신하기위해 `Listen` 상태로 대기한다. \n제일 먼저 발신지에서는 목적지로 세션을 맺기위해 `SYN` 세그먼트를 전송한다.\n\n![WireShark로 캡쳐된 SYN 세그먼트](/post/network/tcp-ip/transport-layer/captured-segment-of-syn.png)\n: { \"description\": \"WireShark로 캡쳐된 SYN 세그먼트\" }\n\n위 이미지는 `WireShark`로 캡쳐된 `SYN` 세그먼트이다.\n클라이언트에서 서버로 `4248590219`라는 임의의 시퀀스 번호를 가진 `SYN` 세그먼트를 전송 하는 모습을 볼 수 있다.\n\n이때 서버의 상태는 `SYN_SENT` 상태이다.\n\n### SYN + ACK::synchronize-acknowledgment\n\n![서버에서는 연결을 수락하기 위해 SYN+ACK를 보낸다.](/post/network/tcp-ip/transport-layer/syn+ack-diagram-in-tcp.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"SYN + ACK 전송\" }\n\n서버는 클라이언트로부터 `SYN` 세그먼트를 받으면, 세션을 맺기위해 `SYN + ACK` 세그먼트를 전송한다.\n이는 연결수락을 의미하는 세그먼트이다.\n\n![WireShark로 캡쳐된 SYN + ACK 세그먼트](/post/network/tcp-ip/transport-layer/captured-segment-of-syn+ack.png)\n: { \"description\": \"WireShark로 캡쳐된 SYN + ACK 세그먼트\" }\n\n서버는 정확하게 `SYN`의 ISN +1을 `ACK`로 전송을 한것이 보인다. \n서버는 `1595116508`이라는 SYN을 보내며, 이때 서버의 상태는 `SYN_RECV` 상태이다.\n\n>클라이언트의 ISN인 `4248590219`에 `1`을 더한 `4248590220`을 `ACK`로 전송한것을 확인할 수 있다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n\n### ACK::acknowledgment\n\n![클라이언트에서는 서버의 응답을 확인하기 위해 ACK를 보낸다.](/post/network/tcp-ip/transport-layer/ack-diagram-in-tcp.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"ACK 전송\" }\n\n클라이언트는 SYN + ACK 세그먼트를 받으면, 세션을 맺기위해 `ACK` 세그먼트를 전송한다.\n\n![WireShark로 캡쳐된 ACK 세그먼트](/post/network/tcp-ip/transport-layer/captured-segment-of-ack.png)\n: { \"description\": \"WireShark로 캡쳐된 ACK 세그먼트\" }\n\n클라이언트는 서버의 ISN +1을 `ACK`로 전송하며, 이때 클라이언트의 상태는 `ESTABLISHED` 상태이다.\n\n>서버의 ISN인 `1595116508`에 `1`을 더한 `1595116509`을 `ACK`로 전송한것을 확인할 수 있다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n\n### 데이터 전송::data-send\n\n![서버와 클라이언트는 데이터를 전송한다.](/post/network/tcp-ip/transport-layer/data-send-diagram-in-tcp.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"데이터 전송\" }\n\n`ACK`로 세션이 맺어지는 순간부터 데이터를 전송할 수 있고, 데이터를 전송할 때마다 `ACK`를 받아야 한다.\n이는 수신측과 발신측 모두에 해당되는 내용이다.\n\n![WireShark로 캡쳐된 데이터 전송 세그먼트](/post/network/tcp-ip/transport-layer/captured-segment-of-data.png)\n: { \"description\": \"WireShark로 캡쳐된 데이터 전송 세그먼트\" }\n\n위 네 개의 각 세그먼트는 클라이언트와 서버가 데이터를 주고받는 과정을 보여준다.\n[HTTP]()는 `요청/응답` 방식이기 때문에 위처럼 클라이언트가 요청을 보내고, 서버가 응답을 보내는 방식으로 동작한다.\n\n그렇기 때문에 `1`번에서 클라이언트가 `GET /greeting`을 요철 했을 때 `2`번 서버가 ACK를 보내는 것을 볼 수 있다.\n반대로 서버가 `3`번에서 `200 OK`를 응답하면, 클라이언트가 `4`번에서 ACK를 보내는 것을 확인할 수 있다.\n\n>요청/응답 구조는 HTTP 스펙이므로 TCP 기준으로만 봤을때는 데이터 전송에대한 응답으로 ACK를 보내는 것이다.\n:{ \"type\": \"important\", \"icon\": \"warning-octagon\" }\n\n\n### FIN::finish\n\n연결 종료를 위한 통신과정은 `4-way Handshake`로 이루어 지며, `FIN`, `ACK`, `FIN`, `ACK` 세그먼트를 통해 처리된다.\n`FIN`은 세션을 종료하기 위헤 보내는 세그먼트이다.\n\n![클라이언트와 서버는 세션을 종료하기위해 FIN을 보낸다.](/post/network/tcp-ip/transport-layer/fin-diagram-in-tcp.png)\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"FIN 전송\" }\n\n위의 이미지와 보는 보와 같이 세션이 연결 중인 상태(`ESTABLISHED`)에서 연결을 종료가 필요한 장치에서 `FIN` 세그먼트를 전송한다.\n실제로는 서버와 클라이언트 어디쪽에서든지 먼저 연결종료 요청을 할수 있지만, 여기서는 클라이언트가 먼저 `FIN` 세그먼트를 전송하였다.\n\n1. 클라이언트에서 연결종료를 위해 서버로 `FIN` 세그먼트로 전송하며, 이때 클라이언트의 상태는 `FIN_WAIT_1` 상태이다.\n2. 서버는 `FIN` 세그먼트를 받으면, `ACK` 세그먼트로 응답을 전송하며, 이때 서버의 상태는 `CLOSE_WAIT` 상태이다.\n3. 서버가 연결종료에 대한 준비를 모두 끝낸후 클라이언트에게 `FIN` 세그먼트를 전송하며, 이때 서버의 상태는 `LAST_ACK` 상태이다.\n4. 클라이언트는 `FIN` 세그먼트를 받으면, `ACK` 세그먼트로 응답을 전송하며, 이때 클라이언트의 상태는 `TIME_WAIT` 상태이다.\n5. 클라이언트는 `TIME_WAIT` 상태에서 `2MSL(Maximum Segment Lifetime)` 시간동안 대기하고, 이후에 연결이 종료되며, 이때 클라이언트의 상태는 `CLOSED` 상태이다.\n\n\n>TCP는 연결의 신뢰성을 보장하기 위해서는 많은 네트워크 비용이 필요하다.\n: { \"type\": \"important\", \"icon\": \"warning-octagon\" }\n"
   },
   {
     "path": "/docs/network/tcp-ip/network-layer",
