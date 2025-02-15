@@ -3,7 +3,7 @@ layout: post
 title: 네트워크 계층 (Network Layer)
 tags: [Network, Network Layer, OSI, OSI 7 Layer, TCP/IP]
 date: 2021-03-01 11:50:00
-thumbnail: /post/network/network-layer/ip-packet-structure.png
+thumbnail: /post/network/tcp-ip/network-layer/ip-packet-structure.png
 profile-image: /post/profile/profile1.jpg
 current-company: Cubic INC
 current-position: SI Researcher
@@ -25,10 +25,10 @@ IP 주소를 이용하여 논리적 주소지정 방식을 사용하는데, 이�
 
 ## 패킷 구조::packet-structure
 
-![IP 패킷 구조](/post/network/network-layer/ip-packet-structure.png)
+![IP 패킷 구조](/post/network/tcp-ip/network-layer/ip-packet-structure.png)
 : { "align": "center", "max-width": "700px", "description": "IP 패킷 구조" }
 
-IP 패킷은 크게 헤더와 페이로드로 구성되며 IP 패킷은 [데이터 링크 계층](/docs/network/data-link-layer) 프레임의 페이로드이다.
+IP 패킷은 크게 헤더와 페이로드로 구성되며 IP 패킷은 [데이터 링크 계층](/docs/network/tcp-ip/data-link-layer) 프레임의 페이로드이다.
 
 일반적으로 헤더는 20바이트이며 나머지는 옵션과 페이로드(세그먼트)이다.
 

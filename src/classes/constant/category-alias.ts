@@ -14,6 +14,7 @@ export class CategoryAlias {
     private static readonly DATABASE = new CategoryAlias('database', '데이터베이스');
     private static readonly MYSQL = new CategoryAlias('mysql', 'MySQL');
     private static readonly NETWORK = new CategoryAlias('network', '네트워크');
+    private static readonly TCP_IP = new CategoryAlias('tcp-ip', 'TCP/IP');
     private static readonly BACK_END = new CategoryAlias('back-end', '서버/백엔드');
     private static readonly SPRING = new CategoryAlias('spring', '스프링');
     private static readonly TOOL = new CategoryAlias('tool', '라이브러리/도구');
@@ -43,6 +44,7 @@ export class CategoryAlias {
     private static values(): Array<CategoryAlias> {
         return [this.DEVELOPMENT, this.ALGORITHM, this.DATA_STRUCTURE, this.LANGUAGE, this.JAVA, this.TYPESCRIPT, this.CPP,
             this.COMPUTER_STRUCTURE, this.OPERATING_SYSTEM, this.COMPUTER_SCIENCE, this.DATABASE, this.MYSQL, this.NETWORK,
+            this.TCP_IP,
             this.BACK_END, this.SPRING, this.TOOL, this.SOFTWARE_DESIGN, this.STRUCTURE, this.BEHAVIOR, this.ETC];
     }
 

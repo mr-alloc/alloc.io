@@ -3,7 +3,7 @@ layout: post
 title: 물리 계층 (Physical Layer)
 tags: [Network, Physical Layer, OSI, OSI 7 Layer]
 date: 2021-02-04 19:54:00
-thumbnail: /post/network/physical-layer/pin-map-of-cable.png
+thumbnail: /post/network/tcp-ip/physical-layer/pin-map-of-cable.png
 profile-image: /post/profile/profile1.jpg
 current-company: Cubic INC
 current-position: SI Researcher
@@ -29,7 +29,7 @@ hide: false
 이더넷을 기준으로 예를 들면, 이더넷은 랜선(UTP)위에서 전달되며, 전기신호를 사용한다.
 전기신호는 [Bit](/wiki/bit)로 표현되며, 0과 1로 이루어진 데이터를 전달한다.
 
-![UTP 케이블](/post/network/physical-layer/utp-cable.png)
+![UTP 케이블](/post/network/tcp-ip/physical-layer/utp-cable.png)
 : { "align": "center", "max-width": "400px", "description": "UTP 케이블" }
 
 >UTP는 **U**nshielded **T**wisted **P**air의 약자로, 피복이 있는 작은 구리선들이 두 개씩 묶여 있는 케이블이다.
@@ -64,7 +64,7 @@ hide: false
      * 모든 페어가 양방향 통신
      * 각 페어가 송수신 동시 수행
 
-![케이블 핀맵](/post/network/physical-layer/pin-map-of-cable.png)
+![케이블 핀맵](/post/network/tcp-ip/physical-layer/pin-map-of-cable.png)
 : { "align": "center", "max-width": "600px", "description": "케이블 핀맵" }
 
 ## 데이터 처리::data-processing

@@ -3,7 +3,7 @@ layout: post
 title: 데이터 링크 계층 (Data Link Layer)
 tags: [Network, Data Link Layer, OSI, OSI 7 Layer]
 date: 2021-02-05 13:22:00
-thumbnail: /post/network/data-link-layer/network-interface-card.png
+thumbnail: /post/network/tcp-ip/data-link-layer/network-interface-card.png
 profile-image: /post/profile/profile1.jpg
 current-company: Cubic INC
 current-position: SI Researcher
@@ -16,7 +16,7 @@ hide: false
 <!--more-->
 ## 데이터 링크 계층이란?::what-is-data-link-layer
 
-**데이터 링크 계층**은 OSI 7 계층 중 두 번째 계층으로, [물리 계층](/docs/network/physical-layer)에 데이터 전송을 지시할 수 있다.
+**데이터 링크 계층**은 OSI 7 계층 중 두 번째 계층으로, [물리 계층](/docs/network/tcp-ip/physical-layer)에 데이터 전송을 지시할 수 있다.
 흔히 **L2**(Layer 2)라고도 불리며 L2에서는 MAC 주소를 기반으로 주소지정을 사용한다.  
 
 L2는 프레임 단위의 데이터를 전송하며, 신뢰성 있는 전송을 보장하기 위해 오류제어 및 흐름 제어를 수행한다.  
@@ -29,7 +29,7 @@ L2에는 Mac 주소 테이블이 있으며, 출발지 MAC을 테이블에 학습
 **NIC**(**N**etwork **I**nterface **C**ard)은 네트워크 장치로, 컴퓨터와 네트워크 간의 통신을 위한 하드웨어 장치이다.
 컴퓨터에서는 `NIC`이 L2 계층의 역할로 여러가지 처리를 수행한다.
 
-![NIC](/post/network/data-link-layer/network-interface-card.png)
+![NIC](/post/network/tcp-ip/data-link-layer/network-interface-card.png)
 :{ "align": "center", "max-width": "400px", "description": "L2 계층을 수행하는 랜카드(NIC)" }
 
 **NIC의 주요 특징**
