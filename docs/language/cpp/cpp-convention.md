@@ -3,10 +3,10 @@ layout: post
 title: c++ 시작하기
 tags: [Language, C++, C]
 date: 2022-02-07 08:10:00
-profile-image: /post/profile/profile-2024-06-07.jpg
+profile-image: /post/profile/profile4.jpg
 thumbnail: /post/language/cpp/cpp-grammar.png
-current-company: NEOWIZ
-current-position: Software Engineer
+current-company: Herit Corporation
+current-position: Backend Server Developer
 excerpt-separator: <!--more-->
 summary: C++ 문법
 hide: false

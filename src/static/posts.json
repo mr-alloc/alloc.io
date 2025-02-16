@@ -987,10 +987,10 @@
         "C"
       ],
       "date": 1644221400000,
-      "profile-image": "/post/profile/profile-2024-06-07.jpg",
+      "profile-image": "/post/profile/profile4.jpg",
       "thumbnail": "/post/language/cpp/cpp-grammar.png",
-      "current-company": "NEOWIZ",
-      "current-position": "Software Engineer",
+      "current-company": "Herit Corporation",
+      "current-position": "Backend Server Developer",
       "excerpt-separator": "<!--more-->",
       "summary": "C++ 문법",
       "hide": false,
@@ -1370,6 +1370,200 @@
     "content": "\n## 시스템 서비스란?::what-is-system-service\n\n![macOS 운영체제의 시스템 서비스(활성 상태 보기)](/post/computer/macos-activity-monitor.png)\n:{ \"description\": \"macOS 운영체제의 시스템 서비스(활성 상태 보기)\" }\n\n시스템 서비스(System Service)는 시스템 유틸리티(System Utility)로도 알려진 시스템 프로그램(System Program)이다.\n시스템 사용을 위해 편리하게 제공되며 내부 구현은 복잡한 프로그램이다. 일부는 우리가 알고 있는 [시스템 API](/wiki/system-call#api-and-system-call)이다.\n\n사용자는 **노래를 들으며**, 게임을 어떻게 할 수 있는지 알 필요가 없다. 사용자가 원하는 것을 쉽게 사용할 수 있도록 운영체제가 시스템 서비스를 제공한다.\n예를 들어 크롬 브라우저에서 유튜브 뮤직을 재생하고 Stream 앱으로 게임을 실행하고 있어도 노래가 정지되지 않는다.\n\n근본적으로는 노래가 재생되고 있는 `Chrome` 앱이 백그라운드로 전환 될때 오디오 시스템과 통신하는 데몬을 실행하기 때문에 사용자는 눈치채지 못한다.\n\n> macOS의 경우 Chrome 앱이 백그라운드로 전환되면 `coreaudiod` 데몬이 실행되며 하드웨어 드라이버를 제어한다.\n: { \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n## 시스템 서비스의 종류::types-of-system-service\n\n시스템 서비스는 포그라운드 서비스(Foreground Service)와 백그라운드 서비스(Background Service)로 나뉜다.\n`Foreground`는 현재 사용자와 직접적인 상호작용을 하는 서비스를 말하고, `Background`는 프로세스의 상태로 사용자와 직접적인 상호작용을 하지 않는 서비스를 말한다.\n\n각 운영체제별 시스템 서비스의 종류는 다음과 같다:\n\n| 운영체제 |          포그라운드 서비스           |                   백그라운드 서비스                    |\n|:---:|:----------------------------:|:----------------------------------------------:|\n| Windows |        `작업 관리자`, `엣지`        |      `작업 스케줄러`, `윈도우 디펜더`, `윈도우 업데이트 서비스`      |\n| macOS   |    `활성 상태 보기`, `시스템 환경설정`    | `coreaudiod`, `알림 센터`, `bird (iCloud 데이터 동기화)` |\n| Linux   | `vim 에디터`, `top (프로세스 관리도구)` |           `systemd`, `cron`, `sshd (SSH 데몬)`           |\n\n### 포그라운드 서비스::foreground-service\n\n**파일 관리**\n\n파일과 디렉토리를 생성하며, 삭제, 복사, 명명, 출력, 목록화 및 일반적인 조작을 수행한다.\n\n**상태 정보**\n\n시스템의 상태정보를 제공한다. 예를들어 날짜, 시간, 가용 메모리 및 디스크, 사용자 수 등과 같은 상태정보를 제공한다. 이러한 기능을 제공하는 서비스들은 환경설정 정보를 저장하고 검색할 수 있는 등록(registry) 기능을 지원하기도 한다.\n\n**파일 변경**\n\n앞서 설명한 파일관리와 비슷하지만, 기능을 연계하여 파일을 변경(예: `text editor`)하거나 파일의 속성을 변경하는 기능을 제공한다.\n\n**프로그래밍 언어 지원**\n\n일반적인 프로그래밍 언어를 지원하기 위해 컴파일러, 링커, 디버거, 런타임 라이브러리 등을 제공한다. 예를들어 리눅스의 경우 기본적으로 `gcc` 컴파일러를 제공한다.\n\n**프로그램 적재와 수행**\n\n컴파일 된 프로그램을 링크하는 `링키지 에디터`(linkage editor)와 실행가능한 바이너리를 메모리에 적재하는 로더(loader)를 제공한다.\n* 로더는 메모리의 절대 주소에 로드하는 `절대 로더`(Absolute Loader)와 동적인 주소에 로드하는 `재배치 가능 로더`(Relocatable Loader)로 나뉘며, 큰 프로그램을 부분적으로 메모리에 로드하는 `중첩 로더`(Overlay Loader)도 있다.\n\n**통신**\n\n사용자 와 다른 시스템 간에 가상접속을 구현하는 통신 서비스를 제공한다. 예를 들어 리눅스의 `ls | grep text`와 같은 명령어는 `|`를 통해 두 프로그램을 연결한다.\n\n\n### 백그라운드 서비스::background-service\n\n프로그램은 자신의 할일을 완수하면 종료되는 프로그램도 있는 반면에, 시스템이 종료될 때 까지 계속 실행되는 프로그램도 있다.\n이러한 프로그램을 **백그라운드 서비스(Background Service)** 또는 **데몬(Daemon)** 이라고 한다.\n\n앞서 `coreaudiod` 데몬은 `macOS`에서 오디오 시스템을 제어한다고 했었다. 이외에도 네트워크 연결을 청취(Listen)하는 네트워크 데몬이 있고, \n시스템 연결요청을 올바른 프로세스에 연결해주는 역할을 수행한다. \n\n또 다른 예로 프로세스를 시작시키는 프로세스 스케줄러, 시스템 오류 감시 서비스 및 출력서버 등이 있다. \n또한 OS가 중요한 활동을 커널 컨텍스트(Kernel Context)에서가 아니라 사용자 컨텍스트(User Context)에서 수행 해야하는 경우, 데몬을 이용해서 이 작업을 수행할 수 있다.\n\n\n## 서브 시스템::sub-system\n\nOS의 핵심 기능을 놀리적으로 분할한 작은 단위의 시스템이고 서비스와는 다른 개념이다.  \n예를 들어 계층으로 분류를 하면 아래와 같다:\n\n```\n운영체제\n├── 파일시스템 서브시스템 (File System Subsystem)\n│   └── VFS → 실제 파일시스템 → 블록 디바이스 드라이버 → 물리장치\n├── 메모리 관리 서브시스템 (Memory Management Subsystem)\n│   └── 가상메모리 → 페이지테이블 → 물리메모리\n├── 프로세스 관리 서브시스템 (Process Management Subsystem)\n│   └── 스케줄러 → 프로세스/스레드 관리 → CPU\n└── I/O 서브시스템 (I/O Subsystem)\n    └── I/O 스케줄러 → 디바이스 드라이버 → 물리장치\n```\n이는 특정 기능 역역 전체를 관리하는 상위 개념이며, 그 아래 있는 여러 계층 구조와 구성요소들을 포함한다.\n\n> `서브 시스템`은 시스템의 핵심 기능을 제공하기 위해 존재하는 작은 단위의 시스템이다.\n: { \"type\": \"tip\", \"icon\": \"lightbulb\" }\n"
   },
   {
+    "path": "/docs/network/https",
+    "header": {
+      "layout": "post",
+      "title": "HTTPS (HyperText Transfer Protocol Secure)",
+      "tags": [
+        "Network",
+        "TCP/IP",
+        "HTTP"
+      ],
+      "date": 1617037380000,
+      "thumbnail": "/post/network/http/index.png",
+      "profile-image": "/post/profile/profile1.jpg",
+      "current-company": "Cubic INC",
+      "current-position": "SI Researcher",
+      "summary": "HTTPS",
+      "excerpt-separator": "<!--more-->",
+      "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "네트워크"
+      ],
+      "images": [
+        {
+          "src": "/post/network/https/http-without-encrypt.png",
+          "alt": "암호화 되지 않은 정보 전송"
+        },
+        {
+          "src": "/post/network/https/http-with-encrypt.png",
+          "alt": "암호화 된 정보 전송"
+        },
+        {
+          "src": "/post/network/https/tls-layer-structure.png",
+          "alt": "TLS 계층 구조"
+        },
+        {
+          "src": "/post/network/https/client-hello.png",
+          "alt": "Client Hello"
+        },
+        {
+          "src": "/post/network/https/captured-client-hello.png",
+          "alt": "WireShark로 캡쳐된 Client Hello"
+        },
+        {
+          "src": "/post/network/https/specification-of-cipher-suite.png",
+          "alt": "Cipher Suite 스펙"
+        },
+        {
+          "src": "/post/network/https/server-hello.png",
+          "alt": "Server Hello"
+        },
+        {
+          "src": "/post/network/https/certificate-in-tls-1.2.png",
+          "alt": "TLS 1.2의 Certificate"
+        },
+        {
+          "src": "/post/network/https/hilarious-certificate.png",
+          "alt": "인증서의 공개키 검증"
+        },
+        {
+          "src": "/post/network/https/hilarious-verification.png",
+          "alt": "브라우저의 인증서 검증"
+        },
+        {
+          "src": "/post/network/https/server-key-exchange.png",
+          "alt": "Server Key Exchange"
+        },
+        {
+          "src": "/post/network/https/captured-server-key-exchange.png",
+          "alt": "WireShark로 캡쳐된 Server Key Exchange"
+        },
+        {
+          "src": "/post/network/https/client-key-exchange.png",
+          "alt": "Client Key Exchange"
+        },
+        {
+          "src": "/post/network/https/hilarious-process-from-making-premaster-secret.png",
+          "alt": "서버와 클라이언트의 공개키로 Premaster Secret을 만든다."
+        },
+        {
+          "src": "/post/network/https/client-hello.png",
+          "alt": "Client Hello"
+        },
+        {
+          "src": "/post/network/https/captured-client-hello.png",
+          "alt": "WireShark로 캡쳐된 Client Hello"
+        },
+        {
+          "src": "/post/network/https/specification-of-cipher-suite.png",
+          "alt": "Cipher Suite 스펙"
+        },
+        {
+          "src": "/post/network/https/server-hello.png",
+          "alt": "Server Hello"
+        }
+      ],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "HTTPS란?::what-is-https",
+            "title": "HTTPS란?",
+            "fragment": "what-is-https",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "HTTPS 동작 방식::how-https-work",
+            "title": "HTTPS 동작 방식",
+            "fragment": "how-https-work",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "TLS 1.2 동작 과정::how-tls-1.2-works-in",
+            "title": "TLS 1.2 동작 과정",
+            "fragment": "how-tls-1.2-works-in",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "1. Client Hello(TLS 1.2)::client-hello-in-tls-1.2",
+                "title": "1. Client Hello(TLS 1.2)",
+                "fragment": "client-hello-in-tls-1.2",
+                "children": []
+              },
+              {
+                "rank": 3,
+                "origin": "2. Server Hello::server-hello",
+                "title": "2. Server Hello",
+                "fragment": "server-hello",
+                "children": []
+              },
+              {
+                "rank": 3,
+                "origin": "3. Certificate::certificate",
+                "title": "3. Certificate",
+                "fragment": "certificate",
+                "children": []
+              },
+              {
+                "rank": 3,
+                "origin": "3-5. Server Key Exchange::server-key-exchange",
+                "title": "3-5. Server Key Exchange",
+                "fragment": "server-key-exchange",
+                "children": []
+              },
+              {
+                "rank": 3,
+                "origin": "4. Client Key Exchange::client-key-exchange",
+                "title": "4. Client Key Exchange",
+                "fragment": "client-key-exchange",
+                "children": []
+              }
+            ]
+          },
+          {
+            "rank": 2,
+            "origin": "TLS 1.3 동작 과정::how-tls-1.3-works-in",
+            "title": "TLS 1.3 동작 과정",
+            "fragment": "how-tls-1.3-works-in",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "1. Client Hello(TLS 1.3)::client-hello-in-tls-1.3",
+                "title": "1. Client Hello(TLS 1.3)",
+                "fragment": "client-hello-in-tls-1.3",
+                "children": []
+              },
+              {
+                "rank": 3,
+                "origin": "2. Server Hello::server-hello-in-tls-1.3",
+                "title": "2. Server Hello",
+                "fragment": "server-hello-in-tls-1.3",
+                "children": []
+              },
+              {
+                "rank": 3,
+                "origin": "3. Certificate::certificate-in-tls-1.3",
+                "title": "3. Certificate",
+                "fragment": "certificate-in-tls-1.3",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "description": "HTTPS(HyperText Transfer Protocol Secure)는 전송 계층에서 데이터를 암호화하여 보안을 강화한 프로토콜이다.",
+    "content": "## HTTPS란?::what-is-https\n\n**HTTPS**(HyperText Transfer Protocol Secure)는 HTTP의 보안 버전으로, 전송 계층에서 데이터를 암호화하여 보안을 강화한 프로토콜이다.\n기본 HTTP 프로토콜은 암호화되지 않은 텍스트로 통신하기 때문에, 중요한 정보를 주고 받을 때 보안에 취약하다.\n\n![암호화 되지 않은 정보 전송](/post/network/https/http-without-encrypt.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"암호화 되지 않은 정보 전송\" }\n\n예를 들어 어떤 사이트에 가입하려고 할 때, 계정 정보를 암호화 없이 전송하게 된다면, 중간에 누군가가 정보를 가로채어 악용할 수 있다.\n인증서는 도메인을 기반으로 발급되기 때문에 `http://...`으로 접속한 경우 다른 사이트로 리다이렉트되어 악용될 수 있다. \n\n![암호화 된 정보 전송](/post/network/https/http-with-encrypt.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"암호화 된 정보 전송\" }\n\n반대로 암호화된 HTTPS 프로토콜을 사용하게 되면, 중간에 누군가가 정보를 가로채도 암호화된 정보를 해독하기 어렵기 때문에 안전하다.\n또한 이 암호화의 간격이 짧아서, 암호화된 정보를 해독하는데 많은 시간이 소요되어 보안성이 높다.\n\n## HTTPS 동작 방식::how-https-work\n\nHTTPS는 [전송 계층](/docs/network/tcp-ip/transport-layer)과 **응용계층** 사이에서 동작 하기 때문에, 응용 계층의 구현과 상관없이 사용이 가능하다.\n\n흔히 **SSL**(Secure Socket Layer) 또는 **TLS**(Transport Layer Security)이라고 불리우는 프로토콜을 사용하여 데이터를 암호화한다.\n두 가지다 같은 내용이지만, 아래와 같이 구분된다:\n\n* **SSL**\n  * 넷스케이프(Netscape)에서 개발한 프로토콜\n  * 1.0: 공개된적 없음 (Netscape 내부에서만 사용)\n  * 2.0: 1995년 공개 (심각한 보안 취약점 존재로 2011년 공식 사용중단)\n  * 3.0: 1996년 공개 (현재도 사용중이지만, 취약점 존재, 2015년 공식 사용 중단)\n* **TLS**\n  * IETF(Internet Engineering Task Force)에서 개발한 프로토콜\n  * 1.0: 1999년 공개 (취약점 존재)\n  * 1.1: 2006년 공개 (취약점 보완)\n  * 1.2: 2008년 공개 (현재 사용중)\n  * 1.3: 2018년 공개 (현재 사용중)\n\n![TLS 계층 구조](/post/network/https/tls-layer-structure.png)\n:{ \"align\": \"center\", \"max-width\": \"600px\", \"description\": \"TLS 계층 구조\" }\n\n현재까지 사용되는 TLS는 1.2버전과 1.3버전이 있으며, 1.3버전이 보안성이 더 높다.\n\n>TLS는 크게 2가지 Record Protocol과 Handshake Protocol로 나뉘어지지만, 사실상 Handshake은 Record 위에서 동작한다.\n:{ \"type\": \"note\", \"icon\": \"info\" }\n\n## TLS 1.2 동작 과정::how-tls-1.2-works-in\n실제 `TLS 1.3`의 경우 Extensions의 `supported_versions` 확장 필드를 통해 `TLS 1.3`을 지원한다는 것을 알린다.\n\n\n### 1. Client Hello(TLS 1.2)::client-hello-in-tls-1.2\n\n![Client Hello](/post/network/https/client-hello.png)\n:{ \"align\": \"center\", \"max-width\": \"500px\", \"description\": \"Client Hello\" }\n\n먼저 [TCP 연결](/docs/network/tcp-ip/transport-layer#tcp-3-way-handshake)이 이루어지면 TLS Handshake가 시작된다.\n클라이언트는 서버에게 `Client Hello` 메세지를 보내어, 서버와의 통신을 시작한다.\n\n![WireShark로 캡쳐된 Client Hello](/post/network/https/captured-client-hello.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"WireShark로 캡쳐된 Client Hello\" }\n\n* **Version**: 클라이언트가 지원하는 TLS 버전 0x0303(TLS 1.2)\n* **Cipher Suite**\n  * **키 교환**, **인증**, **암호화**, **해시 알고리즘** 등을 포함한 암호화 알고리즘의 조합\n  * ![Cipher Suite 스펙](/post/network/https/specification-of-cipher-suite.png)\n* **Random**\n  *`Random` 필드는 클라이언트가 생성한 난수를 포함한다. 이는 세션을 생성할 때 사용되는 값이다. 일반적으로 32[비트](/wiki/bit)의 난수를 생성한다.\n* **Compression Method**:  `null(0x00) - 압축하지 않음`으로 설정되어 있지만, `DEFLATE(0x01) - ZLIB 압축`, `LSZ(0x40) - LZS 압축` 등이 있다.\n* **Session ID**: 클라이언트가 생성한 세션 ID (재연결 시)\n  * 이 값은 `TLS 1.2`에서만 사용되고, `TLS 1.3`에서는 `Legacy Session ID`로 변경 되었으며, 하위 호환성을 위해 유지되었지만, 실제로는 사용되지 않는다.\n* **Extensions**\n  * TLS 1.2의 경우 선택적으로 사용되는 확장 필드이며, `TLS 1.3`에서는 필수로 사용된다.\n  * **supported_versiosn**: 클라이언트가 지원하는 TLS 버전을 나타내는 확장 필드\n  * **key_share**: `supported_groups`에서 명시한 그룹들에 대한 클라이언트의 공개키 값들\n    * `1-RTT` 핸드쉐이크를 위해 미리 키를 생성\n  * **pre_shared_key(선택사항)**: 클라이언트가 서버와 공유한 세션 ID\n    * `0-RTT` 핸드쉐이크를 위해 사용\n\n>클라이언트가 Client Hello 메세지를 보내면, TCP 계층에서 메세지를 받자마자 ACK가 전송한다. \n>하지만 TLS 레벨에서는 하위계층(TCP)의 통신은 알수 없기 떄문에, ACK 전송을 기다리지 않고 Server Hello를 전송한다.   \n: { \"type\": \"note\", \"icon\": \"info\" }\n\n### 2. Server Hello::server-hello\n\n![Server Hello](/post/network/https/server-hello.png)\n:{ \"align\": \"center\", \"max-width\": \"500px\", \"description\": \"Server Hello\" }\n\n서버는 클라이언트가 보낸 `Client Hello` 메세지를 받으면 클라이언트에게 `Server Hello` 메세지를 보낸다.\n클라이언트에서 보낸 `Client Hello` 메세지를 통해 서버는 클라이언트가 지원하는 암호화 알고리즘을 확인하고, 서버에서 사용할 암호화 알고리즘을 선택한다.\n\n>**Version**, **Cipher Suite**, **Random**, **Compression Method** 필드들은 `Client Hello`와 동일하다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n\n### 3. Certificate::certificate\n\n![TLS 1.2의 Certificate](/post/network/https/certificate-in-tls-1.2.png)\n:{ \"align\": \"center\", \"max-width\": \"500px\", \"description\": \"TLS 1.2의 Certificate\" }\n\nCertificate 메세지에는 인증서 체인이 포함되어 있으며 각 인증서에는 공개키가 포함되어 있다.\n인증서는 [ASN.1](https://en.wikipedia.org/wiki/ASN.1)(**A**bstract **S**yntax **N**otation One) 형식으로 작성된다.\n\nX.509 인증서의 v3 디지털 인증서는 다음과 같은 필드를 포함한다:\n\n* Certificate\n  * Version Number\n  * Serial Number\n  * Signature Algorithm ID\n  * Issuer Name\n  * Validity period\n    * Not Before\n  * Not After\n  * Subject name\n  * Subject Public Key Info\n    * Public Key Algorithm\n  * Subject Public Key\n  * Issuer Unique Identifier (optional)\n  * Subject Unique Identifier (optional)\n  * Extensions (optional)\n    * ...\n* Certificate Signature Algorithm\n* Certificate Signature\n\n아무튼 각 인증서는 X.509 규격을 따르는데, 중요한 점은 이곳에 `공개키`와 `서명`이 포함되어 있다는 것이다.\n`클라이언트`는 `Certificate` 메세지를 받으면, 인증서 체인에 대해 각 인증서를 검증한다.\n\n```text\n[서버 인증서] -> [중간 CA 인증서] -> [ROOT CA 인증서]\n```\n\n예를 들어 이러한 구조로 인증서 체인이 있다면, 클라이언트는 서버인증서의 기본 필드, 확장 필드, 서명을 검증한다.\n각 인증서를 검증 하는 방법은 이래와 같다.\n\n![인증서의 공개키 검증](/post/network/https/hilarious-certificate.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"인증서의 공개키\" }\n\n1. 인증서에서 `Certificate` 부분의 `ASN.1 DER` 인코딩된 바이트 문자열을 `Certificate Signature Algorithm`값을 이용해 해싱한다.\n2. 상위 인증서의 공개키로 `Certificate Signature`를 복호화하여 해시값을 얻는다.\n3. 1번에서 얻은 해시값과 2번에서 얻은 해시값을 비교하여 인증서의 유효성을 검증한다.\n\n>Root CA의 인증서는 자체 서명(Self-Signed) 인증서이며, **브라우저**는 대부분의 Root CA 인증서를 내장하고 있다. \n> 내장된 인증서 목록과 인증서 체인의 Root 인증서를 비교하여 검증한다. \n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n\n![브라우저의 인증서 검증](/post/network/https/hilarious-verification.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"무서운 브라우저의 인증서 검증\" }\n\n>이는 Root CA가 제공하는 인증서가 신뢰할 수 있는 인증서인지를 검증하는 과정이다.\n: { \"type\": \"warning\", \"icon\": \"info\" }\n\n### 3-5. Server Key Exchange::server-key-exchange\n\n![Server Key Exchange](/post/network/https/server-key-exchange.png)\n:{ \"align\": \"center\", \"max-width\": \"500px\", \"description\": \"Server Key Exchange\" }\n\n`Server Key Exchage` 메세지는 일반적인 상황에서는 전송되지 않지만, `Server Hello` 메세지의 `Cipher Suite`가 임시 교환 알고리즘을 사용하는 경우 전송된다.\n\n임시 키 알고리즘은 DHE(Diffie-Hellman Ephemeral) 또는 ECDHE(Elliptic Curve Diffie-Hellman Ephemeral) 등이 있다.\n\n![WireShark로 캡쳐된 Server Key Exchange](/post/network/https/captured-server-key-exchange.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"WireShark로 캡쳐된 Server Key Exchange\" }\n\n`Server Key Exchange` 메세지를 받은 클라이언트는 서명을 확인 하고, 임시 공개키를 저장한다. 그후 키교환에 필요한 자체 임시 키 생성을 준비한다.\n\n### 4. Client Key Exchange::client-key-exchange\n\nTLS에서 메세지를 암호화 하고 복호화 하려면 어떤 세션키가 있어야한다. 하지만 그 세션키를 만드려면 먼저 `Premaster Secret`이라는 값이 만들어져야 한다.\n\n하지만, 이 값은 `Cipher Suite`의 키교환 알고리즘에 따라 만드는 방식이 제각각이다. 아래는 알고리즘별 차이를 설명한다.\n\n![Client Key Exchange](/post/network/https/client-key-exchange.png)\n:{ \"align\": \"center\", \"max-width\": \"500px\", \"description\": \"Client Key Exchange\" }\n\n* **RSA**:\n  * 클라이언트의 `Premaster Secret`는 48바이트 이다.\n  * 맨 앞의 2바이트는 TLS 프로토콜 버전인 `0x0303 0x0303`을 넣는다.\n  * 나머지 46바이트에는 암호학적으로 안전한 난수 생성기로 랜덤값을 생성하여 만든다.\n* **DHE**\n  * 암호학 적으로 안전한 난수 생성기로 -1~(p-1) 사이의 랜덤한 큰 정수로 **개인키 A**를 만든다.\n  * g^A mod p(g: 생성자, p: 소수, A: 개인키)로 **공개키**를 만든다.\n* **ECDHE**\n  * 암호학 적으로 안전한 난수 생성기로 1~(곡선차수-1) 사이의 랜덤한 큰 정수로 **개인키**를 만든다.\n  * 타원 곡선(EC)의 기준점(Generator Point)에 개인키를 [스칼라]() 곱셈하여 새로운 포인트 좌표(**공개키**)를 만든다.\n\n각 키 교환 알고리즘 별 생성된 정보는 `Client Key Exchange` 메세지에 담겨 서버로 전송된다.\n\n>RSA의 경우 `Premaster Secret`을 생성후 서버 인증서의 공개키로 암호화 하여 `Client Key Exchange` 메세지에 담아 전송한다.\n: { \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n**RSA**는 서버로 암호화 된 `Premaster Secret`을 전송하였다. 이는 서버에서 자신의 개인키로 복호화하여 `Premaster Secret`을 얻을수 있지만,\n**DHE**, **ECDHE**는 서버의 공개키와 전달받은 클라이언트의 공개키로 `Premaster Secret`을 생성한다.\n\n\n![서버와 클라이언트의 공개키로 Premaster Secret을 만든다.](/post/network/https/hilarious-process-from-making-premaster-secret.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"서버와 클라이언트의 공개키로 Premaster Secret을 만든다.\" }\n\n\n\n\n\n\n\n\n\n\n\n## TLS 1.3 동작 과정::how-tls-1.3-works-in\n\n### 1. Client Hello(TLS 1.3)::client-hello-in-tls-1.3\n\n![Client Hello](/post/network/https/client-hello.png)\n:{ \"align\": \"center\", \"max-width\": \"500px\", \"description\": \"Client Hello\" }\n\n먼저 [TCP 연결](/docs/network/tcp-ip/transport-layer#tcp-3-way-handshake)이 이루어지면 TLS Handshake가 시작된다.\n클라이언트는 서버에게 `Client Hello` 메세지를 보내어, 서버와의 통신을 시작한다.\n\n![WireShark로 캡쳐된 Client Hello](/post/network/https/captured-client-hello.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"WireShark로 캡쳐된 Client Hello\" }\n\n**Version**\n\n`Version` 필드는 `TLS 1.2`, `TLS 1.3` 모두 `0x0303(TLS 1.2)`으로 설정 되어있다.\n**Cipher Suite**\n\n`Cipher Suite`는 클라이언트가 지원하는 암호화 알고리즘을 나타낸다. `TLS 1.2`에서 `TLS 1.3`으로 넘어오면서 암호화 알고리즘의 종류가 달라졌다.\n* TLS 1.2: **키 교환**, **인증**, **암호화**, **해시 알고리즘**을 모두 포함\n  * 예: `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`\n* TLS 1.3: **암호화**와 **해시 알고리즘**만 포함\n  * 예: `TLS_AES_128_GCM_SHA256`\n\n>TLS 1.2에서 사라진 키 교환 및 인증 알고리즘은 Extensions 필드의 `key_share`와 `signature_algorithms` 확장 필드로 대체되었다.\n: { \"type\": \"tip\", \"icon\": \"lightbulb\" }\n\n`WireShark로 캡쳐된 Client Hello` 이미지에 보여진 것과 같이 `Cipher Suite`는 클라이언트가 지원하는 여러 알고리즘이 나와있다.\n예: `TLS_AES_128_GCM_SHA256`, `TLS_AES_256_GCM_SHA384`, `TLS_CHACHA20_POLY1305_SHA256` 등등...\n\n![Cipher Suite 스펙](/post/network/https/specification-of-cipher-suite.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"Cipher Suite 스펙\" }\n\n`Cipher Suite`의 각 자리 별 의미는 위와 같다.\n\n**Random**\n\n`Random` 필드는 클라이언트가 생성한 난수를 포함한다. 이는 세션을 생성할 때 사용되는 값이다. 일반적으로 32[비트](/wiki/bit)의 난수를 생성한다.\n\n* **Compression Method**: 클라이언트가 지원하는 압축 방식\n\n일반 적으로 취약점 문제 때문에 `TLS 1.2`, `TLS 1.3` 모두 `null(0x00) - 압축하지 않음`으로 설정되어 있지만,\n`DEFLATE(0x01) - ZLIB 압축`, `LSZ(0x40) - LZS 압축` 등이 있다.\n\n>압축 방식은 `TLS 1.3`에서는 제거되었다.\n:{ \"type\": \"caution\", \"icon\": \"x-circle\" }\n\n* **Session ID**: 클라이언트가 생성한 세션 ID (재연결 시)\n* 이 값은 `TLS 1.2`에서만 사용되고, `TLS 1.3`에서는 `Legacy Session ID`로 변경 되었으며, 하위 호환성을 위해 유지되었지만, 실제로는 사용되지 않는다.\n\n**Extensions**\n\nTLS 1.2의 경우 선택적으로 사용되는 확장 필드이며, `TLS 1.3`에서는 필수로 사용된다.\n* **supported_versiosn**: 클라이언트가 지원하는 TLS 버전을 나타내는 확장 필드\n* **key_share**: `supported_groups`에서 명시한 그룹들에 대한 클라이언트의 공개키 값들\n  * `1-RTT` 핸드쉐이크를 위해 미리 키를 생성\n* **pre_shared_key(선택사항)**: 클라이언트가 서버와 공유한 세션 ID\n  * `0-RTT` 핸드쉐이크를 위해 사용\n\n>클라이언트가 Client Hello 메세지를 보내면, TCP 계층에서 메세지를 받자마자 ACK가 전송한다.\n>하지만 TLS 레벨에서는 하위계층(TCP)의 통신은 알수 없기 떄문에, ACK 전송을 기다리지 않고 Server Hello를 전송한다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n\n### 2. Server Hello::server-hello-in-tls-1.3\n\n![Server Hello](/post/network/https/server-hello.png)\n:{ \"align\": \"center\", \"max-width\": \"500px\", \"description\": \"Server Hello\" }\n\n서버는 클라이언트가 보낸 `Client Hello` 메세지를 받으면 클라이언트에게 `Server Hello` 메세지를 보낸다.\n클라이언트에서 보낸 `Client Hello` 메세지를 통해 서버는 클라이언트가 지원하는 암호화 알고리즘을 확인하고, 서버에서 사용할 암호화 알고리즘을 선택한다.\n\n>**Version**, **Cipher Suite**, **Random**, **Compression Method** 필드들은 `Client Hello`와 동일하다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n\n#### 2-5. Encrypted Extensions::encrypted-extensions-in-tls-1.3\n\n이 메세지는 `TLS 1.3`에서 추가된 메세지로, `Server Hello` 이후에 클라이언트에 전송된다.\n\n`Server Hello`에서 `Extensions` 필드는 확장에 필요한 정보를 포함하지만, 모든 정보가 있는것이 아니다.\n평문으로 보낼수 없는 `Extensions` 정보들은 `Server Hello`에서 선택된 `Cipher Suite`으로  암호화 하면, 그것이 `Encrypted Extensions`이다.\n\n이 프로토콜에서는 다음과같은 확장 필드들이 포함된다:\n\n* **supported_groups**: 클라이언트가 지원하는 그룹을 나타내는 목록\n* **application_layer_protocol_negotiation (ALPN)**: 클라이언트가 지원하는 프로토콜 목록 (HTTP/1.1, HTTP/2, HTTP/3 등)\n* **server_name (SNIndication)**: 여러 도메인을 호스팅하는 서버에서 클라이언트가 요청한 도메인\n* **signature_algorithms**: 클라이언트가 지원하는 인증서의 서명과 디지털 서명을 검증할 때 사용 할 알고리즘 목록\n* **compress_certificate**: 인증서 압축 지원 여부와 지원하는 압축 알고리즘\n* **record_size_limit**: 클라이언트가 지원하는 최대 TLS 레코드 크기\n\n>**Encrypted Extensions**는 `TLS 1.3`에서만 사용되며, `TLS 1.2`에서는 사용되지 않는다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n\n### 3. Certificate::certificate-in-tls-1.3\n\n\n\n\n"
+  },
+  {
     "path": "/docs/network/media-type",
     "header": {
       "layout": "wiki",
@@ -1513,87 +1707,6 @@
     },
     "description": "HTTP는 HyperText Transfer Protocol의 약자로, 웹 서버와 웹 클라이언트 간의 통신을 위한 프로토콜이다.\nTCP 위에서, 요청/응답 방식으로 동작한다.",
     "content": "## HTTP란?::what-is-http\n\n**HTTP**(HyperText Transfer Protocol)는 웹 서버와 웹 클라이언트 간의 통신을 위한 프로토콜이다.\n기본적으로 클라이언트가 서버에 요청을 보내고, 서버는 요청에 대한 응답을 보내는 방식으로 동작한다.\n\n![HTTP 통신](/post/network/http/index.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"HTTP 통신\" }\n\nHTTP의 일반적인 동작은 이미지처럼  [TCP](/docs/network/tcp-ip/transport-layer#tcp-3-way-handshake) 위에서 수행된다.\n이미 연결이 맺어졌다는 가정하에, 메세지를 교환하는 방식이다.\n\n각 장치에서는 TCP 세그먼트의 페이로드를 HTTP 메세지로, 표준화된 규격에 맞게 해석하여 처리한다.\n[HTTP/1.1](https://www.rfc-editor.org/info/rfc2616)은 1999년에 표준화되었으며, 현재는 [HTTP/2](https://www.rfc-editor.org/info/rfc7540) 등 상위 버전도 나와있다.\n\n## HTTP 메세지 구조::message-structure\n\nHTTP는 상태가 없는(Stateless) 프로토콜이기 떄문에 서버에서 이전 요청들의 상태를 저장하지 않는다. \n메세지는 크게 요청(Request) 메세지와 응답(Response) 메세지로 나뉘며 각 메세지는 표준 규격을 따른다.\n\n### 요청 메세지::request-message\n\n![HTTP 요청 메세지](/post/network/http/request-format.png)\n:{ \"align\": \"center\", \"max-width\": \"600px\", \"description\": \"HTTP 요청 메세지\" }\n\nHTTP 메세지는 요청 라인, 헤더, 본문으로 구성된다. 예제에서는 이해를 위해 요청 라인과 헤더를 알아보자.\n\n*Request Line*\n\n* **Method**: 요청 방식을 나타낸다. (GET, POST, PUT, DELETE 등)\n* **Request-URI**: 요청 대상의 리소스를 나타낸다.\n* **Protocol**: HTTP 프로토콜의 버전을 나타낸다.\n\n요청 라인에서는 클라이언트가 요청하는 리소스에 대하여 어떤 방식으로 요청하는지 와 어떤 프로토콜의 버전으로 처리에 대해 요청하는지를 나타낸다. \n\n*Header*\n\n* **Host**: 요청 대상의 호스트를 나타낸다.\n* **User-Agent**: 요청을 보내는 클라이언트의 정보를 나타낸다.\n* **Accept**: 클라이언트가 받아들일 수 있는 컨텐츠 타입을 나타낸다.\n* **Content-Type**: 요청 본문의 타입을 나타낸다.\n* **Content-Length**: 요청 본문의 길이를 나타낸다.\n\n헤더에서는 클라이언트가 요청하는 리소스에 대하여 추가적인 정보를 담고 있다. \n이미지에서는 일부 헤더가 생략 되었지만, 실제로 Content-Length 같이 요청의 끝을 알 수 없어 메세지 해석이 어려운 경우 TCP 연결종료 끝을 판단한다.\n따라서 대부분은 HTTP 클라이언트는 기본적인 헤더를 포함되게 되어있다.\n\n\n### 응답 메세지::response-message\n\n![HTTP 응답 메세지](/post/network/http/response-format.png)\n:{ \"align\": \"center\", \"max-width\": \"600px\", \"description\": \"HTTP 응답 메세지\" }\n\nHTTP 응답 메세지는 상태 라인, 헤더, 본문으로 구성된다. 예제에서는 이해를 위해 상태 라인과 헤더를 알아보자.\n\n*Status Line*\n\n* **Protocol**: HTTP 프로토콜의 버전을 나타낸다.\n* **Status-Code**: 요청에 대한 응답 상태 코드를 나타낸다.\n  * | 전체 범위 | 정의된 범위 | 분류 |\n    |:---:|:---:|:---:|\n    | 1xx | 100 ~ 101 | 정보 |\n    | 2xx | 200 ~ 206 | 성공 |\n    | 3xx | 300 ~ 305 | 리다이렉션 |\n    | 4xx | 400 ~ 415 | 클라이언트 에러 |\n    | 5xx | 500 ~ 505 | 서버 에러 |\n* **Reason-Phrase**: 상태 코드에 대한 설명을 나타낸다.\n  * | 상태 코드 | 사유 구절 | 의미 |\n    |:---:|:---:|:---:|\n    | 200 | OK | 요청이 성공적으로 처리되었음 |\n    | 404 | Not Found | 요청한 리소스를 찾을 수 없음 |\n    | 500 | Internal Server Error | 서버 내부 에러로 요청을 처리할 수 없음 |\n\n상태 라인에서는 서버가 클라이언트에게 응답하는 상태 코드와 그에 대한 설명을 나타낸다.  \n\n상태 코드는 [RFC9110](https://www.rfc-editor.org/rfc/rfc9110.html#name-status-codes)에 정의되어 있으며, 상태 코드에 따라 클라이언트는 어떻게 처리해야 하는지 알 수 있다.\n이는 사유구절과 한개의 상태 정보로 사용된다. \n\n*Header*\n\n* **Server**: 서버의 정보를 나타낸다.\n* **Content-Type**: 응답 본문의 타입을 나타낸다.\n* **Content-Length**: 응답 본문의 길이를 나타낸다.\n* **Date**: 응답을 보낸 시간을 나타낸다.\n* **Connection**: 클라이언트와 서버의 연결 상태를 나타낸다.\n\n## 메세지 본문::message-body\n\n![HTTP 메세지 전문](/post/network/http/http-message.png)\n:{ \"align\": \"center\", \"max-width\": \"600px\", \"description\": \"HTTP 메세지 전문\" }\n\n`HTTP` 메세지의 **요청라인과 상태라인 그리고 헤더**가 메세지에 대한 설정 정보라면 본문은 실제 데이터를 담고 있는 부분이다.\n\nHTTP 메세지 해석시 본문을 알기 위해서는, 메세지 전체를 볼 필요가있다. \n먼저 메세지 시작을 알기위해 `Header`와 `Body`를 구분하는 개행이 필요하다. http 메세지는 표준 스트림으로 읽기 때문에 끝을 알수가 없다.\n\n따라서 메세지 헤더의 `Content-Length`를 통해 본문의 길이를 알 수 있으며, 이를 통해 본문의 끝을 알 수 있다.\n\n이미지에는 요청 본문이 `application/x-www-form-urlencoded`형식으로 되어있고, 응답 본문에는 `application/html`형식으로 되어있는걸 알 수 있다.\n메세지를 받는 대상이 올바르게 해석할 수 있도록 `Content-Type`을 통해 본문의 타입을 알려준다.\n\n\n## HTTP Header Options::header-options\n\nHTTP는 TCP 위에서 동작하기 때문에, HTTP 헤더 옵션으로 TCP의 기능을 사용할 수 있다.\n예를 들어 `Keep-Alive` 헤더는 특정 시간동안 요청의 세션을 재사용할 수 있도록 지원한다.  \n\n### Keep-Alive::keep-alive\n\n`Keep-Alive`는 TCP 스펙의 지속 연결(`Persistent Connection`)을 이용하여, 클라이언트와 서버간의 연결을 유지하는 기능이다.\n\n```http\nGET /index.html HTTP/1.1\nHost: www.example.com\nConnection: Keep-Alive\nKeep-Alive: timeout=60, max=1000\n...\n```\n\n![Keep-Alive](/post/network/http/keep-alive.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"Keep-Alive를 1분으로 설정\" }\n\n예를 들어 위와 같이 `Connection`은 `Keep-Alive`로 설정되어 있고, `Keep-Alive` 헤더에는 `timeout`과 `max`를 설정하였다.\n이 경우 60초 동안 세션을 유지하고, 최대 1000개의 요청을 처리할 수 있으며 둘 중 하나가 먼저 도달하면 세션을 종료한다.\n\n> 이렇게 지원되는 `Keep-Alive`는 세션 계층으로서의 구현이다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n"
-  },
-  {
-    "path": "/docs/network/https",
-    "header": {
-      "layout": "post",
-      "title": "HTTPS (HyperText Transfer Protocol Secure)",
-      "tags": [
-        "Network",
-        "TCP/IP",
-        "HTTP"
-      ],
-      "date": 1616160120000,
-      "thumbnail": "/post/network/http/index.png",
-      "profile-image": "/post/profile/profile1.jpg",
-      "current-company": "Cubic INC",
-      "current-position": "SI Researcher",
-      "summary": "HTTPS",
-      "excerpt-separator": "<!--more-->",
-      "hide": false,
-      "breadcrumbs": [
-        "문서",
-        "네트워크"
-      ],
-      "images": [
-        {
-          "src": "/post/network/https/http-without-encrypt.png",
-          "alt": "암호화 되지 않은 정보 전송"
-        },
-        {
-          "src": "/post/network/https/http-with-encrypt.png",
-          "alt": "암호화 된 정보 전송"
-        },
-        {
-          "src": "/post/network/https/tls-layer-structure.png",
-          "alt": "TLS 계층 구조"
-        },
-        {
-          "src": "/post/network/https/client-hello.png",
-          "alt": "Client Hello"
-        }
-      ],
-      "headlines": {
-        "rank": 0,
-        "origin": "root::root",
-        "title": "root",
-        "fragment": "root",
-        "children": [
-          {
-            "rank": 2,
-            "origin": "HTTPS란?::what-is-https",
-            "title": "HTTPS란?",
-            "fragment": "what-is-https",
-            "children": []
-          },
-          {
-            "rank": 2,
-            "origin": "HTTPS 동작 방식::how-https-work",
-            "title": "HTTPS 동작 방식",
-            "fragment": "how-https-work",
-            "children": []
-          },
-          {
-            "rank": 2,
-            "origin": "HTTPS 동작 과정::how-https-works",
-            "title": "HTTPS 동작 과정",
-            "fragment": "how-https-works",
-            "children": [
-              {
-                "rank": 3,
-                "origin": "1. Client Hello::client-hello",
-                "title": "1. Client Hello",
-                "fragment": "client-hello",
-                "children": []
-              }
-            ]
-          }
-        ]
-      }
-    },
-    "description": "HTTPS(HyperText Transfer Protocol Secure)는 전송 계층에서 데이터를 암호화하여 보안을 강화한 프로토콜이다.",
-    "content": "## HTTPS란?::what-is-https\n\n**HTTPS**(HyperText Transfer Protocol Secure)는 HTTP의 보안 버전으로, 전송 계층에서 데이터를 암호화하여 보안을 강화한 프로토콜이다.\n기본 HTTP 프로토콜은 암호화되지 않은 텍스트로 통신하기 때문에, 중요한 정보를 주고 받을 때 보안에 취약하다.\n\n![암호화 되지 않은 정보 전송](/post/network/https/http-without-encrypt.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"암호화 되지 않은 정보 전송\" }\n\n예를 들어 어떤 사이트에 가입하려고 할 때, 계정 정보를 암호화 없이 전송하게 된다면, 중간에 누군가가 정보를 가로채어 악용할 수 있다.\n인증서는 도메인을 기반으로 발급되기 때문에 `http://...`으로 접속한 경우 다른 사이트로 리다이렉트되어 악용될 수 있다. \n\n![암호화 된 정보 전송](/post/network/https/http-with-encrypt.png)\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"암호화 된 정보 전송\" }\n\n반대로 암호화된 HTTPS 프로토콜을 사용하게 되면, 중간에 누군가가 정보를 가로채도 암호화된 정보를 해독할 수 없기 때문에 안전하다.\n또한 이 암호화의 간격이 짧아서, 암호화된 정보를 해독하는데 많은 시간이 소요되어 보안성이 높다.\n\n## HTTPS 동작 방식::how-https-work\n\nHTTPS는 [전송 계층](/docs/network/tcp-ip/transport-layer)과 **응용계층** 사이에서 동작 하기 때문에, 응용 계층의 구현과 상관없이 사용이 가능하다.\n\n흔히 **SSL**(Secure Socket Layer) 또는 **TLS**(Transport Layer Security)이라고 불리우는 프로토콜을 사용하여 데이터를 암호화한다.\n두 가지다 같은 내용이지만, 아래와 같이 구분된다:\n\n* **SSL**\n  * 넷스케이프(Netscape)에서 개발한 프로토콜\n  * 1.0: 공개된적 없음 (Netscape 내부에서만 사용)\n  * 2.0: 1995년 공개 (심각한 보안 취약점 존재로 2011년 공식 사용중단)\n  * 3.0: 1996년 공개 (현재도 사용중이지만, 취약점 존재, 2015년 공식 사용 중단)\n* **TLS**\n  * IETF(Internet Engineering Task Force)에서 개발한 프로토콜\n  * 1.0: 1999년 공개 (취약점 존재)\n  * 1.1: 2006년 공개 (취약점 보완)\n  * 1.2: 2008년 공개 (현재 사용중)\n  * 1.3: 2018년 공개 (현재 사용중)\n\n## HTTPS 동작 과정::how-https-works\n\n![TLS 계층 구조](/post/network/https/tls-layer-structure.png)\n:{ \"align\": \"center\", \"max-width\": \"500px\", \"description\": \"TLS 계층 구조\" }\n\n현재까지 사용되는 TLS는 1.2버전과 1.3버전이 있으며, 1.3버전이 보안성이 더 높다.\n`HTTPS`의 동작 과정을 알아보면서, 1.2 버전과 1.3버전의 차이점도 같이 공부해보자.\n\n>TLS는 크게 2가지 Record Protocol과 Handshake Protocol로 나뉘어진다. 사실상 Handshake은 Record 위에서 동작한다.\n: { \"type\": \"note\", \"icon\": \"info\" }\n\n### 1. Client Hello::client-hello\n\n![Client Hello](/post/network/https/client-hello.png)\n:{ \"align\": \"center\", \"max-width\": \"500px\", \"description\": \"Client Hello\" }\n\n"
   },
   {
     "path": "/docs/network/tcp-ip/transport-layer",
