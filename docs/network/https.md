@@ -2,16 +2,17 @@
 layout: post
 title: HTTPS (HyperText Transfer Protocol Secure)
 tags: [Network, TCP/IP, HTTP]
-date: 2021-03-29 17:03:00
-thumbnail: /post/network/http/index.png
-profile-image: /post/profile/profile1.jpg
-current-company: Cubic INC
-current-position: SI Researcher
+date: 2022-08-11 17:03:00
+thumbnail: /post/network/https/hilarious-process-from-making-premaster-secret.png
+profile-image: /post/profile/winkkom.png
+current-company: NEOWIZ
+current-position: Software Engineer
 summary: HTTPS
 excerpt-separator: <!--more-->
 hide: false
 ---
 HTTPS(HyperText Transfer Protocol Secure)는 전송 계층에서 데이터를 암호화하여 보안을 강화한 프로토콜이다.
+클라이언트와 서버가 신뢰할 수 있는 통신이 어떻게 이루어지는지 알아보자.
 <!--more-->
 ## HTTPS란?::what-is-https
 
