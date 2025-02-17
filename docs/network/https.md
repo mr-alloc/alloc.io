@@ -61,7 +61,7 @@ HTTPS는 [전송 계층](/docs/network/tcp-ip/transport-layer)과 **응용계층
 실제 `TLS 1.3`의 경우 Extensions의 `supported_versions` 확장 필드를 통해 `TLS 1.3`을 지원한다는 것을 알린다.
 
 
-### 1. Client Hello(TLS 1.2)::client-hello-in-tls-1.2
+### 1. Client Hello::client-hello
 
 ![Client Hello](/post/network/https/client-hello.png)
 :{ "align": "center", "max-width": "500px", "description": "Client Hello" }
@@ -76,8 +76,7 @@ HTTPS는 [전송 계층](/docs/network/tcp-ip/transport-layer)과 **응용계층
 * **Cipher Suite**
   * **키 교환**, **인증**, **암호화**, **해시 알고리즘** 등을 포함한 암호화 알고리즘의 조합
   * ![Cipher Suite 스펙](/post/network/https/specification-of-cipher-suite.png)
-* **Random**
-  *`Random` 필드는 클라이언트가 생성한 난수를 포함한다. 이는 세션을 생성할 때 사용되는 값이다. 일반적으로 32[비트](/wiki/bit)의 난수를 생성한다.
+* **Random**: `Random` 필드는 클라이언트가 생성한 난수를 포함한다. 이는 세션을 생성할 때 사용되는 값이다. 일반적으로 32바이트의 난수를 생성한다.
 * **Compression Method**:  `null(0x00) - 압축하지 않음`으로 설정되어 있지만, `DEFLATE(0x01) - ZLIB 압축`, `LSZ(0x40) - LZS 압축` 등이 있다.
 * **Session ID**: 클라이언트가 생성한 세션 ID (재연결 시)
   * 이 값은 `TLS 1.2`에서만 사용되고, `TLS 1.3`에서는 `Legacy Session ID`로 변경 되었으며, 하위 호환성을 위해 유지되었지만, 실제로는 사용되지 않는다.
@@ -207,111 +206,37 @@ TLS에서 메세지를 암호화 하고 복호화 하려면 어떤 세션키가 
 ![서버와 클라이언트의 공개키로 Premaster Secret을 만든다.](/post/network/https/hilarious-process-from-making-premaster-secret.png)
 :{ "align": "center", "max-width": "400px", "description": "서버와 클라이언트의 공개키로 Premaster Secret을 만든다." }
 
+#### 4.5 Sesion Key 생성::session-key-generation
 
+`Client Key Exchange`메세지까지 전송했다면, 양측 모두 `Premaster Secret`을 가지고 있다.
+이제 이 값을 이용하여, `Master Secret`을 생성하고, `Master Secret`을 이용하여 `Session Key`를 생성한다.
 
+**Master Secret**은 **PRF**(Pseudo Random Function)를 이용하여 `Master secret = PRF(Premaster Secret, "master secret", ClientHello.random + ServerHello.random)`로 생성한다.
 
+이렇게 생성된 `Master Secret`에서는 Cipher Suite에 따라 여러가지 값을 추출할 수 있다.
+ 
+* **Client Write MAC Key**: 클라이언트가 서버로 보내는 메세지를 MAC(Message Authentication Code)하기 위한 키
+* **Server Write MAC Key**: 서버가 클라이언트로 보내는 메세지를 MAC하기 위한 키
+* **Client Write Key**: 클라이언트가 서버로 보내는 메세지를 암호화하기 위한 키
+* **Server Write Key**: 서버가 클라이언트로 보내는 메세지를 암호화하기 위한 키
+* **Client Write IV**: 클라이언트가 서버로 보내는 메세지를 암호화하기 위한 초기화 벡터
+* **Server Write IV**: 서버가 클라이언트로 보내는 메세지를 암호화하기 위한 초기화 벡
 
+이중 실제 메세지를 암·복호화 하는데 사용되는 키를 세션키라 부른다.
+**클라이언트**는 **Client Write Key**로 암호화, **Server Write Key**로 복호화를 하며,
+**서버**는 **Server Write Key**로 암호화, **Client Write Key**로 복호화를 한다.
 
-
-
-
-
-
-## TLS 1.3 동작 과정::how-tls-1.3-works-in
-
-### 1. Client Hello(TLS 1.3)::client-hello-in-tls-1.3
-
-![Client Hello](/post/network/https/client-hello.png)
-:{ "align": "center", "max-width": "500px", "description": "Client Hello" }
-
-먼저 [TCP 연결](/docs/network/tcp-ip/transport-layer#tcp-3-way-handshake)이 이루어지면 TLS Handshake가 시작된다.
-클라이언트는 서버에게 `Client Hello` 메세지를 보내어, 서버와의 통신을 시작한다.
-
-![WireShark로 캡쳐된 Client Hello](/post/network/https/captured-client-hello.png)
-:{ "align": "center", "max-width": "400px", "description": "WireShark로 캡쳐된 Client Hello" }
-
-**Version**
-
-`Version` 필드는 `TLS 1.2`, `TLS 1.3` 모두 `0x0303(TLS 1.2)`으로 설정 되어있다.
-**Cipher Suite**
-
-`Cipher Suite`는 클라이언트가 지원하는 암호화 알고리즘을 나타낸다. `TLS 1.2`에서 `TLS 1.3`으로 넘어오면서 암호화 알고리즘의 종류가 달라졌다.
-* TLS 1.2: **키 교환**, **인증**, **암호화**, **해시 알고리즘**을 모두 포함
-  * 예: `TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256`
-* TLS 1.3: **암호화**와 **해시 알고리즘**만 포함
-  * 예: `TLS_AES_128_GCM_SHA256`
-
->TLS 1.2에서 사라진 키 교환 및 인증 알고리즘은 Extensions 필드의 `key_share`와 `signature_algorithms` 확장 필드로 대체되었다.
-: { "type": "tip", "icon": "lightbulb" }
-
-`WireShark로 캡쳐된 Client Hello` 이미지에 보여진 것과 같이 `Cipher Suite`는 클라이언트가 지원하는 여러 알고리즘이 나와있다.
-예: `TLS_AES_128_GCM_SHA256`, `TLS_AES_256_GCM_SHA384`, `TLS_CHACHA20_POLY1305_SHA256` 등등...
-
-![Cipher Suite 스펙](/post/network/https/specification-of-cipher-suite.png)
-:{ "align": "center", "max-width": "400px", "description": "Cipher Suite 스펙" }
-
-`Cipher Suite`의 각 자리 별 의미는 위와 같다.
-
-**Random**
-
-`Random` 필드는 클라이언트가 생성한 난수를 포함한다. 이는 세션을 생성할 때 사용되는 값이다. 일반적으로 32[비트](/wiki/bit)의 난수를 생성한다.
-
-* **Compression Method**: 클라이언트가 지원하는 압축 방식
-
-일반 적으로 취약점 문제 때문에 `TLS 1.2`, `TLS 1.3` 모두 `null(0x00) - 압축하지 않음`으로 설정되어 있지만,
-`DEFLATE(0x01) - ZLIB 압축`, `LSZ(0x40) - LZS 압축` 등이 있다.
-
->압축 방식은 `TLS 1.3`에서는 제거되었다.
-:{ "type": "caution", "icon": "x-circle" }
-
-* **Session ID**: 클라이언트가 생성한 세션 ID (재연결 시)
-* 이 값은 `TLS 1.2`에서만 사용되고, `TLS 1.3`에서는 `Legacy Session ID`로 변경 되었으며, 하위 호환성을 위해 유지되었지만, 실제로는 사용되지 않는다.
-
-**Extensions**
-
-TLS 1.2의 경우 선택적으로 사용되는 확장 필드이며, `TLS 1.3`에서는 필수로 사용된다.
-* **supported_versiosn**: 클라이언트가 지원하는 TLS 버전을 나타내는 확장 필드
-* **key_share**: `supported_groups`에서 명시한 그룹들에 대한 클라이언트의 공개키 값들
-  * `1-RTT` 핸드쉐이크를 위해 미리 키를 생성
-* **pre_shared_key(선택사항)**: 클라이언트가 서버와 공유한 세션 ID
-  * `0-RTT` 핸드쉐이크를 위해 사용
-
->클라이언트가 Client Hello 메세지를 보내면, TCP 계층에서 메세지를 받자마자 ACK가 전송한다.
->하지만 TLS 레벨에서는 하위계층(TCP)의 통신은 알수 없기 떄문에, ACK 전송을 기다리지 않고 Server Hello를 전송한다.
+>클라이언트와 서버는 메세지를 암·복호화 하기 위한 준비를 마쳤다. 이제부터는 암호화된 메세지를 주고 받을 수 있다.
 : { "type": "note", "icon": "info" }
 
-### 2. Server Hello::server-hello-in-tls-1.3
 
-![Server Hello](/post/network/https/server-hello.png)
-:{ "align": "center", "max-width": "500px", "description": "Server Hello" }
+### 5. Change Cipher Spec and Finished::change-cipher-spec-and-finished
 
-서버는 클라이언트가 보낸 `Client Hello` 메세지를 받으면 클라이언트에게 `Server Hello` 메세지를 보낸다.
-클라이언트에서 보낸 `Client Hello` 메세지를 통해 서버는 클라이언트가 지원하는 암호화 알고리즘을 확인하고, 서버에서 사용할 암호화 알고리즘을 선택한다.
+![Change Cipher Spec과 and Finished](/post/network/https/change-cipher-spec-and-finished.png)
+:{ "align": "center", "max-width": "600px", "description": "Change Cipher과 and Finished" }
 
->**Version**, **Cipher Suite**, **Random**, **Compression Method** 필드들은 `Client Hello`와 동일하다.
-: { "type": "note", "icon": "info" }
+`Change Cipher Spec` 메세지는 클라이언트와 서버가 암호화된 메세지를 주고 받을 준비가 되었음을 알리는 메세지이다.
+이 메세지 이후 각장치는 `Finished`로 첫 암호화 메세지를 전송한다.
 
-#### 2-5. Encrypted Extensions::encrypted-extensions-in-tls-1.3
-
-이 메세지는 `TLS 1.3`에서 추가된 메세지로, `Server Hello` 이후에 클라이언트에 전송된다.
-
-`Server Hello`에서 `Extensions` 필드는 확장에 필요한 정보를 포함하지만, 모든 정보가 있는것이 아니다.
-평문으로 보낼수 없는 `Extensions` 정보들은 `Server Hello`에서 선택된 `Cipher Suite`으로  암호화 하면, 그것이 `Encrypted Extensions`이다.
-
-이 프로토콜에서는 다음과같은 확장 필드들이 포함된다:
-
-* **supported_groups**: 클라이언트가 지원하는 그룹을 나타내는 목록
-* **application_layer_protocol_negotiation (ALPN)**: 클라이언트가 지원하는 프로토콜 목록 (HTTP/1.1, HTTP/2, HTTP/3 등)
-* **server_name (SNIndication)**: 여러 도메인을 호스팅하는 서버에서 클라이언트가 요청한 도메인
-* **signature_algorithms**: 클라이언트가 지원하는 인증서의 서명과 디지털 서명을 검증할 때 사용 할 알고리즘 목록
-* **compress_certificate**: 인증서 압축 지원 여부와 지원하는 압축 알고리즘
-* **record_size_limit**: 클라이언트가 지원하는 최대 TLS 레코드 크기
-
->**Encrypted Extensions**는 `TLS 1.3`에서만 사용되며, `TLS 1.2`에서는 사용되지 않는다.
-: { "type": "note", "icon": "info" }
-
-### 3. Certificate::certificate-in-tls-1.3
-
-
-
-
+>Finished 메세지까지 보낸다면 TLS 핸드쉐이크가 완료된다.
+: { "type": "tip", "icon": "check-circle" }
