@@ -2849,6 +2849,43 @@
     "content": "## 구성요소\n\n- Target: 어댑터 패턴을 사용하기 위한 인터페이스를 정의한다.\n- Adapter: Target 인터페이스를 구현하여 기존의 클래스를 사용할 수 있도록 한다.\n- Adaptee: 어댑터 패턴을 사용하기 위한 기존의 클래스이다.\n- Client: Adapter 패턴을 사용하는 클래스이다.\n\n## 예제\n\n먼저 Adapter 패턴을 사용하기 위해 선언한 핵심 구성요소는 아래와 같은 클래스들로 구성된다.\n\n### 상황\n\n기존에 사용하던 결제 시스템이 있다고 가정하자. 이 결제 시스템은 `Payment` 인터페이스를 구현하고 있다.\n하지만, 새로운 결제수단으로 PayPal을 사용하고자 한다. PayPal은 `PayPalAPI` 클래스를 사용하여 결제를 처리한다.\n이를 위해 추가적인 코드의 작성이 필요한 상황이다.\n\n\n### 구성요소 정의 \n\n::code-group\n\n```Payment.java\npublic interface Payment {\n\n    void processPayment(double amount);\n\n    PaymentStatus checkStatus(String paymentId);\n}\n\n```\n```PayPalAPI.java\npublic class PayPalAPI {\n\n    public void makePayment(PayPalPaymentRequest request) {\n        System.out.println(\"Making PayPal payment of \" + request.getAmount());\n    }\n\n    public PayPalPaymentStatus getPaymentStatus(PaypalTransactionId txId) {\n        return PayPalPaymentStatus.SUCCESS;\n    }\n}\n```\n```PayPalAdapter.java\npublic class PaypalAdapter implements Payment {\n\n    private final PayPalAPI payPalAPI;\n\n    public PaypalAdapter(PayPalAPI payPalAPI) {\n        this.payPalAPI = payPalAPI;\n    }\n\n    @Override\n    public void processPayment(double amount) {\n        PayPalPaymentRequest request = new PayPalPaymentRequest(amount);\n        payPalAPI.makePayment(request);\n    }\n\n    @Override\n    public PaymentStatus checkStatus(String paymentId) {\n        PaypalTransactionId txId = new PaypalTransactionId(paymentId);\n        PayPalPaymentStatus paymentStatus = payPalAPI.getPaymentStatus(txId);\n\n        return convertPayPalStatus(paymentStatus);\n    }\n    ...\n}\n```\n```PaymentProcessor.java\npublic class PaymentProcessor {\n\n    private final Payment paymentSystem;\n\n    public PaymentProcessor(Payment paymentSystem) {\n        this.paymentSystem = paymentSystem;\n    }\n\n    public void process(Order order) {\n        paymentSystem.processPayment(order.getTotal());\n        //결제상태 확인\n        PaymentStatus paymentStatus = paymentSystem.checkStatus(\"AE2D123-12\");\n        System.out.println(\"Payment status: \" + paymentStatus);\n\n    }\n}\n```\n\n::\n\n위의 코드로 어댑터 패턴의 핵심 구성요소를 설명하면 다음과 같다.\n\n* Target: Payment.java\n* Adapter: PaypalAdapter.java\n* Adaptee: PayPalAPI.java\n* Client: PaymentProcessor.java\n\n그리고 예시를 위해 추가적인 데이터가 아래와 같이 있다고 가정 한다.\n\n::code-group\n```PayPalPaymentRequest.java\n//페이팔 결제 요청정보\npublic class PayPalPaymentRequest {\n\n    private final double amount;\n\n    public PayPalPaymentRequest(double amount) {\n        this.amount = amount;\n    }\n\n    public double getAmount() {\n        return amount;\n    }\n}\n```\n\n```PaypalTransactionId.java\n//페이팔 결제 ID\npublic class PaypalTransactionId {\n\n    private final String txId;\n\n    public PaypalTransactionId(String txId) {\n        this.txId = txId;\n    }\n\n    public String getTxId() {\n        return txId;\n    }\n}\n```\n\n```Order.java\n//주문 정보\npublic class Order {\n\n    private final double total;\n\n    public Order(double total) {\n        this.total = total;\n    }\n\n    public double getTotal() {\n        return total;\n    }\n}\n```\n::\n\n위 정보를 조합하면 각 클래스간 역할 및 관계는 다음과 같다.\n\n```mermaid\n---\ntitle: 새로운 페이팔 결제수단에 대해 대응 가능한 어댑터 패턴\nconfig:\n    class:\n        hideEmptyMembersBox: true\n---\nclassDiagram\n    class Payment {\n        +processPayment(double amount): void\n        +checkStatus(String paymentId): PaymentStatus\n    }\n    class LegacyPayment {\n        +processPayment(double amount): void\n        +checkStatus(String paymentId): PaymentStatus\n    }\n    class PayPalAPI {\n        +makePayment(PayPalPaymentRequest request): void\n        +getPaymentStatus(PaypalTransactionId txId): PayPalPaymentStatus\n    }\n    class PaypalAdapter {\n        -payPalAPI: PayPalAPI\n        +processPayment(double amount): void\n        +checkStatus(String paymentId): PaymentStatus\n    }\n    class PaymentProcessor {\n        +process(Order order): void\n    }\n    class PayPalPaymentRequest {\n        -amount: double\n        +getAmount(): double\n    }\n    class PaypalTransactionId {\n        -value: String\n        +getTxId(): String\n    }\n    class PayPalPaymentStatus {\n        SUCCESS\n        PENDING\n        FAILED\n        REFUND_SUCCESS\n        CANCELLED\n    }\n    class PaymentStatus {\n        PENDING\n        COMPLETED\n        FAILED\n        REFUNDED\n        CANCELLED\n    }\n    class Order {\n        +getTotal(): double\n    }\n    Payment <|-- PaypalAdapter\n    Payment <|-- LegacyPayment\n    PaypalAdapter --> PayPalAPI\n    PaymentProcessor --> Payment\n    PaymentProcessor --> Order\n    PayPalAPI --> PayPalPaymentRequest\n    PayPalAPI --> PaypalTransactionId\n```\n\nAdapter 패턴의 사용으로 새로운 결제수단이 추가되어도 기존의 결제처리 로직을 변경하지 않고 사용할 수 있다.\n* PayPalAdapter는 Payment 인터페이스를 구현하여 내부적으로 PayPalAPI를 사용하며, 기존 결제에 대한 행동에는 변화가 없다.\n* Payment 역할을 그대로 수행하며 내부적으로 실제 처리과정만 다를 뿐이다.\n\n### 사용\n\n```java\nOrder order = new Order(100.0);\n\nPaymentProcessor processor = LocalDate.now().isBefore(LocalDate.of(2021, 4, 13))\n        ? new PaymentProcessor(new LegacyPayment())\n        : new PaymentProcessor(new PaypalAdapter(new PayPalAPI()));\n\nprocessor.process(order);\n```\n\n> 예를들어 `2021-04-13` 부터 PayPal 결제로만 서비스를 제공한다고 가정하면, 위와 같이 사용할 수 있다.\n:{ \"type\": \"tip\", \"icon\": \"info\" }\n"
   },
   {
+    "path": "/docs/algorithm/base-64",
+    "header": {
+      "layout": "wiki",
+      "title": "Base64 인코딩",
+      "date": 1572945900000,
+      "tags": [
+        "Algorithm",
+        "Encoding",
+        "Base64"
+      ],
+      "summary": "Base64",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "알고리즘"
+      ],
+      "images": [],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "Base64란?::what-is-base64",
+            "title": "Base64란?",
+            "fragment": "what-is-base64",
+            "children": []
+          }
+        ]
+      }
+    },
+    "description": "",
+    "content": "\n## Base64란?::what-is-base64\n\n**Base64**는 이진 데이터를 6비트씩 끊어서 문자로 변환하는 인코딩 방식이다.\n60년대 후반에서 70년대 초반, 최초의 이메일 시스템은 7bit ASCII 문자만 전송할 수 있었다. 이는 [SMTP]()(**S**imple **M**ail **T**ransfer **P**rotocol)가 7bit ASCII 기반으로 설계되었기 때문이다.\n\n하지만 실제 데이터는 대부분 8bit 바이너리 형식이였고, 여기에 실행 파일, 이미지, 비디오 등이 포함 된다. 이 8bit 데이터를 7bit 채널로 전송하기 위한 해결책이 필요했고, \n이 문제를 해결하기위해 1987년 PSRG(**P**rivacy and **S**ecurity **R**esearch **G**roup)에서 Base64 인코딩 방식을 제안했다.\n\nBase64는 3바이트(24bit)의 바이너리 데이터를 4개의 6bit 유닛으로 변환하며, 다음의 특징을 같는다:\n* 6비트는 0-63까지의 값을 표현 할 수 있음\n* 이 64개의 값을 ASCII 문자로 매핑(A-Z, a-z, 0-9, +, /)\n* 패딩이 필요한 경우 `=` 문자를 사용\n\n"
+  },
+  {
     "path": "/docs/algorithm/insertion-sort",
     "header": {
       "layout": "post",
