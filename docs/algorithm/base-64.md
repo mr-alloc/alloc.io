@@ -4,7 +4,7 @@ title: Base64 인코딩
 date: 2019-11-05 18:25:00 +0900
 tags: [Algorithm, Encoding, Base64]
 summary: Base64
-hide: true
+hide: false
 ---
 
 ## Base64란?::what-is-base64
