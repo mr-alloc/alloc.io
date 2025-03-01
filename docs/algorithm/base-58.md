@@ -7,3 +7,4 @@ summary: Base48
 hide: false
 ---
 
+## Base58란?::what-is-base58
