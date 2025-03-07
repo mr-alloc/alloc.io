@@ -86,6 +86,9 @@
         <loc>https://alloc.io/docs/computer-science/operating-system/operating-system</loc>
     </url>
     <url>
+        <loc>https://alloc.io/wiki/base58</loc>
+    </url>
+    <url>
         <loc>https://alloc.io/docs/language/java/install-zulu-in-mac</loc>
     </url>
     <url>
@@ -108,9 +111,6 @@
     </url>
     <url>
         <loc>https://alloc.io/docs/software-design/adapter-pattern</loc>
-    </url>
-    <url>
-        <loc>https://alloc.io/wiki/base-58</loc>
     </url>
     <url>
         <loc>https://alloc.io/wiki/base64</loc>
