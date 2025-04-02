@@ -60,7 +60,7 @@ const colorMode = useColorMode();
 const features = [
   {
     label: '검색',
-    click: (e: PointerEvent) => searchStatusStore.searching(),
+    click: (e: Event) => searchStatusStore.searching(),
     icon: 'i-ph:magnifying-glass'
   }
 ]

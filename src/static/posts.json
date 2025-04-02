@@ -102,6 +102,140 @@
     "content": "\r\n## PIO란?\r\n\r\n`Programmed I/O`(이하 PIO)는 말그대로 프로그램 입출력이다. `PIO` 방식은 [네트워크 어댑터]() 또는 [ATA]() 기억장치 같은 주변기기와 [CPU](/wiki/central-processing-unit) 사이에서 데이터를 주고 받는다.\r\nCPU의 개입으로 처리되므로 성능에 영향을 주며, 이러한 단점을 극복하기 위해 [인터럽트](/wiki/interrupt)나 [DMA](/wiki/direct-memory-access)같은 방식이 고안되었다.\r\n\r\n\r\n## PIO의 데이터 전송방식\r\n\r\n`PIO`는 CPU가 데이터를 읽거나 쓸 장치에대해서 주소신호(대상주소)와 제어신호(IOR, IOW)로 I/O 활성화가 이루어지면 데이터버스를 통해 전송된다. \r\n"
   },
   {
+    "path": "/docs/infrastructure/kubernetes/update-istio",
+    "header": {
+      "layout": "post",
+      "title": "istio 업데이트 (1.22.1 -> 1.25.0)",
+      "tags": [
+        "Spring",
+        "Spring Boot",
+        "Spring Security"
+      ],
+      "date": 1743479880000,
+      "thumbnail": "/post/infrastructure/kubernetes/update-istio.webp",
+      "current-company": "NEOWIZ",
+      "current-position": "Software Engineer",
+      "summary": "istio 업데이트",
+      "excerpt_separator": "<!--more-->",
+      "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "인프라",
+        "쿠버네티스"
+      ],
+      "images": [],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "선행 지식::prerequisites",
+            "title": "선행 지식",
+            "fragment": "prerequisites",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "설치::install-istio",
+            "title": "설치",
+            "fragment": "install-istio",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "버전 업데이트",
+            "title": "버전 업데이트",
+            "fragment": "root-2",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "레이블 적용 및 사이드카 주입::labeling-and-inject-sidecar",
+            "title": "레이블 적용 및 사이드카 주입",
+            "fragment": "labeling-and-inject-sidecar",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "TL;DR::too-long-did-not-read",
+            "title": "TL;DR",
+            "fragment": "too-long-did-not-read",
+            "children": []
+          }
+        ]
+      }
+    },
+    "description": "관리하는 K8s 버전이 올라가면서, 필요한 istio 업데이트 진행을 간단히 정리해보자.",
+    "content": "\r\n\r\n## 선행 지식::prerequisites\r\n\r\n1. 핵심 컴포넌트\r\n   * istiod: 컨트롤 플레인 (istio-system namespace에 위치하며 워커 노드에 배포)\r\n   * istio-proxy: 사이드카 프록시 (각 어플리케이션 Pod에 주입되며 istiod와 통신)\r\n   * istio-ingressgateway: 인바운드 트래픽 처리\r\n   * istio-egressgateway: 아웃바운드 트래픽 처리 (선택적)\r\n2. 관리도구\r\n   * istioctl: istio CLI 도구 (클라이언트)\r\n   * kubectl: k8s CLI 도구 (클라이언트)\r\n3. 리소스\r\n   * Namespace: istio-system\r\n   * Pod: 컨테이너 실행단위\r\n   * Service: 서비스 디스커버리와 로드밸런싱\r\n   * Deployment: Pod 관리 및 배포\r\n4. 아키텍쳐 용어\r\n   * Control Plane: 중앙 제어/관리 부분\r\n   * Data Plane: 실제 트래픽을 처리하는 부분\r\n   * Sidecar: 메인 컨테이너와 함께 실행되는 보조 컨테이너\r\n\r\n## 설치::install-istio\r\n\r\n먼저 istio를 설치하기전에 [kubectl](https://kubernetes.io/ko/docs/tasks/tools/install-kubectl-linux/)과 [istioctl](https://github.com/istio/istio/releases)을 설치해야한다. \r\n\r\n> kubectl을 설치하고 클러스터 설정이 되지않았다면, `aws eks update-kubeconfig --name 클러스터이름 --region 리전이름 --profile 프로필이름` 명령으로 설정할 수 있다.\r\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\r\n\r\n`istioctl`이 설치되었다면 다음의 명령으로 `kubectl context`에 설정된 클러스터의 검사를 진행한다.\r\n\r\n```\r\n> istioctl x precheck\r\n✔ No issues found when checking the cluster. Istio is safe to install or upgrade!\r\n  To get started, check out https://istio.io/latest/docs/setup/getting-started/.\r\n```\r\n\r\n위와 같이 나온다면, 정상적으로 설치가 가능한 상태이다.\r\n\r\n```\r\n> ./istioctl install --set revision=1-25-0\r\n        |\\\r\n        | \\\r\n        |  \\\r\n        |   \\\r\n      /||    \\\r\n     / ||     \\\r\n    /  ||      \\\r\n   /   ||       \\\r\n  /    ||        \\\r\n /     ||         \\\r\n/______||__________\\\r\n____________________\r\n  \\__       _____/\r\n     \\_____/\r\n\r\nThis will install the Istio 1.25.0 profile \"default\" into the cluster. Proceed? (y/N) y\r\n✔ Istio core installed ⛵️\r\n✔ Istiod installed 🧠\r\n✔ Ingress gateways installed 🛬\r\n✔ Installation complete\r\n```\r\n\r\n위 처럼 설치가 완료되었다면, service, pod, configmap을 모두 확인해보자.\r\n\r\n```\r\n> kubectl get svc -n istio-system\r\nNAME                   TYPE           CLUSTER-IP       EXTERNAL-IP\r\nistio-ingressgateway   LoadBalancer   {Clister IP}     {AWS ELB DNS Address}\r\nistiod-1-22-1          ClusterIP      {Clister IP}     <none>\r\nistiod-1-25-0          ClusterIP      {Clister IP}     <none>\r\n\r\n> kubectl get pods -n istio-system\r\nNAME                                   READY   STATUS    RESTARTS   AGE\r\nistio-ingressgateway-655dc875b-sgsgm   1/1     Running   0          6m31s\r\nistiod-1-22-1-94f886767-lxjdh          1/1     Running   0          77d\r\nistiod-1-22-1-94f886767-qrccf          1/1     Running   0          77d\r\nistiod-1-25-0-85c49d99c6-x8cv5         1/1     Running   0          6m43s\r\n\r\n> kubectl get configmap -n istio-system\r\nNAME                                  DATA   AGE\r\nistio-1-22-1                          2      188d\r\nistio-1-25-0                          2      7m54s\r\nistio-ca-root-cert                    1      ...\r\nistio-gateway-deployment-leader       0      ...\r\nistio-gateway-status-leader           0      ...\r\nistio-ip-autoallocate                 0      7m43s\r\nistio-leader                          0      ...\r\nistio-namespace-controller-election   0      ...\r\nistio-sidecar-injector-1-22-1         2      188d\r\nistio-sidecar-injector-1-25-0         2      7m54s\r\nkube-root-ca.crt                      1      ...\r\n```\r\n\r\n설치가 정상적으로 된것으로 보인다. \r\n\r\n\r\n## 버전 업데이트\r\n\r\n안전한 업그레이드를 위해 현재 사용중인 Sidecar Injector ConfigMap을 백업 해두자.\r\n\r\n```\r\nk get configmap -n istio-system istio-sidecar-injector-1-25-0 -o yaml > istio-sidecar-injector-1.25.0.yaml\r\n```\r\n\r\ncanary(신규 버전)와 stable(현재 버전) 태그로 안정적인 배포전략을 사용중이기 때문에, 태그설정이 필요하다.\r\n\r\n```shell::태그 확인\r\n> istioctl tag list\r\nTAG    REVISION NAMESPACES\r\ncanary 1-22-1\r\nstable 1-22-1   some-qa,some-staging\r\n       1-25-0\r\n```\r\n현재는 `qa`와 `staging` namespace모두 stable로 적용되어있기 때문에 새로 변경할 1.25.0 revision을 canary로 바꿔줘야한다.\r\n\r\n```shell::새로운 버전을 canary로 변경\r\n> istioctl tag set canary --revision 1-25-0 --overwrite\r\nRevision tag \"canary\" created, referencing control plane revision \"1-25-0\". To enable injection using this\r\nrevision tag, use 'kubectl label namespace <NAMESPACE> istio.io/rev=canary'\r\n> istioctl tag show\r\nTAG    REVISION NAMESPACES\r\nstable 1-22-1   some-qa, some-staging\r\ncanary 1-25-0\r\n```\r\n\r\n## 레이블 적용 및 사이드카 주입::labeling-and-inject-sidecar\r\n\r\n리비전 태그를 생성했다면, 이제 가이드 대로 레이블을 namespace에 적용할 수 있다.\r\n\r\n```shell::레이블 적용 및 확인\r\n> kubectl label namespace some-qa istio.io/rev=canary --overwrite\r\nnamespace/some-qa labeled\r\n> k get ns -L istio.io/rev\r\nNAME                     STATUS   AGE    REV\r\n...\r\nistio-operator           Active   188d\r\nistio-system             Active   ...\r\n...\r\nsome-qa                  Active   ....   canary\r\nsome-staging             Active   ....   stable\r\n> k get ns --show-labels\r\nNAME                     STATUS   AGE    LABELS\r\n...\r\nsome-qa                  Active   509d   ...,istio.io/rev=canary,...\r\nsome-staging             Active   509d   ...,istio.io/rev=stable,...\r\n```\r\n\r\n레이블이 정상적으로 namespace에 적용된걸 확인 할 수 있다. 이제 배포를 하여, 사이드카가 정상적으로 들어가는지 확인이 필요하다.\r\n\r\n::code-group\r\n\r\n```shell::배포 전(1.22.1) 확인\r\n> kubectl describe pod foo-pod -n some-qa | grep -A 10 \"Init Containers:\"\r\nInit Containers:\r\n  istio-init:\r\n    Container ID:  containerd://...\r\n    Image:         .../istio/proxyv2:1.22.1\r\n    Image ID:      .../istio/proxyv2@sha256:...\r\n    Port:          <none>\r\n    Host Port:     <none>\r\n    Args:\r\n      istio-iptables\r\n      -p\r\n      15001\r\n```\r\n\r\n```shell::어플리케이션 재배포\r\n> kubectl -n some-qa rollout restart deploy foo-pod\r\ndeployment.apps/foo-pod restarted\r\n```\r\n\r\n```shell::배포 후(1.25.0)\r\n> kubectl describe pod foo-pod -n some-qa | grep -A 10 \"Init Containers:\"\r\nInit Containers:\r\n  istio-init:\r\n    Container ID:  containerd://...\r\n    Image:         .../istio/proxyv2:1.25.0\r\n    Image ID:      .../istio/proxyv2@sha256:...\r\n    Port:          <none>\r\n    Host Port:     <none>\r\n    Args:\r\n      istio-iptables\r\n      -p\r\n      15001\r\n```\r\n::\r\n\r\nnamespace에 있는 `foo-pod` deployment의 모든 pod을 재시작 했다면, 위와 같이 sidecar injection이 정상적으로 되었을 것이다.\r\n(`istioctl proxy-status`로 컨텍스트에 배포된 상태를 확인 할 수 있다.)\r\n\r\n테스트가 완료되었다면, stable 태그를 새로운 버전으로 변경해주고, 나머지 운영 namespace를 다시 업데이트 해줘야한다.\r\n```shell::태그 변경 및 레이블링\r\n> istioctl tag set stable --revision 1-25-0 --overwrite\r\nRevision tag \"stable\" created, referencing control plane revision \"1-25-0\". To enable injection using this\r\nrevision tag, use 'kubectl label namespace <NAMESPACE> istio.io/rev=stable'\r\n\r\n> istioctl tag show\r\nTAG    REVISION NAMESPACES\r\n       1-22-1\r\ncanary 1-25-0   some-qa,some-staging\r\nstable 1-25-0\r\n\r\n> kubectl label namespace some-qa istio.io/rev=stable --overwrite\r\nnamespace/some-qa labeled\r\n> kubectl label namespace some-staging istio.io/rev=stable --overwrite\r\nnamespace/some-staging labeled\r\n```\r\n\r\n```shell::Pod 재배포\r\n> kubectl rollout restart -n some-qa foo-pod\r\n> kubectl rollout restart -n some-staging foo-pod\r\n```\r\n\r\n배포가 정상적으로 되었고, 기존 버전을 사용하는 namespace가 없다면 제거해도 좋다.\r\n```shell::기존버전 확인 및 삭제\r\n# 1.25.0이외 버전을 사용하는지 확인\r\n> istioctl proxy-status\r\nNAME                                                  CLUSTER        CDS                LDS                EDS                RDS                ECDS        ISTIOD                             VERSION\r\n...\r\nfoo-pod-6566b68d8f-8l7c6.some-qa                      Kubernetes     SYNCED (4m5s)      SYNCED (4m5s)      SYNCED (2m15s)     SYNCED (4m5s)      IGNORED     istiod-1-25-0-85c49d99c6-x8cv5     1.25.0\r\nfoo-pod-b649ff85-rz68n.some-staging                   Kubernetes     SYNCED (4m5s)      SYNCED (4m5s)      SYNCED (2m15s)     SYNCED (4m5s)      IGNORED     istiod-1-25-0-85c49d99c6-x8cv5     1.25.0\r\n\r\n# 삭제\r\n> istioctl uninstall --revision 1-22-1\r\nNo resources will be pruned from the cluster. Please double check the input configs\r\n\r\n✔ Uninstall complete\r\n```\r\n\r\n## TL;DR::too-long-did-not-read\r\n\r\n1. 설치전 클러스터 확인\r\n   * `> istioctl x precheck`\r\n2. istio 설치 (istiod Depoloyment, ConfigMap, Service 생성)\r\n   * `> istioctl install --set revision=1-25-0`\r\n3. 설치 확인\r\n   * `kubectl get svc -n istio-system`\r\n   * `kubectl get pods -n istio-sytem`\r\n   * `kubectl get configmap -n istiosystem`\r\n4. 필요한 ConfigMap 백업 (선택)\r\n   * `kubectl get configmap -n istio-system istio-sidecar-1-25-0 -o yaml > istio-sidecar-injector-1.25.0.yaml`\r\n5. 태그 설정 및 레이블 적용 (태그 확인: `istioctl tag show`)\r\n   1. `istioctl tag set canary --revision 1-25-0 --overwrite`\r\n   2. canary(테스트용): `kubectl label namepsace 네임스페이스명 istio.io/rev=canary`\r\n      * canary는 배포 테스트를 위해 적용하는 임시적인 레이블\r\n   3. stable(서비스용): `kubectl lable namespace 네임스페이스명 istio.io/rev=stable`\r\n6. 서비스 배포 (배포 전 레이블 확인: `kubectl get ns --show-labels`)\r\n   * `kubectl rollout restart deploy -n 네임스페이스명 파드명`\r\n   * 서비스 배포후 정상적으로 동작한다면, 5-3 진행\r\n7. 프록시 상태 확인 및 삭제\r\n   * `istioctl proxy-status`\r\n   * 삭제: `istioctl uninstall --revision 1-22-1`"
+  },
+  {
+    "path": "/docs/back-end/spring/spring-security",
+    "header": {
+      "layout": "post",
+      "title": "스프링 시큐리티 프로젝트 구성",
+      "tags": [
+        "Spring",
+        "Spring Boot",
+        "Spring Security"
+      ],
+      "date": 1742961480000,
+      "thumbnail": "/post/back-end/spring/spring-security.svg",
+      "current-company": "NEOWIZ",
+      "current-position": "Software Engineer",
+      "summary": "트랜잭션 관리자",
+      "excerpt_separator": "<!--more-->",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "서버/백엔드",
+        "스프링"
+      ],
+      "images": [],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "임시 비밀번호::temporary-password",
+            "title": "임시 비밀번호",
+            "fragment": "temporary-password",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "보안 설정::configure-security",
+            "title": "보안 설정",
+            "fragment": "configure-security",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "폼 로그인::form-login",
+                "title": "폼 로그인",
+                "fragment": "form-login",
+                "children": []
+              },
+              {
+                "rank": 3,
+                "origin": "HTTP 기본인증::http-basic-authentication-scheme",
+                "title": "HTTP 기본인증",
+                "fragment": "http-basic-authentication-scheme",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "description": "스프링 시큐리티 프로젝트 구성시, 필요한 기능을 정리한다.",
+    "content": "\r\n\r\n## 임시 비밀번호::temporary-password\r\n\r\n```\r\nUsing generated security password: c76d7851-5e89-4ef3-bc5d-cb04d5d5e365\r\n```\r\n\r\n스프링 시큐리티 의존성이 있는 프로젝트를 실행하면 위와 같이 UUID와 같은 임시 비밀번호를 부여 받는다.\r\n스프링 시큐리티는 기본적으로 모든 엔드 포인트를 보호한다. 이말은 즉, 설정으로 특정 API의 자격증명을 요구하도록 하지않는 한 모든 엔드포인트는 자격증명을 요구한다는 말이다.\r\n\r\n따라서 자격 증명을 준비할 수 없느 상황에 대비하여 임시 비밀번호로 자격증명을 사용하게 해주는 기능이다.\r\n\r\n> 당연히 자격 증명을 대신하므로, 개발환경(또는 로컬)에서 만 사용하는것을 권장한다. 이 값은 서버를 다시 시작하면 새로 발급된다.\r\n:{ \"type\": \"caution\", \"icon\": \"info\" }\r\n\r\n## 보안 설정::configure-security\r\n\r\n```java\r\n@Configuration\r\n@EnableWebSecurity\r\npublic class SecurityConfiguration {\r\n    ...\r\n}\r\n```\r\n\r\n`Spring Security`는 간단한 설정으로 강력한 보안을 지원한다.\r\n위와 같이 `@EnableWebSecurity` 어노테이션 추가시, 내부적으로 웹 보안과 관련된 여러 설정들을 가져온다.\r\n\r\n```javascript\r\n@Import({\r\n    WebSecurityConfiguration.class, SpringWebMvcImportSelector.class, OAuth2ImportSelector.class,\r\n    HttpSecurityConfiguration.class, ObservationImportSelector.class\r\n})\r\n```\r\n\r\n어쨋든 기본 설정을 사용자화 하려면 `SecurityFilterChain`을 Bean으로 등록해주면 된다.\r\n\r\n```java\r\n@Bean\r\npublic SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {\r\n    return http.build();\r\n}\r\n```\r\n\r\n기본적으로 등록을하고, HttpSecurity 객체로 변경할 수 있다.\r\n\r\n### 폼 로그인::form-login\r\n\r\n임시 비밀번호로 받은 임의의 문자열은 `/login` 페이지에서 사용가능하다. 필터체인을 Bean으로 등록하지않는 이상 기본적으로 폼로그인은 활성화 된다.\r\n\r\n먼저 폼 로그인은 Username에 `user` 그리고 Password에 [임시 비밀번호](#임시-비밀번호temporary-password)로 로그인이 가능하다.\r\n폼 로그인은 다음과 같이 처리된다.\r\n\r\n```java::비활성화 (다른 인증방법을 사용해야함)\r\nhttp.formLogin(form -> form.disable());\r\n```\r\n\r\n```java::활성화 (폼로그인으로 사용)\r\nhttp.formLogin(form -> form.permitAll());\r\n```\r\n\r\n만약 @Bean만 등록하고 폼 로그인에대해 설정하지 않는다면 비활성화이다 (Bean 자체가 빈 설정으로 등록됨).\r\n\r\n### HTTP 기본인증::http-basic-authentication-scheme\r\n\r\nHTTP 기본인증은 [RFC 2617](https://datatracker.ietf.org/doc/html/rfc2617) 사양의 `HTTP Basic Authentication Scheme`이다.\r\n\r\n```java\r\nhttp.httpBasic(basic -> basic.disable());\r\n```\r\n\r\nHTTP 기본 인증 스킴(`Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==`) 비활성화는 위와 같이 할 수있다.\r\n\r\n"
+  },
+  {
     "path": "/docs/life/youth-of-ggomi",
     "header": {
       "layout": "post",

@@ -1,4 +1,4 @@
-import { toMap } from "@/utils/collection-util";
+import {toMap} from "@/utils/collection-util";
 
 export default class FileAlias {
 
@@ -24,6 +24,8 @@ export default class FileAlias {
     private static readonly SOFTWARE_DESIGN = new FileAlias("software-design", "소프트웨어 설계");
     private static readonly STRUCTURE = new FileAlias("structure", "구조");
     private static readonly BEHAVIOR = new FileAlias("behavior", "행동");
+    private static readonly INFRASTRUCTURE = new FileAlias("infrastructure", "인프라");
+    private static readonly KUBERNETES = new FileAlias("kubernetes", "쿠버네티스");
     private static readonly LIFE = new FileAlias("life", "일상");
 
     private static readonly CACHED = toMap(FileAlias.values(), (file) => file._value);
@@ -40,7 +42,10 @@ export default class FileAlias {
         return [this.DOCS, this.ALGORITHM, this.DATA_STRUCTURE, this.JAVA, this.JAVASCRIPT, this.TYPESCRIPT,
             this.BACK_END, this.NETWORK, this.TCP_IP, this.CPP,
             this.FRAMEWORK, this.SPRING, this.LANGUAGE, this.SWIFT, this.TOOL, this.DATABASE,
-            this.OS, this.COMPUTER, this.HARDWARE, this.SOFTWARE_DESIGN, this.BEHAVIOR, this.STRUCTURE, this.LIFE];
+            this.OS, this.COMPUTER, this.HARDWARE, this.SOFTWARE_DESIGN, this.BEHAVIOR, this.STRUCTURE,
+            this.INFRASTRUCTURE,
+            this.KUBERNETES,
+            this.LIFE];
     }
 
     get value(): string {

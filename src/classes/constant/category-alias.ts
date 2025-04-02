@@ -8,7 +8,7 @@ export class CategoryAlias {
     private static readonly LANGUAGE = new CategoryAlias('language', '언어');
     private static readonly JAVA = new CategoryAlias('java', 'Java');
     private static readonly CPP = new CategoryAlias('cpp', 'C++');
-    private static readonly COMPUTER_SCIENCE = new CategoryAlias('computer-science', '컴퓨터 공학');
+    private static readonly COMPUTER_SCIENCE = new CategoryAlias('computer-science', '컴퓨터 과학');
     private static readonly COMPUTER_STRUCTURE = new CategoryAlias('computer-structure', '컴퓨터 구조');
     private static readonly OPERATING_SYSTEM = new CategoryAlias('operating-system', '운영체제');
     private static readonly DATABASE = new CategoryAlias('database', '데이터베이스');
@@ -21,6 +21,8 @@ export class CategoryAlias {
     private static readonly SOFTWARE_DESIGN = new CategoryAlias('software-design', '소프트웨어 디자인');
     private static readonly STRUCTURE = new CategoryAlias('structure', '구조');
     private static readonly BEHAVIOR = new CategoryAlias('behavior', '행동');
+    private static readonly INFRASTRUCTURE = new CategoryAlias('infrastructure', '인프라');
+    private static readonly KUBERNETES = new CategoryAlias('kubernetes', 'k8s')
     private static readonly ETC = new CategoryAlias('etc', '기타');
 
     private static readonly CACHED = toMap(this.values(), (alias) => alias.name);
@@ -42,10 +44,26 @@ export class CategoryAlias {
     }
 
     private static values(): Array<CategoryAlias> {
-        return [this.DEVELOPMENT, this.ALGORITHM, this.DATA_STRUCTURE, this.LANGUAGE, this.JAVA, this.TYPESCRIPT, this.CPP,
-            this.COMPUTER_STRUCTURE, this.OPERATING_SYSTEM, this.COMPUTER_SCIENCE, this.DATABASE, this.MYSQL, this.NETWORK,
+        return [
+            this.DEVELOPMENT,
+            this.ALGORITHM,
+            this.DATA_STRUCTURE,
+            this.LANGUAGE,
+            this.JAVA, this.TYPESCRIPT, this.CPP,
+            this.COMPUTER_SCIENCE,
+            this.COMPUTER_STRUCTURE, this.OPERATING_SYSTEM,
+            this.DATABASE,
+            this.MYSQL,
+            this.NETWORK,
             this.TCP_IP,
-            this.BACK_END, this.SPRING, this.TOOL, this.SOFTWARE_DESIGN, this.STRUCTURE, this.BEHAVIOR, this.ETC];
+            this.TOOL,
+            this.BACK_END,
+            this.SPRING,
+            this.SOFTWARE_DESIGN,
+            this.STRUCTURE, this.BEHAVIOR,
+            this.INFRASTRUCTURE,
+            this.KUBERNETES,
+            this.ETC];
     }
 
 
