@@ -2,15 +2,14 @@
 layout: post
 title: 도커 엔진 설치하기 (Ubuntu)
 tags: [ Infrastructure, Docker, Container ]
-date: 2025-04-02 14:23:00
-thumbnail: /post/infrastructure/install-docker-engine.png
+date: 2025-04-07 19:23:00
+thumbnail: /post/infrastructure/docker-logo.svg
 current-company: NEOWIZ
 current-position: Software Engineer
 summary: Ubuntu 도커 엔진 설치
 excerpt_separator: <!--more-->
 hide: false
 ---
-
 유료 도커 데스크탑 말고, 무료 도커 엔진 사용하기
 <!--more-->
 
@@ -26,7 +25,8 @@ hide: false
 
 ### 방화벽 제한 사항::firewall-limitations
 
-> 도커 설치하기 전에, 다음의 보안 영향과 방화벽 호환성 문제를 고려해야 한다.
+> 도커를 설치하기 전에, 다음의 보안 영향과 방화벽 호환성 문제를 고려해야 한다.
+:{ "type": "warning", "icon": "warning-diamond" }
 
 * 방화벽 설정을 관리하기 위해 `ufw` 또는 `firewalld`를 사용하는 경우, 도커를 통해 컨테이너 포트를 노출할 때, 이 포트가 방화벽 규칙을 우회한다는 점을 주의 해야한다.
   자세한 사항은 [도커와 ufw](https://docs.docker.com/engine/network/packet-filtering-firewalls/#docker-and-ufw) 참조.
@@ -67,8 +67,8 @@ hide: false
 
 아래 명령으로 충돌나느 모든 패키지들을 삭제할 수 있다:
 
-```shell
-$ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+```bash
+for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
 ```
 
 `apt-get`에서 설치된 패키지가 없다고 나올수도 있다.
@@ -91,7 +91,7 @@ $ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker
 새 호스트 머신에서 처음 도커 엔진을 설치하기 전에, 도커 `apt` 저장소를 설치해야 한다. 그 후에, 저장소에서 도커를 설치하거나 업데이트 할 수 있다.
 
 1. 도커 `apt` 저장소 설치하기.
-   ```shell
+   ```bash
    # 도커 공식 GPG 키 추가
    sudo apt-get update
    sudo apt-get install ca-certificates curl
@@ -108,25 +108,25 @@ $ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker
    ```
 2. 도커 패키지 설치.
     * 최신 버전
-       ```shell
-       $ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+       ```bash
+       sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
        ```
     * 특정 버전
-       ```shell
+       ```bash
        # 가능한 버전 확인
-       $ apt-cache madison docker-ce | awk '{ print $3 }'
+       apt-cache madison docker-ce | awk '{ print $3 }'
        
        5:28.0.4-1~ubuntu.24.04~noble
        5:28.0.3-1~ubuntu.24.04~noble
        ```
       원하는 버전 선택 및 설치
-       ```shell
-       $ VERSION_STRING=5:28.0.4-1~ubuntu.24.04~noble
+       ```bash
+       VERSION_STRING=5:28.0.4-1~ubuntu.24.04~noble
        $sudo apt-get install docker-ce=$VERSION_STRING docker-ce-cli=$VERSION_STRING containerd.io docker-buildx-plugin docker-compose-plugin
        ``` 
 3. `hello-world` 이미지 실행으로 설치 성공 확인하기:
-   ```shell
-   $ sudo docker run hello-world
+   ```bash
+   sudo docker run hello-world
    ```
    이 명령어는 테스트 이미지를 다운로드 하고 컨테이너에서 실행한다. 컨테이너가 실행할 때, 확인 메세지를 출력하고 종료한다.
 
@@ -157,8 +157,8 @@ $ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker
     * `docker-buildx-plugin_<version>_<arch>.deb`
     * `docker-compose-plugin_<version>_<arch>.deb`
 5. `deb` 패키지를 설치. 도커 패키지를 다운받은 다음의 예제 경로에서 업데이트
-    ```shell
-    $ sudo dpkg -i ./containerd.io_<version>_<arch>.deb \
+    ```bash
+    sudo dpkg -i ./containerd.io_<version>_<arch>.deb \
       ./docker-ce_<version>_<arch>.deb \
       ./docker-ce-cli_<version>_<arch>.deb \
       ./docker-buildx-plugin_<version>_<arch>.deb \
@@ -166,9 +166,9 @@ $ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker
     ```
    도커 데몬은 자동으로 시작된다.
 6. 설치는 `hello-world` 이미지 실행으로 성공으로 검증한다.
-    ```shell
-    $ sudo service docker start
-    $ sudo docker run hello-world
+    ```bash
+    sudo service docker start
+    sudo docker run hello-world
     ```
    이 명령은 테스트 이미지를 다운로드하고 컨테이너에서 실행한다. 컨테이너가 실행할 때, 확인 메세지를 출력하고 종료한다.
 
@@ -205,9 +205,9 @@ $ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker
 * 스크립트는 기존 도커 설치를 업그레이드 하기위해 설계되지 않았다. 기존 설치에 스크립트를 사용하는 경우, 의존성들은 예상 버전으로 업그레이드 되지 않을수 있고 결과적으로 오래된 버전이 생성된다.
 
 > 실행 전 스크립트 절차를 미리 확인. 호출 시 어떤 단계로 스크립트가 실행되는지 알아보기 위해 `--dry-run` 옵션으로 스크립트를 실행할 수 있다:
-> ```shell
-> $ curl -fsSL https://get.docker.com -o get-docker.sh
-> $ sudo sh ./get-docker.sh --dry-run
+> ```bash
+> curl -fsSL https://get.docker.com -o get-docker.sh
+> sudo sh ./get-docker.sh --dry-run
 > ```
 :{ "type": "tip", "icon": "lightbulb" }
 
@@ -215,9 +215,9 @@ $ for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker
 예제는 [https://get.docker.com/](https://get.docker.com/?_gl=1*1bnqmxv*_ga*ODU1OTAyNzQxLjE3NDM1ODEyNzY.*_ga_XJWPQMJYHQ*MTc0NDAwODUxNy40LjEuMTc0NDAwODYzMC42MC4wLjA.)
 에서 스크립트를 다운로드하고 리눅스에서 도커 최신 안정화 버전을 설치하기 위해 실행한다:
 
-```shell
-$ curl -fsSL https://get.docker.com -o get-docker.sh
-$ sudo sh get-docker.sh
+```bash
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
 Executing docker install script, commit: 7cae5f8b0decc17d6571f9f52eb840fbc13b2737
 <...>
 ```
@@ -227,7 +227,6 @@ CentOS, Fedora, RHEL 또는 SLES같은 `RPM`기반 배포판에서는 적절한 
 메세지가 나타내는 것으로는, 메세지에 나와있듯이, 기본적으로 일반 유저는 도커 명령어를 실행할 수 없다.
 
 > **권한이 없는 유저로 도커를 사용하거나 rootless 모드에서 설치하려면?**
->
 > 설치 스크립트는 도커를 설치하고 사용하기 위해 `root` 또는 `sudo` 권한이 필요하다. 일반 유저가 도커에 접근하는데 권한을
 > 주고싶다면, [리눅스를 위한 설치이후 단계](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)를
 > 참조한다.
@@ -240,6 +239,35 @@ CentOS, Fedora, RHEL 또는 SLES같은 `RPM`기반 배포판에서는 적절한 
 도커는 사전 배포버전 설치를
 위한 [편의 스크립트](https://test.docker.com/?_gl=1*cdfrv6*_ga*ODU1OTAyNzQxLjE3NDM1ODEyNzY.*_ga_XJWPQMJYHQ*MTc0NDAwODUxNy40LjEuMTc0NDAwODYzMC42MC4wLjA.)
 또한 제공한다.
-이 스크립트는 `get.docker.com`에 있는 것과 같지만, 도커 패키지 저장소의 테스트 채널을 사용하기 위해 패키지 매니저를 설정한다. 테스트 채널은 안정화 및 사전배포(베타 버전, 배포 후보) 버전을 모두
-포함한다.
-새로운 배포 버전에 사전 접근하거나 안정화 버전으로 배포되기 전에 테스팅 환경에서 평가하기위해 이 스크립트를 사용한다.
+이 스크립트는 `get.docker.com`에 있는 것과 같지만, 도커 패키지 저장소의 테스트 채널을 사용하기 위해 패키지 매니저를 설정한다.
+테스트 채널은 안정화 및 사전배포(베타 버전, 배포 후보) 버전을 모두 포함한다.
+새로운 배포 버전을 미리 확인하거나 안정화 버전으로 배포되기 전에 테스팅 환경에서 평가하기 위해 이 스크립트를 사용한다.
+
+테스트 채널에서 최신 버전 도커를 설치하려면 다음을 실행:
+
+```bash
+curl -fsSL https://test.docker.com -o test-docker.sh
+sudo sh test-docker.sh
+```
+
+### 편의 스크립트 사용 후 도커 업그레이드::upgade-docker-after-using-the-convenience-script
+
+편의 스크릭트로 도커를 설치했다면, 패키지 매니저를 이용하여 직접 도커를 업그레이드 해야한다.
+편의 스크립트를 다시 실행하는 것은 아무런 이점이 없으며 호스트 머신에서 이미 존재하는 저장소를 재설치를 시도한다면 문제를 일으킬 수 있다.
+
+## 도커 엔진 제거
+
+1. 도커 엔진, CLI, containerd, 도커 컴포즈 패키지를 제거:
+   ```bash
+   sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+   ```
+2. 시스템에 있는 이미지. 컨테이너, 볼륨 또는 커스텀 설정 파일은 자동으로 제거되지 않음, 모두 제거 하려면 다음을 수행:
+   ```bash
+   sudo rm -rf /var/lib/docker
+   sudo rm -rf /var/lib/containerd
+   ```
+3. 패키지 소스와 인증키를 삭제
+   ```bash
+   sudo rm /etc/apt/sources.list.d/docker.list
+   sudo rm /etc/apt/keyrings/docker.asc
+   ```
