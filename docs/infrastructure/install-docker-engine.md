@@ -13,6 +13,8 @@ hide: false
 유료 도커 데스크탑 말고, 무료 도커 엔진 사용하기
 <!--more-->
 
+## 시작::start
+
 > 다른 플랫폼은 [도커 엔진 설치](https://docs.docker.com/engine/install/) 에서 확인할 수 있다.
 :{ "type": "tip", "icon": "check-circle" }
 
@@ -45,7 +47,7 @@ hide: false
 
 우분투 도커 엔진은 x86_64 (또는 amd_64), armhf, arm64, s390x 그리고 ppc64le (ppc64el) 아키텍쳐들과 호환된다.
 
-> Linux Mint같은 우분투 파생 배포판에서의 설치는 공식적으로 지완되지않는다. (될 수도 있지만)
+> Linux Mint같은 우분투 파생 배포판에서의 설치는 공식적으로 지완되지 않는다. (될 수도 있지만)
 :{ "type": "note", "icon": "info" }
 
 ### 이전 버전 제거::uninstall-old-versions
@@ -227,6 +229,7 @@ CentOS, Fedora, RHEL 또는 SLES같은 `RPM`기반 배포판에서는 적절한 
 메세지가 나타내는 것으로는, 메세지에 나와있듯이, 기본적으로 일반 유저는 도커 명령어를 실행할 수 없다.
 
 > **권한이 없는 유저로 도커를 사용하거나 rootless 모드에서 설치하려면?**
+>
 > 설치 스크립트는 도커를 설치하고 사용하기 위해 `root` 또는 `sudo` 권한이 필요하다. 일반 유저가 도커에 접근하는데 권한을
 > 주고싶다면, [리눅스를 위한 설치이후 단계](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user)를
 > 참조한다.

@@ -8,6 +8,9 @@
         <loc>https://alloc.io/wiki/programmed-io</loc>
     </url>
     <url>
+        <loc>https://alloc.io/docs/infrastructure/install-docker-engine</loc>
+    </url>
+    <url>
         <loc>https://alloc.io/docs/infrastructure/kubernetes/update-istio</loc>
     </url>
     <url>

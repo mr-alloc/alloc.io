@@ -1,6 +1,5 @@
 import type IMarkdownDecorator from "@/markup/decorator/i-markdown-decorator";
 import RuleType from "@/markup/constant/rule-type";
-import BlockquoteDecorator from "@/markup/decorator/implementation/blockquote-decorator";
 import HeadlineDecorator from "@/markup/decorator/implementation/headline-decorator";
 import CodeBlockDecorator from "@/markup/decorator/implementation/code-block-decorator";
 import ImageDecorator from "@/markup/decorator/implementation/image-decorator";
@@ -10,6 +9,7 @@ import StyleDecorator from "@/markup/decorator/style/style-decorator";
 import ImageGroupDecorator from "@/markup/decorator/implementation/image-group-decorator";
 import CodeGroupDecorator from "@/markup/decorator/implementation/code-group-decorator";
 import TextWrappingDecorator from "@/markup/decorator/implementation/text-wrapping-decorator";
+import MultilineBlockquoteDecorator from "@/markup/decorator/implementation/multiline-blockquote-decorator";
 
 export default class DecoratorProvider {
 
@@ -18,7 +18,7 @@ export default class DecoratorProvider {
     private readonly _decorators: Map<RuleType, IMarkdownDecorator>;
     private constructor() {
         const entries: [RuleType, IMarkdownDecorator][] = [
-            [RuleType.BLOCK_QUOTE, new BlockquoteDecorator()],
+            [RuleType.BLOCK_QUOTE, new MultilineBlockquoteDecorator()],
             [RuleType.HEADLINE, new HeadlineDecorator()],
             [RuleType.CODE_BLOCK, new CodeBlockDecorator()],
             [RuleType.LINK, new LinkDecorator()],
