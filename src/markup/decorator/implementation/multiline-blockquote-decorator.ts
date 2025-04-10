@@ -27,7 +27,6 @@ export default class MultilineBlockquoteDecorator implements IMarkdownDecorator 
         ): string => {
             const closeIndex = findCloseIndex(this.KEY_CLOSE, tokens, index);
             const subSet = tokens.slice(index + 1, closeIndex);
-            console.log('subSet', subSet);
             const groups = this.separateSubsetByParagraph(subSet, index + 1);
             //상태 1. blockquote 하위에 fence가 있다면 템플릿 속성이 무시되어 다른 문단으로 취급됨.
             //상태 2. inline 문자열에 개행이 있더라도, 한개의 문단으로 처리됨.
