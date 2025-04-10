@@ -1,5 +1,6 @@
 import Token from "markdown-it/lib/token";
 import {TokenNesting} from "@/markup/constant/token-nesting";
+import RuleType from "@/markup/constant/rule-type";
 
 export function findCloseIndex(closeName: string, tokens: Array<Token>, index: number): number {
     const range = tokens.slice(index, tokens.length);
@@ -29,10 +30,18 @@ export function findTokens(tokens: Array<Token>, type: string): Array<Token> {
     }, new Array<Token>());
 }
 
-export function wrappingTokens(tokens: Array<Token>, tag: string) {
+export function wrappingTokens(tokens: Array<Token>, tag: string, type: string = '') {
     return [
-        new Token('', tag, TokenNesting.OPEN),
+        new Token(type, tag, TokenNesting.OPEN),
         ...tokens,
-        new Token('', tag, TokenNesting.CLOSE)
+        new Token(type, tag, TokenNesting.CLOSE)
     ]
+}
+
+export function notEqualsType(token: Token, ...types: Array<RuleType>): boolean {
+    return types.every(type => !type.name.startsWith(token.type));
+}
+
+export function equalsType(token: Token, ...types: Array<RuleType>): boolean {
+    return types.every(type => type.name.startsWith(token.type));
 }

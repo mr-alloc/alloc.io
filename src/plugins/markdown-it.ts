@@ -8,11 +8,13 @@ import imageGroupParser from "@/plugins/markdown-it/image-group-parser";
 import textWrappingParser from "@/plugins/markdown-it/text-wrapping-parser";
 import subParser from "@/plugins/markdown-it/sub-parser";
 import supParser from "@/plugins/markdown-it/sup-parser";
+import blockQuoteParser from "@/plugins/markdown-it/block-quote-parser";
 
 export default defineNuxtPlugin(async (nuxtApp) => {
     if (nuxtApp.$md) return;
     const markdownIt = new MarkdownIt(DEFAULT_MARKDOWN_IT_OPTIONS);
 
+    markdownIt.use(blockQuoteParser)
     markdownIt.use(codeGroupParser);
     markdownIt.use(imageGroupParser);
     markdownIt.use(textWrappingParser);

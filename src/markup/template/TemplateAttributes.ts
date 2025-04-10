@@ -51,7 +51,6 @@ export default class TemplateAttributes {
             return new TemplateAttributes(src, '{}');
         }
 
-
         const executed = TemplateExpression.exec(src);
         return new TemplateAttributes(
             executed[TemplateExpression.TEXT_INDEX],

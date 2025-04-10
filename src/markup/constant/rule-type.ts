@@ -10,6 +10,7 @@ export default class RuleType {
     public static readonly CODE_GROUP = new RuleType('code_group');
     public static readonly IMAGE = new RuleType('image');
     public static readonly TEXT_WRAPPING = new RuleType('text_wrapping');
+    public static readonly INLINE = new RuleType('inline');
 
     private readonly _name: string;
     private constructor(name: string) {
