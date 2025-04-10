@@ -5,6 +5,7 @@ export default class PromptType {
     private static readonly PURPLE = new PromptType('important');
     private static readonly YELLOW = new PromptType('warning');
     private static readonly RED = new PromptType('caution');
+    private static readonly GRAY = new PromptType('ignore');
 
     private readonly _name: string;
 
@@ -17,7 +18,7 @@ export default class PromptType {
     }
 
     private static values (): Array<PromptType> {
-        return [this.BLUE, this.GREEN, this.GREEN, this.PURPLE, this.YELLOW, this.RED];
+        return [this.BLUE, this.GREEN, this.GREEN, this.PURPLE, this.YELLOW, this.RED, this.GRAY];
     }
 
     public static includes(name: string) {

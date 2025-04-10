@@ -302,6 +302,73 @@
   color: rgb(248 113 113/var(--tw-text-opacity,1))!important
 }
 
+// ignore
+._ignore {
+  --color-light: #677285;
+  --tw-prose-bold: #677285;
+  border-color: #c4c8d1;
+  --tw-text-opacity: 1;
+  color: rgb(103 114 133/var(--tw-text-opacity));
+}
+
+._ignore :is(:where(a):not(:where([class~=not-prose],[class~=not-prose] *))) {
+  --tw-text-opacity: 1;
+  color: rgb(8 109 215 / var(--tw-text-opacity));
+}
+
+._ignore :is(:where(a):not(:where([class~=not-prose],[class~=not-prose] *))):hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(8 109 215 / var(--tw-text-opacity));
+}
+
+._ignore :is(:where(code):not(:where([class~=not-prose],[class~=not-prose] *))) {
+  --tw-text-opacity: 1;
+  color: rgb(103 114 133/var(--tw-text-opacity));
+  background-color: rgb(225 226 230/var(--tw-bg-opacity)) !important;
+  border-color: #c4c8d1;
+}
+
+._ignore:is(.dark *) {
+  --color-dark: #9c9eae;
+  --tw-prose-bold: #9c9eae;
+  --tw-border-opacity: 1 !important;
+  --tw-text-opacity: 1;
+  background-color: unset !important;
+  color: rgb(156 158 174/var(--tw-text-opacity))
+}
+
+._ignore :is(:where(a):not(:where([class~=not-prose],[class~=not-prose] *))):is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(55 137 223 / var(--tw-text-opacity));
+}
+
+._ignore :is(:where(a):not(:where([class~=not-prose],[class~=not-prose] *))):hover:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(55 137 223 / var(--tw-text-opacity));
+}
+
+._ignore :is(:where(code):not(:where([class~=not-prose],[class~=not-prose] *))):is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(103 114 133/var(--tw-text-opacity));
+  background-color: rgb(220 220 221/var(--tw-bg-opacity)) !important;
+  border-color: #c4c8d1;
+}
+
+._ignore a code:hover {
+  background-color: rgb(244 245 251/var(--tw-bg-opacity)) !important;
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(103 114 133/var(--tw-border-opacity)) !important;
+  --tw-text-opacity: 1 !important;
+  color: rgb(103 114 133/var(--tw-text-opacity)) !important
+}
+
+._ignore a code:hover:is(.dark *) {
+  background-color: rgb(62 69 81/var(--tw-bg-opacity)) !important;
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(196 200 209/var(--tw-border-opacity)) !important;
+  --tw-text-opacity: 1 !important;
+  color: rgb(196 200 209/var(--tw-text-opacity)) !important
+}
 
 html .light .shiki span {
   color: var(--shiki-light);
