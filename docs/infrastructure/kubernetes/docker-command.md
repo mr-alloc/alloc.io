@@ -26,25 +26,10 @@ hide: true
 빌더 인스턴스와 BuildKit 인스턴스는 아래와 같은 관계이다.
 하지만 빌더 인스턴스는 논리적인 개념이므로 CLI의 일부로서 실행되고 실행을 위한 인스턴스가 Pod등으로 생성되는건 아니다.
 
-```scss
-Builder Instance
-
-(
-빌더 인스턴스
-
-)
-└── Node
-
-(
-BuildKit 인스턴스
-
-)
-└── BuildKit Daemon
-
-(
-실제 빌드 수행
-
-)
+```
+Builder Instance  (빌더 인스턴스 )
+    └── Node (BuildKit 인스턴스)
+          └── BuildKit Daemon(실제 빌드 수행)
 ```
 
 ```shell
@@ -62,30 +47,37 @@ docker buildx create --name docker-builder --bootstrap --use \
 * `--bootstrap`: 즉시 초기화, 없으면 나중에 수동 초기화 필요.
 * `--driver`: 드라이버 지정. 기본이 `docker`
     1. `docker`
-
-    * 기본값
-    * 로컬 Dcoker 데몬 사용
-    * 기본 적인 빌드가능
-
+        * 기본값
+        * 로컬 Dcoker 데몬 사용
+        * 기본 적인 빌드가능
     2. `docker-container`
-
-    * 격리된 컨테이너에서 BuildKit 실행
-    * 더 나은 캐시 지원
-    * 모든 BuildKit 기능 사용 가능
-
+        * 격리된 컨테이너에서 BuildKit 실행
+        * 더 나은 캐시 지원
+        * 모든 BuildKit 기능 사용 가능
     3. `kubernetes`
-
-    * 쿠버네티스 클러스터에서 BuildKit Pod 실행
-    * 분산 빌드 가능
-    * 리소스 관리 용이
-        4. `remote`
-    * 원격 BuildKit 인스턴스 사용
+        * 쿠버네티스 클러스터에서 BuildKit Pod 실행
+        * 분산 빌드 가능
+        * 리소스 관리 용이
+    4. `remote`
+        * 원격 BuildKit 인스턴스 사용
 
 ### 빌더 인스턴스 조회::buildx-ls
 
 ```shell
 docker buildx ls
 ```
+
+### 빌더 상태확인::buildx-inspect
+
+```shell
+docker buildx inspect ${BUILDER_NAME}
+```
+
+현재 사용중인 빌더가 있다면 빌더 이름을 생략할 수 있다.
+
+**옵션**
+
+* `--bootstrap`: 빌더 초기화. 생성시 진행하였다면 필요없다.
 
 빌더들의 인스턴스 목록을 확인할 수 있다.
 
@@ -115,4 +107,10 @@ docker buildx imagetools --tag ${DOCKER_REGISTRY}:${DOCKER_IMAGE_TAG} \
 한개의 메니페스트로 여러개의 이미지를 묶을 수 있다.
 --tag 옵션으로 지정 가능하며, 클라이언트는 OS/arch에 맞는 이미지를 얻을 수 있다. 
 
+## Dockerfile
 
+* `FROM`: 사용할 기본 이미지
+    * `${레지스트리 경로}/${이미지 이름}:${태그}` 형식으로 사용
+* `RUN`: Shell 실행
+* `ENV`: 환경변수 설정
+* `ARG`: 빌드 시점에 사용되는 변수
