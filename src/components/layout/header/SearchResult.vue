@@ -8,7 +8,7 @@
         <li class="py-2 px-1 my-1 mx-0.5 rounded-md cursor-pointer hover:bg-gray-100 hover:dark:bg-gray-800 duration-300"
             :class="[`${result.status}`, { select: result.isSelected}]"
             v-for="result in props.row.results"
-            :key="result.content.path"
+            :key="result.contentPath"
             v-on:click="goTo(result.content.path)">
           <div class="text-gray-600 dark:text-gray-50">
             <span class="text-inherit font-bold">{{ result.content.header.title }}</span>
@@ -36,15 +36,20 @@
 import {PostSearchGroup} from "@/classes/implement/post-search-group";
 import {useRouter} from "vue-router";
 import {useSearchStatusStore} from "@/store/search-status-store";
+import {usePostContentStore} from "@/store/post-content-store";
 
 const router = useRouter()
+const postContentStore = usePostContentStore();
 const searchStatus = useSearchStatusStore()
 const props = defineProps<{
   row: PostSearchGroup
 }>();
 
-const goTo = (path: string) => {
-  router.push(path)
+const goTo = (path: Path) => {
+  const value = postContentStore.isWiki(path.last)
+      ? `/wiki/${path.last}`
+      : path.value;
+  router.push(value)
   searchStatus.cancelSearch()
 }
 </script>

@@ -21,6 +21,12 @@ export class PostSearchResult {
         return this._status
     }
 
+    get contentPath(): string {
+        return this._postContent.header.layout === 'wiki'
+            ? `/wiki/${this._postContent.path.last}`
+            : this._postContent.path.value;
+    }
+
     selected(isSelected: boolean): void {
         this._isSelected = isSelected
     }

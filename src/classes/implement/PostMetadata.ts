@@ -41,7 +41,7 @@ export class PostMetadata {
         if (this._header.layout === DocumentType.WIKI.name) {
             return 'wiki';
         }
-        return this._path.array.slice(2, 3)[0] ?? 'etc';
+        return this._path.valueOf(this._path.array.length - 2) ?? 'etc';
     }
 
     static fromJson (json: any): PostMetadata {

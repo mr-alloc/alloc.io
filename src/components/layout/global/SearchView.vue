@@ -71,7 +71,7 @@ const methods = {
     const inputElement = searchInput.value as HTMLInputElement
     const text = inputElement.value ?? ''
 
-    methods.searchText(text)
+    setTimeout(() => methods.searchText(text), 500);
   },
   sendKeyboardEvent: (e: KeyboardEvent) => {
     if (e.code == Key.ESC) {
@@ -92,27 +92,33 @@ const methods = {
       methods.deployResult([]);
       return;
     }
-
-    if (/([a-zA-Z가-힣0-9@\W\-_])/.test(text)) {
-      const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i');
-      const contentsForSearch = postContentStore.allValues() as Array<PostMetadata>;
-      const results: PostSearchResult [] = contentsForSearch
-          .filter(content => {
-            const title = content.header.title;
-            return RE.test(title)
-          })
-          .map(content => new PostSearchResult(content));
-      methods.deployResult(results);
+    if (!/([a-zA-Z가-힣0-9@\W\-_])/.test(text)) {
+      //검색 대상이 아닌경우.
+      return;
     }
+
+
+    const RE = new RegExp(`(.+)?(${text})(.+)?`, 'i');
+    const contentsForSearch = postContentStore.allValues() as Array<PostMetadata>;
+    const results: PostSearchResult [] = contentsForSearch
+        .filter(content => {
+          const pass = RE.test(content.header.title);
+          RE.lastIndex = 0;
+          return pass
+        })
+        .map(content => new PostSearchResult(content));
+
+    methods.deployResult(results);
   },
   deployResult(results: Array<PostSearchResult>) {
+    //그룹화 된 각 검색 결과 목록
     const map: Map<string, PostSearchResult[]> = grouping<string, PostSearchResult>(results, (result)=> {
-      const node = postContentStore.get(result.content.path)!;
+      const node = postContentStore.get(result.contentPath)!;
       return node.group;
-    })
+    });
 
+    //그룹 이름 목록
     const keys = [...groups.value.keys()];
-    // clonedArray: Map<string, PostSearchGroup> = 기존 검색 결과
     // map: Map<string, PostSearchResult[]> = 신규 검색 결과
     keys.forEach(key => {
       // 기존 검색결과 와 같은 그룹이라면 업데이트
@@ -121,20 +127,15 @@ const methods = {
         map.delete(key)
         const oldResult = groups.value.get(key)
         oldResult?.update(newResult)
-
-        if (oldResult?.results.length == 0) {
-          groups.value.delete(key)
-        }
-        return
       }
       // 기존 그룹에있지만, 신규 결과에서 그룹이 없는 경우
       else {
         // console.log('old key delete:', key)
-        // const beFinalize = groups.value.get(key)
-        // beFinalize?.finalizeAllChild()
+        const beFinalize = groups.value.get(key)
+        beFinalize?.finalizeAllChild()
         groups.value.delete(key)
       }
-    })
+    });
 
     //기존에 그룹에는 없고, 신규 결과에서 그룹이 있는경우
     const newKeys = [...map.entries()]
@@ -190,7 +191,13 @@ const methods = {
       return
     }
 
-    router.push(currentTarget?.content.path ?? '')
+    const path = currentTarget?.content.path;
+    const value = postContentStore.isWiki(path?.last)
+        ? `/wiki/${path?.last}`
+        : path?.value;
+
+    console.log('value', value);
+    router.push(value ?? '')
     currentLocationIndex.value = 0;
     const input = searchInput.value as HTMLInputElement;
     input.value = '';
