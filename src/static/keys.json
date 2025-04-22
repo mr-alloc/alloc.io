@@ -1,7 +1,12 @@
 [
   "/wiki/io-manager",
   "/wiki/programmed-io",
+  "/docs/back-end/spring/secrets-manager-with-spring",
+  "/docs/infrastructure/linux-command",
+  "/docs/infrastructure/kubernetes/docker-command",
+  "/docs/back-end/hikari-connection-pool",
   "/docs/infrastructure/install-docker-engine",
+  "/docs/infrastructure/gitlab-ci",
   "/docs/infrastructure/kubernetes/update-istio",
   "/docs/back-end/spring/spring-security",
   "/docs/life/youth-of-ggomi",

@@ -8,7 +8,22 @@
         <loc>https://alloc.io/wiki/programmed-io</loc>
     </url>
     <url>
+        <loc>https://alloc.io/docs/back-end/spring/secrets-manager-with-spring</loc>
+    </url>
+    <url>
+        <loc>https://alloc.io/docs/infrastructure/linux-command</loc>
+    </url>
+    <url>
+        <loc>https://alloc.io/docs/infrastructure/kubernetes/docker-command</loc>
+    </url>
+    <url>
+        <loc>https://alloc.io/docs/back-end/hikari-connection-pool</loc>
+    </url>
+    <url>
         <loc>https://alloc.io/docs/infrastructure/install-docker-engine</loc>
+    </url>
+    <url>
+        <loc>https://alloc.io/docs/infrastructure/gitlab-ci</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/infrastructure/kubernetes/update-istio</loc>

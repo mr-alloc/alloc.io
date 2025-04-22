@@ -1,21 +1,24 @@
 ---
 layout: post
-title: Spring에서 중요정보를 Secrets Manager로 관리하기
+title: Spring에서 Secrets Manager로 중요 정보 관리하기
 tags: [ Spring, Spring Boot, Secrets Manager, AWS ]
 date: 2025-04-18 11:58:00
 thumbnail: /post/back-end/spring/secrets-manager/with-spring.png
 current-company: NEOWIZ
 current-position: Software Engineer
-summary: Spring AWS SecretsManager 적용하기
+summary: 시크릿매니저 적용하기
 excerpt_separator: <!--more-->
-hide: true
+hide: false
 ---
 
-어플리케이션 개발 시 중요정보는 설정 파일로 관리된다.
+애플리케이션 개발 시 중요정보는 설정 파일로 관리된다.
 하지만 이는 Git과 같은 VCS에서 노출되며, 이는 취약점으로 이어질 수 있다.
 
 이를 해결하기 위해 AWS Secrets Manager에 중요정보를 보관하고, 런타임에 이를 불러와서 사용할 수 있다.
 <!--more-->
+
+> 이 문서에서는 Secrets Manager의 보안암호 등록과정은 다루지 않는다.
+:{ "type": "note", "icon": "info"}
 
 ## Secrets Manager::what-is-secretes-manager
 
@@ -70,11 +73,11 @@ String secret = response.secretString();
 
 ## SpringBoot와 함께 사용하기::use-with-spring-boot
 
-Spring Boot의 경우 어플리케이션 시작 시점에 DB 연결을 한다. 하지만
+Spring Boot의 경우 애플리케이션 시작 시점에 DB 연결을 한다. 하지만
 DB 정보를 Secrets Manager로 옮긴다면, 값설정은 DataSource 값이 초기화 되기전에 설정 되어야한다.
 
 또한 너무 빨리 세팅을 해버린다면, DB 프로퍼티 세팅시 값이 덮어씌어 질 수 있다.
-즉 아래와 같은 순서로 설정 되어야 의도되로 사용이 가능하다.
+즉 아래와 같은 순서로 설정 되어야, 의도처럼 사용이 가능하다.
 
 ```
 Spring Property Setting → Secrets Manager Setting → Make DB Property
@@ -103,7 +106,7 @@ public class SecretsManagerPropertyProcessor implements EnvironmentPostProcessor
 ```
 
 `ConfigDataEnvironmentPostProcessor`는 `application.properties`, `application.yml` 등 기본 설정 파일을 로드하는 프로세스이므로, 실행시 주입되는 설정을
-덮어쓰려면, 위와 같은 순서로 진행되어야한다. 먼저 어플리케이션 실행 시 주입되었던, `AWS` 정보를 가져와서 새로운 프로퍼티를 만들수 있다.
+덮어쓰려면, 위와 같은 순서로 진행되어야한다. 먼저 애리케이션 실행 시 주입되었던, `AWS` 정보를 가져와서 새로운 프로퍼티를 만들수 있다.
 
 ```java::커스텀 설정 정보를 추출
 private AwsSecretsManagerProperty getSecretsManagerProperty(ConfigurableEnvironment environment) {
@@ -115,7 +118,6 @@ private AwsSecretsManagerProperty getSecretsManagerProperty(ConfigurableEnvironm
     property.setEnable(binder.bind("aws.secrets-manager.enabled", Boolean.class).orElse(Boolean.FALSE));
     property.setRegion(binder.bind("aws.region", String.class).orElse(""));
     property.setName(binder.bind("aws.secrets-manager.secret-name", String.class).orElse(""));
-    property.setKey(binder.bind("aws.secrets-manager.specify-key", String.class).orElse(""));
     
     return property;
 }
@@ -124,7 +126,6 @@ private AwsSecretsManagerProperty getSecretsManagerProperty(ConfigurableEnvironm
 주입된 설정정보를 먼저 읽어와서, 해당 정보롤 `AWS Secrets Manager`에 요청하여 값을 받을 수 있다.
 
 ::code-group
-
 ```java::프로퍼티 추가
 private void addProperties(ConfigurableEnvironment environment) {
     AwsSecretsManagerProperty property = getSecretsManagerProperty(environment);
@@ -147,10 +148,9 @@ private void addProperties(ConfigurableEnvironment environment) {
     GetSecretValueRequest request = GetSecretValueRequest.builder().secretId("user-dev").build();
     GetSecretValueResponse response = client.getSecretValue(request);
     
-    addSecrets(response.secretString(), property.getKey(), environment);
+    addSecrets(response.secretString(), environment);
 }
 ```
-
 ```java::보안암호 추가
 private void addSecrets(String secret, String key, ConfigurableEnvironment environment) {
     try {
@@ -159,9 +159,7 @@ private void addSecrets(String secret, String key, ConfigurableEnvironment envir
         
         Map<String, Object> propertyMap = new LinkedHashMap<>();
         
-        if (node.has(key)) {
-            propertyMap.putAll(mapper.convertValue(node.get(key), new TypeReference<Map<String, Object>>(){}));
-        }
+        propertyMap.putAll(mapper.convertValue(node, new TypeReference<Map<String, Object>>(){}));
         
         if (propertyMap.isEmpty()) {
             return;
@@ -173,7 +171,6 @@ private void addSecrets(String secret, String key, ConfigurableEnvironment envir
     }
 }    
 ```
-
 ```java::convertHierarchy 메서드
 public static Map<String, Object> convertHierarchy(Map<String, Object> hierarchyMap) {
     Map<String, Object properties = new HashMap();
@@ -198,7 +195,6 @@ public static void convertHierarchyToProperties(
     }
 }
 ```
-
 ::
 
 > `convertHierarchy` 메서드는 계층 형태의 객체를 각 키의 경로로 구분지어 1차원적으로 만들어 준다.
@@ -206,7 +202,7 @@ public static void convertHierarchyToProperties(
 
 ::code-group
 
-```secrets.json
+```json::secrets.json
 {
     "account": {
         "database": {
@@ -223,7 +219,7 @@ public static void convertHierarchyToProperties(
 }
 ```
 
-```json
+```json::보안암호 평탄화
 {
   "account.database.username": "dbuserid",
   "account.database.password": "dbuserpassword",
@@ -231,11 +227,165 @@ public static void convertHierarchyToProperties(
   "payment.database.password": "paymentuserpassword"
 }
 ```
-
 ::
 
 ## 기본값과 함께 적용하기::set-with-defaults
 
-자금이 부족하여 여러개의 보안 암호를 구성
+```json::보안 암호
+{
+    "service-authorizer": {
+        "account": {
+            "database": {
+                "username": "dbuserid",
+                "password": "dbuserpassword"
+            }
+        },
+        "payment": {
+            "database": {
+                "username": "paymentuserid",
+                "password": "paymentuserpassword"
+            }
+        }
+    },
+    "content-server": {
+        "account": {
+            "database": {
+                "username": "dbuserid",
+                "password": "dbuserpassword"
+            }
+        }
+    }
+}
+```
 
+여러개의 보안암호를 구성하기 어려운 경우, 한개의 보안 암호에서 특정 서비스별로 나눌 수도 있다.
+위의 경우 `service-authorizer`나 `content-server`는 자신이 필요한 정보만 추출하여 다음의 방법으로 사용이 가능하다:
+
+::code-group
+
+```java::Property에 추가
+private AwsSecretsManagerProperty getSecretsManagerProperty(ConfigurableEnvironment environment) {
+    ... //기존로직
+    property.setKey(binder.bind("aws.secrets-manager.specify-key", String.class).orElse(""));
+    return property;
+}
+```
+
+```java::호출부 수정
+//addSecrets 호출시 특정 key전달
+//여기서 Key는 프로퍼티에서 전달받은 서비스의 이름
+addSecrets(response.secretString(), property.getKey(), environment);
+```
+
+```java::필요한 키만 추출
+private void addSecrets(String secret, String key, ConfigurableEnvironment environment) {
+    try {
+        ... //기존 로직
+        Map<String, Object> propertyMap = new LinkedHashMap<>();
+        //키가 비어있다면, 전체 보안 암호를 추가
+        if ( ! StringUtils.hasLength(key) {
+            propertyMap.putAll(mapper.convertValue(node, new TypeReference<Map<String, Object>>(){}));
+        } else {
+            //해당 키를 가지고 있다면 추출하여 보안 암호를 추가
+            if (node.has(key)) {
+                propertyMap.putAll(mapper.convertValue(node.get(key), new TypeReference<Map<String, Object>>(){}));
+            }
+        }
+        
+        if (propertyMap.isEmpty()) {
+            return;
+        }
+        ... //기존 로직
+    } catch (Exception ex) {
+        log.error("Error Occurred at adding secrets, ex);
+    }
+}  
+```
+
+::
+
+> 이 방법은 여러서비스의 보안 암호를 한번에 구성하기에 좋은 방법이지만 환경까지 나누는건 권장하지 않는다.
+:{ "type": "warning", "icon": "info" }
+
+다시 돌아아와서 보안암호를 보자.
+
+```json::보안 암호
+{
+    "service-authorizer": {
+        "account": {
+            "database": {
+                "username": "dbuserid",
+                "password": "dbuserpassword"
+            }
+        },
+        "payment": {
+            "database": {
+                "username": "paymentuserid",
+                "password": "paymentuserpassword"
+            }
+        }
+    },
+    "content-server": {
+        "account": {
+            "database": {
+                "username": "dbuserid",
+                "password": "dbuserpassword"
+            }
+        }
+    }
+}
+```
+
+위 보안 암호에서는 `service-authorizer`와 `content-server`가 사용하는 정보중 `account`는 같은 정보를 사용하는 걸로 보인다.
+이 경우는 공통정보로 빼네어 사용할 수도 있다.
+
+::code-group
+
+```json::account 정보는 공통화
+{
+    "default": {
+      "account": {
+        "database": {
+          "username": "dbuserid",
+          "password": "dbuserpassword"
+        }
+      }
+    },
+    "service-authorizer": {
+        "payment": {
+            "database": {
+                "username": "paymentuserid",
+                "password": "paymentuserpassword"
+            }
+        }
+    },
+    "content-server": {
+    }
+}
+```
+
+```java::공통 정보를 적용
+Map<String, Object> propertyMap = new LinkedHashMap<>();
+if (!StringUtils.hasLength(key)) {
+    propertyMap.putAll(mapper.convertValue(node, new TypeReference<Map<String, Object>>() {
+    }));
+} else {
+    //default가 있다면 먼저 적용한다.
+    if (node.has("default")) {
+        propertyMap.putAll(mapper.convertValue(node.get("default"), new TypeReference<Map<String, Object>>() {
+        }));
+    }
+    //default가 적용된 이후에, 덮어쓸 값이 남아있다면 적용한다.
+    if (node.has(key)) {
+        propertyMap.putAll(mapper.convertValue(node.get(key), new TypeReference<Map<String, Object>>() {
+        }));
+    }
+}
+
+if (propertyMap.isEmpty()) {
+    return;
+}
+```
+
+::
 

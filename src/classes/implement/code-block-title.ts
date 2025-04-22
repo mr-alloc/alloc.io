@@ -27,7 +27,7 @@ export default class CodeBlockTitle {
             const filename = Filename.of(name);
             return new CodeBlockTitle(filename.ext, name);
         } else {
-            throw new Error('alias or filename is required.');
+            throw new Error(`alias or filename is required: "${name}"`);
         }
     }
 }
