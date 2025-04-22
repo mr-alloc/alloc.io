@@ -86,6 +86,5 @@ export class PostSearchGroup {
                 result.change(SearchStatus.READY);
                 return result.contentPath;
             });
-
     }
 }
