@@ -102,6 +102,76 @@
     "content": "\r\n## PIO란?\r\n\r\n`Programmed I/O`(이하 PIO)는 말그대로 프로그램 입출력이다. `PIO` 방식은 [네트워크 어댑터]() 또는 [ATA]() 기억장치 같은 주변기기와 [CPU](/wiki/central-processing-unit) 사이에서 데이터를 주고 받는다.\r\nCPU의 개입으로 처리되므로 성능에 영향을 주며, 이러한 단점을 극복하기 위해 [인터럽트](/wiki/interrupt)나 [DMA](/wiki/direct-memory-access)같은 방식이 고안되었다.\r\n\r\n\r\n## PIO의 데이터 전송방식\r\n\r\n`PIO`는 CPU가 데이터를 읽거나 쓸 장치에대해서 주소신호(대상주소)와 제어신호(IOR, IOW)로 I/O 활성화가 이루어지면 데이터버스를 통해 전송된다. \r\n"
   },
   {
+    "path": "/docs/computer-science/operating-system/tty-and-session",
+    "header": {
+      "layout": "post",
+      "title": "TTY에 대해 알아보자",
+      "tags": [
+        "Operating System",
+        "OS",
+        "tty",
+        "session"
+      ],
+      "date": 1745576370000,
+      "thumbnail": "/post/computer-science/tty-and-session/index.png",
+      "current-company": "NEOWIZ",
+      "current-position": "Software Engineer",
+      "profile-image": "/post/profile/profile1.jpg",
+      "summary": "TTY",
+      "excerpt-separator": "<!--more-->",
+      "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "컴퓨터",
+        "operating-system"
+      ],
+      "images": [
+        {
+          "src": "/post/computer-science/tty-and-session/tty-model-33.png",
+          "alt": "Teletype Model 33"
+        }
+      ],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "개요::overview",
+            "title": "개요",
+            "fragment": "overview",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "tty란?::what-is-tty",
+            "title": "tty란?",
+            "fragment": "what-is-tty",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "tty의 데이터 흐름::data-flow-of-tty",
+            "title": "tty의 데이터 흐름",
+            "fragment": "data-flow-of-tty",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "사용사례::use-case",
+            "title": "사용사례",
+            "fragment": "use-case",
+            "children": []
+          }
+        ]
+      }
+    },
+    "description": "tty란 무엇일까?",
+    "content": "\r\n\r\n## 개요::overview\r\n\r\n**T**ele**TY**pewriter는 전기-기계식 타자기와 전신 기술의 결합체를 의미한다. 원래 원격지 간 타이핑된 메세지를 주고받는 통신 장치 였다.\r\nTelegraph (전신: 문자나 숫자를 전기신호로 바꾸어 전파나 전류를 보내는 통신)와 (Typewriter: 타자기)의 융합으로 탄생되었고 1846년 Royal Earl House의 인쇄 전신기로 최초 개발 되었다.\r\n\r\n상용화는 1908년 즈음 시작되었으며, 1920-1960년대 황금기를 맞아 1950년대 부터 컴퓨팅 시대의 흐름에 따라 컴퓨터와 연결되었다.\r\n여러 사용자가 텔레타이프를 통해 원격 접속이 가능해지며, 현대의 `/dev/tty` 개념의 발판이 되었다.\r\n\r\n![Teletype Model 33](/post/computer-science/tty-and-session/tty-model-33.png)\r\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"대표적인 tty, TeleType Model 33\"}\r\n\r\n중요한 점은 컴퓨터와 사람 간 실시간 상호작용이 가능한점에 있다. 물리적 tty는 원래 다음과 같은 흐름으로 동작하였다:\r\n\r\n```\r\n╭─────╮\r\n│ TTY ├──Input with───╮\r\n╰──┬──╯    Keyboard   ↓\r\n   ↑             ╭────┴────╮      ╭──────────╮\r\n   │             │ Encoder ├──→───┤ Computer │\r\nOutput with      ╰─────────╯      ╰─────┬────╯\r\n Printer         ╭─────────╮            │\r\n   ╰─────────────┤ Decoder ├──────←─────╯\r\n                 ╰─────────╯\r\n```\r\n\r\nTTY에 내장된 키보드와 프린터를 통해 입출력을하고 Encoder와 Decoder를 통해 전기신호로 바뀌어 컴퓨터와 통신한다.\r\n이러한 물리적 장치가 소프트웨어로 tty가 구현되면서, 사용자와 상호작용이 가능하게 되었다.\r\n\r\n## tty란?::what-is-tty\r\n\r\nTTY는 사실 AT&T의 자회사인 Teletype Corporation의 브랜드명이였다.\r\n하지만 `Model 33`의 기점으로 UNIX 운영체제가 발전하며 tty가 소프트웨어로 구현되며 대명사적으로 컴퓨터와 사람간 인터렉션할 수 있는 장치를 tty로 부르기 시작하였다.\r\n\r\n즉 tty는 터미널이다. tty는 아래와 같이 가상 콘솔과 유사 터미널이 있다.\r\n* 가상 콘솔 (Virtual Console): `/dev/tty1` - `/dev/tty6`\r\n* 유사 터미널 (Pseudo Terminal): `/dev/pts/*`\r\n\r\n**가상 콘솔**은 배포판에 따라 다르지만 `/dev/tty1` - `/dev/tty6`까지 제공한다. 하나의 물리적 시스템에서 여러개의 텍스트 기반 터미널 세션을 제공하는 기능이다.\r\n한개의 물리 시스템에 가상 콘솔을 생성하여 연결하기 때문에 호스트 시스템 자체에서만 접근이 가능하다. \r\n또한 `Ctrl + Alt + F1` - `F6`으로 콘솔을 전환 가능하며 다중 사용자간에는 세션을 공유한다.\r\n\r\n**유사 터미널**은 하드웨어 터미널을 소프트웨어적으로 에뮬레이션한 말그대로의 진정한 \"유사\" 터미널이다.\r\n줄여서 `pty(Pseudo TeletYpe write)`라고 한다.\r\n\r\n기본적으로 Master-Slave 구조를 가지며 ptmx(Pseudo Terminal Master Multiplexer)가 pts를(Pseudo Terminal Slave)생성한다.\r\n\r\nptmx의 장치 파일은 `/dev/ptmx`이며 터미널 에뮬레이터 프로그램이 제어한다. 예를 들어 새로운 세션 생성 요청이 들어오면 다음과 같이 동작한다:\r\n\r\n1. 백그라운드에서 실행 중이던 **터미널 에뮬레이터**가 세션 생성 요청을 수신\r\n2. PTY 쌍을 생성\r\n   1. `open(\"/dev/ptmx\", O_RDWR)` [시스템콜](/wiki/system-call)로 마스터 멀티플렉서(디바이스)를 열면, 커널에 마스터, 슬레이브 인스턴스 쌍을 생성하고 fd([파일 디스크립터]())를 얻음\r\n   2. 얻은 master_fd는 마스터 인스턴스를 참조하며 grantpt(master_fd)로 slave의 소유자 권한을 설정, unlockpt(master_fd)로 slave 장치의 잠금 해제 \r\n   3. `char *slave_name = ptsname(master_fd)`으로 생성된 slave 경로명만 조회 (예: `/dev/pts/0`)\r\n3. 셸 시작\r\n   1. `fork()`로 자식 [프로세스]() 생성\r\n   2. `close(master_fd)`생성해 두었던 master_fd를 닫기(자식 프로세스에서는 더이상 master_fd가 필요 없음)\r\n   3. `int slave_fd = open(slave_name, ORDWR)`슬레이브를 열어 파일 디스크립터 반환\r\n   4. 생성된 PTY Slave 장치를 표준 입출력으로 설정. (세션에 연결되어 사용할 터미널이므로)\r\n      ```c\r\n      dup2(slave_fd, 0); //stdin\r\n      dup2(slave_fd, 1); //stdout\r\n      dup2(slave_fd, @); //stderr\r\n      ```\r\n   5. `execl(\"/bin/bash\", \"bash\", NULL)` 셸 실행\r\n\r\n\r\n## tty의 데이터 흐름::data-flow-of-tty\r\n\r\n세션을 연결하여 생성된 tty는 PTY Slave이다. 그렇다면 명령 실행에대한 데이터 흐름은 어떻게 될까?\r\n\r\n```\r\n╭────────────────────╮     ╭──────────╮  ╭────────────╮\r\n│ Input From Keyboad ├────→│ Terminal │  │   Kernel   │\r\n│  'ls -al' + Enter  │     │ Emulator ├──→╭──────────╮│ \r\n╰────────────────────╯     ╰──────────╯  ││  Master  ││\r\n╭────────────────────╮   ╭────────────╮  ││ Instance ├──╮\r\n│  Output to Display │ ←─┤    Line    ├──→╰==========╯╯ │\r\n│  'ls -al'          │   │ Discipline │    ╭───────╮    │\r\n╰────────────────────╯   ╰────────────╯    │ Shell │    │\r\n                                ↑          ╰───────╯    │\r\n                                │              ↑        │\r\n                                │        ╭─────┴────╮   │\r\n                                ╰────────┤  Slave   ├───╯\r\n                                         │ Instance │ \r\n                                         ╰──────────╯\r\n```\r\n\r\n만약 `ls -al`이라는 명령을 입력 한다면 다음과 같이 처리된다.\r\n\r\n1. 사용자가 `ls -al` + Enter를 입력\r\n2. 터미널 에뮬레이터가 입력 이벤트를 마스터 FD에 `write()` 시스템 콜로 전송\r\n3. 커널이 데이터를 마스터에서 슬레이브로 복사\r\n4. 라인 디시플린이 각 문자를 처리하고 에코 기능으로 다시 마스터로 보냄\r\n5. 터미널 에뮬레이터가 마스터 FD에서 에코된 문자를 읽어 화면에 표시\r\n6. Enter 키가 입력되면 라인 버퍼의 내용이 셸에 전달\r\n7. 셸이 슬레이브에서 `read()`시스템콜로 전체 명령어 `ls -al`을 읽음\r\n\r\nShell의 반대로 실행결과는  `Shell 프로세스` -> `PTY 슬레이브` ->  `마스터 인스턴스` -> `터미널 에뮬레이터` -> `화면 표시` 순서로 처리된다.\r\n\r\n## 사용사례::use-case\r\n\r\n그렇다면 사용자 입장에서 tty를 직접 적으로 사용하는 경우는 언제일까?\r\n도커를 예로 들어보자 `docker exec -it {container id} /bin/bash` 명령어는 컨테이너로 세션을 붙을 때 사용할 수있다.\r\n이 명령에서 `-i` 옵션은 표준 입력(input)을, `-t` 옵션은 `pt` 가상 터미널을 사용하겠다는 의미이다.\r\n\r\n또한 원격사용자가 ssh로 접속할때마다 새로운 세션이 생성되면서 PTS가 할당된다. 만약 터미널 세션이 종료되면, `/dev/pts/N` 장치가 제거된다."
+  },
+  {
     "path": "/docs/back-end/spring/secrets-manager-with-spring",
     "header": {
       "layout": "post",
@@ -616,6 +686,40 @@
     },
     "description": "관리하는 K8s 버전이 올라가면서, 필요한 istio 업데이트 진행을 간단히 정리해보자.",
     "content": "\r\n\r\n## 선행 지식::prerequisites\r\n\r\n1. 핵심 컴포넌트\r\n    * istiod: 컨트롤 플레인 (istio-system namespace에 위치하며 워커 노드에 배포)\r\n    * istio-proxy: 사이드카 프록시 (각 어플리케이션 Pod에 주입되며 istiod와 통신)\r\n    * istio-ingressgateway: 인바운드 트래픽 처리\r\n    * istio-egressgateway: 아웃바운드 트래픽 처리 (선택적)\r\n2. 관리도구\r\n    * istioctl: istio CLI 도구 (클라이언트)\r\n    * kubectl: k8s CLI 도구 (클라이언트)\r\n3. 리소스\r\n    * Namespace: istio-system\r\n    * Pod: 컨테이너 실행단위\r\n    * Service: 서비스 디스커버리와 로드밸런싱\r\n    * Deployment: Pod 관리 및 배포\r\n4. 아키텍쳐 용어\r\n    * Control Plane: 중앙 제어/관리 부분\r\n    * Data Plane: 실제 트래픽을 처리하는 부분\r\n    * Sidecar: 메인 컨테이너와 함께 실행되는 보조 컨테이너\r\n\r\n## 설치::install-istio\r\n\r\n먼저 istio를 설치하기전에 [kubectl](https://kubernetes.io/ko/docs/tasks/tools/install-kubectl-linux/)\r\n과 [istioctl](https://github.com/istio/istio/releases)을 설치해야한다.\r\n\r\n> kubectl을 설치하고 클러스터 설정이 되지않았다면, `aws eks update-kubeconfig --name 클러스터이름 --region 리전이름 --profile 프로필이름` 명령으로 설정할 수 있다.\r\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\r\n\r\n`istioctl`이 설치되었다면 다음의 명령으로 `kubectl context`에 설정된 클러스터의 검사를 진행한다.\r\n\r\n```\r\n> istioctl x precheck\r\n✔ No issues found when checking the cluster. Istio is safe to install or upgrade!\r\n  To get started, check out https://istio.io/latest/docs/setup/getting-started/.\r\n```\r\n\r\n위와 같이 나온다면, 정상적으로 설치가 가능한 상태이다.\r\n\r\n```\r\n> ./istioctl install --set revision=1-25-0\r\n        |\\\r\n        | \\\r\n        |  \\\r\n        |   \\\r\n      /||    \\\r\n     / ||     \\\r\n    /  ||      \\\r\n   /   ||       \\\r\n  /    ||        \\\r\n /     ||         \\\r\n/______||__________\\\r\n____________________\r\n  \\__       _____/\r\n     \\_____/\r\n\r\nThis will install the Istio 1.25.0 profile \"default\" into the cluster. Proceed? (y/N) y\r\n✔ Istio core installed ⛵️\r\n✔ Istiod installed 🧠\r\n✔ Ingress gateways installed 🛬\r\n✔ Installation complete\r\n```\r\n\r\n위 처럼 설치가 완료되었다면, service, pod, configmap을 모두 확인해보자.\r\n\r\n```\r\n> kubectl get svc -n istio-system\r\nNAME                   TYPE           CLUSTER-IP       EXTERNAL-IP\r\nistio-ingressgateway   LoadBalancer   {Clister IP}     {AWS ELB DNS Address}\r\nistiod-1-22-1          ClusterIP      {Clister IP}     <none>\r\nistiod-1-25-0          ClusterIP      {Clister IP}     <none>\r\n\r\n> kubectl get pods -n istio-system\r\nNAME                                   READY   STATUS    RESTARTS   AGE\r\nistio-ingressgateway-655dc875b-sgsgm   1/1     Running   0          6m31s\r\nistiod-1-22-1-94f886767-lxjdh          1/1     Running   0          77d\r\nistiod-1-22-1-94f886767-qrccf          1/1     Running   0          77d\r\nistiod-1-25-0-85c49d99c6-x8cv5         1/1     Running   0          6m43s\r\n\r\n> kubectl get configmap -n istio-system\r\nNAME                                  DATA   AGE\r\nistio-1-22-1                          2      188d\r\nistio-1-25-0                          2      7m54s\r\nistio-ca-root-cert                    1      ...\r\nistio-gateway-deployment-leader       0      ...\r\nistio-gateway-status-leader           0      ...\r\nistio-ip-autoallocate                 0      7m43s\r\nistio-leader                          0      ...\r\nistio-namespace-controller-election   0      ...\r\nistio-sidecar-injector-1-22-1         2      188d\r\nistio-sidecar-injector-1-25-0         2      7m54s\r\nkube-root-ca.crt                      1      ...\r\n```\r\n\r\n설치가 정상적으로 된것으로 보인다.\r\n\r\n## 버전 업데이트\r\n\r\n안전한 업그레이드를 위해 현재 사용중인 Sidecar Injector ConfigMap을 백업 해두자.\r\n\r\n```\r\nk get configmap -n istio-system istio-sidecar-injector-1-25-0 -o yaml > istio-sidecar-injector-1.25.0.yaml\r\n```\r\n\r\ncanary(신규 버전)와 stable(현재 버전) 태그로 안정적인 배포전략을 사용중이기 때문에, 태그설정이 필요하다.\r\n\r\n```shell::태그 확인\r\n> istioctl tag list\r\nTAG    REVISION NAMESPACES\r\ncanary 1-22-1\r\nstable 1-22-1   some-qa,some-staging\r\n       1-25-0\r\n```\r\n\r\n현재는 `qa`와 `staging` namespace모두 stable로 적용되어있기 때문에 새로 변경할 1.25.0 revision을 canary로 바꿔줘야한다.\r\n\r\n```shell::새로운 버전을 canary로 변경\r\n> istioctl tag set canary --revision 1-25-0 --overwrite\r\nRevision tag \"canary\" created, referencing control plane revision \"1-25-0\". To enable injection using this\r\nrevision tag, use 'kubectl label namespace <NAMESPACE> istio.io/rev=canary'\r\n> istioctl tag show\r\nTAG    REVISION NAMESPACES\r\nstable 1-22-1   some-qa, some-staging\r\ncanary 1-25-0\r\n```\r\n\r\n## 레이블 적용 및 사이드카 주입::labeling-and-inject-sidecar\r\n\r\n리비전 태그를 생성했다면, 이제 가이드 대로 레이블을 namespace에 적용할 수 있다.\r\n\r\n```shell::레이블 적용 및 확인\r\n> kubectl label namespace some-qa istio.io/rev=canary --overwrite\r\nnamespace/some-qa labeled\r\n> k get ns -L istio.io/rev\r\nNAME                     STATUS   AGE    REV\r\n...\r\nistio-operator           Active   188d\r\nistio-system             Active   ...\r\n...\r\nsome-qa                  Active   ....   canary\r\nsome-staging             Active   ....   stable\r\n> k get ns --show-labels\r\nNAME                     STATUS   AGE    LABELS\r\n...\r\nsome-qa                  Active   509d   ...,istio.io/rev=canary,...\r\nsome-staging             Active   509d   ...,istio.io/rev=stable,...\r\n```\r\n\r\n레이블이 정상적으로 namespace에 적용된걸 확인 할 수 있다. 이제 배포를 하여, 사이드카가 정상적으로 들어가는지 확인이 필요하다.\r\n\r\n::code-group\r\n\r\n```shell::배포 전(1.22.1) 확인\r\n> kubectl describe pod foo-pod -n some-qa | grep -A 10 \"Init Containers:\"\r\nInit Containers:\r\n  istio-init:\r\n    Container ID:  containerd://...\r\n    Image:         .../istio/proxyv2:1.22.1\r\n    Image ID:      .../istio/proxyv2@sha256:...\r\n    Port:          <none>\r\n    Host Port:     <none>\r\n    Args:\r\n      istio-iptables\r\n      -p\r\n      15001\r\n```\r\n\r\n```shell::어플리케이션 재배포\r\n> kubectl -n some-qa rollout restart deploy foo-pod\r\ndeployment.apps/foo-pod restarted\r\n```\r\n\r\n```shell::배포 후(1.25.0)\r\n> kubectl describe pod foo-pod -n some-qa | grep -A 10 \"Init Containers:\"\r\nInit Containers:\r\n  istio-init:\r\n    Container ID:  containerd://...\r\n    Image:         .../istio/proxyv2:1.25.0\r\n    Image ID:      .../istio/proxyv2@sha256:...\r\n    Port:          <none>\r\n    Host Port:     <none>\r\n    Args:\r\n      istio-iptables\r\n      -p\r\n      15001\r\n```\r\n\r\n::\r\n\r\nnamespace에 있는 `foo-pod` deployment의 모든 pod을 재시작 했다면, 위와 같이 sidecar injection이 정상적으로 되었을 것이다.\r\n(`istioctl proxy-status`로 컨텍스트에 배포된 상태를 확인 할 수 있다.)\r\n\r\n테스트가 완료되었다면, stable 태그를 새로운 버전으로 변경해주고, 나머지 운영 namespace를 다시 업데이트 해줘야한다.\r\n\r\n```shell::태그 변경 및 레이블링\r\n> istioctl tag set stable --revision 1-25-0 --overwrite\r\nRevision tag \"stable\" created, referencing control plane revision \"1-25-0\". To enable injection using this\r\nrevision tag, use 'kubectl label namespace <NAMESPACE> istio.io/rev=stable'\r\n\r\n> istioctl tag show\r\nTAG    REVISION NAMESPACES\r\n       1-22-1\r\ncanary 1-25-0   some-qa,some-staging\r\nstable 1-25-0\r\n\r\n> kubectl label namespace some-qa istio.io/rev=stable --overwrite\r\nnamespace/some-qa labeled\r\n> kubectl label namespace some-staging istio.io/rev=stable --overwrite\r\nnamespace/some-staging labeled\r\n```\r\n\r\n```shell::Pod 재배포\r\n> kubectl rollout restart -n some-qa foo-pod\r\n> kubectl rollout restart -n some-staging foo-pod\r\n```\r\n\r\n배포가 정상적으로 되었고, 기존 버전을 사용하는 namespace가 없다면 제거해도 좋다.\r\n\r\n```shell::기존버전 확인 및 삭제\r\n# 1.25.0이외 버전을 사용하는지 확인\r\n> istioctl proxy-status\r\nNAME                                                  CLUSTER        CDS                LDS                EDS                RDS                ECDS        ISTIOD                             VERSION\r\n...\r\nfoo-pod-6566b68d8f-8l7c6.some-qa                      Kubernetes     SYNCED (4m5s)      SYNCED (4m5s)      SYNCED (2m15s)     SYNCED (4m5s)      IGNORED     istiod-1-25-0-85c49d99c6-x8cv5     1.25.0\r\nfoo-pod-b649ff85-rz68n.some-staging                   Kubernetes     SYNCED (4m5s)      SYNCED (4m5s)      SYNCED (2m15s)     SYNCED (4m5s)      IGNORED     istiod-1-25-0-85c49d99c6-x8cv5     1.25.0\r\n\r\n# 삭제\r\n> istioctl uninstall --revision 1-22-1\r\nNo resources will be pruned from the cluster. Please double check the input configs\r\n\r\n✔ Uninstall complete\r\n```\r\n\r\n## TL;DR::too-long-did-not-read\r\n\r\n1. 설치전 클러스터 확인\r\n    * `> istioctl x precheck`\r\n2. istio 설치 (istiod Depoloyment, ConfigMap, Service 생성)\r\n    * `> istioctl install --set revision=1-25-0`\r\n3. 설치 확인\r\n    * `kubectl get svc -n istio-system`\r\n    * `kubectl get pods -n istio-sytem`\r\n    * `kubectl get configmap -n istiosystem`\r\n4. 필요한 ConfigMap 백업 (선택)\r\n    * `kubectl get configmap -n istio-system istio-sidecar-1-25-0 -o yaml > istio-sidecar-injector-1.25.0.yaml`\r\n5. 태그 설정 및 레이블 적용 (태그 확인: `istioctl tag show`)\r\n    1. `istioctl tag set canary --revision 1-25-0 --overwrite`\r\n    2. canary(테스트용): `kubectl label namepsace 네임스페이스명 istio.io/rev=canary`\r\n        * canary는 배포 테스트를 위해 적용하는 임시적인 레이블\r\n    3. stable(서비스용): `kubectl lable namespace 네임스페이스명 istio.io/rev=stable`\r\n6. 서비스 배포 (배포 전 레이블 확인: `kubectl get ns --show-labels`)\r\n    * `kubectl rollout restart deploy -n 네임스페이스명 파드명`\r\n    * 서비스 배포후 정상적으로 동작한다면, 5-3 진행\r\n7. 프록시 상태 확인 및 삭제\r\n    * `istioctl proxy-status`\r\n    * 삭제: `istioctl uninstall --revision 1-22-1`"
+  },
+  {
+    "path": "/docs/back-end/spring/cloud-stream",
+    "header": {
+      "layout": "post",
+      "title": "스프링 시큐리티 프로젝트 구성",
+      "tags": [
+        "Spring",
+        "Spring Boot",
+        "Spring Security"
+      ],
+      "date": 1742961480000,
+      "thumbnail": "/post/back-end/spring/spring-security.svg",
+      "current-company": "NEOWIZ",
+      "current-position": "Software Engineer",
+      "summary": "트랜잭션 관리자",
+      "excerpt_separator": "<!--more-->",
+      "hide": true,
+      "breadcrumbs": [
+        "문서",
+        "서버/백엔드",
+        "스프링"
+      ],
+      "images": [],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": []
+      }
+    },
+    "description": "스프링 클라우드 스트림은 무엇이고",
+    "content": "\r\n"
   },
   {
     "path": "/docs/back-end/spring/spring-security",

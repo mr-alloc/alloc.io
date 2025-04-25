@@ -1,6 +1,7 @@
 [
   "/wiki/io-manager",
   "/wiki/programmed-io",
+  "/docs/computer-science/operating-system/tty-and-session",
   "/docs/back-end/spring/secrets-manager-with-spring",
   "/docs/infrastructure/linux-command",
   "/docs/infrastructure/kubernetes/docker-command",
@@ -8,6 +9,7 @@
   "/docs/infrastructure/install-docker-engine",
   "/docs/infrastructure/gitlab-ci",
   "/docs/infrastructure/kubernetes/update-istio",
+  "/docs/back-end/spring/cloud-stream",
   "/docs/back-end/spring/spring-security",
   "/docs/life/youth-of-ggomi",
   "/docs/database/mysql-explain",
