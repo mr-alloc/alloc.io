@@ -134,6 +134,25 @@ private Map<String, BindingProperties> bindings = new ConcurrentHashMap<>();
 Spring Cloud Stream은 마치 레고 블록과 같다. 여러 레고 조각(마이크로서비스)들이 서로 연결될 수 있도록 표준화된 연결 부분(메세지 시스템 추상화)을 제공한다.
 이러한 구성을 만들기위해 몇가지 컴포넌트 개념이 있다.
 
+대략적으로 서비스에 설정되는 정보는 다음과 같다:
+
+```yaml::application.yaml
+spring:
+  cloud:
+    stream: 
+      bindings:
+        (...설정 A...)
+      (...설정 B...)
+```
+
+`spring.cloud.stream.bindings` 아래에 들어가는 바인딩 설정은 SCS에서 추상화한 함수와 Binder를 잇는 Binding을 의미한다.
+또한, `spring.cloud.stream` 하위에 들어가는 바인딩 설정은 메시징 플랫폼과 위의 Binding을 잇는 Binding을 의미한다.
+
+* BindingServiceProperties: `sping.cloud.stream` 내 프로퍼티 정보
+* BindingService: `BindingServiceProperties` 설정 정보를 이용해 실제 바인딩을 구성
+* InputBindingLifecycle: `Bindable` 객체를 `BindingService`로 바인딩을 트리거하고 그 정보를 관리
+* BindableFunctionProxyFactory: `Bindable`의 구현체이며 추상화 함수와 바인딩할 수 있는
+
 ### MessageChannel::message-channel
 
 메세지 채널은 Spring integration에서 가져온 개념으로, 애플리케이션 내에서 메시지가 이동하는 파이프라인 역할
@@ -166,9 +185,12 @@ public interface Binder<T, C extends ConsumerProperties, P extends ProducerPrope
 * `Binder` 인터페이스를 구현하는 클래스
 * 메세징 미들웨어와의 연결 인프라를 설정하는 `Binder`타입 빈을 생성하는 스프링  `@Configuration` 클래스
 * 하나 이상의 바인더 정의를 포함하며 클래스 패스에 위치하는 `META-INF/spring.binders` 파일:
-  ```
+  ```text::
   kafka:\
   org.springframework.cloud.stream.binder.kafka.config.KafkaBinderConfiguration
+  ```
+  ```mermaid
+
   ```
 
 > 앞서 언급했듯이 바인더 추상화 역시 프레임워크의 확장 지점 중 하나이다. 앞서 나온 목록에서 완전한 바인더를 찾을수 없는 경우 SCS의 상위 에서 바인더를 직접 구현할 수 있다.
@@ -234,13 +256,102 @@ private void startBeans(boolean autoStartupOnly) {
 }
 ```
 
-[라이프사이클 빈 목록](/post/spring/spring-cloud-stream/lifecycle-beans.png)
-:{ "align": "center", "max-width": "500px", "description": "LifeCycle Bean 목록" }
+![라이프사이클 빈 목록](/post/spring/spring-cloud-stream/lifecycle-beans.png)
+:{ "align": "center", "max-width": "600px", "description": "LifeCycle Bean 목록" }
 
 lifecycleBeans는 클래스패스에 포함된 LifeCycle 하위 구현요소들이며, 이를 시작할지를 결정짓는 부분이다.
-포스팅을 하는 시점에서는 위와 같이 10개정도가 포함 되어있었다. 어쨋든 동일한 Phase끼리 그룹화 되어, 각 그룹을 한번에 시작한다.
+포스팅을 하는 시점에서는 위와 같이 14개정도가 포함 되어있었다. 어쨋든 동일한 Phase끼리 그룹화 되어, 각 그룹을 한번에 시작한다.
+
+어쨋든 라이프 사이클 그룹을 시작하면 `Bean`을 개별적으로 시작한다. 추상화된 바인딩 정보는 `Bindable`이라는 추상화 객체로서 선언된 함수 `Bean`을 바인딩한다.
+
+**DefaultLifecycleProcessor.java** 파일 내용
+::code-group
+
+```java::lifecycle bean을 시작 
+private void doStart(Map<String, ? extends Lifecycle> lifecycleBeans, String beanName, boolean autoStartupOnly) {
+    Lifecycle bean = lifecycleBeans.remove(beanName);
+    if (bean != null && bean != this) {
+        String[] dependenciesForBean = getBeanFactory().getDependenciesForBean(beanName);
+        for (String dependency : dependenciesForBean) {
+            doStart(lifecycleBeans, dependency, autoStartupOnly);
+        }
+        if (!bean.isRunning() && (!autoStartupOnly || toBeStarted(beanName, bean))) {
+            if (logger.isTraceEnabled()) {
+                logger.trace("Starting bean '" + beanName + "' of type [" + bean.getClass().getName() + "]");
+            }
+            try {
+                bean.start(); // 시작
+            }
+            catch (Throwable ex) {
+                throw new ApplicationContextException("Failed to start bean '" + beanName + "'", ex);
+            }
+            if (logger.isDebugEnabled()) {
+                logger.debug("Successfully started bean '" + beanName + "'");
+            }
+        }
+    }
+}
+```
+
+```java::AbstractBindingLifecycle.java
+@Override
+public void start() {
+    if (!this.running) {
+        if (this.context != null) {
+            this.bindables.putAll(context.getBeansOfType(Bindable.class));
+        }
+        //각 바인딩을 수행할 수 있는 BindableFactoryBean 목록
+        this.bindables.values().forEach(this::doStartWithBindable);
+        // "&saveGameResultConsumer_binding" -> BindableFunctionProxyFactory
+        // "&saveTransactionResultConsumer_binding" -> BindableFunctionProxyFactory
+        //...
+        this.running = true;
+    }
+}
+```
+
+```java::InputBindingLifecycle.java
+@Override
+void doStartWithBindable(Bindable bindable) {
+    Collection<Binding<Object>> bindableBindings = bindable
+            .createAndBindInputs(this.bindingService); // 실제 바인딩이 구성
+    if (!CollectionUtils.isEmpty(bindableBindings)) {
+        this.inputBindings.addAll(bindableBindings);
+    }
+}
+```
+
+::
+
+또한 위 라이프사이클 빈 중에서 바인딩 관련은 `InputBindingLifecycle`, `OutputBindingLifecycle`이 있는데 `Input`은 `Consumer`들의 모든 바인딩 정보를,
+`Output`은 `Function`등의 바인딩 정보를 가지고 있다.
+
+> 각 팩토리빈이 "&..._binding"의 형태로 구분되어있는데, 이는 설정 적용 과정에서 `FunctionConfiguration`에서 등록되었다. (뒤에서 다시설명)
+:{ "type": "tip", "icon": "lightbulb" }
+
+아무튼 위 코드그룹 세번째 코드에 보여진 `createAndBindInput(...)` 메서드로 실제 바인딩이 구성되는데, 각 함수와 바인딩을 생성하는 `BindableFunctionProxyFactory`이다.
+바인딩이 구성되는 과정은 다음과 같다:
+
+1. 바인딩 대상 탐색 (ex: 채널)
+2. 탐색된 대상 바인딩
+  1. 바인딩 대상에 따른 바인더 탐색 (ex: RabbitMQ용 Binder)
 
 함수 등록 Bean
 FunctionCatalog
 FunctionRegistry
-FunctionConfiguration
+FunctionConfiguration: Function Bean을 생성해서 BeanFactory에 넣음 (afterPropertiesSet() 참조)
+BeanFactory
+ConversionService
+RabbitExchangeQueueProvisioner.autoBindDLQ
+
+바인딩
+컨슈머 시작 이벤트: AsyncConsumerStartedEvent
+이벤트 메세지 멀티캐스트 SimpleApplicationEventMulticaster.multicastEvent()
+RabbitExchangeQueueProvisioner
+
+StreamBridge는 ApplicationListener 이다.
+
+AnnotationConfigApplicationContext 에서 메세지 발행시 적절한 ApplicationContext 가 없으면 super인
+AnnotationConfigServletWebServerApplicationContext로 publishEvent를 호출하고
+그 내부에서, this.applicationMulticaster로 multicastEvent 한다.
+
