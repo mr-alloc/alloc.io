@@ -266,7 +266,6 @@ lifecycleBeans는 클래스패스에 포함된 LifeCycle 하위 구현요소들�
 
 **DefaultLifecycleProcessor.java** 파일 내용
 ::code-group
-
 ```java::lifecycle bean을 시작 
 private void doStart(Map<String, ? extends Lifecycle> lifecycleBeans, String beanName, boolean autoStartupOnly) {
     Lifecycle bean = lifecycleBeans.remove(beanName);
@@ -292,7 +291,6 @@ private void doStart(Map<String, ? extends Lifecycle> lifecycleBeans, String bea
     }
 }
 ```
-
 ```java::AbstractBindingLifecycle.java
 @Override
 public void start() {
@@ -309,7 +307,6 @@ public void start() {
     }
 }
 ```
-
 ```java::InputBindingLifecycle.java
 @Override
 void doStartWithBindable(Bindable bindable) {
@@ -320,21 +317,19 @@ void doStartWithBindable(Bindable bindable) {
     }
 }
 ```
-
 ::
 
 또한 위 라이프사이클 빈 중에서 바인딩 관련은 `InputBindingLifecycle`, `OutputBindingLifecycle`이 있는데 `Input`은 `Consumer`들의 모든 바인딩 정보를,
 `Output`은 `Function`등의 바인딩 정보를 가지고 있다.
+즉, `DefaultLifecycleProcessor`는 그룹화 된 Life
 
 > 각 팩토리빈이 "&..._binding"의 형태로 구분되어있는데, 이는 설정 적용 과정에서 `FunctionConfiguration`에서 등록되었다. (뒤에서 다시설명)
 :{ "type": "tip", "icon": "lightbulb" }
 
-아무튼 위 코드그룹 세번째 코드에 보여진 `createAndBindInput(...)` 메서드로 실제 바인딩이 구성되는데, 각 함수와 바인딩을 생성하는 `BindableFunctionProxyFactory`이다.
-바인딩이 구성되는 과정은 다음과 같다:
 
-1. 바인딩 대상 탐색 (ex: 채널)
-2. 탐색된 대상 바인딩
-  1. 바인딩 대상에 따른 바인더 탐색 (ex: RabbitMQ용 Binder)
+아무튼 위 코드그룹 세번째 코드에 보여진 `createAndBindInput(...)` 메서드로 바인딩이 구성하는데, 이는 각 함수와 바인딩을 생성을 관리하는 `BindableFunctionProxyFactory`
+이다.
+`SCS`는 철저하게 추상화된 부분만 관리하며, 실제 연동 및 바인딩은 `Binder` 구현체에게 맡긴다.
 
 함수 등록 Bean
 FunctionCatalog
@@ -354,4 +349,26 @@ StreamBridge는 ApplicationListener 이다.
 AnnotationConfigApplicationContext 에서 메세지 발행시 적절한 ApplicationContext 가 없으면 super인
 AnnotationConfigServletWebServerApplicationContext로 publishEvent를 호출하고
 그 내부에서, this.applicationMulticaster로 multicastEvent 한다.
+
+간단하게 설명하면, Spring Core는 아래를 수행
+
+1. 앱실행 (Bean refresh)
+2. ServletWebServerApplicationContext에서 기본 Bean에대한 refresh가 끝나면 `finishRefresh()` 실행
+3. `getLifecycleProcessor().onRefresh()` 실행 (`DefaultLifecycleProcessor`)
+4. `DefaultLifecycleProcessor`에서 LifecycleGroup으로 각 `Phase`들을 그룹화
+5. 그룹화 된 `Lifecycle Bean`들을 순차적으로 실행
+
+이때 순차적으로 실행되는 Spring Cloud Stream 관련 Lifecycle은 아래를 수행
+
+6. `InputBindingLifecycle`, `OutputBindingLifecycle` 등 doStartWithBindable 메서드로 바인딩을 실행
+7. `InputBindingLifecycle` 의 경우 `BindableFunctionProxyFactory.createAndBindInputs(this.bindingService)`를 실행
+8. `InputBindingLifecycle`는 매개변수로 받은 바인딩 서비스를 `bindingService.bideConsumer(...)`로 바인딩과정을 위임
+9. `BindService`에서 사용할 `Binder`를 찾아 바인딩을 요청한다.
+10. 요청을 받은 바인더(여기서는 `RabbitMessageChannelBinder`)는 전달받은 바인딩정보로 인바운드 목적지로 엔드포인트를 지정하여 또 다른 라이프 사이클을 시작한다.
+11. `consumerEndpointWithLifecycle.start()`하게 되면 `AmqpInboundChannelAdapter`로 시작된다.
+12. 이는 곧바로 `this.messageListenerContainer.start()`로 연결된다.
+13. 내부적으로 비동기로 `AsyncMessageProcessingConsumer`를 실행하며 바인딩에 필요한 처리를한다.
+
+여기서 `AsyncMessageProcessingConsumer`는 컨슈머 인스턴스 이며 바인딩된 이후 부터, 메세지 관리를 
+
 
