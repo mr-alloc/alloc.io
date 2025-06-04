@@ -1,14 +1,14 @@
 ---
 layout: post
-title: Spring Cloud Stream
+title: Component Abstraction
 tags: [ Spring, Spring Boot, Spring Cloud Stream ]
-date: 2025-04-29 09:34:00
-thumbnail: /post/back-end/spring/spring-cloud-stream/index.png
+date: 2025-06-04 09:34:00
+thumbnail: /post/back-end/spring/spring-cloud-stream/component-abstraction.png
 current-company: NEOWIZ
 current-position: Software Engineer
-summary: 스프링 클라우드 스트림
+summary: 스트림 추상화
 excerpt_separator: <!--more-->
-hide: true
+hide: false
 ---
 
 Spring Cloud Stream은 주로 메시지 브로커를 위한 추상화 계층을 제공하는 데 특화되어 있다.
@@ -44,6 +44,9 @@ Spring Cloud Stream은 주로 메시지 브로커를 위한 추상화 계층을 
 ## SCS Property 구조::structure-of-spring-cloud-stream-property
 
 ```
+╭───────────────────────╮    ╭────────────────────╮
+│ spring.cloud.function │ ─→ │ FunctionProperties │
+╰───────────────────────╯    ╰────────────────────╯
 ╭─────────────────────╮    ╭──────────────────────────╮
 │ spring.cloud.stream │ ─→ │ BindingServiceProperties │
 ╰─────────────────────╯    ╰──────────────────────────╯
@@ -101,21 +104,21 @@ private Map<String, BindingProperties> bindings = new ConcurrentHashMap<>();
 바인딩 정보로서 추상화되며 아래의 내용을 포함한다:
 
 * destination: 바인더가 바인드하는 브로커에서의 물리적인 이름을 의미한다.
-  * `RabbitMq`의 경우 Exchange의 이름으로, Kafka의 경우 Topic의 이름으로 정의한다.
+    * `RabbitMq`의 경우 Exchange의 이름으로, Kafka의 경우 Topic의 이름으로 정의한다.
 * group
-  * 그룹의 경우 Consumer에게만 적영되며, 소속될 바인딩의 고유한 이름이다. 많은 컨슈머가 같은 그룹 내에서 구독을 공유한다.
-  * null, 빈 문자열 값은 익명그룹을 나타내며 공유 되지않는다.
-  * 즉 그룹은 각 미들웨어에서 컨슈머를 묶는 그룹으로 이해하면 된다. `RabbitMQ`의 경유 Queue, `Kafka`의 경우 Consumer Group과 연결된다.
+    * 그룹의 경우 Consumer에게만 적영되며, 소속될 바인딩의 고유한 이름이다. 많은 컨슈머가 같은 그룹 내에서 구독을 공유한다.
+    * null, 빈 문자열 값은 익명그룹을 나타내며 공유 되지않는다.
+    * 즉 그룹은 각 미들웨어에서 컨슈머를 묶는 그룹으로 이해하면 된다. `RabbitMQ`의 경유 Queue, `Kafka`의 경우 Consumer Group과 연결된다.
 * contentType
-  * 이벤트 내에서 이 바인딩으로 사용될 콘텐츠의 유형을 의미한다. HTTP 스펙에서 사용되는 MIME Type과 동일하다. 기본값은 `application/json`
-  * 메세지 헤더에 지정되지 않은 경우 이 바인딩에서 사용될 콘텐츠 유형을 지정한다.
+    * 이벤트 내에서 이 바인딩으로 사용될 콘텐츠의 유형을 의미한다. HTTP 스펙에서 사용되는 MIME Type과 동일하다. 기본값은 `application/json`
+    * 메세지 헤더에 지정되지 않은 경우 이 바인딩에서 사용될 콘텐츠 유형을 지정한다.
 * bindier
-  * 여러개의 바인더가 사용 가능할 경우 이 바인딩에서 사용할 바인더명
-  * 예: rabbit
+    * 여러개의 바인더가 사용 가능할 경우 이 바인딩에서 사용할 바인더명
+    * 예: rabbit
 * consumer
-  * 추가적인 컨슈머 프로퍼티 (`ConsumerProperties`)
+    * 추가적인 컨슈머 프로퍼티 (`ConsumerProperties`)
 * producer
-  * 추가적인 프로듀서 프로퍼티 (`ProducerProperties`)
+    * 추가적인 프로듀서 프로퍼티 (`ProducerProperties`)
 
 ## 기본 아키텍쳐 및 컴포넌트의 역할::role-of-each-component-and-basic-architecture
 
@@ -142,7 +145,6 @@ spring:
     stream: 
       bindings:
         (...설정 A...)
-      (...설정 B...)
 ```
 
 `spring.cloud.stream.bindings` 아래에 들어가는 바인딩 설정은 SCS에서 추상화한 함수와 Binder를 잇는 Binding을 의미한다.
@@ -185,17 +187,15 @@ public interface Binder<T, C extends ConsumerProperties, P extends ProducerPrope
 * `Binder` 인터페이스를 구현하는 클래스
 * 메세징 미들웨어와의 연결 인프라를 설정하는 `Binder`타입 빈을 생성하는 스프링  `@Configuration` 클래스
 * 하나 이상의 바인더 정의를 포함하며 클래스 패스에 위치하는 `META-INF/spring.binders` 파일:
-  ```text::
+  ```text::spring.binders
   kafka:\
   org.springframework.cloud.stream.binder.kafka.config.KafkaBinderConfiguration
-  ```
-  ```mermaid
-
   ```
 
 > 앞서 언급했듯이 바인더 추상화 역시 프레임워크의 확장 지점 중 하나이다. 앞서 나온 목록에서 완전한 바인더를 찾을수 없는 경우 SCS의 상위 에서 바인더를 직접 구현할 수 있다.
 > 자세한
-> 내용은 [맨 처음부터 SCS 바인더를 생성하는 방법](https://medium.com/@domenicosibilio/how-to-create-a-spring-cloud-stream-binder-from-scratch-ab8b29ee931b)
+>
+내용은 [맨 처음부터 SCS 바인더를 생성하는 방법](https://medium.com/@domenicosibilio/how-to-create-a-spring-cloud-stream-binder-from-scratch-ab8b29ee931b)
 > 를 참조
 :{ "type": "note", "icon": "info" }
 
@@ -210,26 +210,26 @@ SCS의 경우 프레임워크 레벨에서 다음의 라이프사이클을 구�
       hideEmptyMembersBox: true
 ---
 classDiagram
-  class LifeCycle {
-    <<interface>>
-    ...
-  }
-  class SmartLifeCycle {
-    <<interface>>
-    ...
-  }
-  class AbstractBindingLifeCycle {
-    <<abstract>>
-    ...
-  }
-  class InputBindingLifeCycle {
-  }
-  class OutputBindingLifeCycle {
-  }
-  LifeCycle <|-- SmartLifeCycle
-  SmartLifeCycle <|.. AbstractBindingLifeCycle
-  AbstractBindingLifeCycle <|-- InputBindingLifeCycle
-  AbstractBindingLifeCycle <|-- OutputBindingLifeCycle
+    class LifeCycle {
+        <<interface>>
+        ...
+    }
+    class SmartLifeCycle {
+        <<interface>>
+        ...
+    }
+    class AbstractBindingLifeCycle {
+        <<abstract>>
+        ...
+    }
+    class InputBindingLifeCycle {
+    }
+    class OutputBindingLifeCycle {
+    }
+    LifeCycle <|-- SmartLifeCycle
+    SmartLifeCycle <|.. AbstractBindingLifeCycle
+    AbstractBindingLifeCycle <|-- InputBindingLifeCycle
+    AbstractBindingLifeCycle <|-- OutputBindingLifeCycle
 ```
 
 실제로 바인딩이 진행되는 흐름은 Spring의 `LifeCycle` 로 구현되어있다.
@@ -256,7 +256,7 @@ private void startBeans(boolean autoStartupOnly) {
 }
 ```
 
-![라이프사이클 빈 목록](/post/spring/spring-cloud-stream/lifecycle-beans.png)
+![라이프사이클 빈 목록](/post/back-end/spring/spring-cloud-stream/lifecycle-beans.png)
 :{ "align": "center", "max-width": "600px", "description": "LifeCycle Bean 목록" }
 
 lifecycleBeans는 클래스패스에 포함된 LifeCycle 하위 구현요소들이며, 이를 시작할지를 결정짓는 부분이다.
@@ -266,6 +266,7 @@ lifecycleBeans는 클래스패스에 포함된 LifeCycle 하위 구현요소들�
 
 **DefaultLifecycleProcessor.java** 파일 내용
 ::code-group
+
 ```java::lifecycle bean을 시작 
 private void doStart(Map<String, ? extends Lifecycle> lifecycleBeans, String beanName, boolean autoStartupOnly) {
     Lifecycle bean = lifecycleBeans.remove(beanName);
@@ -291,6 +292,7 @@ private void doStart(Map<String, ? extends Lifecycle> lifecycleBeans, String bea
     }
 }
 ```
+
 ```java::AbstractBindingLifecycle.java
 @Override
 public void start() {
@@ -307,6 +309,7 @@ public void start() {
     }
 }
 ```
+
 ```java::InputBindingLifecycle.java
 @Override
 void doStartWithBindable(Bindable bindable) {
@@ -317,61 +320,15 @@ void doStartWithBindable(Bindable bindable) {
     }
 }
 ```
+
 ::
 
 또한 위 라이프사이클 빈 중에서 바인딩 관련은 `InputBindingLifecycle`, `OutputBindingLifecycle`이 있는데 `Input`은 `Consumer`들의 모든 바인딩 정보를,
 `Output`은 `Function`등의 바인딩 정보를 가지고 있다.
-즉, `DefaultLifecycleProcessor`는 그룹화 된 Life
-
-> 각 팩토리빈이 "&..._binding"의 형태로 구분되어있는데, 이는 설정 적용 과정에서 `FunctionConfiguration`에서 등록되었다. (뒤에서 다시설명)
-:{ "type": "tip", "icon": "lightbulb" }
-
 
 아무튼 위 코드그룹 세번째 코드에 보여진 `createAndBindInput(...)` 메서드로 바인딩이 구성하는데, 이는 각 함수와 바인딩을 생성을 관리하는 `BindableFunctionProxyFactory`
 이다.
 `SCS`는 철저하게 추상화된 부분만 관리하며, 실제 연동 및 바인딩은 `Binder` 구현체에게 맡긴다.
 
-함수 등록 Bean
-FunctionCatalog
-FunctionRegistry
-FunctionConfiguration: Function Bean을 생성해서 BeanFactory에 넣음 (afterPropertiesSet() 참조)
-BeanFactory
-ConversionService
-RabbitExchangeQueueProvisioner.autoBindDLQ
-
-바인딩
-컨슈머 시작 이벤트: AsyncConsumerStartedEvent
-이벤트 메세지 멀티캐스트 SimpleApplicationEventMulticaster.multicastEvent()
-RabbitExchangeQueueProvisioner
-
-StreamBridge는 ApplicationListener 이다.
-
-AnnotationConfigApplicationContext 에서 메세지 발행시 적절한 ApplicationContext 가 없으면 super인
-AnnotationConfigServletWebServerApplicationContext로 publishEvent를 호출하고
-그 내부에서, this.applicationMulticaster로 multicastEvent 한다.
-
-간단하게 설명하면, Spring Core는 아래를 수행
-
-1. 앱실행 (Bean refresh)
-2. ServletWebServerApplicationContext에서 기본 Bean에대한 refresh가 끝나면 `finishRefresh()` 실행
-3. `getLifecycleProcessor().onRefresh()` 실행 (`DefaultLifecycleProcessor`)
-4. `DefaultLifecycleProcessor`에서 LifecycleGroup으로 각 `Phase`들을 그룹화
-5. 그룹화 된 `Lifecycle Bean`들을 순차적으로 실행
-
-이때 순차적으로 실행되는 Spring Cloud Stream 관련 Lifecycle은 아래를 수행
-
-6. `InputBindingLifecycle`, `OutputBindingLifecycle` 등 doStartWithBindable 메서드로 바인딩을 실행
-7. `InputBindingLifecycle` 의 경우 `BindableFunctionProxyFactory.createAndBindInputs(this.bindingService)`를 실행
-8. `InputBindingLifecycle`는 매개변수로 받은 바인딩 서비스를 `bindingService.bideConsumer(...)`로 바인딩과정을 위임
-9. `BindService`에서 사용할 `Binder`를 찾아 바인딩을 요청한다.
-
-구현된 플랫폼 Binder는 아래를 수행
-
-10. 요청을 받은 바인더(여기서는 `RabbitMessageChannelBinder`)는 전달받은 바인딩정보로 인바운드 목적지로 엔드포인트를 지정하여 또 다른 라이프 사이클을 시작한다.
-11. `consumerEndpointWithLifecycle.start()`하게 되면 `AmqpInboundChannelAdapter`로 시작된다.
-12. 이는 곧바로 `this.messageListenerContainer.start()`로 연결된다.
-13. 내부적으로 비동기로 `AsyncMessageProcessingConsumer`를 실행하며 바인딩에 필요한 처리를한다.
-
-여기서 `AsyncMessageProcessingConsumer`는 컨슈머 인스턴스 이며 바인딩된 이후 부터, 메세지 관리를 진행한다.
-
+여기까지가 `Spring Cloud Stream`이 추상화 하여 유연하게 서드파티 바인더와 연결하는 방법이다.
 
