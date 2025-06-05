@@ -6,7 +6,7 @@ date: 2025-06-04 09:34:00
 thumbnail: /post/back-end/spring/spring-cloud-stream/component-abstraction.png
 current-company: NEOWIZ
 current-position: Software Engineer
-summary: 스트림 추상화
+summary: 클라우드 스트림 추상화
 excerpt_separator: <!--more-->
 hide: false
 ---
@@ -30,9 +30,9 @@ Spring Cloud Stream은 주로 메시지 브로커를 위한 추상화 계층을 
 ### Spring Cloud Stream이 만들어진 이유::why-spring-cloud-stream-was-created
 
 현대에는 RabbitMQ, Kafka, Amazon SQS 등 다양한 메시지 브로커가 존재하며,
-각각 사용법과 개념이 달라 애플리케이션 코드가 특정 기술에 종송되는 문제가 있기 때문에 여러 메시징 기술의 추상화가 필요했다.
+각각 사용법과 개념이 달라 애플리케이션 코드가 특정 기술에 종속되는 문제가 있기 때문에 여러 메시징 기술의 추상화가 필요했다.
 
-`Spring Cloud Stream`은 바인더(Binder)라는 개념을 통해 다양한 메시징 시스템을 추상화하였다.
+`Spring Cloud Stream(이하 SCS)`은 바인더(Binder)라는 개념을 통해 다양한 메시징 시스템을 추상화하였다.
 개발자는 기본 메시징 시스템을 알 필요 없이 동일한 코드로 작업하여 일관된 프로그래밍 모델을 제공할 수 있게되었다.
 
 또한 간단한 설정 변경만으로 RabbitMQ에서 Kafka로 또는 반대로 전환이 가능하기 때문에, 기반 기술이 변경되어도 비즈니스 로직 코드는 그대로 유지된다.
@@ -55,10 +55,167 @@ Spring Cloud Stream은 주로 메시지 브로커를 위한 추상화 계층을 
 ╰──────────────────────────────╯    ╰───────────────────────────────────────╯
 ```
 
-`SCS`에서 제공하는 프로퍼티는 위의 컴포넌트가 대부분이다. `SCS`에서는 거의 대부분의 클라우드 스트림 구성을 위 정보를 이용해 진행한다.
+### Function Properties::function-properties
+
+컴포넌트 이름에서 알 수 있듯이, 함수의 프로퍼티를 의미한다. 이 프로퍼티에 설정된 값은 함수형 컴포넌트(엔드포인트)와의 연결을 만들기위해 사용된다.
+
+**definition**
+
+```yaml::application.yaml
+spring:
+  cloud:
+    function:
+      definition: create-schedule
+```
+
+컴포넌트 이름으로 함수형 컴포넌트를 지정한다. 위 같은 경우 스케쥴을 생성하는 메세지를 처리하기 위해 메서드를 아래 처럼 만들 수 도 있다.
+
+```java
+@Bean("create-schedule")
+public Consumer<Message<CreateSchedule>> createSchedule() {
+    return (message -> {
+        //스케쥴 생성
+    });
+}
+```
+
+또는 Bean Name 지정을 하지않고 `definition: createSchedule` 또한 사용이 가능하다.
+`definition`은 함수 자체를 선언한다. 이 의미는 상당히 직관적이다.
+
+```yaml
+spring:
+  cloud:
+    function:
+      definition: >
+        create-schedule, alert-schedule-operation;
+        logging-behavior
+```
+
+예를들어 위의 설정에서는 `,` 또는 `|` 그리고 `;`로 구분되어있다.
+먼저 `,` 또는 `|`는 같은 의미이다. 내부적으로 치환되며 함수를 조합할 때 사용이 가능하다.
+
+예시 설정에서 `create-schedule, alert-schedule-operation`이 첫번째 줄에 보인다. 이는 파이프라인으로서 한개의 함수로 구성된걸 의미한다.
+첫 번째로 `create-schdule` -> `alert-schedule-operation`으로 진행되며, 메세지처리를 파이프라인하여 한개의 함수로 동작한다.
+두 번째 또한 `logging-behavior`도 한개의 함수 그 자체로 수행된다.
+
+```java::선언함수를 연결할 수 있도록 코드로 만든다.
+@Bean("create-schedule")
+public Function<Message<CreateScheduleEvent>, ScheduleResponse> createSchedule() {
+    return (message -> {
+        CreateScheduleEvent event = message.getPayload();
+        
+        ScheduleCommand command = ScheduleCommand.resolve(event);
+        
+        //스케쥴 생성 처리
+        Schdule schedule = scheduleUseCase.create(command); 
+        
+        return new ScheduleResponse(schedule);
+    });
+}
+
+@Bean("alert-schedule-operation")
+public Function<ScheduleResponse, OperationAlertEvent> alertScheduleOperation() {
+    return (response -> {
+        Integer scheduleId = response.getId();
+        ScheduleOperation operation = response.getOperation();
+        return new ScheduleOperationEvent(scheduleId, operation, TemporalUtils.getTimestamp());
+    });
+}
+
+@Bean("logging-behavior")
+public Consumer<Message<BehaviorEvent>> loggingBehavior() {
+    return (message -> {
+        BehaviorEvent behavior = message.getPayload();
+        loggingService.save(new BehaviorLog(behavior));
+    });
+}
+```
+
+`SCS`는 이러한 함수를 연결하기 위해, 한개의 함수(`;`)단위로 묶어서 함수형 컴포넌트와 연결한다.
+위 코드에서는 `createSchedule()` 메서드를 실행 후 스케줄을 생성하여 `alertScheduleOperation()` 메서드에 전달한다.
+또한 `logging-behavior`는 파이프라인 없이 개별 함수 이기 때문에, 그대로 수행한다.
+
+```java::SimpleFunctionRegistry.java (파이프라인 구성)
+private FunctionInvocationWrapper compose(Class<?> type, String functionDefinition) {
+    //functionDefinition: ["create-schedule", "alert-schedule-operation"]
+    String[] functionNames = StringUtils.delimitedListToStringArray(functionDefinition.replaceAll(",", "|").trim(), "|");
+    FunctionInvocationWrapper composedFunction = null;
+
+    for (String functionName : functionNames) { // functionName: "create-schedule"
+        FunctionInvocationWrapper function = this.findFunctionInFunctionRegistrations(functionName);
+        if (function == null) {
+            return null;
+        }
+        else {
+            //첫번째 파이프라인 초기화
+            if (composedFunction == null) {
+                composedFunction = function;
+            }
+            else {
+                FunctionInvocationWrapper andThenFunction =
+                        invocationWrapperInstance(functionName, function.getTarget(), function.inputType, function.outputType);
+                //이후 파이프라인 들은 andThen으로 연결
+                composedFunction = (FunctionInvocationWrapper) composedFunction.andThen((Function<Object, Object>) andThenFunction);
+            }
+            composedFunction = this.enrichInputIfNecessary(composedFunction);
+            composedFunction = this.enrichOutputIfNecessary(composedFunction);
+            if (composedFunction.isSingleton) {
+                this.wrappedFunctionDefinitions.put(composedFunction.functionDefinition, composedFunction);
+            }
+        }
+    }
+    if (logger.isDebugEnabled()) {
+        logger.debug("Composed function " + composedFunction);
+    }
+    return composedFunction;
+}
+```
+
+[**routing-expression**](https://docs.spring.io/spring-cloud-stream/reference/spring-cloud-stream/event-routing.html)
+
+`routingExpression(또는 routing-expression)`은 SpEL(Spring Expression Language) 표현식으로, 실행할 함수명 또는 함수 조합 명령어를 동적으로 결정한다.
+이는 이벤트 라우팅(Event Routing)이라고도 하는데, `SCS`에서 다음을 할수 있는 기능이다.
+*a) 특정 이벤트 구독자에 이벤트를 라우팅*
+*b) 이벤트 구독자에서 발행된 이벤트를 특정 목적지에 라우팅*
+
+아래의 라우팅 `TO`와 라우팅 `FROM`을 참조하자.
+
+#### 라우팅 TO 소비자::routing-to-consumer
+
+Spring Cloud Function 3.0에서 `RoutingFunction` 활성화에 따라 라우팅이 처리된다.
+`spring.cloud.function.routing.enabled=true` 프로퍼티 또는 `spring.cloud.function.routing-expression` 프로퍼티만 추가하면 된다.
+
+```java::FunctionConfiguration.java
+private boolean determineFunctionName(
+    FunctionCatalog catalog, 
+    Environment environment
+) {
+    ... //RoutingFunction 사용을 위해 내부적으로 처리
+    else if (Boolean.parseBoolean(environment.getProperty("spring.cloud.stream.function.routing.enabled", "false"))
+            || environment.containsProperty("spring.cloud.function.routing-expression")) {
+        streamFunctionProperties.setDefinition(RoutingFunction.FUNCTION_NAME);
+    }
+    ...
+    return StringUtils.hasText(streamFunctionProperties.getDefinition());
+}
+```
+
+`RoutingFunction`이 활성화 되면, 입력 목적지에 바인딩되어 모든 메시지를 받고, 제공된 명령을 기반으로 다른 함수들로 라우팅한다.
+
+> 라우팅 목적지의 이름을 바인딩하기 위한 목적은 `functionRouter-in-0`이다. (
+> RoutingFunction.FUNCTION_NAME과 [Functional Binding Names](https://docs.spring.io/spring-cloud-stream/reference/spring-cloud-stream/functional-binding-names.html)
+> 바인딩 명명 규칙 확인)
+: { "type": "caution", "icon": "warning-octagon" }
+
+기본적으로 `RoutingFunction`은 `spring.cloud.function.definition` 또는 `spring.cloud.function.routing-expression` 헤더가 있다면 찾은 값을
+라우팅 명령으로 취급한다.
+
+### BindingServiceProperties::binding-service-properties
+
+`SCS`에서 제공하는 프로퍼티는 위의 컴포넌트가 대부분이다. `SCS`에서는 거의 대부분의 구성을 위 정보를 이용해 진행한다.
 예를 들어 `SCS`에서 추상화 하고 있는 바인딩 정보는 아래와 같다.
 
-```java::BindingServiceProperties
+```java::BindingServiceProperties.java
 @ConfigurationProperties("spring.cloud.stream")
 @JsonInclude(Include.NON_DEFAULT)
 public class BindingServiceProperties
@@ -72,8 +229,6 @@ public class BindingServiceProperties
 ```
 
 해당 추상화 바인딩 정보는 각 미들웨어(Message Broker)에서 여러 정보로 매핑된다. Rabbit의 경우 Exchange, Kafka의 경우 Topic으로 대응된다.
-
-### BindingProperties::binding-properties
 
 즉 `BindingProperties`는 연결할 미들웨어의 바인딩 대상이 된다. 위의 코드를 기준으로 바인딩을 비교해 본다면 아래와 같이 대응 된다:
 
