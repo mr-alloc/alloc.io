@@ -11,74 +11,29 @@ excerpt_separator: <!--more-->
 hide: true
 ---
 
-Spring Cloud Stream은 주로 메시지 브로커를 위한 추상화 계층을 제공하는 데 특화되어 있다.
-그렇다면 왜 Spring Cloud일까? 또한 어떻게 추상화를 지원하여 유연한 연결을 제공하는지 알아보자.
+서비스와 메시징플랫 폼을 연결하기 위해, Spring Cloud Stream 설정은 종류와 사용 방법을 알아보자.
 <!--more-->
 
 ## 개요::introduction
 
-### Spring Cloud Stream의 탄생 배경::how-spring-cloud-stream-came-to-be
+이전에 [스프링 클라우드 스트림](/docs/back-end/spring/cloud-stream)에 대해 알아보았었다.
+그렇다면 실제 서비스 적용을 위해 어떤 값을 설절하고, 어떻게 동작이 되는지 알아보자.
 
-*"왜 Spring Cloud와 메시지 큐가 연결되었는가?"*
+### Cloud Stream Properties::configuration-properties
 
-`Spring Cloud`는 클라우드 네이티브 애플리케이션과 마이크로 서비스 개발을 위한 도구 모음이다.
-마이크로서비스 간 통신에서 메시지 큐는 핵심 컴포넌트로 비동기 통신을 가능하게 하기때문에 마이크로서비스 아키텍처에서 필요하게 되었다.
+**S**pring **C**loud **S**tream(이하 `SCS`)에서는 바인딩 관련 구성을 자동화하기 위해 다음의 과정으로 진행할 수 있다.
 
-또한, 마이크로서비스 환경에서는 서비스간 느슨한 결합(loose coupling)이 중요하기 때문에,
-메시지 큐로 서비스 간 비동기 통신을 제공하여 이 문제를 해결하여 분산 시스템 문제를 해결할 수 있다.
-
-### Spring Cloud Stream이 만들어진 이유::why-spring-cloud-stream-was-created
-
-현대에는 RabbitMQ, Kafka, Amazon SQS 등 다양한 메시지 브로커가 존재하며,
-각각 사용법과 개념이 달라 애플리케이션 코드가 특정 기술에 종송되는 문제가 있기 때문에 여러 메시징 기술의 추상화가 필요했다.
-
-`Spring Cloud Stream`은 바인더(Binder)라는 개념을 통해 다양한 메시징 시스템을 추상화하였다.
-개발자는 기본 메시징 시스템을 알 필요 없이 동일한 코드로 작업하여 일관된 프로그래밍 모델을 제공할 수 있게되었다.
-
-또한 간단한 설정 변경만으로 RabbitMQ에서 Kafka로 또는 반대로 전환이 가능하기 때문에, 기반 기술이 변경되어도 비즈니스 로직 코드는 그대로 유지된다.
-
-> 즉, Spring Cloud Stream은 메시징 시스템의 복잡성을 추상화하고, 마이크로서비스 아키텍처에서 서비스간 통신을 더 쉽게 구현할 수 있도록 만들어졌다.
-> 이를 통해 개발자는 비즈니스 로직에 집중하면서도 확장 가능한 분산 시스템을 구축할 수 있게 되었다.
-:{ "type": "tip", "icon": "lightbulb" }
-
-## SCS Property 구조::structure-of-spring-cloud-stream-property
-
-```
-╭─────────────────────╮    ╭──────────────────────────╮
-│ spring.cloud.stream │ ─→ │ BindingServiceProperties │
-╰─────────────────────╯    ╰──────────────────────────╯
-╭──────────────────────────────╮    ╭───────────────────────────────────────╮
-│ spring.cloud.stream.function │ ─→ │ StreamFunctionConfigurationProperties │
-╰──────────────────────────────╯    ╰───────────────────────────────────────╯
-```
-
-`SCS`에서 제공하는 프로퍼티는 위의 컴포넌트가 대부분이다. `SCS`에서는 거의 대부분의 클라우드 스트림 구성을 위 정보를 이용해 진행한다.
-예를 들어 `SCS`에서 추상화 하고 있는 바인딩 정보는 아래와 같다.
-
-```java::BindingServiceProperties
-@ConfigurationProperties("spring.cloud.stream")
-@JsonInclude(Include.NON_DEFAULT)
-public class BindingServiceProperties
-	implements ApplicationContextAware, InitializingBean {
-    ...
-    
-    private Map<String, BindingProperties> bindings = new ConcurrentHashMap<>();
-    
-    ...	
-}
-```
-
-해당 추상화 바인딩 정보는 각 미들웨어(Message Broker)에서 여러 정보로 매핑된다. Rabbit의 경우 Exchange, Kafka의 경우 Topic으로 대응된다.
-
-### BindingProperties::binding-properties
+1. 연결 할 함수명 정의(`spring.cloud.function`)
+2. Cloud Stream 레벨의 추상화 바인딩 정의(`spring.cloud.stream`)
 
 즉 `BindingProperties`는 연결할 미들웨어의 바인딩 대상이 된다. 위의 코드를 기준으로 바인딩을 비교해 본다면 아래와 같이 대응 된다:
 
 ::code-group
-
 ```yaml::application.yaml
 spring:
   cloud:
+    function:
+      definition: 
     stream:
       bindings:
         GameResultProducer-out-0: # 채널명
@@ -86,13 +41,6 @@ spring:
         GameResultConsumer-in-0:
           destination: GameResultConsumer 
 ```
-
-```java::BindingServiceProperties.java
-private Map<String, BindingProperties> bindings = new ConcurrentHashMap<>();
-// "GameResultProducer-out-0" → BindingProperties
-// "GameResultConsumer-in-0" → BindingProperties
-```
-
 ::
 
 `BindingProperties`는 미들웨어 대상(RabbitMQ의 Exchange, Kafka의 Topic)을 추상화한 `SCS`의 바인딩 객체이다. 바인딩 대상은 `Producer`가 될 수도있고,
