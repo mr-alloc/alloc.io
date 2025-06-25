@@ -8,10 +8,10 @@
         <loc>https://alloc.io/wiki/programmed-io</loc>
     </url>
     <url>
-        <loc>https://alloc.io/docs/back-end/spring/spring-cloud-stream-1</loc>
+        <loc>https://alloc.io/docs/back-end/spring/cloud-stream</loc>
     </url>
     <url>
-        <loc>https://alloc.io/docs/back-end/spring/spring-cloud-stream</loc>
+        <loc>https://alloc.io/docs/back-end/spring/cloud-stream-configuration</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/computer-science/operating-system/tty-and-session</loc>
@@ -36,9 +36,6 @@
     </url>
     <url>
         <loc>https://alloc.io/docs/infrastructure/kubernetes/update-istio</loc>
-    </url>
-    <url>
-        <loc>https://alloc.io/docs/back-end/spring/cloud-stream</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/back-end/spring/spring-security</loc>

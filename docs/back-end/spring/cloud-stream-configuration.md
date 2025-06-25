@@ -1,12 +1,12 @@
 ---
 layout: post
-title: Spring Cloud Stream
-tags: [ Spring, Spring Boot, Spring Cloud Stream ]
+title: Cloud Stream Configuration
+tags: [ Spring, Spring Boot, Spring Cloud Stream, Configuration ]
 date: 2025-04-29 09:34:00
-thumbnail: /post/back-end/spring/spring-cloud-stream/index.png
+thumbnail: /post/back-end/spring/cloud-stream-configuration/index.png
 current-company: NEOWIZ
 current-position: Software Engineer
-summary: 스프링 클라우드 스트림
+summary: 클라우드 스트림 구성
 excerpt_separator: <!--more-->
 hide: true
 ---
@@ -17,36 +17,150 @@ hide: true
 ## 개요::introduction
 
 이전에 [스프링 클라우드 스트림](/docs/back-end/spring/cloud-stream)에 대해 알아보았었다.
-그렇다면 실제 서비스 적용을 위해 어떤 값을 설절하고, 어떻게 동작이 되는지 알아보자.
+그렇다면 실제 서비스 적용을 위해 어떤 값을 설정하고, 어떻게 동작이 되는지 알아보자.
 
-### Cloud Stream Properties::configuration-properties
+## Cloud Stream Properties::configuration-properties
 
 **S**pring **C**loud **S**tream(이하 `SCS`)에서는 바인딩 관련 구성을 자동화하기 위해 다음의 과정으로 진행할 수 있다.
 
-1. 연결 할 함수명 정의(`spring.cloud.function`)
-2. Cloud Stream 레벨의 추상화 바인딩 정의(`spring.cloud.stream`)
+1. 연결 할 함수 정의(`spring.cloud.function`)
+2. Cloud Stream 레벨의 추상화 바인딩 정의(`spring.cloud.stream.bindings`)
+3. 메시징 플랫폼 바인더 설정(`spring.cloud.stream.{name}`)
 
-즉 `BindingProperties`는 연결할 미들웨어의 바인딩 대상이 된다. 위의 코드를 기준으로 바인딩을 비교해 본다면 아래와 같이 대응 된다:
+### 1. 연결 함수 정의::define-functions
+
+`definition` 프로퍼티(이하 `definition`)는 **함수를 정의한다.**
+정확히는 함수의 이름, 파이프라인을 정의 한다. 프레임워크 내부적으로 `definition`이 해석될 때 두 가지의 방법으로 정의할 수 있다.
+
+`SCS`에서는 추상화된 함수를 기차놀이처럼 여러개를 붙여서 한개의 함수로 만들수 도 있고, 독립적으로 한개의 함수만 그대로 사용할 수 있다.
+
+> 한 가지 기억할것은 함수(한 개의 독립적인 함수든, 여러개를 합쳐서 만든 함수든)는 `;`로 구분된다는 것이다.
+:{ "type": "tip", "icon": "lightbulb" }
+
+**독립적으로 한개의 함수만 정의하기**
+
+::code-group
+
+```yaml::application.yaml
+spring:
+  cloud:
+    funtion:
+      definition: create-schedule;
+```
+
+```java::StreamFunctionConfiguration
+@Bean("create-schedule")
+public Consumeer<Message<CreateScheduleEvent>> createSchedule() {
+  return (message -> {
+      CreateScheduleEvent event = message.getPayload();
+      //스케줄을 생성한다.
+      scheduleUseCase.create(evnet);
+  });
+}
+```
+
+::
+
+위 경우 스케줄 생성(`create-schedule`)이라는 독립적인 한개의 함수만 동작한다.
+
+**함수 파이프라인을 구성하여 한개의 함수를 정의하기**
 
 ::code-group
 ```yaml::application.yaml
 spring:
   cloud:
     function:
-      definition: 
-    stream:
-      bindings:
-        GameResultProducer-out-0: # 채널명
-          destination: GameResultProducer # 미들웨어 내 바인딩 대상
-        GameResultConsumer-in-0:
-          destination: GameResultConsumer 
+      definition: create-schedule|alert-operation;
 ```
+
+```java::StreamFunctionConfiguration
+@Bean("create-schedule")
+public Function<Message<CreateScheduleEvent>, NotifiableEvent> createSchedule() {
+    return (message -> {
+        CreateScheduleEvent event = message.getPayload();
+        Schedule created = scheduleUseCase.create(event);
+        return new ScheduleCreateResponse(schedule);
+    });
+}
+
+@Bean("alert-operation")
+public Consumer<Message<NotifiableEvent>> alertOperation() {
+    return (message -> {
+        NotifiableEvent event = message.getPayload();
+        alertUseCase.operate(event);
+    });
+}
+```
+
 ::
 
-`BindingProperties`는 미들웨어 대상(RabbitMQ의 Exchange, Kafka의 Topic)을 추상화한 `SCS`의 바인딩 객체이다. 바인딩 대상은 `Producer`가 될 수도있고,
-`Consumer`가 될 수 도있다.
+함수 파이프라인을 구성하려면, `|`파이프 문자열(`,` 쉼표도 가능)로 함수의 정의를 묶어 정의할 수있다.
 
-바인딩 정보로서 추상화되며 아래의 내용을 포함한다:
+```
+단일 함수
+╭──── Function ───╮
+│ create-schedule │
+╰─────────────────╯
+파이프라인 함수
+╭─── Function1 ───╮    ╭─── Function2 ───╮
+│ create-schedule │ ─→ │ alert-operation │
+╰─────────────────╯    ╰─────────────────╯
+```
+
+파이프라인 함수는 처리한 함수의 출력값과 다음 함수에서 받을 입력값이 같아야한다.
+그렇다면 여러 종류의 함수를 정의하려면 어떻게 할 수 있을까?
+
+```yaml::여러종류의 함수를 정의
+spring:
+  cloud:
+    function:
+      definition: create-schedule|alert-operation; modify
+```
+
+> 각 함수 구분자(`;`)는 앞뒤로 공백이 있어도 되지만, 파이프라인 구분자(`|`)는 앞, 뒤로 공백이 있으면 안된다.
+:{ "type": "caution", "icon": "warning-octagon" }
+
+### 2. 추상화 바인딩 정의::define-abstract-biding
+
+먼저 추상화 바인딩이 뭔지 간단하게 집고 넘어가자면, 다음과 같다.
+
+1. SCS는 많은 메시징 플랫폼을 지원하지만, 실제 그 구현까지는 관여하지 않음.
+2. SCS는 각 구현체인 Binder에 제어 넘기기 전까지 스프링에 구성된 함수형 컴포넌트와 연결되는 바인딩을 설정기반으로 준비함.
+
+메세징 플랫폼과 연결되려면 각 Binder(`RabbitMQ`, `Kafka`)들과 연결되는 상위레벨 구성이 필요하고, 이를 SCS가 제공한다.
+
+```
+╭───────────╮     ╭────────────╮
+│ Funtion 1 │     │ Function 2 │
+╰────┐┌─────╯     ╰────┐┌──────╯
+─────┤├────────────────┤├──────
+ ╭───┘└─── Function ───┘└───╮
+ │   Spring Cloud Stream    │
+ ╰───┐┌────────────────┐┌───╯
+─────┤├────────────────┤├──────
+     ││                ││ 
+╭─ Kafka ─╮    ╭─── Rabbit MQ ───╮
+│  Topic  │    │ Exchange, Queue │
+╰─────────╯    ╰─────────────────╯
+```
+
+```yaml::application.yaml
+spring:
+  cloud:
+    function:
+      definition: create-schedule; modify-schedule
+    stream:
+      bindings:
+        create-schedule-in-0:
+          destination: schedule-consume-exchange
+          group: create-schedule-queue
+        modify-schedule-in-0:
+          destination: schedume-consume-exchange
+          group: modify-schedule-queue
+```
+
+`SCS`의 바인딩 추상화는 실제 그 바인딩대상이 어떤 방향(생산 또는 소비)인지 모르기 때문에, 모든 설정에대한 구성을 받는다.
+추가적인 속성은 바인딩 정보로서 추상화되며 아래의 내용을 포함한다:
 
 * destination: 바인더가 바인드하는 브로커에서의 물리적인 이름을 의미한다.
   * `RabbitMq`의 경우 Exchange의 이름으로, Kafka의 경우 Topic의 이름으로 정의한다.
@@ -64,6 +178,34 @@ spring:
   * 추가적인 컨슈머 프로퍼티 (`ConsumerProperties`)
 * producer
   * 추가적인 프로듀서 프로퍼티 (`ProducerProperties`)
+
+### 메시징 플랫폼 바인더 설정::configuration-of-messaging-platform
+
+`SCS`는 실제 메시징 플랫폼과 유연하게 연결되기 위해 `Binder`인터페이스를 제공한다.
+또한 각 플랫폼 바인더 모듈은 이를 구현하여 브로커와 통신하며, 실제 스트림을 제공한다.
+
+예를 들어 **RabbitMQ**라면 다음과 같이 구성할 수 있다.
+
+```yaml::application.yaml
+spring:
+  cloud:
+    function:
+      definition: create-schedule; modify-schedule
+    stream:
+      bindings:
+        create-schedule-in-0:
+          destination: schedule-consume-exchange
+          group: create-schedule-queue
+        modify-schedule-in-0:
+          destination: schedume-consume-exchange
+          group: modify-schedule-queue
+      rabbit:
+        default:
+          consumer:
+            
+```
+
+`RabbitExtendedBindingProperties`, `KafkaExtendedBindingProperties`
 
 ## 기본 아키텍쳐 및 컴포넌트의 역할::role-of-each-component-and-basic-architecture
 

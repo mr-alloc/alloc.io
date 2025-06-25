@@ -1,8 +1,8 @@
 [
   "/wiki/io-manager",
   "/wiki/programmed-io",
-  "/docs/back-end/spring/spring-cloud-stream-1",
-  "/docs/back-end/spring/spring-cloud-stream",
+  "/docs/back-end/spring/cloud-stream",
+  "/docs/back-end/spring/cloud-stream-configuration",
   "/docs/computer-science/operating-system/tty-and-session",
   "/docs/back-end/spring/secrets-manager-with-spring",
   "/docs/infrastructure/linux-command",
@@ -11,7 +11,6 @@
   "/docs/infrastructure/install-docker-engine",
   "/docs/infrastructure/gitlab-ci",
   "/docs/infrastructure/kubernetes/update-istio",
-  "/docs/back-end/spring/cloud-stream",
   "/docs/back-end/spring/spring-security",
   "/docs/life/youth-of-ggomi",
   "/docs/database/mysql-explain",
