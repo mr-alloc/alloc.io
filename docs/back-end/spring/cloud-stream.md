@@ -422,7 +422,6 @@ lifecycleBeans는 클래스패스에 포함된 LifeCycle 하위 구현요소들�
 
 **DefaultLifecycleProcessor.java** 파일 내용
 ::code-group
-
 ```java::lifecycle bean을 시작 
 private void doStart(Map<String, ? extends Lifecycle> lifecycleBeans, String beanName, boolean autoStartupOnly) {
     Lifecycle bean = lifecycleBeans.remove(beanName);
@@ -448,7 +447,6 @@ private void doStart(Map<String, ? extends Lifecycle> lifecycleBeans, String bea
     }
 }
 ```
-
 ```java::AbstractBindingLifecycle.java
 @Override
 public void start() {
@@ -465,7 +463,6 @@ public void start() {
     }
 }
 ```
-
 ```java::InputBindingLifecycle.java
 @Override
 void doStartWithBindable(Bindable bindable) {
@@ -476,7 +473,6 @@ void doStartWithBindable(Bindable bindable) {
     }
 }
 ```
-
 ::
 
 또한 위 라이프사이클 빈 중에서 바인딩 관련은 `InputBindingLifecycle`, `OutputBindingLifecycle`이 있는데 `Input`은 `Consumer`들의 모든 바인딩 정보를,

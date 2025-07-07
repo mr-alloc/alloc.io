@@ -192,6 +192,7 @@ spring:
     function:
       definition: create-schedule; modify-schedule
     stream:
+      #SCS 추상화를 위한 바인딩
       bindings:
         create-schedule-in-0:
           destination: schedule-consume-exchange
@@ -199,232 +200,17 @@ spring:
         modify-schedule-in-0:
           destination: schedume-consume-exchange
           group: modify-schedule-queue
-      rabbit:
-        default:
-          consumer:
-            
 ```
+
+`create-schedule`(스케줄 생성)의 경우 DLQ(Dead Letter Queue)를 설정하지 않고, `modify-schedule`(스케줄 변경)의 경우 설정하였다.
 
 `RabbitExtendedBindingProperties`, `KafkaExtendedBindingProperties`
 
-## 기본 아키텍쳐 및 컴포넌트의 역할::role-of-each-component-and-basic-architecture
-
-```
-╭────────────╮     ╭─────────────────────╮
-│  Service A │ ←─→ │ Spring Cloud Stream │ ←──╮
-╰─(Producer)─╯     ╰─(Abstraction Layer)─╯    ↓
-                                  ╭──────────────────╮
-                                  │     RabbitMQ     │    
-                                  ╰─(Message Broker)─╯
-╭────────────╮     ╭─────────────────────╮    ↑
-│  Service B │ ←─→ │ Spring Cloud Stream │ ←──╯
-╰─(Consumer)─╯     ╰─(Abstraction Layer)─╯
-```
-
-Spring Cloud Stream은 마치 레고 블록과 같다. 여러 레고 조각(마이크로서비스)들이 서로 연결될 수 있도록 표준화된 연결 부분(메세지 시스템 추상화)을 제공한다.
-이러한 구성을 만들기위해 몇가지 컴포넌트 개념이 있다.
-
-대략적으로 서비스에 설정되는 정보는 다음과 같다:
-
-```yaml::application.yaml
-spring:
-  cloud:
-    stream: 
-      bindings:
-        (...설정 A...)
-      (...설정 B...)
-```
-
-`spring.cloud.stream.bindings` 아래에 들어가는 바인딩 설정은 SCS에서 추상화한 함수와 Binder를 잇는 Binding을 의미한다.
-또한, `spring.cloud.stream` 하위에 들어가는 바인딩 설정은 메시징 플랫폼과 위의 Binding을 잇는 Binding을 의미한다.
-
-* BindingServiceProperties: `sping.cloud.stream` 내 프로퍼티 정보
-* BindingService: `BindingServiceProperties` 설정 정보를 이용해 실제 바인딩을 구성
-* InputBindingLifecycle: `Bindable` 객체를 `BindingService`로 바인딩을 트리거하고 그 정보를 관리
-* BindableFunctionProxyFactory: `Bindable`의 구현체이며 추상화 함수와 바인딩할 수 있는
-
-### MessageChannel::message-channel
-
-메세지 채널은 Spring integration에서 가져온 개념으로, 애플리케이션 내에서 메시지가 이동하는 파이프라인 역할
-
-### Binder SPI:binder-service-provider-interface
-
-Binder **S**ervice **P**rovider **I**nterface는 몇개의 인터페이스, 외부 유틸리티 클래스, 외부 미들웨어에 연결하기 위해 연결가능한 메카니즘을 제공하는 발견 전략들로 구성되어있다.
-여기서 중요한 점은 SPI는 외부 미들웨어에 입력과 출력을 연결하기 위한 전략인 `Binder`라는 것이다. 다음의 목록은 `Binder` 인터페이스의 정의를 보여준다.
-
-```java::Binder.java
-public interface Binder<T, C extends ConsumerProperties, P extends ProducerProperties> {
-
-	default String getBinderIdentity() {
-		return String.valueOf(this.hashCode());
-	}
-
-	Binding<T> bindConsumer(String name, String group, T inboundBindTarget, C consumerProperties);
-
-	Binding<T> bindProducer(String name, T outboundBindTarget, P producerProperties);
-}
-```
-
-`C, P`처럼 생산자, 소비자에 대한 설정이 Generic으로 파라미터화 되었으며 여러 확장 지점(Extended Point)을 제공한다:
-
-* 입출력 바인딩 대상 - 메세지를 수신하거나 전송하는 대상(예: Kafka 토픽, RabbitMQ 큐 등)을 바인딩 할수 있는 지점을 의미
-* 확장된 소비자 및 생산자 속성 - 특정 Binder 구현(Kafka Binder, RabbitMQ Binder 등)이 타입 안전한 방식으로 지원할 수 있는 추가 속성을 더할 수 있게 해준다는 의미
-
-일반적인 바인더 구현체는 다음의 요소로 구성된다:
-
-* `Binder` 인터페이스를 구현하는 클래스
-* 메세징 미들웨어와의 연결 인프라를 설정하는 `Binder`타입 빈을 생성하는 스프링  `@Configuration` 클래스
-* 하나 이상의 바인더 정의를 포함하며 클래스 패스에 위치하는 `META-INF/spring.binders` 파일:
-  ```text::
-  kafka:\
-  org.springframework.cloud.stream.binder.kafka.config.KafkaBinderConfiguration
-  ```
-  ```mermaid
-
-  ```
-
-> 앞서 언급했듯이 바인더 추상화 역시 프레임워크의 확장 지점 중 하나이다. 앞서 나온 목록에서 완전한 바인더를 찾을수 없는 경우 SCS의 상위 에서 바인더를 직접 구현할 수 있다.
-> 자세한
-> 내용은 [맨 처음부터 SCS 바인더를 생성하는 방법](https://medium.com/@domenicosibilio/how-to-create-a-spring-cloud-stream-binder-from-scratch-ab8b29ee931b)
-> 를 참조
-:{ "type": "note", "icon": "info" }
-
-## SCS LifeCycle::spring-cloud-stream-life-cycle
-
-SCS의 경우 프레임워크 레벨에서 다음의 라이프사이클을 구현한다.
-
-```mermaid
----
-  config:
-    class:
-      hideEmptyMembersBox: true
----
-classDiagram
-  class LifeCycle {
-    <<interface>>
-    ...
-  }
-  class SmartLifeCycle {
-    <<interface>>
-    ...
-  }
-  class AbstractBindingLifeCycle {
-    <<abstract>>
-    ...
-  }
-  class InputBindingLifeCycle {
-  }
-  class OutputBindingLifeCycle {
-  }
-  LifeCycle <|-- SmartLifeCycle
-  SmartLifeCycle <|.. AbstractBindingLifeCycle
-  AbstractBindingLifeCycle <|-- InputBindingLifeCycle
-  AbstractBindingLifeCycle <|-- OutputBindingLifeCycle
-```
-
-실제로 바인딩이 진행되는 흐름은 Spring의 `LifeCycle` 로 구현되어있다.
-이 `LifeCycle`은 기본적으로 `DefaultLifeCycleProcessor`에 의해 처리되는데, 이는 아래와 같다.
-
-```java::DefaultLifeCycleProcessor.java
-private void startBeans(boolean autoStartupOnly) {
-    Map<String, Lifecycle> lifecycleBeans = getLifecycleBeans();
-    Map<Integer, LifecycleGroup> phases = new TreeMap<>();
-
-    lifecycleBeans.forEach((beanName, bean) -> {
-        if (!autoStartupOnly || isAutoStartupCandidate(beanName, bean)) {
-            int startupPhase = getPhase(bean);
-            phases.computeIfAbsent(startupPhase,
-                    phase -> new LifecycleGroup(phase, determineTimeout(phase), lifecycleBeans, autoStartupOnly)
-            ).add(beanName, bean);
-        }
-    });
-
-    //라이프사이클이 실제 시작 되는 부분
-    if (!phases.isEmpty()) {
-        phases.values().forEach(LifecycleGroup::start);
-    }
-}
-```
-
-![라이프사이클 빈 목록](/post/spring/spring-cloud-stream/lifecycle-beans.png)
-:{ "align": "center", "max-width": "600px", "description": "LifeCycle Bean 목록" }
-
-lifecycleBeans는 클래스패스에 포함된 LifeCycle 하위 구현요소들이며, 이를 시작할지를 결정짓는 부분이다.
-포스팅을 하는 시점에서는 위와 같이 14개정도가 포함 되어있었다. 어쨋든 동일한 Phase끼리 그룹화 되어, 각 그룹을 한번에 시작한다.
-
-어쨋든 라이프 사이클 그룹을 시작하면 `Bean`을 개별적으로 시작한다. 추상화된 바인딩 정보는 `Bindable`이라는 추상화 객체로서 선언된 함수 `Bean`을 바인딩한다.
-
-**DefaultLifecycleProcessor.java** 파일 내용
-::code-group
-```java::lifecycle bean을 시작 
-private void doStart(Map<String, ? extends Lifecycle> lifecycleBeans, String beanName, boolean autoStartupOnly) {
-    Lifecycle bean = lifecycleBeans.remove(beanName);
-    if (bean != null && bean != this) {
-        String[] dependenciesForBean = getBeanFactory().getDependenciesForBean(beanName);
-        for (String dependency : dependenciesForBean) {
-            doStart(lifecycleBeans, dependency, autoStartupOnly);
-        }
-        if (!bean.isRunning() && (!autoStartupOnly || toBeStarted(beanName, bean))) {
-            if (logger.isTraceEnabled()) {
-                logger.trace("Starting bean '" + beanName + "' of type [" + bean.getClass().getName() + "]");
-            }
-            try {
-                bean.start(); // 시작
-            }
-            catch (Throwable ex) {
-                throw new ApplicationContextException("Failed to start bean '" + beanName + "'", ex);
-            }
-            if (logger.isDebugEnabled()) {
-                logger.debug("Successfully started bean '" + beanName + "'");
-            }
-        }
-    }
-}
-```
-```java::AbstractBindingLifecycle.java
-@Override
-public void start() {
-    if (!this.running) {
-        if (this.context != null) {
-            this.bindables.putAll(context.getBeansOfType(Bindable.class));
-        }
-        //각 바인딩을 수행할 수 있는 BindableFactoryBean 목록
-        this.bindables.values().forEach(this::doStartWithBindable);
-        // "&saveGameResultConsumer_binding" -> BindableFunctionProxyFactory
-        // "&saveTransactionResultConsumer_binding" -> BindableFunctionProxyFactory
-        //...
-        this.running = true;
-    }
-}
-```
-```java::InputBindingLifecycle.java
-@Override
-void doStartWithBindable(Bindable bindable) {
-    Collection<Binding<Object>> bindableBindings = bindable
-            .createAndBindInputs(this.bindingService); // 실제 바인딩이 구성
-    if (!CollectionUtils.isEmpty(bindableBindings)) {
-        this.inputBindings.addAll(bindableBindings);
-    }
-}
-```
-::
-
-또한 위 라이프사이클 빈 중에서 바인딩 관련은 `InputBindingLifecycle`, `OutputBindingLifecycle`이 있는데 `Input`은 `Consumer`들의 모든 바인딩 정보를,
-`Output`은 `Function`등의 바인딩 정보를 가지고 있다.
-즉, `DefaultLifecycleProcessor`는 그룹화 된 Life
-
-> 각 팩토리빈이 "&..._binding"의 형태로 구분되어있는데, 이는 설정 적용 과정에서 `FunctionConfiguration`에서 등록되었다. (뒤에서 다시설명)
-:{ "type": "tip", "icon": "lightbulb" }
-
-
-아무튼 위 코드그룹 세번째 코드에 보여진 `createAndBindInput(...)` 메서드로 바인딩이 구성하는데, 이는 각 함수와 바인딩을 생성을 관리하는 `BindableFunctionProxyFactory`
-이다.
-`SCS`는 철저하게 추상화된 부분만 관리하며, 실제 연동 및 바인딩은 `Binder` 구현체에게 맡긴다.
 
 함수 등록 Bean
 FunctionCatalog
 FunctionRegistry
-FunctionConfiguration: Function Bean을 생성해서 BeanFactory에 넣음 (afterPropertiesSet() 참조)
+FunctionConfiguration(FunctionBindingRegistrar: Function Bean을 생성해서 BeanFactory에 넣음 (afterPropertiesSet() 참조)
 BeanFactory
 ConversionService
 RabbitExchangeQueueProvisioner.autoBindDLQ
