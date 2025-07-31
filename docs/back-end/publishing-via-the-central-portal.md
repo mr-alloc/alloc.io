@@ -2,8 +2,8 @@
 layout: post
 title: Publishing via the Central Portal
 tags: [ Maven Central Repository, Publish, Artifact ]
-date: 2025-07-07 11:02:00
-thumbnail: /post/back-end/publishing-via-the central-portal/component-abstraction.png
+date: 2025-08-01 06:30:00
+thumbnail: /post/back-end/publishing-via-the central-portal/index.png
 current-company: NEOWIZ
 current-position: Software Engineer
 summary: Central Portal 통해 발행하기
@@ -27,16 +27,16 @@ hide: false
 
 네임스페이스(namespace) 인증한 후, Maven Central에 구성요소를 업로드할 준비가 된거다. 다음의 내용으로 참조:
 
-* [Maven]()
-* [Publisher API]()
-* [Uploading a bundle]()
+* [Maven](https://central.sonatype.org/publish/publish-portal-maven/)
+* [Publisher API](#publishing-by-using-the-portal-publisher-api)
+* [Uploading a bundle](#publishing-by-uploading-a-bundle)
 * [Gradle](#publishing-by-using-a-gradle-plugin)
 
 #### 구성요소 검증::component-validation
 
 업로드가 승인된 후, 중앙 게시자 포털(Central Publisher Portal)은 검증 절차를 시작한다:
 
-![검증 절차]()
+![검증 절차](/post/back-end/publishing-via-the-central-portal/publishingsettings_deployment.png)
 
 검증 절차는 구성 요소가 Maven Central의 모든 요구사항을 충족하는지 확인한다. 검증은 몇 분이상 걸리지 않으며, 새로고침(Refresh) 버튼 클릭으로 검증 절차의 상태를 볼 수 있다.
 
@@ -45,7 +45,7 @@ hide: false
 
 검증이 성공한 후, 오류가 없다면 구성요소를 게시할 수 있다. 게시(Publish) 버튼을 눌러 Maven Cental에 자동으로 동기화 된다.
 
-![배포 정보]()
+![배포 정보](/post/back-end/publishing-via-the-central-portal/deployment-publish-button.png)
 
 > 릴리즈/게시 한 후에는 구성요소를 삭제/변경/수정 할 수 없다. wktpgks
 > sodyddms [Central에서 구성요소를 변경(수정, 삭제, 업데이트)할  수 있나요?](https://central.sonatype.org/faq/can-i-change-a-component/) FAQ 정책을
@@ -60,11 +60,11 @@ hide: false
 
 사용자 정보 하위에서 웹훅 보기(View Webhooks) 링크를 클릭하여 웹훅을 추가할 수 있다.
 
-![View Webhooks Button]()
+![View Webhooks Button](/post/back-end/publishing-via-the-central-portal/viewwebhooks.png)
 
 웹훅을 호출하기위해 웹훅 URL, 사용자 정보(필요하다면 이름과 비밀번호)를 입력후 저장(Save)버튼을 누르면 변경사항을 저장할 수있다.
 
-![Webhook Popup]()
+![Webhook Popup](/post/back-end/publishing-via-the-central-portal/webhook.png)
 
 올바른 URL(과 추가적인 자격 증명)을 입력 했다면, 컴포넌트 배포하려고하면 즉시 호출된다.
 
@@ -396,6 +396,69 @@ Maven의 경우 `settings.xml` 파일에 필수값 으로 `<server>`와 `<reposi
 
 ## 업로드 번들로 게시하기::publishing-by-uploading-a-bundle
 
-중앙 게시자 포털에서는 구성 요소와 필수 파일(metadata, checksums, signatures)이 포함된 zip 파일을 업로드 할 수 있습니다.  
-이 압축파일을 조립하는 것은 빌드도구와 프로세스에 따라 달라진다. 업로드용 압축파일을 구성하는 기본 안내는
-기존 [수동 배포 가이드](https://central.sonatype.org/publish/publish-manual/)에서 
+중앙 게시자 포털에서는 구성 요소와 필수 파일(metadata, checksums, signatures)이 포함된 zip 파일을 업로드 할 수 있다.  
+이 압축파일을 조립하는 것은 빌드도구와 프로세스에 따라 달라진다. 업로드용 압축파일 구성에 대한 기본 안내는
+기존 [수동 배포 가이드](https://central.sonatype.org/publish/publish-manual/)에서 확인할 수 있다.
+
+두 개 프로세스의 주요 차이점은 새로운 프로세스는 번들이 `.jar`파일일 필요는
+없지만, [Maven Repository 레이아웃](https://maven.apache.org/repository/layout.html)폴더 규칙을 따르는 파일을 예상한다.
+예를 들어, `com.sonatype.central.example` 네임 스페이스, `example_java_project` 컴포넌트, 그리고 `0.1.0` 버전은 다음의 폴더 구조로 압축 해제될 수도 있다:
+
+```
+$ tree
+.
+`-- com
+    `-- sonatype
+        `-- central
+            `-- example
+                `-- example_java_project
+                    `-- 0.1.0
+                        |-- example_java_project-0.1.0-javadoc.jar
+                        |-- example_java_project-0.1.0-javadoc.jar.asc
+                        |-- example_java_project-0.1.0-javadoc.jar.md5
+                        |-- example_java_project-0.1.0-javadoc.jar.sha1
+                        |-- example_java_project-0.1.0-sources.jar
+                        |-- example_java_project-0.1.0-sources.jar.asc
+                        |-- example_java_project-0.1.0-sources.jar.md5
+                        |-- example_java_project-0.1.0-sources.jar.sha1
+                        |-- example_java_project-0.1.0.jar
+                        |-- example_java_project-0.1.0.jar.asc
+                        |-- example_java_project-0.1.0.jar.md5
+                        |-- example_java_project-0.1.0.jar.sha1
+                        |-- example_java_project-0.1.0.pom
+                        |-- example_java_project-0.1.0.pom.asc
+                        |-- example_java_project-0.1.0.pom.md5
+                        `-- example_java_project-0.1.0.pom.sha1
+```
+
+> **중요**
+> 현재 중앙 게시자 포탈은 공통 아카이브 확장(예: zip, tar.gz)을 지원한다. 게시하는 요청당 한번 압축파일 한개를 업로드 할 수 있으며, 아카이브는 한개 이상의 컴포넌트를 포함할 수 있다.
+> 아카이브는 1GB까지 업로드 가능하다. 업로드가 오류로 실패하거나 배포가 생성되지 않는 경우 먼저 파일의 크기가 1GB 미만인지 확인하고 로컬아카이브 추출 도구로 제대로 추출되는지 확인 해야한다.
+> 아카이브가 유효하고 사이즈 제한에 딱 맞지만, 업로드가 되지않는 다면 [중앙 지원](mailto:central-support@sonatype.com)으로 이메일 요청하면 많은 지원 정보를 제공받는다.
+: { "type": "note", "icon": info" }
+
+최소 한개이상의 인증된 네임스페이스를 갖고 있는경우, Namespace 탭에서 "컴포넌트 게시(Publish Compoent)" 버튼을 누를 수있다.
+
+![Publish Component in Namespace](/post/back-end/publishing-via-the-central-portal/verifiednamespace.png)
+:{ "align": "center", "description": "Namespace 탭"}
+
+또한 우측상단의 "Publish" 링크 또는 "Publish Settings" 하위 "Deployments" 탭에서 할 수도 있다.
+
+![Publish Component in Deployments](/post/back-end/publishing-via-the-central-portal/publishsettings_deployments)
+:{ "align": "center", "description": "Deployments 탭"}
+
+여기서 "컴포넌트 게시(Publish Component)" 버튼을 누를 수 있다:
+
+![Publish Component Popup](/post/back-end/publishing-via-the-central-portal/publishcomponent1.png)
+:{ "align": "center", "description": "Publish Component 팝업"}
+
+입력한 "배포 이름(Deployment Component)"은 게시하기 위해 시도하는 것이 무엇인지 식별하는데 도움이 된다(예를 들어 Maven Central에 게시하는 경우 좌표를 추가할 수 있다. 예: "
+your.groupId:your.artifactId:0.0.your-version").
+더 길고 선택적인 "설명"을 제공할 수도 있다.
+
+Popup에서 스크롤을 내리면 업로드 파일(Uplaod File)버튼을 찾을 수 있다:
+
+!["Upload File"  Button](/post/back-end/publishing-via-the-central-portal/publishcomponent2.png)
+:{ "align": "center", "description": "업로드 파일 버튼"}
+
+이 버튼을 누르면 로컬 컴퓨터의 파일을 선택할 수 있고, "컴포넌트 게시(Publish Component)"을 누르면 업로드를 시작한다.
