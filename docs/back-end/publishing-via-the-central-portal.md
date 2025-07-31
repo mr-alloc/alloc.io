@@ -3,7 +3,7 @@ layout: post
 title: Publishing via the Central Portal
 tags: [ Maven Central Repository, Publish, Artifact ]
 date: 2025-08-01 06:30:00
-thumbnail: /post/back-end/publishing-via-the central-portal/index.png
+thumbnail: /post/back-end/publishing-via-the-central-portal/index.png
 current-company: NEOWIZ
 current-position: Software Engineer
 summary: Central Portal 통해 발행하기
@@ -83,7 +83,7 @@ hide: false
 
 > **알려진 웹훅 알림 이슈**: `central-publishing-maven-plugin`의 autoPublish가 활성화 된 경우 VALIDATED 알림은 전송되지 않는다.
 >게시 조건에 따라 PUBLISHED 알림은 완전히 누락되거나 중복될 수 있다.
-: { "type": "note", "icon": info" }
+: { "type": "note", "icon": "info" }
 
 #### 샘플 JSON 본문 전송
 
@@ -117,7 +117,7 @@ Sonatype은 Gralde을 통한 게시가 중요하다는 상당한 피드백을 �
 
 > **OSSRH API**: 현재 OSSRH를 통해 게시중이고 포털로 마이그레이션하려는 경우, 아래 옵션중 하나를 고려. 하지만 기존 플러그인을
 선호하면 [포털 OSSRH Staging API](https://central.sonatype.org/publish/publish-portal-ossrh-staging-api/)를 활용.
-: { "type": "note", "icon": info" }
+: { "type": "note", "icon": "info" }
 
 커뮤니티 플러그인
 
@@ -153,7 +153,7 @@ Gradle 플러그인 통합을 통해 사용이 가능하다.
 > **대상 사용자**
 > 이 문서는 포털 게시 API를 통해 게시하기위해 클라이언트 구현을 고려하는 유저들을 위해 의도 되었다. 자체 구성요소를 Maven Central로 게시하려는
 > 경우, [Maven Client](https://central.sonatype.org/publish/publish-portal-maven/)를 사용하는것이 더 좋다.
-: { "type": "note", "icon": info" }
+: { "type": "note", "icon": "info" }
 
 이 문서는 웹 클라이언트를 통해 쿼리를 테스트하기 위한 대화형 환경을 제공하는 [OpenAPI 문서](https://central.sonatype.com/api-doc)를 보완한다.
 이 문서의 목적상 예제에서 `curl`을 사용하지만, 기본적인 세부사항을 따라하므로써 어떤 HTTP 클라이언트 든지 API와 상호작용 할 수 있다.
@@ -163,7 +163,7 @@ Gradle 플러그인 통합을 통해 사용이 가능하다.
 > **사용자 토큰**
 > [사용자 토큰을 생성](https://central.sonatype.org/publish/generate-portal-token/)하기
 > 위해, [계정 페이지](https://central.sonatype.com/account)에 방문하여 사용자 토큰 생성(Generate User Token) 버튼을 클릭
-: { "type": "note", "icon": info" }
+: { "type": "note", "icon": "info" }
 
 API에 대한 요청은 사용자토큰 헤더를 통해 인증 되어야 한다. `example_username`이라는 사용자 이름과 `example_password`라는 사용자 토큰이 주어지면, `:`로 연결된 두개의 값은
 base64로 계산된다.
@@ -179,7 +179,7 @@ ZXhhbXBsZV91c2VybmFtZTpleGFtcGxlX3Bhc3N3b3Jk
 > **사용자토큰 토큰들**
 > API는 같은 base64 인코딩 값으로 비표준 `UserToken`, `Authorization` 헤더도 허용하지만, 표준 `Bearer` 값 사용을 추천하며, 이후 버전의 API는 `UserToken`에 대한
 > 지원을 중단될 수 있다.
-: { "type": "note", "icon": info" }
+: { "type": "note", "icon": "info" }
 
 ### 배포 번들 업로드::uploading-a-deployment-bundle
 
@@ -187,7 +187,7 @@ ZXhhbXBsZV91c2VybmFtZTpleGFtcGxlX3Bhc3N3b3Jk
 `/api/v1/publisher/upload` 엔드 포인트에 업로드 될 수 있다고 가정하자.
 엔드 포인트는 `multipart/formdata`의 `bundle`이라는 이름과 정의된 파일명을 가지는 `application/octet-stream` 단일 파트의 `Content-Type`을 예상한다.
 
-```http request::파트별로 Content-Type을 가지는 multipart/formdata
+```http::파트별로 Content-Type을 가지는 multipart/formdata
 POST /api/v1/publisher/upload HTTP/1.1
 Host: central.sonatype.com
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
@@ -338,7 +338,7 @@ Gradle의 경우, [저장소 정의 문서](https://docs.gradle.org/current/user
 
 ::code-group
 
-```gradle::build.gradle
+```groovy::build.gradle
 repositories {
     maven {
         name = "centralManualTesting"
@@ -435,7 +435,7 @@ $ tree
 > 현재 중앙 게시자 포탈은 공통 아카이브 확장(예: zip, tar.gz)을 지원한다. 게시하는 요청당 한번 압축파일 한개를 업로드 할 수 있으며, 아카이브는 한개 이상의 컴포넌트를 포함할 수 있다.
 > 아카이브는 1GB까지 업로드 가능하다. 업로드가 오류로 실패하거나 배포가 생성되지 않는 경우 먼저 파일의 크기가 1GB 미만인지 확인하고 로컬아카이브 추출 도구로 제대로 추출되는지 확인 해야한다.
 > 아카이브가 유효하고 사이즈 제한에 딱 맞지만, 업로드가 되지않는 다면 [중앙 지원](mailto:central-support@sonatype.com)으로 이메일 요청하면 많은 지원 정보를 제공받는다.
-: { "type": "note", "icon": info" }
+: { "type": "note", "icon": "info" }
 
 최소 한개이상의 인증된 네임스페이스를 갖고 있는경우, Namespace 탭에서 "컴포넌트 게시(Publish Compoent)" 버튼을 누를 수있다.
 
@@ -444,7 +444,7 @@ $ tree
 
 또한 우측상단의 "Publish" 링크 또는 "Publish Settings" 하위 "Deployments" 탭에서 할 수도 있다.
 
-![Publish Component in Deployments](/post/back-end/publishing-via-the-central-portal/publishsettings_deployments)
+![Publish Component in Deployments](/post/back-end/publishing-via-the-central-portal/publishsettings_deployments.png)
 :{ "align": "center", "description": "Deployments 탭"}
 
 여기서 "컴포넌트 게시(Publish Component)" 버튼을 누를 수 있다:
