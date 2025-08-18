@@ -8,7 +8,7 @@ current-company: NEOWIZ
 current-position: Software Engineer
 summary: 클라우드 스트림 구성
 excerpt_separator: <!--more-->
-hide: true
+hide: false
 ---
 
 서비스와 메시징플랫 폼을 연결하기 위해, Spring Cloud Stream 설정은 종류와 사용 방법을 알아보자.
@@ -58,7 +58,6 @@ public Consumeer<Message<CreateScheduleEvent>> createSchedule() {
   });
 }
 ```
-
 ::
 
 위 경우 스케줄 생성(`create-schedule`)이라는 독립적인 한개의 함수만 동작한다.
@@ -165,7 +164,7 @@ spring:
 * destination: 바인더가 바인드하는 브로커에서의 물리적인 이름을 의미한다.
   * `RabbitMq`의 경우 Exchange의 이름으로, Kafka의 경우 Topic의 이름으로 정의한다.
 * group
-  * 그룹의 경우 Consumer에게만 적영되며, 소속될 바인딩의 고유한 이름이다. 많은 컨슈머가 같은 그룹 내에서 구독을 공유한다.
+  * 그룹의 경우 Consumer에게만 적용되며, 소속될 바인딩의 고유한 이름이다. 많은 컨슈머가 같은 그룹 내에서 구독을 공유한다.
   * null, 빈 문자열 값은 익명그룹을 나타내며 공유 되지않는다.
   * 즉 그룹은 각 미들웨어에서 컨슈머를 묶는 그룹으로 이해하면 된다. `RabbitMQ`의 경유 Queue, `Kafka`의 경우 Consumer Group과 연결된다.
 * contentType
@@ -190,19 +189,50 @@ spring:
 spring:
   cloud:
     function:
-      definition: create-schedule; modify-schedule
+      definition: create-schedule
     stream:
       #SCS 추상화를 위한 바인딩
       bindings:
         create-schedule-in-0:
-          destination: schedule-consume-exchange
+          destination: create-schedule-exchange
           group: create-schedule-queue
-        modify-schedule-in-0:
-          destination: schedume-consume-exchange
-          group: modify-schedule-queue
+          binder: rabbit
+      rabbit:
+        bindings:
+          create-schedule-in-0:
+            consumer:
+              auto-bind-dlq: false
 ```
 
-`create-schedule`(스케줄 생성)의 경우 DLQ(Dead Letter Queue)를 설정하지 않고, `modify-schedule`(스케줄 변경)의 경우 설정하였다.
+`create-schedule`(스케줄 생성)의 경우 DLQ(Dead Letter Queue)를 설정하지 않고 Exchange와 Queue만 지정해주었다.
+SCS에서는 바인딩의 이름(`*-out-0`, `*-in-0`)이 약솓되어있기 때문에, 이름을 위해 커스텀 설정을 하지않는 이상 네이밍 룰을 따라야한다.
+컨슈머(Consumer)는 기본적으로 `*-in-0`룰을 따르기 때문에 위와 같이 지정하였다.
+
+![DLQ가 활성화 되지 않은 설정](/post/back-end/spring/cloud-stream-configuration/bind-without-dlq-config.png)
+:{ "align": "center", "max-width": "600px", "description": "DLQ가 활성화 되지 않은 Exchange" }
+
+```
+╭──────── Exchange ────────╮
+│ create-schedule-exchange │
+╰────────────┐┌────────────╯
+          ↓  ││  ↓ 
+  ╭─────── Queue ─────────╮
+  │ create-schedule-queue │
+  ╰────────//───\\────────╯
+          //     \\
+      ╭───┘└╮   ╭┘└───╮
+      │ App │   │ App │
+      ╰─────╯   ╰─────╯
+```
+
+위 바인딩의 흐름을 간략히 본다면 위와 같다 App에서는 처리할 메세지의 Exchange 정보를 정의(App 구동시 동일한 정보가 없다면 생성)한다.
+`auto-bind-dlq` 옵션을 활성화 하면 기본적으로 Dead Letter를 처리할 수 있는 Exchange를 `DLX`로 사용(없으면 생성)한다.
+
+![dlq 설정 활성화](/post/back-end/spring/cloud-stream-configuration/activate-dlq-config.png)
+:{ "align": "center", "max-width": "400px", "description": "DLQ 구성을 활성화 하였다." }
+
+위 이미지는 `auto-bind-dlq` 옵션을 통해 DLQ 바인딩을 진행하였다. DLX는 `dead-letter-exchange` 옵션으로 dlq 이름을 지정하지 않는이상, 기본으로 사용된다.
+이는 다른 큐들과 함께 DLX가 공유되며 Queue의 이름이 Routing Key로 사용된다.
 
 `RabbitExtendedBindingProperties`, `KafkaExtendedBindingProperties`
 
