@@ -2,7 +2,7 @@
 layout: post
 title: Cloud Stream Configuration
 tags: [ Spring, Spring Boot, Spring Cloud Stream, Configuration ]
-date: 2025-04-29 09:34:00
+date: 2025-08-08 09:34:00
 thumbnail: /post/back-end/spring/cloud-stream-configuration/index.png
 current-company: NEOWIZ
 current-position: Software Engineer

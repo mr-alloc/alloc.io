@@ -14,13 +14,13 @@
         <loc>https://alloc.io/docs/back-end/message-queue/configure-rabbitmq</loc>
     </url>
     <url>
+        <loc>https://alloc.io/docs/back-end/spring/cloud-stream-configuration</loc>
+    </url>
+    <url>
         <loc>https://alloc.io/docs/back-end/publishing-via-the-central-portal</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/back-end/spring/cloud-stream</loc>
-    </url>
-    <url>
-        <loc>https://alloc.io/docs/back-end/spring/cloud-stream-configuration</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/computer-science/operating-system/tty-and-session</loc>

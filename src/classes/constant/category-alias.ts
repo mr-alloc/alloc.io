@@ -16,6 +16,7 @@ export class CategoryAlias {
     private static readonly NETWORK = new CategoryAlias('network', '네트워크');
     private static readonly TCP_IP = new CategoryAlias('tcp-ip', 'TCP/IP');
     private static readonly BACK_END = new CategoryAlias('back-end', '서버/백엔드');
+    private static readonly MESSAGE_QUEUE = new CategoryAlias('message-queue', '메세지큐')
     private static readonly SPRING = new CategoryAlias('spring', '스프링');
     private static readonly TOOL = new CategoryAlias('tool', '라이브러리/도구');
     private static readonly SOFTWARE_DESIGN = new CategoryAlias('software-design', '소프트웨어 디자인');
@@ -58,6 +59,7 @@ export class CategoryAlias {
             this.TCP_IP,
             this.TOOL,
             this.BACK_END,
+            this.MESSAGE_QUEUE,
             this.SPRING,
             this.SOFTWARE_DESIGN,
             this.STRUCTURE, this.BEHAVIOR,

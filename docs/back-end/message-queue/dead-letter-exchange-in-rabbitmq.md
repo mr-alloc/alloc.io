@@ -8,20 +8,22 @@ current-company: NEOWIZ
 current-position: Software Engineer
 summary: RabbitMQ의 DLX란 무엇일까?
 excerpt_separator: <!--more-->
-hide: true
+hide: false
 ---
-
 RabbitMQ는 다양한 failover 메커니즘을 구현하였다. 그중 메세지 처리를 위한 DLX 개념을 알아보자.
 <!--more-->
+
+> 이 문서는 [원문](https://www.rabbitmq.com/docs/dlx)을 참조하여 작성하였습니다.
+:{ "type": "tip", "icon": "light-bulb" }
 
 ## Dead Letter Exchange란?::what-is-a-dead-letter-exchange
 
 큐에서 온 메세지는 "dead-lettered"상태가 될 수 있다. 즉, 다음의 4가지 이벤트 중 하나가 발생하면 이러한 메세지가 exchange에 재발행 된다.
 
 1. 메세지가 다음 상황에서 [거부(부정적 승인)](https://www.rabbitmq.com/docs/confirms)인 경우
-    * AMQP 1.0. 수신자가 [
-      `rejected`](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-rejected) 결과를 사용하는
-      경우
+   * AMQP 1.0. 수신자가 [
+     `rejected`](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-rejected) 결과를 사용하는
+     경우
     * AMQP 0.9.1 컨슈머가 `requeue`파라미터를 `false`로 설정하여 `basic.reject`, `basic.nack`를 사용하는 경우
 
    > RabbitMQ에서는 프로토콜 버전에 따라 용어가 다르다 0.9.1(기본)에서는 메세지를 소비하는 개념으로서 Consumer(소비자)를 1.0에서는 메세지를 수신하는 개념으로서 Receiver(수신자)를
@@ -61,16 +63,89 @@ DLX가 지정될 때, 선언된 큐에 일반 구성 권한 외에도, 사용자
 
 ## 정책을 사용하여 DLX 구성하기::configuring-a-dead-letter-exchange-using-a-policy
 
-정책을 사용하여 DLX를 지정하기 위해 "dead-letter-exchange" 키를 정책선언에 추가한다:
+정책을 사용하여 DLX를 지정하기 위해 "dead-letter-exchange" 키를 정책 선언에 추가한다:
 
 ::code-group
 
-```bash
+```bash::bash
 rabbitmqctl set_policy DLX ".*" '{"dead-letter-exchange":"my-dlx"}' --apply-to queues --priority 7
 ```
 
-```powershell
+```powershell::Power Shell
+rabbitmqctl set_policy DLX ".*" "{""dead-letter-exchange"":""my-dlx""}" --apply-to queues --priority 7
+```
 
+```bash::rabbitmqadmin V2
+rabbitmqadmin policies declare --name=DLX --pattern=".*" --definition='{"dead-letter-exchange":"my-dlx"}' --apply-to=queues --priority=7
+```
+
+```http::HTTP API
+PUT /api/policies/%2f/DLX
+    {"pattern": ".*",
+     "definition": {"dead-letter-exchange":"my-dlx"},
+     "priority": 7,
+     "apply-to": "queues"}
+```
+::
+
+위 예제에서는 모든 큐에 적용되고 "my-dlx"라는 교환소를 dead letter 대상으로 구성하는 "DLX"라는 정책을 선언했다.
+이건 그냥 예제이고, 실무에서는 각각 일부 큐들에게만 적용하는 여러 정책들을 보는것이 일반적이다.
+
+마찬가지로, 정책에 "dead-letter-routing-key"를 추가하여 명시적 라우팅키를 지정할 수 있다:
+
+::code-group
+
+```bash::bash
+rabbitmqctl set_policy DLX ".*" '{"dead-letter-exchange":"my-dlx", "dead-letter-routing-key":"my-routing-key"}' --apply-to queues --priority 7
+```
+
+```powershell::Power Shell
+rabbitmqctl set_policy DLX ".*" "{""dead-letter-exchange"":""my-dlx"", ""dead-letter-routing-key"":""my-routing-key""}" --apply-to queues --priority 7
+```
+
+```bash::rabbitmqadmin V2
+rabbitmqadmin policies declare --name=DLX --pattern=".*" --definition='{"dead-letter-exchange":"my-dlx", "dead-letter-routing-key":"my-routing-key"}' --apply-to=queues --priority=7
+```
+
+```http::HTTP API
+PUT /api/policies/%2f/DLX
+    {"pattern": ".*",
+     "definition": {"dead-letter-exchange":"my-dlx"},
+     "priority": 7,
+     "apply-to": "queues"}
 ```
 
 ::
+
+### 선택적인 Queue 매개변수를 사용하여 DLX 구성하기::configuring-a-dead-letter-exchange-using-optional-queue-arguments
+
+> 하드코딩된 `x-arguments`는 애플리케이션을 재배포하고 큐를 삭제한 후 재선언 되는것 없이 변경될 수 없기 때문에 강력하게 권장하지 않는다.
+> 반면에 정책들은 언제든지변경이 가능하다.
+:{ "type": "warning", "icon": "info" }
+
+큐를 선언할 때 선택적인 `x-dead-letter-exchnage` 매개변수를 지정하여 큐에 대한 DLX를 설정 가능하다. 값은 동일한 가상 호스트의 교환소(Exchange)명이어야 한다:
+
+```java
+channel.exchangeDeclare("some.exchange.name", "direct");
+
+// Important: prefer using policies over hardcoded x-arguments
+Map<String, Object> args = new HashMap<String, Object>();
+args.put("x-dead-letter-exchange", "some.exchange.name");
+channel.queueDeclare("myqueue", false, false, false, args);
+```
+
+위의 코드는 `some.exchange.name`이라는 새로운 교환소(Exchange)를 선언하고 이 교환소를 새로 생성된 Queue에 대해 DLX로 설정한다.
+참고로 큐가 선언될 때 교환소는 선언되지 않아도 되지만, 메세지들이 dead-letter가 될 시점에는 존재 해야한다.
+해당 항목이 누락된다면, 메세지는 삭제된다.
+
+대상 DLX 이름 외에도, 메세지가 dead letter 될 때 사용할 라우팅키도 설정할 수 있다. 라우팅 키가 설정되지 않으면 메세지의 라우팅키가 사용된다.
+
+```java
+// Important: prefer using policies over hardcoded x-arguments.
+Map<String, Object> args = new HashMap<String, Object>();
+args.put("x-dead-letter-exchange", "some.exchange.name");
+args.put("x-dead-letter-routing-key", "some-routing-key");
+```
+
+DLX가 지정될 때, 선언된 큐에 대한 일반 구성 권한 외에도 사용자는 해당 큐에 대한 읽기 권한과 DLX에 대한 쓰기권한을 가져야한다.
+권한은 큐가 선언될 때 검증된다.
