@@ -11,6 +11,7 @@ excerpt_separator: <!--more-->
 hide: false
 ---
 
+문자열 집합과 문자열 인코딩의 차이를 이해하고, 서로 다른 인코딩을 사용하는 상황에서 어떻게 처리해야 할지 알아보자
 <!--more-->
 
 ## 사전지식::prerequisites
