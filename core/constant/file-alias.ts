@@ -18,6 +18,7 @@ export default class FileAlias {
     private static readonly NETWORK = new FileAlias("network", "네트워크");
     private static readonly TCP_IP = new FileAlias("tcp-ip", "TCP/IP");
     private static readonly DATABASE = new FileAlias("database", "데이터베이스");
+    private static readonly MYSQL = new FileAlias("mysql", "MySQL");
     private static readonly OS = new FileAlias("os", "운영체제");
     private static readonly COMPUTER = new FileAlias("computer-science", "컴퓨터");
     private static readonly HARDWARE = new FileAlias("computer-structure", "하드웨어");
@@ -41,7 +42,7 @@ export default class FileAlias {
     public static values(): Array<FileAlias> {
         return [this.DOCS, this.ALGORITHM, this.DATA_STRUCTURE, this.JAVA, this.JAVASCRIPT, this.TYPESCRIPT,
             this.BACK_END, this.NETWORK, this.TCP_IP, this.CPP,
-            this.FRAMEWORK, this.SPRING, this.LANGUAGE, this.SWIFT, this.TOOL, this.DATABASE,
+            this.FRAMEWORK, this.SPRING, this.LANGUAGE, this.SWIFT, this.TOOL, this.DATABASE, this.MYSQL,
             this.OS, this.COMPUTER, this.HARDWARE, this.SOFTWARE_DESIGN, this.BEHAVIOR, this.STRUCTURE,
             this.INFRASTRUCTURE,
             this.KUBERNETES,

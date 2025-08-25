@@ -102,6 +102,84 @@
     "content": "\r\n## PIO란?\r\n\r\n`Programmed I/O`(이하 PIO)는 말그대로 프로그램 입출력이다. `PIO` 방식은 [네트워크 어댑터]() 또는 [ATA]() 기억장치 같은 주변기기와 [CPU](/wiki/central-processing-unit) 사이에서 데이터를 주고 받는다.\r\nCPU의 개입으로 처리되므로 성능에 영향을 주며, 이러한 단점을 극복하기 위해 [인터럽트](/wiki/interrupt)나 [DMA](/wiki/direct-memory-access)같은 방식이 고안되었다.\r\n\r\n\r\n## PIO의 데이터 전송방식\r\n\r\n`PIO`는 CPU가 데이터를 읽거나 쓸 장치에대해서 주소신호(대상주소)와 제어신호(IOR, IOW)로 I/O 활성화가 이루어지면 데이터버스를 통해 전송된다. \r\n"
   },
   {
+    "path": "/docs/database/mysql/character-encoding",
+    "header": {
+      "layout": "post",
+      "title": "DB와 App의 인코딩이 다르다면 어떻게 처리해야 할까?",
+      "tags": [
+        "Database",
+        "MySQL",
+        "Character Encoding",
+        "Encoding"
+      ],
+      "date": 1756145640000,
+      "thumbnail": "/post/database/mysql/character-encoding/index.png",
+      "current-company": "NEOWIZ",
+      "current-position": "Software Engineer",
+      "summary": "데이터베이스 인코딩",
+      "excerpt_separator": "<!--more-->",
+      "hide": false,
+      "breadcrumbs": [
+        "문서",
+        "데이터베이스",
+        "MySQL"
+      ],
+      "images": [
+        {
+          "src": "/post/database/mysql/character-encoding/matrix-of-character-set.png",
+          "alt": "16 ~ 18구의 한글"
+        }
+      ],
+      "headlines": {
+        "rank": 0,
+        "origin": "root::root",
+        "title": "root",
+        "fragment": "root",
+        "children": [
+          {
+            "rank": 2,
+            "origin": "사전지식::prerequisites",
+            "title": "사전지식",
+            "fragment": "prerequisites",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "구역·점 방식의 코드 매트릭스::code-matrix-for-character-set",
+                "title": "구역·점 방식의 코드 매트릭스",
+                "fragment": "code-matrix-for-character-set",
+                "children": []
+              }
+            ]
+          },
+          {
+            "rank": 2,
+            "origin": "EUC-KR을 UTF-8로 변환하기::converting-euc-kr-to-utf-8",
+            "title": "EUC-KR을 UTF-8로 변환하기",
+            "fragment": "converting-euc-kr-to-utf-8",
+            "children": []
+          },
+          {
+            "rank": 2,
+            "origin": "서로 다른 인코딩의 사용::using--different-encodings",
+            "title": "서로 다른 인코딩의 사용",
+            "fragment": "using--different-encodings",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "MySQL에서 클라이언트와 서로 다른 인코딩으로 통신하기::connecting-with-different-encodings",
+                "title": "MySQL에서 클라이언트와 서로 다른 인코딩으로 통신하기",
+                "fragment": "connecting-with-different-encodings",
+                "children": []
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "description": "",
+    "content": "\r\n\r\n## 사전지식::prerequisites\r\n\r\n```\r\n캐릭터 인코딩의 종류들:\r\n├── ASCII (영어 + 기본 기호, 128개)\r\n├── ISO-8859-1 (서유럽 언어, 256개)\r\n├── EUC-KR (한국어)\r\n├── Shift_JIS (일본어)\r\n└── Unicode ← 이것도 캐릭터셋 중 하나!\r\n    ├── UTF-8 (인코딩 방식)\r\n    ├── UTF-16 (인코딩 방식)\r\n    └── UTF-32 (인코딩 방식)\r\n```\r\n\r\n**문자열 집합**은 문자들의 집합을 정의하는 표준 규칙이다. 즉 어떤 문자들이 존재하는지를 정의한다.\r\n위의 예시처럼 `ASCII`, `ISO-8859-1(Latin)`, `EUC-KR` 등이있다.\r\n\r\n`Character Set`(문자열 집합)은 `Character Encoding`(문자열 인코딩)과 다르다. \r\n집합은 어떤 문자를 포함 할 지를 정하고,  인코딩을 해당 문자를 어떤 바이트로 변환할지에 대한 구체적 방법이다.\r\n\r\n엄밀히 말하면 한글을 표현하는 KS X 1001 (완성형 한글)은 Character Set이며, 이를 매핑에 사용하는 EUC-KR은 `Character Encoding`이다.\r\n하지만 통상적으로 `Character Encoding`에 바이트로 표현할 `Character Set` 맵핑이 있기 때문에 `EUC-KR Character Set`이라고 칭하는것이다.\r\n\r\n좀 더 상세하게 기술하자면, 특정 문자는 Code Page이고, 그 문자에 해당하는 숫자는 Code Point이다.\r\n[`KS X 1001`에서 매핑](https://www.unicode.org/Public/MAPPINGS/OBSOLETE/EASTASIA/KSC/KSX1001.TXT)하는 `가 (0x3021)`라는 문자를 KS X 1001 문자셋으로 분해하여 EUC-KR로 인코딩하면, 아래와 같은 순서로 진행된다.\r\n\r\n::code-group\r\n```text::0x3021 분해\r\n'가' 0x3021을 분해하면\r\n상위 바이트: 0x30 (48)\r\n하위 바이트: 0x21 (33)\r\n\r\n구역-점 체계를 인코딩한 코드포인트:\r\n0x30 = 구역 16 + 0x20 (16 + 32 = 48)\r\n0x21 = 점 1 + 0x20 (1 + 32 = 33)\r\n```\r\n```text::KS X 1001 -> EUC-KR 직접변환\r\nKS X 1001: 0x3021 ('가')\r\n\r\n1단계: 구역-점 추출\r\n구역 (0x30 - 0x20) = 0x10 = 16\r\n점 (0x21 - 0x20) = 0x01 = 1\r\n\r\n2단계: EUC-KR 바이트 계싼\r\n첫 번째 바이트 = 구역 + 0xA0 = 16 + 0xA0 = 0xB0\r\n두 번째 바이트 = 점 + 0xA0 = 1 + 0xA0 = 0xA1\r\n결과: 0xB0A1\r\n```\r\n```text::변환 과정 요약\r\nKS X 1001 코드 포인트: 0x3021\r\n         ↓ (구역-점 추출)\r\n구역 16, 점 1\r\n         ↓ (EUC-KR 인코딩 규칙)\r\nEUC-KR 바이트: 0xB0A1\r\n```\r\n::\r\n\r\n위 과정을 통해 KS X 1001 코드 포인트를 EUC-KR 바이트로 직접 변환이 가능하다.\r\n\r\n과거에는 언어별로 필요한 문자 때문에, 서로 다른 인코딩을 사용하였다.\r\n그 결과 각 사이트간 문자가 깨지는 문제가 발생하였다. 이를 해결하기 위해 유니코드로 말그대로 통합하는 부호를 만들었다.\r\n\r\n모든 웹 사이트는 UTF-8 유니코드를 사용하여 각기 다른 언어를 하나에 페이지에서 한번에 보여줄 수 있었다. 그러나 서로다른 언어를 한개의 인코딩으로 보여줄 수 없기에 유니코드를 만들었다.\r\n유니코드는 전세계 언어를 한개로 통합한 인코딩이다.\r\n\r\n### 구역·점 방식의 코드 매트릭스::code-matrix-for-character-set\r\n\r\n동아시아 권에서 사용하는 여러 한차체계를 표현하기위해 고안된 구역·점 방식은 여러 언어를 포함한 문자열 집합에서 주로 사용된다.\r\n[`KS X 1001`](https://www.koreafont.com/PDF/KSX1001Hangul.pdf)의 경우 94 x 94 매트릭스를 사용하며, 세로축(구역)와 가로축(점)으로 구분 할 수 있다.\r\n각 구역의 0번 점(A0)은 스페이스(깨지지 않는 공백)를 의미하고, 95번(FF)는 끝(EOF)을 알리는 값이다. \r\n따라서 실제 사용되는 값은 94개이다. 그 중 한글은 16 ~ 40구 까지 총 25개의 구역을 사용한다.\r\n\r\n|    | 0 | 1 | 2 | 3 | … | 94 | 95 |\r\n|----|---|---|---|---|---|----|----|\r\n| 16 |   | 가 | 각 | 간 | …  | 괆  |    |\r\n| 17 |  | 괌 | 괍 | 괏 |  …  | 깸  |    |\r\n\r\n16(0xFF) X 6 로 한개의 구역을표현 하고 여기서 실제로 문자가 있는 94개의 점으로 구분된다.\r\n\r\n![16 ~ 18구의 한글](/post/database/mysql/character-encoding/matrix-of-character-set.png)\r\n: { \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"KS X 1001의 16 ~ 18구역\" }\r\n\r\n## EUC-KR을 UTF-8로 변환하기::converting-euc-kr-to-utf-8\r\n\r\n`가`라는 문자의 바이트를 각 인코딩 별로 보면 다음과 같다.\r\n\r\n| EUC-KR Code Point | Code Page | UTF-8 Code Point |\r\n|-------------------|-----------|------------------|\r\n| 0xB0A0            | 가         | 0xAC00           |\r\n| 0xB3AA            | 나         | 0xB098           |\r\n:{ \"align\": \"center\", \"max-width\": \"400px\", \"description\": \"EUC-KR의 유니코드 매핑 테이블\" }\r\n\r\n이미 만들어진 EUC-KR 인코딩을 UTF-8로 수학적 변환을 하는 것은 불가능하다.\r\n게다가 유니코드가 만들어질 때 모든 언어를 고려해서 만들어졌기 때문에, 각 문자열 집합 별 매핑 테이블을 제공한다.\r\n\r\n`EUC-KR Encoding`에서 참조하는 `KS X 1001`의 경우 완성형 문자열 집합 이고, 유니코드(UTF-8, UTF-16)은 조합형 방식을 채택했다.\r\n따라서 `EUC-KR` 인코딩은 유니코드 컨소시엄에서 제공하는 [KS X 1001 매핑 테이블](https://www.unicode.org/Public/MAPPINGS/OBSOLETE/EASTASIA/KSC/KSX1001.TXT)을 사용 해야하며,\r\n그 기준은 `가`, `나`와 같은 코드 페이지로 매핑된다. \r\n\r\nJava에서는 `jdk.charsets` 패키지의 `EUC_KR` 클래스에서 변환하며, 룩업 테이블 방식으로 `UTF-8 Code Point`의 인덱스를 찾도록 구성되었다.\r\n즉 `EUC-KR Code Point` 값을 특정 인덱스로 변환하여 `UTF-8 Code Point` 룩업 테이블에서 가져와 변환한다. \r\n\r\n언어 별로 방법은 다르지만, 룩업 테이블을 매핑하는 것은 동일하다. \r\n예를 들어, `EUC-KR` 인코딩은 `KS X 1001` 문자열 집합을 사용하기에 구 16, 점 1이라는 값을 얻을 수 있다.\r\n이 값은 이용해 기존 `0xB0A1`의 각각의 자리수를 `0xA1`이라는 값을 빼도 구할 수 있다.\r\n\r\n```text\r\n0xB0 - 0xA1 = 15(16-1)\r\n0xA1 - 0xA1 = 0 (1-1)\r\n\r\n(구의 인덱스 * 94) + (점의 인덱스)= (15 * 94) + 0 = 1410\r\n```\r\n\r\n> `-1`로 인덱스를 만들고, 상위 바이트에 `* 94`를 하면 구역의 인덱스를 알 수 있다.\r\n:{ \"type\": \"tip\", \"icon\": \"lightbulb\" }\r\n\r\n`EUC-KR` 디코더에서는 룩업 테이블에 `1410`번 인덱스로 `U+AC00(가)` 값을 갖고 있고 이를 이용해 변환이 가능한 방식이다.\r\n\r\n\r\n## 서로 다른 인코딩의 사용::using--different-encodings\r\n\r\n처음부터 캐릭터 인코딩을 유니코드로 사용하면 문제가 되지 않지만, 이미 만들어진 상황에서는 어떻게 해야할까?\r\n\r\n예를들어 오래된 .NET Framework를 사용하는 애플리케이션의 경우에는 어떨까. 한국에서는 .NET Framework 초기 버전에서 기본 인코딩이 `CP949`였다.\r\n파일 저장, 데이터베이스 저장 시 명시적으로 UTF-8이나 Unicode를 지정하지 않으면 CP949로 저장해야했기 때문에, 많은 윈도우 앱의 기본 인코딩이 유니코드를 사용하지 않았다.\r\n\r\n이 경우 현재까지 서비스하고 있다면 새로만 들어지는 여러 데이터 관리 툴, 검색툴은 모두 데이터 인코딩을 맞춰야 할까?\r\n그렇지 않다. 가장 간단한 방법은 데이터는 유니코드로, 데이터를 필요로 하는곳에서 해당 인코딩에 맞게 사용하면 된다.\r\n\r\n```text\r\n╭─ EUC-KR ─╮           ╭─ UTF-8 ─╮\r\n│          │    -→     │         │\r\n│ Database │ (Convert) │   App   │ \r\n│          │    ←-     │         │\r\n╰──────────╯           ╰─────────╯\r\n```\r\n\r\n예를 들어, 검색 기능을 구현한다고 가정하자.\r\n애플리케이션에서 검색어(UTF-8)를 그대로 보내면 Database(EUC-KR)는 알지 못한다. 서로 다른 인코딩을 사용하기 때문이다.\r\n따라서 잘못된 문자열로 쿼리 파라미터가 전달되고, 잘못 찾은 결과(EUC-KR)를 App(UTF-8)로 깨져서 전달 한다. \r\n\r\n이를 중간에서 잘 변환해주기 위해서는 설정과 옵션을 올바르게 사용해야한다.\r\n\r\n### MySQL에서 클라이언트와 서로 다른 인코딩으로 통신하기::connecting-with-different-encodings\r\n\r\nMySQL 클라이언트로 결과의 인코딩을 다르게 받아야하는경우, 가장 기본적인 방법은 옵션을 적용하는 것이다.\r\n\r\n::code-group\r\n```sql::인코딩 변환 옵션\r\n-- 클라이언트가 DB로 SQL 문을 보낼 때 사용하는 인코딩\r\nSET character_set_client = utf8mb4;\r\n-- 서버에서 클라이언트로 반환하는 결과의 인코딩\r\nSET character_set_results = utf8mb4;\r\n-- 서버 내부에서 쿼리를 처리시 사용하는 인코딩\r\nSET character_set_connection = utf8mb4;\r\n```\r\n```sql::한번에 사용하는 옵션\r\n-- 각각의 옵션을 한번에 모두 설정하며, 내부적인 동작은 동일하다.\r\nset NAMES utf8mb4;\r\n```\r\n::\r\n\r\n> 위 옵션은 현재 세션에서만 동작하므로, 새로운 세션에서는 추가로 적용해야 한다.\r\n:{ \"type\": \"note\", \"icon\": \"info\" }\r\n\r\n따라서 매번 애플리케이션에서 처리해줘야 하기에 일반적으로 애플리케이션은 커넥션 옵션에 클라이언트의 인코딩을 명시한다.\r\n```java\r\nString url = \"jdbc:mysql://localhost:3306/mydb?characterEncoding=utf8mb4\";\r\n```\r\n\r\n`characterEncoding` 옵션은 위에서 설명한 처리를 간단하게 처리해주기 때문에, 클라이언트에서는 MySQL의 인코딩을 알지 못해도 올바른 처리가 이루어진다. \r\n\r\n> `character_set_database` 옵션은 현재 사용중인 DB의 기본 문자열 집합을, `character_set_server`는 MySQL 서버의 문자열 집합(새로 생성되는 DB에 해당 인코딩을 적용)을\r\n> 영구적으로 적용하기 때문에 주의 해야한다.\r\n:{ \"type\": \"caution\", \"icon\": \"warning-octagon\" }\r\n"
+  },
+  {
     "path": "/docs/back-end/message-queue/dead-letter-exchange-in-rabbitmq",
     "header": {
       "layout": "post",
@@ -158,12 +236,42 @@
                 "children": []
               }
             ]
+          },
+          {
+            "rank": 2,
+            "origin": "데드레터가 된 메세지들 라우팅하기::routing-dead-lettered-messages",
+            "title": "데드레터가 된 메세지들 라우팅하기",
+            "fragment": "routing-dead-lettered-messages",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "데드레터 사이클::dead-letter-cycle",
+                "title": "데드레터 사이클",
+                "fragment": "dead-letter-cycle",
+                "children": []
+              }
+            ]
+          },
+          {
+            "rank": 2,
+            "origin": "안전::safety",
+            "title": "안전",
+            "fragment": "safety",
+            "children": [
+              {
+                "rank": 3,
+                "origin": "발행자 확인으로 재발행::re-publishing-with-publisher-confirms",
+                "title": "발행자 확인으로 재발행",
+                "fragment": "re-publishing-with-publisher-confirms",
+                "children": []
+              }
+            ]
           }
         ]
       }
     },
     "description": "RabbitMQ는 다양한 failover 메커니즘을 구현하였다. 그중 메세지 처리를 위한 DLX 개념을 알아보자.",
-    "content": "\r\n\r\n> 이 문서는 [원문](https://www.rabbitmq.com/docs/dlx)을 참조하여 작성하였습니다.\r\n:{ \"type\": \"tip\", \"icon\": \"light-bulb\" }\r\n\r\n## Dead Letter Exchange란?::what-is-a-dead-letter-exchange\r\n\r\n큐에서 온 메세지는 \"dead-lettered\"상태가 될 수 있다. 즉, 다음의 4가지 이벤트 중 하나가 발생하면 이러한 메세지가 exchange에 재발행 된다.\r\n\r\n1. 메세지가 다음 상황에서 [거부(부정적 승인)](https://www.rabbitmq.com/docs/confirms)인 경우\r\n    * AMQP 1.0. 수신자가 [`rejected`](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-rejected) 결과를 사용하는 경우\r\n    * AMQP 0.9.1 컨슈머가 `requeue`파라미터를 `false`로 설정하여 `basic.reject`, `basic.nack`를 사용하는 경우\r\n   \r\n   > RabbitMQ에서는 프로토콜 버전에 따라 용어가 다르다 0.9.1(기본)에서는 메세지를 소비하는 개념으로서 Consumer(소비자)를 1.0에서는 메세지를 수신하는 개념으로서 Receiver(수신자)를\r\n   사용한다.\r\n   :{ \"icon\": \"info\", \"type\": \"note\" }\r\n\r\n2. 메세지가 [per-message TTL](https://www.rabbitmq.com/docs/ttl) 때문에 만료된 경우\r\n3. 메세지가 큐의 [길이 제한](https://www.rabbitmq.com/docs/maxlength) 초과로 삭제된 경우\r\n4. 메세지가 [전달 제한](https://www.rabbitmq.com/docs/quorum-queues#poison-message-handling)보다 더 많은 횟수로 쿼럼 큐(Quorum Queue)에 반환된 경우\r\n\r\n큐 전체가 [만료](https://www.rabbitmq.com/docs/ttl#queue-ttl)되면, 큐에 있는 메세지는 dead-lettered 상태가 **아님**\r\n\r\nDead letter exchanges (DLXs)는 정상 exchange(교환소)들이다. DLX는 일반 Exchange를 사용하는거지 특별한 선언방식이나 사용방식이 있는게 아니다.\r\n그냥 일반 Exchange를 DLX용도로 사용한다고 이해하면 된다.\r\n\r\n## Dead Lettering이 구성되는 방식::how-dead-lettering-is-configured\r\n\r\n어떤 주어진 큐에 대해, DLX는 클라이언트는 [`정책`](https://www.rabbitmq.com/docs/policies)을 사용하여 선언할 수 있다.\r\n쿼럼 큐에서만 지원되는 것들을 포함하여 몇몇의 DLX 관련 정책 키들이 있다. 하지만 핵심적인 두가지는 다음과 같다:\r\n\r\n* `dead-letter-exchange`: DLX를 사용하기 위한 이름\r\n* `dead-letter-routing-key`: dead-lettering 메세지들일때 사용되는 라우팅 키\r\n\r\n> 정책 키들은 [선택적인 매개변수](https://www.rabbitmq.com/docs/queues#optional-arguments)를 통해 큐 설정 시점에 어플리케이션에서 설정 가능하다.\r\n>\r\n>하드코딩된 `x-arguments`는 강력하게 권장하지 않는다. 왜냐하면 애플리케이션 없이는 변경할 수 없기 때문이다. 반면 정책은 언제든지 변경할 수 있다.\r\n:{ \"icon\": \"info\", \"type\": \"note\" }\r\n\r\n정책과 매개변수가 동시에 DLX를 지정하는 경우, 매개변수가 정책보다 우선적 적용된다.\r\n\r\n대상 DLX 이름 외에도, 메세지가 dead-letter 될 때 사용할 라우팅키도 지정할 수있다. 라우팅키가 설정되지 않는다면, 메세지의 라우팅키가 사용된다.\r\nDLX가 지정될 때, 선언된 큐에 일반 구성 권한 외에도, 사용자는 그 큐에 읽기 권한과 dlx에 쓰기 권한이 있어야한다.\r\n\r\n> 일반 구성 권한(Queue/Exchange 생성, 삭제, 바인딩)만으로는 읽기(큐에서 메세지 수신) 권한이나, 쓰기(exchange에 메세지 발행) 권한까지 사용할 수 없다.\r\n:{ \"type\": \"warning\", \"icon\": \"warning-diamond\" }\r\n\r\n## 정책을 사용하여 DLX 구성하기::configuring-a-dead-letter-exchange-using-a-policy\r\n\r\n정책을 사용하여 DLX를 지정하기 위해 \"dead-letter-exchange\" 키를 정책 선언에 추가한다:\r\n\r\n::code-group\r\n```bash::bash\r\nrabbitmqctl set_policy DLX \".*\" '{\"dead-letter-exchange\":\"my-dlx\"}' --apply-to queues --priority 7\r\n```\r\n```powershell::Power Shell\r\nrabbitmqctl set_policy DLX \".*\" \"{\"\"dead-letter-exchange\"\":\"\"my-dlx\"\"}\" --apply-to queues --priority 7\r\n```\r\n```bash::rabbitmqadmin V2\r\nrabbitmqadmin policies declare --name=DLX --pattern=\".*\" --definition='{\"dead-letter-exchange\":\"my-dlx\"}' --apply-to=queues --priority=7\r\n```\r\n```http::HTTP API\r\nPUT /api/policies/%2f/DLX\r\n    {\"pattern\": \".*\",\r\n     \"definition\": {\"dead-letter-exchange\":\"my-dlx\"},\r\n     \"priority\": 7,\r\n     \"apply-to\": \"queues\"}\r\n```\r\n::\r\n\r\n위 예제에서는 모든 큐에 적용되고 \"my-dlx\"라는 교환소를 dead letter 대상으로 구성하는 \"DLX\"라는 정책을 선언했다.\r\n이건 그냥 예제이고, 실무에서는 각각 일부 큐들에게만 적용하는 여러 정책들을 보는것이 일반적이다.\r\n\r\n마찬가지로, 정책에 \"dead-letter-routing-key\"를 추가하여 명시적 라우팅키를 지정할 수 있다:\r\n\r\n::code-group\r\n```bash::bash\r\nrabbitmqctl set_policy DLX \".*\" '{\"dead-letter-exchange\":\"my-dlx\", \"dead-letter-routing-key\":\"my-routing-key\"}' --apply-to queues --priority 7\r\n```\r\n```powershell::Power Shell\r\nrabbitmqctl set_policy DLX \".*\" \"{\"\"dead-letter-exchange\"\":\"\"my-dlx\"\", \"\"dead-letter-routing-key\"\":\"\"my-routing-key\"\"}\" --apply-to queues --priority 7\r\n```\r\n```bash::rabbitmqadmin V2\r\nrabbitmqadmin policies declare --name=DLX --pattern=\".*\" --definition='{\"dead-letter-exchange\":\"my-dlx\", \"dead-letter-routing-key\":\"my-routing-key\"}' --apply-to=queues --priority=7\r\n```\r\n```http::HTTP API\r\nPUT /api/policies/%2f/DLX\r\n    {\"pattern\": \".*\",\r\n     \"definition\": {\"dead-letter-exchange\":\"my-dlx\"},\r\n     \"priority\": 7,\r\n     \"apply-to\": \"queues\"}\r\n```\r\n::\r\n\r\n### 선택적인 Queue 매개변수를 사용하여 DLX 구성하기::configuring-a-dead-letter-exchange-using-optional-queue-arguments\r\n\r\n>하드코딩된 `x-arguments`는 애플리케이션을 재배포하고 큐를 삭제한 후 재선언 되는것 없이 변경될 수 없기 때문에 강력하게 권장하지 않는다.\r\n>반면에 정책들은 언제든지변경이 가능하다.\r\n:{ \"type\": \"warning\", \"icon\": \"info\" }\r\n\r\n큐를 선언할 때 선택적인 `x-dead-letter-exchnage` 매개변수를 지정하여 큐에 대한 DLX를 설정 가능하다.  값은 동일한 가상 호스트의 교환소(Exchange)명이어야 한다:\r\n\r\n```java\r\nchannel.exchangeDeclare(\"some.exchange.name\", \"direct\");\r\n\r\n// Important: prefer using policies over hardcoded x-arguments\r\nMap<String, Object> args = new HashMap<String, Object>();\r\nargs.put(\"x-dead-letter-exchange\", \"some.exchange.name\");\r\nchannel.queueDeclare(\"myqueue\", false, false, false, args);\r\n```\r\n\r\n위의 코드는 `some.exchange.name`이라는 새로운 교환소(Exchange)를 선언하고 이 교환소를 새로 생성된 Queue에 대해 DLX로 설정한다.\r\n참고로 큐가 선언될 때 교환소는 선언되지 않아도 되지만, 메세지들이 dead-letter가 될 시점에는 존재 해야한다.\r\n해당 항목이 누락된다면, 메세지는 삭제된다.\r\n\r\n대상 DLX 이름 외에도, 메세지가 dead letter 될 때 사용할 라우팅키도 설정할 수 있다. 라우팅 키가 설정되지 않으면 메세지의 라우팅키가 사용된다.\r\n\r\n```java\r\n// Important: prefer using policies over hardcoded x-arguments.\r\nMap<String, Object> args = new HashMap<String, Object>();\r\nargs.put(\"x-dead-letter-exchange\", \"some.exchange.name\");\r\nargs.put(\"x-dead-letter-routing-key\", \"some-routing-key\");\r\n```\r\n\r\nDLX가 지정될 때, 선언된 큐에 대한 일반 구성 권한 외에도 사용자는 해당 큐에 대한 읽기 권한과 DLX에 대한 쓰기권한을 가져야한다.\r\n권한은 큐가 선언될 때 검증된다."
+    "content": "\r\n\r\n> 이 문서는 [원문](https://www.rabbitmq.com/docs/dlx)을 참조하여 작성하였습니다.\r\n:{ \"type\": \"tip\", \"icon\": \"light-bulb\" }\r\n\r\n## Dead Letter Exchange란?::what-is-a-dead-letter-exchange\r\n\r\n큐에서 온 메세지는 \"dead-lettered\"상태가 될 수 있다. 즉, 다음의 4가지 이벤트 중 하나가 발생하면 이러한 메세지가 exchange에 재발행 된다.\r\n\r\n1. 메세지가 다음 상황에서 [거부(부정적 승인)](https://www.rabbitmq.com/docs/confirms)인 경우\r\n   * AMQP 1.0. 수신자가 [\r\n     `rejected`](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-rejected) 결과를 사용하는\r\n     경우\r\n    * AMQP 0.9.1 컨슈머가 `requeue`파라미터를 `false`로 설정하여 `basic.reject`, `basic.nack`를 사용하는 경우\r\n\r\n   > RabbitMQ에서는 프로토콜 버전에 따라 용어가 다르다 0.9.1(기본)에서는 메세지를 소비하는 개념으로서 Consumer(소비자)를 1.0에서는 메세지를 수신하는 개념으로서 Receiver(수신자)를\r\n   사용한다.\r\n   :{ \"icon\": \"info\", \"type\": \"note\" }\r\n\r\n2. 메세지가 [per-message TTL](https://www.rabbitmq.com/docs/ttl) 때문에 만료된 경우\r\n3. 메세지가 큐의 [길이 제한](https://www.rabbitmq.com/docs/maxlength) 초과로 삭제된 경우\r\n4. 메세지가 [전달 제한](https://www.rabbitmq.com/docs/quorum-queues#poison-message-handling)보다 더 많은 횟수로 쿼럼 큐(Quorum Queue)에 반환된\r\n   경우\r\n\r\n큐 전체가 [만료](https://www.rabbitmq.com/docs/ttl#queue-ttl)되면, 큐에 있는 메세지는 dead-lettered 상태가 **아님**\r\n\r\nDead letter exchanges (DLXs)는 정상 exchange(교환소)들이다. DLX는 일반 Exchange를 사용하는거지 특별한 선언방식이나 사용방식이 있는게 아니다.\r\n그냥 일반 Exchange를 DLX용도로 사용한다고 이해하면 된다.\r\n\r\n## Dead Lettering이 구성되는 방식::how-dead-lettering-is-configured\r\n\r\n어떤 주어진 큐에 대해, DLX는 클라이언트는 [`정책`](https://www.rabbitmq.com/docs/policies)을 사용하여 선언할 수 있다.\r\n쿼럼 큐에서만 지원되는 것들을 포함하여 몇몇의 DLX 관련 정책 키들이 있다. 하지만 핵심적인 두가지는 다음과 같다:\r\n\r\n* `dead-letter-exchange`: DLX를 사용하기 위한 이름\r\n* `dead-letter-routing-key`: dead-lettering 메세지들일때 사용되는 라우팅 키\r\n\r\n> 정책 키들은 [선택적인 매개변수](https://www.rabbitmq.com/docs/queues#optional-arguments)를 통해 큐 설정 시점에 어플리케이션에서 설정 가능하다.\r\n>\r\n>하드코딩된 `x-arguments`는 강력하게 권장하지 않는다. 왜냐하면 애플리케이션 없이는 변경할 수 없기 때문이다. 반면 정책은 언제든지 변경할 수 있다.\r\n:{ \"icon\": \"info\", \"type\": \"note\" }\r\n\r\n정책과 매개변수가 동시에 DLX를 지정하는 경우, 매개변수가 정책보다 우선적 적용된다.\r\n\r\n대상 DLX 이름 외에도, 메세지가 dead-letter 될 때 사용할 라우팅키도 지정할 수있다. 라우팅키가 설정되지 않는다면, 메세지의 라우팅키가 사용된다.\r\nDLX가 지정될 때, 선언된 큐에 일반 구성 권한 외에도, 사용자는 그 큐에 읽기 권한과 dlx에 쓰기 권한이 있어야한다.\r\n\r\n> 일반 구성 권한(Queue/Exchange 생성, 삭제, 바인딩)만으로는 읽기(큐에서 메세지 수신) 권한이나, 쓰기(exchange에 메세지 발행) 권한까지 사용할 수 없다.\r\n:{ \"type\": \"warning\", \"icon\": \"warning-diamond\" }\r\n\r\n## 정책을 사용하여 DLX 구성하기::configuring-a-dead-letter-exchange-using-a-policy\r\n\r\n정책을 사용하여 DLX를 지정하기 위해 \"dead-letter-exchange\" 키를 정책 선언에 추가한다:\r\n\r\n::code-group\r\n\r\n```bash::bash\r\nrabbitmqctl set_policy DLX \".*\" '{\"dead-letter-exchange\":\"my-dlx\"}' --apply-to queues --priority 7\r\n```\r\n\r\n```powershell::Power Shell\r\nrabbitmqctl set_policy DLX \".*\" \"{\"\"dead-letter-exchange\"\":\"\"my-dlx\"\"}\" --apply-to queues --priority 7\r\n```\r\n\r\n```bash::rabbitmqadmin V2\r\nrabbitmqadmin policies declare --name=DLX --pattern=\".*\" --definition='{\"dead-letter-exchange\":\"my-dlx\"}' --apply-to=queues --priority=7\r\n```\r\n\r\n```http::HTTP API\r\nPUT /api/policies/%2f/DLX\r\n    {\"pattern\": \".*\",\r\n     \"definition\": {\"dead-letter-exchange\":\"my-dlx\"},\r\n     \"priority\": 7,\r\n     \"apply-to\": \"queues\"}\r\n```\r\n::\r\n\r\n위 예제에서는 모든 큐에 적용되고 \"my-dlx\"라는 교환소를 dead letter 대상으로 구성하는 \"DLX\"라는 정책을 선언했다.\r\n이건 그냥 예제이고, 실무에서는 각각 일부 큐들에게만 적용하는 여러 정책들을 보는것이 일반적이다.\r\n\r\n마찬가지로, 정책에 \"dead-letter-routing-key\"를 추가하여 명시적 라우팅키를 지정할 수 있다:\r\n\r\n::code-group\r\n\r\n```bash::bash\r\nrabbitmqctl set_policy DLX \".*\" '{\"dead-letter-exchange\":\"my-dlx\", \"dead-letter-routing-key\":\"my-routing-key\"}' --apply-to queues --priority 7\r\n```\r\n\r\n```powershell::Power Shell\r\nrabbitmqctl set_policy DLX \".*\" \"{\"\"dead-letter-exchange\"\":\"\"my-dlx\"\", \"\"dead-letter-routing-key\"\":\"\"my-routing-key\"\"}\" --apply-to queues --priority 7\r\n```\r\n\r\n```bash::rabbitmqadmin V2\r\nrabbitmqadmin policies declare --name=DLX --pattern=\".*\" --definition='{\"dead-letter-exchange\":\"my-dlx\", \"dead-letter-routing-key\":\"my-routing-key\"}' --apply-to=queues --priority=7\r\n```\r\n\r\n```http::HTTP API\r\nPUT /api/policies/%2f/DLX\r\n    {\"pattern\": \".*\",\r\n     \"definition\": {\"dead-letter-exchange\":\"my-dlx\"},\r\n     \"priority\": 7,\r\n     \"apply-to\": \"queues\"}\r\n```\r\n\r\n::\r\n\r\n### 선택적인 Queue 매개변수를 사용하여 DLX 구성하기::configuring-a-dead-letter-exchange-using-optional-queue-arguments\r\n\r\n> 하드코딩된 `x-arguments`는 애플리케이션을 재배포하고 큐를 삭제한 후 재선언 되는것 없이 변경될 수 없기 때문에 강력하게 권장하지 않는다.\r\n> 반면에 정책들은 언제든지변경이 가능하다.\r\n:{ \"type\": \"warning\", \"icon\": \"info\" }\r\n\r\n큐를 선언할 때 선택적인 `x-dead-letter-exchnage` 매개변수를 지정하여 큐에 대한 DLX를 설정 가능하다. 값은 동일한 가상 호스트의 교환소(Exchange)명이어야 한다:\r\n\r\n```java\r\nchannel.exchangeDeclare(\"some.exchange.name\", \"direct\");\r\n\r\n// Important: prefer using policies over hardcoded x-arguments\r\nMap<String, Object> args = new HashMap<String, Object>();\r\nargs.put(\"x-dead-letter-exchange\", \"some.exchange.name\");\r\nchannel.queueDeclare(\"myqueue\", false, false, false, args);\r\n```\r\n\r\n위의 코드는 `some.exchange.name`이라는 새로운 교환소(Exchange)를 선언하고 이 교환소를 새로 생성된 Queue에 대해 DLX로 설정한다.\r\n참고로 큐가 선언될 때 교환소는 선언되지 않아도 되지만, 메세지들이 dead-letter가 될 시점에는 존재 해야한다.\r\n해당 항목이 누락된다면, 메세지는 삭제된다.\r\n\r\n대상 DLX 이름 외에도, 메세지가 dead letter 될 때 사용할 라우팅키도 설정할 수 있다. 라우팅 키가 설정되지 않으면 메세지의 라우팅키가 사용된다.\r\n\r\n```java\r\n// Important: prefer using policies over hardcoded x-arguments.\r\nMap<String, Object> args = new HashMap<String, Object>();\r\nargs.put(\"x-dead-letter-exchange\", \"some.exchange.name\");\r\nargs.put(\"x-dead-letter-routing-key\", \"some-routing-key\");\r\n```\r\n\r\nDLX가 지정될 때, 선언된 큐에 대한 일반 구성 권한 외에도 사용자는 해당 큐에 대한 읽기 권한과 DLX에 대한 쓰기권한을 가져야한다.\r\n권한은 큐가 선언될 때 검증된다.\r\n\r\n## 데드레터가 된 메세지들 라우팅하기::routing-dead-lettered-messages\r\n\r\n데드레터가 된 메세지들은 다음중 하나의 방법으로 해당 DLX에 연결된다:\r\n\r\n* 큐에 지정된 라우팅 키로, 또는 이 값이 설정 되지 않았다면,\r\n* 원래 발행할 때 사용한 동일한 라우팅키로\r\n\r\n예를 들어, `foo`라우팅키로 교환소에 메세지를 발행하고, 그 메세지가 데드 레터가 된다면, `foo` 라우팅키로 해당 DLX에 발행된다.\r\n메세지가 원래 도착한 큐가 `x-deade-letter-routing-key` 값이 `bar`로 설정하여 선언되었다면 메세지는 `bar`라우팅키로 해당 DLX에 발행된다.\r\n\r\n참고로 특정 라우팅키가 큐에 대해 설정 되지 않았다면, 큐에 있는 메세지들은 모든 원래 라우팅키들로 데드레터가 된다.\r\n이 데드레터는 `CC`와 `BCC` 헤더들(이 두 헤더에 대한 자세한 내용은 [발신자 선택 분산](https://www.rabbitmq.com/docs/sender-selected)을 참조)로 추가된 라우팅 키들을\r\n포함한다.\r\n\r\n### 데드레터 사이클::dead-letter-cycle\r\n\r\n동일한 메세지가 동일한 큐에 두번 도달하는 사이클(메세지가 데드레터 되는)이 가능하다.\r\n이 데드레터 사이클은 데드레터 라우팅키를 지정하지 않고 큐가 메세지들을 기본 교환소로 데드레터링 할 때 일어날 수있다.\r\n만약 전체 사이클에서 거절이 없다면 RabbitMQ는 데드레터 사이클을 감지하고 메세지를 삭제하여 RabbitMQ 내의 메세지 무한루프를 방지한다.\r\n\r\n## 안전::safety\r\n\r\n데드 레터링(큐에서 메세지를 데드레터로 바꾸는)은 메세지 발행의 형식이고, 어떤 발행 형식이든 이것은 확실한 시나리오에서 실패할 수 있다.\r\n예를 들어 데드 레터링이 온라인 쿼럼을 갖고 있지 않은 쿼럼 큐 사용에 구성되었다면, 발행은 실패하고, 데드레터링을 수행하는 노드는 다음과 같은 메세지를 로깅한다:\r\n\r\n```\r\nCannot forward any dead-letter messages from source quorum queue 'qq.input' in vhost 'my-vhost'\r\nwith configured dead-letter-exchange exchange 'amq.topic' in vhost 'my-vhost'\r\nand configured dead-letter-routing-key 'my-app.events.type.abc'\r\n```\r\n\r\n### 발행자 확인으로 재발행::re-publishing-with-publisher-confirms\r\n\r\n기본적으로, 데드레터 된 메세지들은 내부적으로 활성화 된 발행자 [확인](https://www.rabbitmq.com/docs/confirms) 없이 재발행된다.\r\n그러므로 RabbitMQ 클러스터링 환경에서 DLX를 사용하는 것은 안전하게 보장되지 않는다. DLX 대상 큐에 발행된 후 메세지는 원본큐에서 즉시 삭제된다.\r\n\r\nThis ensures that 이것은 보장한다\r\nthere is no chance of excessive message // 과도한 메세지의 기회가 없다는 것 (문맥상 chance는 부적적인 의미여야 하는 데 어떤의미로 chance를 사용한것인지 궁금함)\r\nbuild up that 빌드업을\r\ncould exhaust broker resources. // 브로커 리소스를 exhaust 할 수 있는\r\n\r\n이것은 과도한 메세지의 발생할 틈이 없는 것이 브로커 리소스를 exhaust 할수 있는 빌드업을 보장한다.\r\n\r\nHowever, messages can be lost if the target queue\r\nis not available to accept messages."
   },
   {
     "path": "/docs/back-end/message-queue/configure-rabbitmq",

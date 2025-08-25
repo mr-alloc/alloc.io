@@ -8,7 +8,7 @@ current-company: NEOWIZ
 current-position: Software Engineer
 summary: RabbitMQ의 DLX란 무엇일까?
 excerpt_separator: <!--more-->
-hide: false
+hide: true
 ---
 RabbitMQ는 다양한 failover 메커니즘을 구현하였다. 그중 메세지 처리를 위한 DLX 개념을 알아보자.
 <!--more-->

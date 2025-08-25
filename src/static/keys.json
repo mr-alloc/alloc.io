@@ -1,6 +1,7 @@
 [
   "/wiki/io-manager",
   "/wiki/programmed-io",
+  "/docs/database/mysql/character-encoding",
   "/docs/back-end/message-queue/dead-letter-exchange-in-rabbitmq",
   "/docs/back-end/message-queue/configure-rabbitmq",
   "/docs/back-end/spring/cloud-stream-configuration",

@@ -8,7 +8,7 @@ current-company: NEOWIZ
 current-position: Software Engineer
 summary: 클라우드 스트림 구성
 excerpt_separator: <!--more-->
-hide: false
+hide: true
 ---
 
 서비스와 메시징플랫 폼을 연결하기 위해, Spring Cloud Stream 설정은 종류와 사용 방법을 알아보자.
