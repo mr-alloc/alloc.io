@@ -2,7 +2,7 @@
 layout: post
 title: 클래스 다이어그램
 tags: [UML, Class Diagram]
-date: 2019-10-18 14:25:00 +0900
+date: 2019-10-18 14:25:00
 thumbnail: /post/software-design/uml/class-diagram-intro.png
 profile-image: /post/profile/profile0.jpg
 current-company: Computer Academy

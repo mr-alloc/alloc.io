@@ -2,7 +2,7 @@
 layout: post
 title: 어댑터 패턴 (Adapter Pattern)
 tags: [Adapter Pattern, Design Pattern]
-date: 2020-06-12 20:17:00 +0900
+date: 2020-06-12 20:17:00
 thumbnail: /post/software-design/adapter-pattern-intro.svg
 profile-image: /post/profile/profile0.jpg
 current-company: Cubic INC

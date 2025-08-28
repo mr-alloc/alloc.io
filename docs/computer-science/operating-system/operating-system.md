@@ -2,7 +2,7 @@
 layout: post
 title: Operating System (OS)
 tags: [Operating System, OS]
-date: 2021-01-20 20:19:30 +0900
+date: 2021-01-20 20:19:30
 thumbnail: /post/computer-science/operating-system.webp
 current-company: Cubic INC
 current-position: SI Researcher

@@ -2,7 +2,7 @@
 layout: post
 title: istio 업데이트 (1.22.1 -> 1.25.0)
 tags: [ Spring, Spring Boot, Spring Security ]
-date: 2025-04-01 12:58:00 +0900
+date: 2025-04-01 12:58:00
 thumbnail: /post/infrastructure/kubernetes/update-istio.webp
 current-company: NEOWIZ
 current-position: Software Engineer

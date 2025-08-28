@@ -10,8 +10,10 @@
 
       <template #date>
         <div class="flex flex-row py-2">
-          <span class="text-gray-500 dark:text-gray-400">작성일</span>
-          <span class="px-2 text-gray-500 dark:text-gray-400">{{ dayjs(content.header.date).format('YYYY-MM-DD') }}</span>
+          <span class="text-gray-500 dark:text-gray-400">작성일시</span>
+          <span class="px-2 text-gray-500 dark:text-gray-400">{{
+              dayjs(content.header.date).format('YYYY-MM-DD HH:mm')
+            }}</span>
         </div>
       </template>
     </MainPageHeader>

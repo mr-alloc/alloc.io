@@ -2,7 +2,7 @@
 layout: post
 title: Gitlab CI 시작하기
 tags: [ Gitlab, CI, CI/CD ]
-date: 2025-04-01 12:58:00 +0900
+date: 2025-04-01 12:58:00
 thumbnail: /post/infrastructure/kubernetes/update-istio.webp
 current-company: NEOWIZ
 current-position: Software Engineer

@@ -2,7 +2,7 @@
 layout: post
 title: 타입스크립트 시작하기 1 (소개)
 tags: [Typescript, Javascript, Type]
-date: 2023-04-15 19:01:00 +0900
+date: 2023-04-15 19:01:00
 current-company: NEOWIZ
 current-position: Software Engineer
 profile-image: /post/profile/profile1.jpg

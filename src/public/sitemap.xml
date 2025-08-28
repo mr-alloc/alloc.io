@@ -2,16 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 >
     <url>
-        <loc>https://alloc.io/wiki/io-manager</loc>
-    </url>
-    <url>
-        <loc>https://alloc.io/wiki/programmed-io</loc>
+        <loc>https://alloc.io/docs/back-end/message-queue/dead-letter-exchange-in-rabbitmq</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/database/mysql/character-encoding</loc>
-    </url>
-    <url>
-        <loc>https://alloc.io/docs/back-end/message-queue/dead-letter-exchange-in-rabbitmq</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/back-end/message-queue/configure-rabbitmq</loc>
@@ -155,13 +149,22 @@
         <loc>https://alloc.io/docs/software-design/bridge-pattern</loc>
     </url>
     <url>
-        <loc>https://alloc.io/docs/software-design/adapter-pattern</loc>
-    </url>
-    <url>
         <loc>https://alloc.io/wiki/base64</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/algorithm/insertion-sort</loc>
+    </url>
+    <url>
+        <loc>https://alloc.io/wiki/bit</loc>
+    </url>
+    <url>
+        <loc>https://alloc.io/wiki/io-manager</loc>
+    </url>
+    <url>
+        <loc>https://alloc.io/wiki/programmed-io</loc>
+    </url>
+    <url>
+        <loc>https://alloc.io/docs/software-design/adapter-pattern</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/software-design/class-diagram</loc>
@@ -177,9 +180,6 @@
     </url>
     <url>
         <loc>https://alloc.io/docs/data-structure/stack</loc>
-    </url>
-    <url>
-        <loc>https://alloc.io/wiki/bit</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/data-structure/array</loc>

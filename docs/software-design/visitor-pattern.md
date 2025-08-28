@@ -2,7 +2,7 @@
 layout: post
 title: 비지터 패턴 (Visitor Pattern)
 tags: [ Visitor Pattern, Design Pattern, Software Design ]
-date: 2020-07-04 19:04:00 +0900
+date: 2020-07-04 19:04:00
 thumbnail: /post/software-design/visitor-pattern-intro.svg
 profile-image: /post/profile/profile0.jpg
 current-company: Cubic INC

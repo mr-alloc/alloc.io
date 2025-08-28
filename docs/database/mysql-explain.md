@@ -2,7 +2,7 @@
 layout: post
 title: MySQL의 EXPLAIN을 알아보자
 tags: [Database, MySQL, EXPLAIN]
-date: 2024-08-23 14:27:00 +0900
+date: 2024-08-23 14:27:00
 thumbnail: /post/database/mysql/mysql-explain-thumbnail.webp
 current-company: NEOWIZ
 current-position: Software Engineer

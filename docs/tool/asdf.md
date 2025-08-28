@@ -2,7 +2,7 @@
 layout: post
 title: 다중모듈 관리툴 asdf
 tags: [Module, Multi Module]
-date: 2023-02-14 22:14:00 +0900
+date: 2023-02-14 22:14:00
 thumbnail: /post/tool/asdf.png
 current-company: Herit Corporation
 current-position: Backend Server Developer

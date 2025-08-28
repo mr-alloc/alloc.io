@@ -2,7 +2,7 @@
 layout: post
 title: 브릿지 패턴 (Bridge Pattern)
 tags: [Bridge Pattern, Design Pattern, Software Design, OCP, SRP]
-date: 2020-06-15 12:17:00 +0900
+date: 2020-06-15 12:17:00
 thumbnail: /post/software-design/bridge-pattern-intro.svg
 profile-image: /post/profile/profile0.jpg
 current-company: Cubic INC

@@ -2,7 +2,7 @@
 layout: wiki
 title: 전기에너지를 만드는 전자
 tags: [원자, 전자, 원자핵, 렙톤]
-date: 2023-09-10 21:22:00 +0900
+date: 2023-09-10 21:22:00
 profile-image: /post/profile/winkkom.png
 current-company: NEOWIZ
 current-position: Software Engineer

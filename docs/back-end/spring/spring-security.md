@@ -2,7 +2,7 @@
 layout: post
 title: 스프링 시큐리티 프로젝트 구성
 tags: [ Spring, Spring Boot, Spring Security ]
-date: 2025-03-26 12:58:00 +0900
+date: 2025-03-26 12:58:00
 thumbnail: /post/back-end/spring/spring-security.svg
 current-company: NEOWIZ
 current-position: Software Engineer

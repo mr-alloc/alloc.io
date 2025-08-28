@@ -2,7 +2,7 @@
 layout: post
 title: 스프링의 트랜잭션 관리자
 tags: [Spring,Spring Boot, Transaction, Transaction Manager]
-date: 2024-06-04 18:58:00 +0900
+date: 2024-06-04 18:58:00
 thumbnail: /post/back-end/spring/spring-transaction-manager.svg
 current-company: NEOWIZ
 current-position: Software Engineer

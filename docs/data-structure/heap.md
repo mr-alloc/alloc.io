@@ -2,7 +2,7 @@
 layout: post
 title: 힙 (Heap)
 tags: [Java, Data Structure, Sort, Heap Sort, Heap]
-date: 2022-05-06 20:53:00 +0900
+date: 2022-05-06 20:53:00
 profile-image: /post/profile/profile4.jpg
 thumbnail: /post/data-structure/heap/index.svg
 current-company: Herit Corporation

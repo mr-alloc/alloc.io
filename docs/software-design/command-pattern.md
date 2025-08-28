@@ -2,7 +2,7 @@
 layout: post
 title: 커맨드 패턴 (Command Pattern)
 tags: [Command Pattern, Design Pattern, Software Design]
-date: 2020-06-17 18:34:00 +0900
+date: 2020-06-17 18:34:00
 thumbnail: /post/software-design/command-pattern-intro.svg
 profile-image: /post/profile/profile0.jpg
 current-company: Cubic INC

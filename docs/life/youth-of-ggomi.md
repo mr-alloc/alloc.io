@@ -3,7 +3,7 @@ layout: post
 title: 꼬미의 젊은 시절
 description: 이빨로 무는 노루 
 tags: [Life]
-date: 2024-12-19 16:00:00 +0900
+date: 2024-12-19 16:00:00
 thumbnail: /post/life/tired-ggomi.png
 current-company: NEOWIZ
 current-position: Software Engineer

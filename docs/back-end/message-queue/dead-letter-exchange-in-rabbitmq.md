@@ -2,19 +2,19 @@
 layout: post
 title: Dead Letter Exchange
 tags: [ Message Queue, RabbitMQ, Dead Letter Exchange ]
-date: 2025-08-18 18:14:00
+date: 2025-08-27 18:14:00
 thumbnail: /post/back-end/message-queue/dead-letter-exchange-in-rabbitmq/index.png
 current-company: NEOWIZ
 current-position: Software Engineer
 summary: RabbitMQ의 DLX란 무엇일까?
 excerpt_separator: <!--more-->
-hide: true
+hide: false
 ---
 RabbitMQ는 다양한 failover 메커니즘을 구현하였다. 그중 메세지 처리를 위한 DLX 개념을 알아보자.
 <!--more-->
 
 > 이 문서는 [원문](https://www.rabbitmq.com/docs/dlx)을 참조하여 작성하였습니다.
-:{ "type": "tip", "icon": "light-bulb" }
+:{ "type": "tip", "icon": "lightbulb" }
 
 ## Dead Letter Exchange란?::what-is-a-dead-letter-exchange
 
@@ -24,7 +24,7 @@ RabbitMQ는 다양한 failover 메커니즘을 구현하였다. 그중 메세지
    * AMQP 1.0. 수신자가 [
      `rejected`](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-rejected) 결과를 사용하는
      경우
-    * AMQP 0.9.1 컨슈머가 `requeue`파라미터를 `false`로 설정하여 `basic.reject`, `basic.nack`를 사용하는 경우
+   * AMQP 0.9.1 소비자가 `requeue`파라미터를 `false`로 설정하여 `basic.reject`, `basic.nack`를 사용하는 경우
 
    > RabbitMQ에서는 프로토콜 버전에 따라 용어가 다르다 0.9.1(기본)에서는 메세지를 소비하는 개념으로서 Consumer(소비자)를 1.0에서는 메세지를 수신하는 개념으로서 Receiver(수신자)를
    사용한다.
@@ -185,13 +185,70 @@ and configured dead-letter-routing-key 'my-app.events.type.abc'
 
 기본적으로, 데드레터 된 메세지들은 내부적으로 활성화 된 발행자 [확인](https://www.rabbitmq.com/docs/confirms) 없이 재발행된다.
 그러므로 RabbitMQ 클러스터링 환경에서 DLX를 사용하는 것은 안전하게 보장되지 않는다. DLX 대상 큐에 발행된 후 메세지는 원본큐에서 즉시 삭제된다.
+이것은 브로커 리소스를 고갈시킬 수 있는 과도한 메세지 축적의 위험성이 없음을 보장하지만, 대상큐가 메세지를 받을 수 없는 상태라면, 메세지들은 유실 될 수 있다.
 
-This ensures that 이것은 보장한다
-there is no chance of excessive message // 과도한 메세지의 기회가 없다는 것 (문맥상 chance는 부적적인 의미여야 하는 데 어떤의미로 chance를 사용한것인지 궁금함)
-build up that 빌드업을
-could exhaust broker resources. // 브로커 리소스를 exhaust 할 수 있는
+쿼럼 큐는 내부적으로 발행자 확인 옵션을 활성화하여 메세지가 재발행 되는 [최소 한번 데드레터링](https://www.rabbitmq.com/docs/quorum-queues#dead-lettering)을
+지원한다.
 
-이것은 과도한 메세지의 발생할 틈이 없는 것이 브로커 리소스를 exhaust 할수 있는 빌드업을 보장한다.
+## 메세지에서 데드레터링된 효과::dead-lettered-effects-on-messages
 
-However, messages can be lost if the target queue
-is not available to accept messages.
+메세지를 데드레터링 하는것은 해당 헤더를 수정한다:
+
+* 교환소 명은 가장 최신의 데드레터 교환소의 이름으로 대체된다.
+* 라우팅키는 데드레터링을 수행하는 큐에서 지정된 값으로 대체될수 있다.(예: 설정한 `dead-letter-routing-key`)
+* 위의 상황이 발생한다면, `CC` 헤더도 삭제된다, 그리고
+* `BCC` 헤더는 [발신자 선택 분산(Sender-Selected Distribution)](https://www.rabbitmq.com/docs/sender-selected)에 따라 삭제된다.
+
+단일 메세지는 여러번 데드레터링 될 수 있다. 메세지가 데드레터링 될 때 마다, 이 이벤트는 메세지 헤더 내에 저장된다.
+무한히 늘어나는 헤더를 방지하기 위해, 데드레터 이벤트 이력이 `{Queue, Reason}`페어로 압축된다.
+
+```text
+메세지 어노테이션
+    ├─ 키: x-opt-deaths (심볼릭 키)
+    └─ 값: 맵들의 배열
+```
+
+`AMQP 1.0`
+메세지는 [메세지 어노테이션](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-message-annotations)
+을 포함하는데, 이는 `x-opt-deaths`라는 심볼릭
+키와 [맵](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-types-v1.0-os.html#type-map)
+들의 [배열](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-types-v1.0-os.html#type-array)이 되는 값을 가진다.
+`AMQP 0.9.1` 메세지는 값이 배열이 되는 `x-death` 헤더를 포함한다. 두가지 프로토콜 모두에서 배열은 최신순으로 정렬 첫 번째 배열 요소에 저장된 가장 최신 데드레터링 이벤트이다.
+
+다음의 표는 AMQP 1.0의 맵 키 밸류와 AMQP 0.9.1의 배열 요소들 구조를 설명한다. 모든 AMQP 1.0 키들은 `symbol`타입이다. AMQP 1.0 클라이언트는 맵의 키밸류 페어 순서에 의존하면
+안된다.
+
+| AMQP 1.0 키   | AMQP 1.0 값 타입   | AMQP 0.9.1 키        | AMQP 0.9.1 값 타입  | 설명                                                                   |
+|--------------|-----------------|---------------------|------------------|----------------------------------------------------------------------|
+| queue        | string          | queue               | longstr          | 메세지를 데드 레터링한 큐의 이름                                                   |
+| reason       | symbol          | reason              | longstr          | 왜 이 메세지가 데드레터링 되었는 지(하단 설명)                                          |
+| count        | ulong           | count               | long             | 이 원인으로 이 큐에서 데드 레터링된 횟수                                              |
+| first-time   | timestamp       |                     |                  | 이 원인으로 이 큐에서 메세지가 처음 데드 레터링 된 시점                                     |
+| last-time    | timestamp       |                     |                  | 이 원인으로 이 큐에서 메세지가 마지막에 데드 레터링 된 시점                                   |
+|              |                 | time                | timestamp        | first-time과 동일                                                       |
+| exchange     | string          | exchange            | longstr          | 메세지가 최초로 데드레터링 되기 전에 발행된 교환소                                         |
+| routing-keys | array of string | routing-keys        | array of longstr | 이 메세지가 최초로 데드 레터링 되기 전의 라우팅키(`CC` 제외, `BCC` 포함)                      |
+| ttl          | uint            |                     |                  | 메세지가 최초로 데드 레터링 되기전의 AMQP 1.0 헤더의 TTL (time to live in milliseconds) |
+|              |                 | original-expiration | longstr          | 이 메세지가 최초로 데드레터링 되기전의 원본 `expiration` 속성                             |
+
+AMQP 1.0 `ttl`과 AMQP 0.9.1 `original-expiration`은 선택적이며 기록된다. 이는 라우팅되는 모든 큐들에서 다시 만료되는걸 방지하기 위해, 데드 레터링 중에 원본 메세지의 TTL이
+메세지에서 삭제되기 때문이다.
+
+`reason`은 메세지가 데드 레터링 된 이유를 설명하는 이름으로, 다음 중 하나:
+
+* `rejected`: 메세지가 거부됨
+* `expired`: [메세지 TTL](https://www.rabbitmq.com/docs/ttl)이 만료됨
+* `maxlen`: [최대 허용가능 큐길이](https://www.rabbitmq.com/docs/maxlength)가 초과 됨
+* `delivery_limit`: 메세지 반환 횟수가 제한 값을 초과함 (쿼럼
+  큐의 [전달 제한수](https://www.rabbitmq.com/docs/quorum-queues#poison-message-handling) 정책으로 설정)
+
+추가적으로, 다음 6개 메세지 어노테이션(AMQP 1.0)또는 헤더(AMQP 0.9.1)는 최초 데드레터링 되는 이벤트에 대해 추가된다:
+
+1. `x-first-death-queue`: 이 메세지가 데드레터링 된 첫 번째 큐
+2. `x-first-death-reason`: 이 메세지가 처음에 데드 레터링 된 이유
+3. `x-first-death-exchange`: 메세지가 처음 데드 레터링 되기 전에 발행된 교환소
+4. `x-last-death-queue`: 이 메세지가 데드레터링 된 마지막 큐
+5. `x-last-death-reason`: 이 메세지가 마지막에 데드 레터링 된 이유
+6. `x-last-death-exchange`: 메세지가 마지막으로 데드 레터링 되기 전에 발행된 교환소
+
+`x-first-*` 어노테이션은 수정되지 않는다. 메세지가 이후에 데드 레터링 될 때마다, `x-last-*` 어노테이션은 변경된다.

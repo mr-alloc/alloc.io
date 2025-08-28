@@ -1,8 +1,6 @@
 [
-  "/wiki/io-manager",
-  "/wiki/programmed-io",
-  "/docs/database/mysql/character-encoding",
   "/docs/back-end/message-queue/dead-letter-exchange-in-rabbitmq",
+  "/docs/database/mysql/character-encoding",
   "/docs/back-end/message-queue/configure-rabbitmq",
   "/docs/back-end/spring/cloud-stream-configuration",
   "/docs/back-end/publishing-via-the-central-portal",
@@ -50,14 +48,16 @@
   "/docs/software-design/visitor-pattern",
   "/docs/software-design/command-pattern",
   "/docs/software-design/bridge-pattern",
-  "/docs/software-design/adapter-pattern",
   "/wiki/base64",
   "/docs/algorithm/insertion-sort",
+  "/wiki/bit",
+  "/wiki/io-manager",
+  "/wiki/programmed-io",
+  "/docs/software-design/adapter-pattern",
   "/docs/software-design/class-diagram",
   "/docs/data-structure/hash",
   "/docs/data-structure/queue",
   "/docs/data-structure/linked-list",
   "/docs/data-structure/stack",
-  "/wiki/bit",
   "/docs/data-structure/array"
 ]

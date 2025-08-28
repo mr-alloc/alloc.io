@@ -2,7 +2,7 @@
 layout: post
 title: markdown-it의 Renderer Rule
 tags: [markdown-it, typescript]
-date: 2023-07-14 19:17:00 +0900
+date: 2023-07-14 19:17:00
 thumbnail: "/post/tool/customize-markdown-it.webp"
 current-company: Herit Corporation
 current-position: Backend Server Developer
