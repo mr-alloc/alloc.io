@@ -11,7 +11,7 @@ excerpt_separator: <!--more-->
 hide: true
 ---
 
-서비스와 메시징플랫 폼을 연결하기 위해, Spring Cloud Stream 설정은 종류와 사용 방법을 알아보자.
+서비스와 메시징 플랫폼을 연결하기 위해, Spring Cloud Stream 설정의 종류와 사용 방법을 알아보자.
 <!--more-->
 
 ## 개요::introduction
@@ -40,7 +40,6 @@ hide: true
 **독립적으로 한개의 함수만 정의하기**
 
 ::code-group
-
 ```yaml::application.yaml
 spring:
   cloud:
@@ -226,7 +225,8 @@ SCS에서는 바인딩의 이름(`*-out-0`, `*-in-0`)이 약솓되어있기 때�
 ```
 
 위 바인딩의 흐름을 간략히 본다면 위와 같다 App에서는 처리할 메세지의 Exchange 정보를 정의(App 구동시 동일한 정보가 없다면 생성)한다.
-`auto-bind-dlq` 옵션을 활성화 하면 기본적으로 Dead Letter를 처리할 수 있는 Exchange를 `DLX`로 사용(없으면 생성)한다.
+`auto-bind-dlq` 옵션을 활성화 하면 기본적으로 Dead Letter를 처리할 수 있는
+Exchange를 [DLX](/docs/back-end/message-queue/dead-letter-exchange-in-rabbitmq)로 사용(없으면 생성)한다.
 
 ![dlq 설정 활성화](/post/back-end/spring/cloud-stream-configuration/activate-dlq-config.png)
 :{ "align": "center", "max-width": "400px", "description": "DLQ 구성을 활성화 하였다." }
