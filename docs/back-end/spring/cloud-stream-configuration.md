@@ -112,10 +112,15 @@ public Consumer<Message<NotifiableEvent>> alertOperation() {
 spring:
   cloud:
     function:
-      definition: create-schedule|alert-operation; modify
+      definition: create-schedule|alert-operation; modify-schedule
 ```
 
 > 각 함수 구분자(`;`)는 앞뒤로 공백이 있어도 되지만, 파이프라인 구분자(`|`)는 앞, 뒤로 공백이 있으면 안된다.
+> 또한, `spring.cloud.function.routing.enabled` 옵션이 활성되 된다면 definition이 functionRouter로 덮어써지기 때문에 적용되지 않는다.
+:{ "type": "caution", "icon": "warning-octagon" }
+
+> 함수 구분자(`;`)는 구분에 쓰이기 때문에, `create-schedule|alert-operation; modify-schedule;`처럼 설정하면
+> 실제로 구성시에 ["create-schedule|alert-operation", "modify-schedule", ""] 처럼 3 개의 설정으로 인식된다. 따라서 주의가 필요하다.
 :{ "type": "caution", "icon": "warning-octagon" }
 
 ### 2. 추상화 바인딩 정의::define-abstract-biding
@@ -177,7 +182,7 @@ spring:
 * producer
   * 추가적인 프로듀서 프로퍼티 (`ProducerProperties`)
 
-### 메시징 플랫폼 바인더 설정::configuration-of-messaging-platform
+### 3. 메시징 플랫폼 바인더 설정::configuration-of-messaging-platform
 
 `SCS`는 실제 메시징 플랫폼과 유연하게 연결되기 위해 `Binder`인터페이스를 제공한다.
 또한 각 플랫폼 바인더 모듈은 이를 구현하여 브로커와 통신하며, 실제 스트림을 제공한다.
@@ -234,8 +239,129 @@ Exchange를 [DLX](/docs/back-end/message-queue/dead-letter-exchange-in-rabbitmq)
 위 이미지는 `auto-bind-dlq` 옵션을 통해 DLQ 바인딩을 진행하였다. DLX는 `dead-letter-exchange` 옵션으로 dlq 이름을 지정하지 않는이상, 기본으로 사용된다.
 이는 다른 큐들과 함께 DLX가 공유되며 Queue의 이름이 Routing Key로 사용된다.
 
-`RabbitExtendedBindingProperties`, `KafkaExtendedBindingProperties`
+각 바인더에서는 추상화된 설정을 구현하기 때문에, `spring.cloud.stream`하위의 개별 설정은 다음의 Properties를 참고하여 설정할 수 있다:
 
+* `RabbitMQ`: RabbitExtendedBindingProperties.class
+* `Kafka`: KafkaExtendedBindingProperties.class
+
+여러 함수를 결합하기 위한 방법은 [함수 설정](/docs/back-end/spring/cloud-stream#function-properties)에서 선언할 수 았다.
+
+## 설정기반 내부 동작::internal-process-based-on-configuration
+
+`SCS`의 다양한 구성을 추상화 하기 위해 내부적으로 여러 설정들이 이루어진다.
+
+```yaml::설정 예시
+spring:
+  cloud:
+    function:
+      definition: > 
+        create-schedule,alert-operation; 
+        create-user
+    stream:
+      bindings:
+        create-schedule,alert-schedule-in-0:
+          destination: create-schedule-exchange
+          group: create-schedule-queue
+          binder: rabbit
+      ...
+```
+
+만약 위와 같은 설정으로 적용된다면,
+실제 메세지 브로커와 의 연결이 이루어지기 까지 다음의 과정을 거친다:
+::code-group
+
+```text::1. 함수 Bean 생성
+      Created!                 Created!
+╭── Function Bean ──╮    ╭─ Function Bean ─╮
+│ (create-schedule) │    │  alert-schedule │
+╰───────────────────╯    ╰─────────────────╯
+```
+
+```text::2. 함수 Bean 결합(또는 단일)
+╭─────────────── Function A ───────────────╮
+│ ╭─ Function Bean ─╮  ╭─ Function Bean ─╮ │
+│ │ create-schedule │==│  alert-schedule │ │
+│ ╰─────────────────╯  ╰─────────────────╯ │
+╰──────────────────────────────────────────╯
+```
+
+```text::3. 스프링 추상화를 통한 Consumer Instance와 연결
+
+  ╭────────╮
+  │ Broker │  1. 결합된 Function Bean을 소비자와 연결
+  ╰───┐┌───╯  2. 컨슈머(인스턴스)는 브로커와 연결
+      ││                            ╭─ Function A  ─╮
+╭─────┘└ Consumer Instance ──────╮  │╭─────╮ ╭─────╮│
+│ AsyncMessageProcessingConsumer │==││ ... │ │ ... ││
+╰────────────────────────────────╯  │╰─────╯ ╰─────╯│
+                                    ╰───────────────╯
+```
+
+::
+
+위 처리를 진행하기 위해 `FunctionConfiguration`에서 설정하여 추상화 함수를 바인딩 하는 `BindableFunctionProxyFactory`를 생성한다.
+먼저 설정은 아래와 같이 함수 단위로 진행한다:
+
+```java::FunctionConfiguration.java
+@Override
+public void afterPropertiesSet() throws Exception {
+    //spring.cloud.function.definition 프로퍼티로 함수이름 결정.
+    //spring.cloud.stream.function.routing.enabled 활성화 시 모두 functionRouter로 덮어써짐 
+    this.determineFunctionName(functionCatalog, environment);
+
+    if (StringUtils.hasText(streamFunctionProperties.getDefinition())) {
+        String[] functionDefinitions = this.filterEligibleFunctionDefinitions();
+        //funtionDefinition = "create-schedule,alert-schedule"
+        for (String functionDefinition : functionDefinitions) {
+            //함수 조회
+            FunctionInvocationWrapper function = functionCatalog.lookup(functionDefinition);
+            if (function != null) {
+                if (function.isSupplier()) {
+                    this.inputCount = 0;
+                    this.outputCount = this.getOutputCount(function, true);
+                }
+                else if (function.isConsumer() || function.isRoutingFunction()) {
+                    this.inputCount = FunctionTypeUtils.getInputCount(function);
+                    this.outputCount = 0;
+                }
+                else {
+                    this.inputCount = FunctionTypeUtils.getInputCount(function);
+                    if (function.isWrappedBiConsumer()) {
+                        this.outputCount = 0;
+                    }
+                    else {
+                        this.outputCount = this.getOutputCount(function, false);
+                    }
+                }
+
+                AtomicReference<BindableFunctionProxyFactory> proxyFactory = new AtomicReference<>();
+                if (function.isInputTypePublisher()) {
+                    final SupportedBindableFeatures supportedBindableFeatures = new SupportedBindableFeatures();
+                    supportedBindableFeatures.setPollable(false);
+                    supportedBindableFeatures.setReactive(true);
+
+                    proxyFactory.set(new BindableFunctionProxyFactory(functionDefinition,
+                        this.inputCount, this.outputCount, this.streamFunctionProperties, supportedBindableFeatures));
+                }
+                else {
+                    proxyFactory.set(new BindableFunctionProxyFactory(functionDefinition,
+                        this.inputCount, this.outputCount, this.streamFunctionProperties));
+                }
+                //"create-schedule,alert-schedule_binding"으로 Bean 등록
+                ((GenericApplicationContext) this.applicationContext).registerBean(functionDefinition + "_binding",
+                    BindableFunctionProxyFactory.class, proxyFactory::get);
+            }
+            else {
+                logger.warn("The function definition '" + streamFunctionProperties.getDefinition() +
+                        "' is not valid. The referenced function bean or one of its components does not exist");
+            }
+        }
+    }
+
+    this.createStandAloneBindingsIfNecessary(applicationContext.getBean(BindingServiceProperties.class));
+
+}     
+```
 
 함수 등록 Bean
 FunctionCatalog

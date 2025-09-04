@@ -171,6 +171,10 @@ private FunctionInvocationWrapper compose(Class<?> type, String functionDefiniti
 }
 ```
 
+`compose` 메서드는 말 그대로 Cloud Stream 엔드포인트(함수)를 구성한다.
+`spring.cloud.function.definition`을 기준으로 함수의 연결을 해석해 해당 여러개의 함수로 구성되는 단일 함수를 추측한다.
+결과의 함수들은 `.andThen`으로 연결하여, 한 개의 단일 함수로서 등록한다.
+
 [**routing-expression**](https://docs.spring.io/spring-cloud-stream/reference/spring-cloud-stream/event-routing.html)
 
 `routingExpression(또는 routing-expression)`은 SpEL(Spring Expression Language) 표현식으로, 실행할 함수명 또는 함수 조합 명령어를 동적으로 결정한다.
@@ -234,7 +238,6 @@ public class BindingServiceProperties
 즉 `BindingProperties`는 연결할 미들웨어의 바인딩 대상이 된다. 위의 코드를 기준으로 바인딩을 비교해 본다면 아래와 같이 대응 된다:
 
 ::code-group
-
 ```yaml::application.yaml
 spring:
   cloud:
@@ -245,13 +248,11 @@ spring:
         GameResultConsumer-in-0:
           destination: GameResultConsumer 
 ```
-
 ```java::BindingServiceProperties.java
 private Map<String, BindingProperties> bindings = new ConcurrentHashMap<>();
 // "GameResultProducer-out-0" → BindingProperties
 // "GameResultConsumer-in-0" → BindingProperties
 ```
-
 ::
 
 `BindingProperties`는 미들웨어 대상(RabbitMQ의 Exchange, Kafka의 Topic)을 추상화한 `SCS`의 바인딩 객체이다. 바인딩 대상은 `Producer`가 될 수도있고,
@@ -309,7 +310,7 @@ spring:
 * BindingServiceProperties: `sping.cloud.stream` 내 프로퍼티 정보
 * BindingService: `BindingServiceProperties` 설정 정보를 이용해 실제 바인딩을 구성
 * InputBindingLifecycle: `Bindable` 객체를 `BindingService`로 바인딩을 트리거하고 그 정보를 관리
-* BindableFunctionProxyFactory: `Bindable`의 구현체이며 추상화 함수와 바인딩할 수 있는
+* BindableFunctionProxyFactory: 추상화 함수와 바인딩할 수 있는 `Bindable`의 구현체
 
 ### MessageChannel::message-channel
 
@@ -483,4 +484,3 @@ void doStartWithBindable(Bindable bindable) {
 `SCS`는 철저하게 추상화된 부분만 관리하며, 실제 연동 및 바인딩은 `Binder` 구현체에게 맡긴다.
 
 여기까지가 `Spring Cloud Stream`이 추상화 하여 유연하게 서드파티 바인더와 연결하는 방법이다.
-
