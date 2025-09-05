@@ -1,8 +1,8 @@
 [
+  "/docs/back-end/spring/cloud-stream-configuration",
   "/docs/back-end/message-queue/dead-letter-exchange-in-rabbitmq",
   "/docs/database/mysql/character-encoding",
   "/docs/back-end/message-queue/configure-rabbitmq",
-  "/docs/back-end/spring/cloud-stream-configuration",
   "/docs/back-end/publishing-via-the-central-portal",
   "/docs/back-end/spring/cloud-stream",
   "/docs/computer-science/operating-system/tty-and-session",

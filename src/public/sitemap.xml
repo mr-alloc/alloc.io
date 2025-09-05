@@ -2,6 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
 >
     <url>
+        <loc>https://alloc.io/docs/back-end/spring/cloud-stream-configuration</loc>
+    </url>
+    <url>
         <loc>https://alloc.io/docs/back-end/message-queue/dead-letter-exchange-in-rabbitmq</loc>
     </url>
     <url>
@@ -9,9 +12,6 @@
     </url>
     <url>
         <loc>https://alloc.io/docs/back-end/message-queue/configure-rabbitmq</loc>
-    </url>
-    <url>
-        <loc>https://alloc.io/docs/back-end/spring/cloud-stream-configuration</loc>
     </url>
     <url>
         <loc>https://alloc.io/docs/back-end/publishing-via-the-central-portal</loc>

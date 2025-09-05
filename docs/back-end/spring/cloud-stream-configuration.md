@@ -2,13 +2,13 @@
 layout: post
 title: Cloud Stream Configuration
 tags: [ Spring, Spring Boot, Spring Cloud Stream, Configuration ]
-date: 2025-08-08 09:34:00
+date: 2025-09-05 09:34:00
 thumbnail: /post/back-end/spring/cloud-stream-configuration/index.png
 current-company: NEOWIZ
 current-position: Software Engineer
 summary: 클라우드 스트림 구성
 excerpt_separator: <!--more-->
-hide: true
+hide: false
 ---
 
 서비스와 메시징 플랫폼을 연결하기 위해, Spring Cloud Stream 설정의 종류와 사용 방법을 알아보자.
@@ -209,7 +209,7 @@ spring:
 ```
 
 `create-schedule`(스케줄 생성)의 경우 DLQ(Dead Letter Queue)를 설정하지 않고 Exchange와 Queue만 지정해주었다.
-SCS에서는 바인딩의 이름(`*-out-0`, `*-in-0`)이 약솓되어있기 때문에, 이름을 위해 커스텀 설정을 하지않는 이상 네이밍 룰을 따라야한다.
+SCS에서는 채널의 이름(`*-out-0`, `*-in-0`)이 약속되어있기 때문에, 이름을 위해 커스텀 설정을 하지않는 이상 네이밍 룰을 따라야한다.
 컨슈머(Consumer)는 기본적으로 `*-in-0`룰을 따르기 때문에 위와 같이 지정하였다.
 
 ![DLQ가 활성화 되지 않은 설정](/post/back-end/spring/cloud-stream-configuration/bind-without-dlq-config.png)
@@ -286,7 +286,6 @@ spring:
 ```
 
 ```text::3. 스프링 추상화를 통한 Consumer Instance와 연결
-
   ╭────────╮
   │ Broker │  1. 결합된 Function Bean을 소비자와 연결
   ╰───┐┌───╯  2. 컨슈머(인스턴스)는 브로커와 연결
@@ -316,37 +315,13 @@ public void afterPropertiesSet() throws Exception {
             //함수 조회
             FunctionInvocationWrapper function = functionCatalog.lookup(functionDefinition);
             if (function != null) {
-                if (function.isSupplier()) {
-                    this.inputCount = 0;
-                    this.outputCount = this.getOutputCount(function, true);
-                }
-                else if (function.isConsumer() || function.isRoutingFunction()) {
-                    this.inputCount = FunctionTypeUtils.getInputCount(function);
-                    this.outputCount = 0;
-                }
-                else {
-                    this.inputCount = FunctionTypeUtils.getInputCount(function);
-                    if (function.isWrappedBiConsumer()) {
-                        this.outputCount = 0;
-                    }
-                    else {
-                        this.outputCount = this.getOutputCount(function, false);
-                    }
-                }
+                if (function.isSupplier(
+                ...
 
                 AtomicReference<BindableFunctionProxyFactory> proxyFactory = new AtomicReference<>();
-                if (function.isInputTypePublisher()) {
-                    final SupportedBindableFeatures supportedBindableFeatures = new SupportedBindableFeatures();
-                    supportedBindableFeatures.setPollable(false);
-                    supportedBindableFeatures.setReactive(true);
-
-                    proxyFactory.set(new BindableFunctionProxyFactory(functionDefinition,
-                        this.inputCount, this.outputCount, this.streamFunctionProperties, supportedBindableFeatures));
-                }
-                else {
-                    proxyFactory.set(new BindableFunctionProxyFactory(functionDefinition,
-                        this.inputCount, this.outputCount, this.streamFunctionProperties));
-                }
+                
+                ...
+                
                 //"create-schedule,alert-schedule_binding"으로 Bean 등록
                 ((GenericApplicationContext) this.applicationContext).registerBean(functionDefinition + "_binding",
                     BindableFunctionProxyFactory.class, proxyFactory::get);
@@ -363,47 +338,42 @@ public void afterPropertiesSet() throws Exception {
 }     
 ```
 
-함수 등록 Bean
-FunctionCatalog
-FunctionRegistry
-FunctionConfiguration(FunctionBindingRegistrar: Function Bean을 생성해서 BeanFactory에 넣음 (afterPropertiesSet() 참조)
-BeanFactory
-ConversionService
-RabbitExchangeQueueProvisioner.autoBindDLQ
+여기서 `functionDefinition + "_binding"`이라고 등록된 `BindableFunctionProxyFactory`를 바인딩 빈이라고 한다.
+바인딩 빈은 바인딩을 위해 필요한 정보를 갖고 있고, 외부에서 `createAndBindInputs`으로 컨슈머 바인딩을, `createAndBindOutputs`으로 퍼블리셔 바인딩을 호출할 수있도록 제공한다.
 
-바인딩
-컨슈머 시작 이벤트: AsyncConsumerStartedEvent
-이벤트 메세지 멀티캐스트 SimpleApplicationEventMulticaster.multicastEvent()
-RabbitExchangeQueueProvisioner
+위에서 소개 했던 각 역할을 나열해 보면 다음과 같다:
 
-StreamBridge는 ApplicationListener 이다.
+```text::SpringApplication.run()에서 라이프 사이클 실행 (RabbitMQ 기준)
+╭─ DefaultLifecycleProcessor ────────────────────╮
+│╭─ Binding Lifecycle Bean Start ───────────────╮│
+││ ╭─ Bindable (Create And Bind)───────────────╮││
+││ │╭─ BindingService ──╮ ╭─ Provisioner ─────╮│││   
+││ ││ Reqiest Binding   │ │ Request Provision ├────────────╮
+││ │╰─────────┬─────────╯ ╰───────────────────╯││    (Provisioning)   
+││ ╰──────────│────────────────────────────────╯││  Create Exchange, Queue 
+│╰────────────│─────────────────────────────────╯│         │
+╰─────────────│──────────────────────────────────╯         │
+              ▼                                            │
+  ╭─ Binder (Lifecycle Start) ──╮                          ▼
+  │╭─ AMQP Listener Container ─╮│           ╭───── RabbitMQ ──────────────╮ 
+  ││  ╭─────────────────────╮  ││           │  ╭─────────╮  ┌────────────┐│
+  ││  │ Consumer Instance 1 ├───── Binding! ──▶│ Queue 1 ■■■■ Exchange 1 ││  
+  ││  ╰─────────────────────╯  ││           │  ╰─────────╯  └────────────┘│ 
+  ││  ╭─────────────────────╮  ││           │  ╭─────────╮  ┌────────────┐│
+  ││  │ Consumer Instance 2 ├───── Binding! ──▶│ Queue 1 ■■■■ Exchange 1 ││
+  ││  ╰─────────────────────╯  ││           │  ╰─────────╯  └────────────┘│
+  ││  ╭─────────────────────╮  ││           │  ╭─────────╮  ┌────────────┐│
+  ││  │ Consumer Instance 3 ├───── Binding! ──▶│ Queue 1 ■■■■ Exchange 1 ││
+  ││  ╰─────────────────────╯  ││           │  ╰─────────╯  └────────────┘│
+  │╰───────────────────────────╯│           ╰─────────────────────────────╯ 
+  ╰─────────────────────────────╯
+     RabbitMessageChannelBinder
+                
+```
 
-AnnotationConfigApplicationContext 에서 메세지 발행시 적절한 ApplicationContext 가 없으면 super인
-AnnotationConfigServletWebServerApplicationContext로 publishEvent를 호출하고
-그 내부에서, this.applicationMulticaster로 multicastEvent 한다.
+Exchange와 Queue 내부적으로 설정을 기반으로 프로비저닝하고, 구성된 함수와 바인딩한다.
+AMQP Listener Conainer에서는 내부적으로 Consumer Instance (AsyncMessageProcessingConsumer)를 통해 RabbitMQ와 통신한다.
+메세지 수신 컴포넌트(SimpleMessageListenerContainer)는 메세지를 비동기적으로 안전하게 수신하기 위해 사용되는 핵심 컴포넌트이다.
 
-간단하게 설명하면, Spring Core는 아래를 수행
-
-1. 앱실행 (Bean refresh)
-2. ServletWebServerApplicationContext에서 기본 Bean에대한 refresh가 끝나면 `finishRefresh()` 실행
-3. `getLifecycleProcessor().onRefresh()` 실행 (`DefaultLifecycleProcessor`)
-4. `DefaultLifecycleProcessor`에서 LifecycleGroup으로 각 `Phase`들을 그룹화
-5. 그룹화 된 `Lifecycle Bean`들을 순차적으로 실행
-
-이때 순차적으로 실행되는 Spring Cloud Stream 관련 Lifecycle은 아래를 수행
-
-6. `InputBindingLifecycle`, `OutputBindingLifecycle` 등 doStartWithBindable 메서드로 바인딩을 실행
-7. `InputBindingLifecycle` 의 경우 `BindableFunctionProxyFactory.createAndBindInputs(this.bindingService)`를 실행
-8. `InputBindingLifecycle`는 매개변수로 받은 바인딩 서비스를 `bindingService.bideConsumer(...)`로 바인딩과정을 위임
-9. `BindService`에서 사용할 `Binder`를 찾아 바인딩을 요청한다.
-
-구현된 플랫폼 Binder는 아래를 수행
-
-10. 요청을 받은 바인더(여기서는 `RabbitMessageChannelBinder`)는 전달받은 바인딩정보로 인바운드 목적지로 엔드포인트를 지정하여 또 다른 라이프 사이클을 시작한다.
-11. `consumerEndpointWithLifecycle.start()`하게 되면 `AmqpInboundChannelAdapter`로 시작된다.
-12. 이는 곧바로 `this.messageListenerContainer.start()`로 연결된다.
-13. 내부적으로 비동기로 `AsyncMessageProcessingConsumer`를 실행하며 바인딩에 필요한 처리를한다.
-
-여기서 `AsyncMessageProcessingConsumer`는 컨슈머 인스턴스 이며 바인딩된 이후 부터, 메세지 관리를 진행한다.
-
-
+내부적으로 BlockingQueueConsumer를 통해 TransactionTemplate을 사용하여 메시지 수신의 원자성을 보장하며, 동시성 제어도 가능하다.
+컨슈머 인스턴스는 바인딩이 된 이후부터 메시지 관리를 시작한다.
