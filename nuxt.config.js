@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { fileURLToPath} from "node:url";
+import {fileURLToPath} from "node:url";
 import Keys from './src/static/keys.json';
-import { toValueMap } from './core/util/collection-util'
+import {toValueMap} from './core/util/collection-util'
 
 export default defineNuxtConfig({
     build: {
@@ -39,7 +39,7 @@ export default defineNuxtConfig({
         routes: ['/wikis',...Keys]
     },
     router: {
-        base: '/special-posted-in/'
+        base: '/alloc.io/'
     },
     target: 'static',
     typescript: {
@@ -62,7 +62,7 @@ export default defineNuxtConfig({
     },
     routeRules: Object.fromEntries(toValueMap(Array.from(['/wiki', '/docs', ...Keys]), (e) => e, (e) => {
         //nuxt에서는 내부적인 크롤러로 링크된 경로까지 확인하기 때문에 존재하지 않는 경로는 링크 되지 않아야한다.
-        //또한 /wiki 나 '/docs' 처럼 래핑 컴포넌트에대한 라우딩은 이루어지면 안되기 때문에 리다이렉트 시킨다.
+        //또한 /wiki 나 '/docs' 처럼 래핑 컴포넌트에대한 라우팅이 이루어지면 안되기 때문에 리다이렉트 시킨다.
         if (e === '/wiki' || e === '/docs') {
             return {
                 redirect: '/',

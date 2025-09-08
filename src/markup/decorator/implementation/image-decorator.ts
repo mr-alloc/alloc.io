@@ -69,7 +69,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
                 isDebug && console.error('[decorator]image:start error: ', skip);
             }
             return `<div class="${wrapperClasses.join(' ')}">
-                       <a href="#" class="my-2 inline-flex">`;
+                       <span class="my-2 inline-flex">`;
         }
 
         markdownIt.renderer.rules[this.KEY_CLOSE] = (
@@ -111,7 +111,7 @@ export default class ImageDecorator implements IMarkdownDecorator {
             } catch(skip) {
                 isDebug && console.error('[decorator]image:close error: ', skip);
             }
-            return `</a></div>`;
+            return `</span></div>`;
         }
     }
 

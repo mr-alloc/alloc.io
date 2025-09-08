@@ -153,12 +153,13 @@ spring:
     function:
       definition: create-schedule; modify-schedule
     stream:
+      #SCS 추상화를 위한 바인딩
       bindings:
         create-schedule-in-0:
           destination: schedule-consume-exchange
           group: create-schedule-queue
         modify-schedule-in-0:
-          destination: schedume-consume-exchange
+          destination: schedule-consume-exchange
           group: modify-schedule-queue
 ```
 
@@ -209,8 +210,11 @@ spring:
 ```
 
 `create-schedule`(스케줄 생성)의 경우 DLQ(Dead Letter Queue)를 설정하지 않고 Exchange와 Queue만 지정해주었다.
-SCS에서는 채널의 이름(`*-out-0`, `*-in-0`)이 약속되어있기 때문에, 이름을 위해 커스텀 설정을 하지않는 이상 네이밍 룰을 따라야한다.
+SCS에서는 채널의 이름(`*-out-0`, `*-in-0`)이 약속되어있기 때문에, 이름을 위해 커스텀 설정을 하지않는 이상 네이밍 컨벤션을 따라야한다.
 컨슈머(Consumer)는 기본적으로 `*-in-0`룰을 따르기 때문에 위와 같이 지정하였다.
+
+> 기본으로 설정된 명명 방식은 `BindingFunctionProxyFactory#buildInputNameForIndex(int)`에서 확인할 수 있다.
+:{ "type": "tip", "icon": "lightbulb" }
 
 ![DLQ가 활성화 되지 않은 설정](/post/back-end/spring/cloud-stream-configuration/bind-without-dlq-config.png)
 :{ "align": "center", "max-width": "600px", "description": "DLQ가 활성화 되지 않은 Exchange" }
@@ -348,7 +352,7 @@ public void afterPropertiesSet() throws Exception {
 │╭─ Binding Lifecycle Bean Start ───────────────╮│
 ││ ╭─ Bindable (Create And Bind)───────────────╮││
 ││ │╭─ BindingService ──╮ ╭─ Provisioner ─────╮│││   
-││ ││ Reqiest Binding   │ │ Request Provision ├────────────╮
+││ ││ Request Binding   │ │ Request Provision ├────────────╮
 ││ │╰─────────┬─────────╯ ╰───────────────────╯││    (Provisioning)   
 ││ ╰──────────│────────────────────────────────╯││  Create Exchange, Queue 
 │╰────────────│─────────────────────────────────╯│         │
