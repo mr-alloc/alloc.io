@@ -187,7 +187,7 @@ ZXhhbXBsZV91c2VybmFtZTpleGFtcGxlX3Bhc3N3b3Jk
 `/api/v1/publisher/upload` 엔드 포인트에 업로드 될 수 있다고 가정하자.
 엔드 포인트는 `multipart/formdata`의 `bundle`이라는 이름과 정의된 파일명을 가지는 `application/octet-stream` 단일 파트의 `Content-Type`을 예상한다.
 
-```http::파트별로 Content-Type을 가지는 multipart/formdata
+```http::파트 별로 Content-Type을 가지는 multipart/formdata
 POST /api/v1/publisher/upload HTTP/1.1
 Host: central.sonatype.com
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
@@ -198,7 +198,7 @@ Content-Length: 1234567
 Content-Disposition: form-data; name="bundle"; filename="entity-printer-1.0.12.jar"
 Content-Type: application/octet-stream
 
-[JAR 파일의 바이너리 데이터 - 실제로는 수천~수만 바이트]
+//[JAR 파일의 바이너리 데이터 - 실제로는 수천~수만 바이트]
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 ```
 

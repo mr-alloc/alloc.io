@@ -76,11 +76,13 @@ const methods = {
   border-color: $linear-dark-color;
 
   span {
-    background-color: #2c3e50;
+    span {
+      background-color: #2c3e50;
 
-    &:active, :hover {
-      background-color: #d3d1d1;
-      color: black;
+      &:active, :hover {
+        background-color: #d3d1d1;
+        color: black;
+      }
     }
   }
 }

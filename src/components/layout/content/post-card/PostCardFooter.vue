@@ -140,33 +140,26 @@ const props = defineProps<{
 }
 
 
-.dark .post-preview-footer {
-  .post-tag-area {
-    border-color: $linear-dark-color;
-
-    span {
-      background-color: #2c3e50;
-
-      &:active, :hover {
-        background-color: #d3d1d1;
-        color: black;
-      }
-    }
-  }
-
-  div[class^="post-comment-list"] {
-    border-color: $linear-dark-color;
-
-    p.from-me {
-
-      &:after {
-        background-color: $main-dark-color;
-
-      }
+.dark {
+  .post-preview-footer {
+    .post-tag-area {
+      border-color: $linear-dark-color;
     }
 
-    .no-comment {
-      background-color: $point-dark-color;
+    div[class^="post-comment-list"] {
+      border-color: $linear-dark-color;
+
+      p.from-me {
+
+        &:after {
+          background-color: $main-dark-color;
+
+        }
+      }
+
+      .no-comment {
+        background-color: $point-dark-color;
+      }
     }
   }
 }
