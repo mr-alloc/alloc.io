@@ -92,7 +92,7 @@ http.httpBasic(basic -> basic.disable());
 ```
 
 HTTP 기본 인증 스킴(`Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==`) 비활성화는 위와 같이 할 수있다.
-비활서화 하지 않고 해당 토큰을 사용하려면 [Basic Authentication Scheme](https://datatracker.ietf.org/doc/html/rfc2617#section-2)으로 헤더에 담아
+비활성화 하지 않고 해당 토큰을 사용하려면 [Basic Authentication Scheme](https://datatracker.ietf.org/doc/html/rfc2617#section-2)으로 헤더에 담아
 보내면 된다.
 
 > `echo -n "user:110bd8bf-c3ea-4516-ba62-d3c301098606" | base64`으로 페어를 한개의 문자열로 [Base64](https://alloc.io/wiki/base64)
