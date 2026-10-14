@@ -9,7 +9,7 @@ current-company: NEOWIZ
 current-position: Software Engineer
 summary: 우당탕탕 인증서버 개발기
 excerpt_separator: <!--more-->
-hide: false
+hide: true
 ---
 인증서버 좀 만들어주세요.
 키는 한 곳에서 관리했으면 좋겠고, 키가 교체되더라도 배포 없이 진행했으면 좋겠어요.
