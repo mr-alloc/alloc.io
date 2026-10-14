@@ -8,7 +8,7 @@ current-company: NEOWIZ
 current-position: Software Engineer
 summary: 스위프트 어트리뷰트
 excerpt_separator: <!--more-->
-hide: false
+hide: true
 ---
 Swift의 흐름제어를 위한 어트리뷰트를 정리해보자
 <!--mode-->
